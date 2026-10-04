@@ -1,0 +1,50 @@
+{
+  "Canvas": {
+    "light": "#F7F5F0",
+    "dark": "#161827"
+  },
+  "Surface": {
+    "light": "#FFFFFF",
+    "dark": "#222638"
+  },
+  "Ink": {
+    "light": "#202438",
+    "dark": "#F4F3F8"
+  },
+  "MutedInk": {
+    "light": "#5B6073",
+    "dark": "#B8BDCD"
+  },
+  "Separator": {
+    "light": "#D8D5E4",
+    "dark": "#454A60"
+  },
+  "AccentColor": {
+    "light": "#6940C6",
+    "dark": "#B99AFA"
+  },
+  "AccentSoft": {
+    "light": "#EDE5FA",
+    "dark": "#343048"
+  },
+  "OnAccent": {
+    "light": "#FFFFFF",
+    "dark": "#211638"
+  },
+  "Success": {
+    "light": "#226746",
+    "dark": "#8FE0B4"
+  },
+  "SuccessSoft": {
+    "light": "#E2F2E8",
+    "dark": "#233D32"
+  },
+  "Reward": {
+    "light": "#8A4C0E",
+    "dark": "#FFD496"
+  },
+  "RewardSoft": {
+    "light": "#FFF0D8",
+    "dark": "#473726"
+  }
+}

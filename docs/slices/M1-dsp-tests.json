@@ -1,0 +1,13 @@
+{"status":"PASS","method":"actual C renderer, offline samples, independent onset oracle","physical_device_gate":"NOT RUN","runs":[
+{"rate":48000,"bpm":30,"meter":0,"subdivision":0,"duration_seconds":900,"onsets":450,"interval_min_samples":96000,"interval_max_samples":96000,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":48000,"bpm":60,"meter":1,"subdivision":1,"duration_seconds":900,"onsets":1800,"interval_min_samples":24000,"interval_max_samples":24000,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":48000,"bpm":120,"meter":2,"subdivision":2,"duration_seconds":900,"onsets":7200,"interval_min_samples":6000,"interval_max_samples":6000,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":48000,"bpm":137,"meter":2,"subdivision":3,"duration_seconds":900,"onsets":6165,"interval_min_samples":7007,"interval_max_samples":7008,"max_onset_error_samples":0.496350367,"final_onset_error_samples":0.299270071},
+{"rate":48000,"bpm":180,"meter":3,"subdivision":4,"duration_seconds":900,"onsets":8100,"interval_min_samples":5333,"interval_max_samples":5334,"max_onset_error_samples":0.333333336,"final_onset_error_samples":0.333333336},
+{"rate":48000,"bpm":240,"meter":2,"subdivision":2,"duration_seconds":900,"onsets":14400,"interval_min_samples":3000,"interval_max_samples":3000,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":44100,"bpm":60,"meter":2,"subdivision":0,"duration_seconds":900,"onsets":900,"interval_min_samples":44100,"interval_max_samples":44100,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":44100,"bpm":120,"meter":2,"subdivision":1,"duration_seconds":900,"onsets":3600,"interval_min_samples":11025,"interval_max_samples":11025,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":44100,"bpm":137,"meter":2,"subdivision":3,"duration_seconds":900,"onsets":6165,"interval_min_samples":6437,"interval_max_samples":6438,"max_onset_error_samples":0.496350367,"final_onset_error_samples":-0.043795623},
+{"rate":44100,"bpm":180,"meter":3,"subdivision":4,"duration_seconds":900,"onsets":8100,"interval_min_samples":4900,"interval_max_samples":4900,"max_onset_error_samples":0.000000000,"final_onset_error_samples":0.000000000},
+{"rate":44100,"bpm":240,"meter":2,"subdivision":2,"duration_seconds":900,"onsets":14400,"interval_min_samples":2756,"interval_max_samples":2757,"max_onset_error_samples":0.500000000,"final_onset_error_samples":0.250000000}
+],"assertions":457769632,"boundary_restart_silence_tests":"PASS"}

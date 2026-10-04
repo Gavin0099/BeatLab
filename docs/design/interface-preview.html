@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="zh-Hant"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>BeatLab · 介面設計預覽</title>
+<style>
+:root{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;font-synthesis:none;--canvas:#F7F5F0;--surface:#FFFFFF;--ink:#202438;--muted:#5B6073;--line:#D8D5E4;--accent:#6940C6;--soft:#EDE5FA;--on-accent:#FFFFFF;--success:#226746;--success-soft:#E2F2E8;--reward:#8A4C0E;--reward-soft:#FFF0D8;--text:1rem}
+*{box-sizing:border-box}body{margin:0;background:var(--canvas);color:var(--ink);font-size:var(--text);line-height:1.5}button,input,select{font:inherit}button{cursor:pointer;touch-action:manipulation}button:focus-visible,a:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--accent);outline-offset:3px}button:disabled{cursor:default;color:var(--muted);background:var(--soft)}h1,h2,h3,p{margin:0}h1{font-size:1.7em;line-height:1.3}h2{font-size:1.45em;line-height:1.3}h3{font-size:1.15em;line-height:1.4}p{max-width:45ch;overflow-wrap:anywhere}.muted{color:var(--muted)}.small{font-size:.88em}.caption{font-size:.8em}.semibold{font-weight:600}.accent{color:var(--accent)}.controls{max-width:1500px;margin:auto;padding:20px;display:flex;gap:16px;align-items:center;justify-content:space-between;flex-wrap:wrap;border-bottom:1px solid var(--line)}.controls h1{font-size:1.15em}.controls label{display:inline-flex;gap:8px;align-items:center;min-height:44px}.options{display:flex;gap:14px;flex-wrap:wrap}.shell{max-width:680px;margin:auto;min-height:calc(100dvh - 100px);display:flex;flex-direction:column}.top{padding:16px 20px;text-align:center;font-weight:700;border-bottom:1px solid var(--line);background:var(--canvas)}.content{padding:20px;display:flex;flex-direction:column;gap:20px;flex:1;min-width:0}.stack{display:flex;flex-direction:column;gap:16px}.card{background:var(--surface);border-radius:24px;padding:20px;min-width:0}.row{display:flex;gap:12px;align-items:center;flex-wrap:wrap}.spread{justify-content:space-between}.pill{background:var(--soft);color:var(--accent);padding:8px 12px;border-radius:999px;font-size:.88em;font-weight:600;display:inline-flex;align-items:center;gap:6px}.button{border:0;min-height:52px;border-radius:18px;padding:14px 16px;font-weight:700;display:flex;gap:8px;align-items:center;justify-content:center;text-align:center;text-decoration:none;width:100%;line-height:1.5}.primary{background:var(--accent);color:var(--on-accent)}.secondary{background:var(--soft);color:var(--accent)}.plain{background:none;border:0;color:var(--accent);min-height:44px;padding:8px 12px;font-weight:600}.numbers{font-variant-numeric:tabular-nums}.tempo{font-size:4.75em;line-height:1.12;font-weight:700;letter-spacing:-.03em}.center{text-align:center}.tempo-row{display:flex;gap:8px;align-items:baseline;justify-content:center}.range{width:100%;accent-color:var(--accent);min-height:44px;margin:0}.adjust{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.adjust .button{padding:12px 8px;border-radius:14px}.beats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.beat{background:var(--soft);border-radius:18px;text-align:center;min-height:78px;padding:10px 4px;font-size:2em;font-weight:700;line-height:1.4;position:relative}.beat.active{background:var(--accent);color:var(--on-accent)}.beat.active:after{content:"";display:block;background:var(--on-accent);border-radius:50%;width:6px;height:6px;margin:0 auto}.note-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}.note{background:var(--soft);font-size:1.2em;font-weight:700;text-align:center;border-radius:12px;padding:12px 4px;min-height:44px}.note.current{background:var(--accent);color:var(--on-accent);outline:2px solid var(--accent)}.note.current:after{content:" •"}.note-label{font-size:.8em;color:var(--muted);text-align:center;padding-bottom:6px}.progress{height:6px;border-radius:3px;background:var(--line);overflow:hidden}.progress-fill{height:100%;background:var(--accent)}.bottom{position:sticky;bottom:66px;background:var(--canvas);padding:12px 20px;display:flex;flex-direction:column;gap:10px}.tabs{position:sticky;bottom:0;background:var(--surface);border-top:1px solid var(--line);display:flex;min-height:66px;z-index:2}.tab{flex:1;border:0;background:none;color:var(--muted);font-size:.8em;display:flex;flex-direction:column;gap:3px;align-items:center;justify-content:center;min-height:66px}.tab[aria-current="page"]{color:var(--accent);font-weight:700}.tap{width:100%;min-height:176px;border-radius:28px;border:2px solid var(--success);background:var(--success-soft);color:var(--success);display:flex;flex-direction:column;gap:8px;justify-content:center;align-items:center}.tap strong{font-size:1.6em;line-height:1.3}.stars{color:var(--reward);font-size:2em;line-height:1.2;letter-spacing:.12em}.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.stat{padding:14px;background:var(--soft);border-radius:16px}.stat strong{display:block;font-size:1.5em;line-height:1.3}.status{background:var(--soft);border-radius:16px;padding:16px;font-size:.9em}details summary{font-weight:600;cursor:pointer;min-height:44px;padding:8px 0;line-height:1.5}details .stack{margin-top:12px}.field{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.field select{color:var(--accent);background:var(--soft);border:0;border-radius:10px;min-height:44px;padding:8px;max-width:100%}.switch{accent-color:var(--accent);width:24px;height:24px}.icon{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}.lesson-row{display:flex;gap:14px;align-items:center;border:0;border-bottom:1px solid var(--line);background:var(--surface);color:var(--ink);padding:16px;text-align:left;width:100%;min-height:80px}.lesson-row:last-child{border:0}.lesson-number{background:var(--soft);border-radius:14px;padding:10px;font-weight:700;color:var(--accent);min-width:44px;text-align:center}.lesson-row:disabled{background:var(--surface);color:var(--muted)}dialog{border:0;border-radius:24px;background:var(--canvas);color:var(--ink);padding:20px;width:calc(100% - 32px);max-width:600px;max-height:85dvh;overflow:auto}dialog::backdrop{background:#16182788}.board{max-width:1500px;margin:auto;padding:24px;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px}.board .shell{border:1px solid var(--line);border-radius:28px;overflow:hidden;min-height:0;margin:0;display:flex;flex-direction:column}.board .content{flex:1}.board .top{margin-top:14px}.board .bottom,.board .tabs{position:static}.board-label{font-weight:600;font-size:.9em;margin-bottom:12px;color:var(--muted)}.large{--text:1.75rem}.large .adjust{grid-template-columns:repeat(2,minmax(0,1fr))}.large .stats,.large .note-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.large .bottom,.large .tabs{position:static}.large .tempo{font-size:3em}.large .beats{gap:4px}.dark{--canvas:#161827;--surface:#222638;--ink:#F4F3F8;--muted:#B8BDCD;--line:#454A60;--accent:#B99AFA;--soft:#343048;--on-accent:#211638;--success:#8FE0B4;--success-soft:#233D32;--reward:#FFD496;--reward-soft:#473726}button:active{opacity:.85}@media(max-width:1100px){.board{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:600px){.board{grid-template-columns:minmax(0,1fr);padding:12px}.controls{padding:12px}.options{gap:10px}.large .content,.large .card{padding:16px}}@media(prefers-reduced-motion:reduce){*{scroll-behavior:auto}}
+</style></head><body>
+<header class="controls"><div><h1>BeatLab · 介面設計預覽</h1><p class="muted small">這是版面參考：示範結果，沒有音訊與真實計分。iOS 畫面待 Mac 驗收。</p></div><div class="options"><label><input id="dark" type="checkbox">暗色</label><label><input id="large" type="checkbox">大字</label><label><input id="board" type="checkbox">四頁總覽</label></div></header>
+<main id="app"></main><dialog id="lessons" aria-labelledby="lesson-title"><div class="stack"><div class="row spread"><h2 id="lesson-title">節奏挑戰</h2><button class="plain" data-action="close-dialog">完成</button></div><p class="muted">完成前一關，就能解鎖下一個挑戰。</p><div id="lesson-rows"></div></div></dialog>
+<script>
+const catalog={
+  "schemaVersion": 1,
+  "lessons": [
+    {
+      "id": "first-beat",
+      "title": "01 找到大拍",
+      "instruction": "跟著大拍，用右手點螢幕。",
+      "bpm": 60,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 1,
+        "steps": [
+          "R",
+          "R",
+          "R",
+          "R"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "quarter-hands",
+      "title": "02 左右輪流",
+      "instruction": "大拍交替右手、左手。",
+      "bpm": 65,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 1,
+        "steps": [
+          "R",
+          "L",
+          "R",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "eighth",
+      "title": "03 一拍兩下",
+      "instruction": "聽到 1 & 2 &，每個格子都打一聲。",
+      "bpm": 60,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "eighth-hands",
+      "title": "04 八分左右手",
+      "instruction": "右、左交替，一拍兩下。",
+      "bpm": 65,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "quarter-rest",
+      "title": "05 留白也是節奏",
+      "instruction": "看到 — 休息，手不要點。",
+      "bpm": 70,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 1,
+        "steps": [
+          "R",
+          "-",
+          "R",
+          "-"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "eighth-rest",
+      "title": "06 八分與休止",
+      "instruction": "跟著 R/L 點，空格保持安靜。",
+      "bpm": 70,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "R",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L",
+          "R",
+          "-"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "sixteenth",
+      "title": "07 一拍四格",
+      "instruction": "每個大拍分四下，先慢慢打。",
+      "bpm": 60,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 4,
+        "steps": [
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "sixteenth-hands",
+      "title": "08 十六分左右",
+      "instruction": "右左輪流，保持均勻。",
+      "bpm": 65,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 4,
+        "steps": [
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "offbeat",
+      "title": "09 反拍留白",
+      "instruction": "大拍也會休息，跟著格子走。",
+      "bpm": 75,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "-",
+          "R",
+          "-",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "mixed",
+      "title": "10 節奏小高手",
+      "instruction": "把左右手、十六分和休止放在一起。",
+      "bpm": 70,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 4,
+        "steps": [
+          "R",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L",
+          "R",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L",
+          "R",
+          "-",
+          "L",
+          "-"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    }
+  ]
+}
+;const palette={
+  "Canvas": {
+    "light": "#F7F5F0",
+    "dark": "#161827"
+  },
+  "Surface": {
+    "light": "#FFFFFF",
+    "dark": "#222638"
+  },
+  "Ink": {
+    "light": "#202438",
+    "dark": "#F4F3F8"
+  },
+  "MutedInk": {
+    "light": "#5B6073",
+    "dark": "#B8BDCD"
+  },
+  "Separator": {
+    "light": "#D8D5E4",
+    "dark": "#454A60"
+  },
+  "AccentColor": {
+    "light": "#6940C6",
+    "dark": "#B99AFA"
+  },
+  "AccentSoft": {
+    "light": "#EDE5FA",
+    "dark": "#343048"
+  },
+  "OnAccent": {
+    "light": "#FFFFFF",
+    "dark": "#211638"
+  },
+  "Success": {
+    "light": "#226746",
+    "dark": "#8FE0B4"
+  },
+  "SuccessSoft": {
+    "light": "#E2F2E8",
+    "dark": "#233D32"
+  },
+  "Reward": {
+    "light": "#8A4C0E",
+    "dark": "#FFD496"
+  },
+  "RewardSoft": {
+    "light": "#FFF0D8",
+    "dark": "#473726"
+  }
+}
+;let screen='home',tempo=80,playing=false;const app=document.querySelector('#app');const dialog=document.querySelector('#lessons');
+function icon(name){const paths={play:'<path d="m8 5 11 7-11 7Z"/>',stop:'<rect x="6" y="6" width="12" height="12" rx="2"/>',home:'<path d="m3 11 9-8 9 8M5 10v11h14V10M9 21v-8h6v8"/>',tempo:'<path d="m7 21 5-18 5 18ZM12 14l7-7M7 17h10"/>',tap:'<path d="M9 13V5a2 2 0 0 1 4 0v7l2-1 5 2-1 7H9l-5-7 2-2Z"/>',arrow:'<path d="M4 12h16m-6-6 6 6-6 6"/>',check:'<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',star:'<path d="m12 3 3 6 7 1-5 5 1 7-6-3-6 3 1-7-5-5 7-1Z"/>',list:'<path d="M8 5h13M8 12h13M8 19h13M3 5h1M3 12h1M3 19h1"/>'};return '<svg class="icon" aria-hidden="true" viewBox="0 0 24 24">'+(paths[name]||paths.tap)+'</svg>'}
+function button(text,action,primary=true,symbol='play'){return `<button class="button ${primary?'primary':'secondary'}" data-action="${action}">${icon(symbol)}${text}</button>`}
+function tabs(active){return `<nav class="tabs" aria-label="主要導覽">${[['home','首頁','home'],['metronome','節拍器','tempo'],['practice','練習','tap']].map(([key,label,symbol])=>`<button class="tab" data-screen="${key}" ${active===key?'aria-current="page"':''}>${icon(symbol)}${label}</button>`).join('')}</nav>`}
+function beats(){return `<div class="beats" aria-label="大拍示範，第二拍高亮">${[1,2,3,4].map(n=>`<div class="beat ${n===2?'active':''}">${n}</div>`).join('')}</div>`}
+function lane(pattern=['R','L','R','L'],active=-1){return `<div class="note-grid" aria-label="節奏格">${pattern.map((n,i)=>`<div><div class="note-label">${i+1}</div><div class="note ${i===active?'current':''}">${n==='-'?'—':n}</div></div>`).join('')}</div>`}
+function home(){const lesson=catalog.lessons[0];return `<div class="stack"><h2>今天，找到你的節奏</h2><p class="muted">一小段練習，從舒服的速度開始。</p></div><section class="card stack"><div class="row spread"><span class="accent semibold small">從第一拍開始</span>${icon('tap')}</div><h1>${lesson.title.slice(3)}</h1><p class="muted">${lesson.instruction}</p><div class="row"><span class="pill">${icon('tempo')}60 BPM</span><span class="pill">4 小節</span></div>${button('開始今天的練習','practice')}</section><section class="stack"><div class="row spread"><h3>我的節奏旅程</h3><span class="muted numbers small">0 / 10 關</span></div><div class="progress" role="progressbar" aria-label="課程進度" aria-valuenow="0" aria-valuemin="0" aria-valuemax="10"></div><p class="small muted">完成一關，就能解鎖下一個節奏。</p></section><section class="card stack"><h2>自由節拍器</h2><p class="muted small">先聽拍子，也可以跟著打。</p><h3 class="numbers">80 BPM · 4/4</h3><p class="small muted">四分音符 · 第一拍重音：開啟</p>${button('打開節拍器','metronome',false,'tempo')}</section>`}
+function metronome(){return `<section class="card stack center"><p class="muted small semibold">找到舒服的速度</p><div class="tempo-row"><strong class="tempo numbers" id="tempo-value">${tempo}</strong><span class="muted semibold">BPM</span></div><input class="range" aria-label="每分鐘拍數" id="tempo-slider" type="range" min="30" max="240" value="${tempo}"><div class="adjust">${[-5,-1,1,5].map(n=>`<button class="button secondary" data-delta="${n}" aria-label="${n>0?'增加':'減少'} ${Math.abs(n)} BPM">${n>0?'+':'−'}${Math.abs(n)}</button>`).join('')}</div>${button('跟著拍，設定速度','tap-tempo',false,'tap')}<p class="small muted" id="tap-status">連續點至少 3 下</p></section><section class="card stack"><h3>看著大拍，跟上節奏</h3>${beats()}<p class="small muted center">${playing?'播放狀態示範':'按下開始，聽聽看'}</p></section><section class="card stack"><details><summary>節奏設定 · 4/4</summary><div class="stack"><div class="field"><label for="meter">拍號</label><select id="meter"><option>4/4</option><option>3/4</option><option>2/4</option><option>6/8</option></select></div><div class="field"><label for="division">細分</label><select id="division"><option>四分音符</option><option>八分音符</option><option>十六分音符</option><option>三連音</option></select></div><label class="field">第一拍重音<input class="switch" type="checkbox" checked></label></div></details><div class="field"><label for="sound">數拍聲音</label><select id="sound"><option>節拍聲</option><option>數拍</option><option>兩種都要</option></select></div><label class="small semibold" for="volume">聲音大小</label><input id="volume" class="range" aria-label="節拍音量" type="range" min="0" max="100" value="70"></section>${button('試試跟拍小挑戰','practice',false,'arrow')}`}
+function practice(){return `<section class="card stack"><p class="accent small semibold">準備好了就出發</p><h1>找到大拍</h1><p class="muted">跟著大拍，用右手點螢幕。</p><span class="pill">60 BPM · 4 小節</span>${lane(['R','R','R','R'])}<div class="row small muted semibold"><span>R 右手</span><span>L 左手</span><span>— 休息</span></div><p class="small muted">先聽 4 拍。看到「換你了」，再點跟拍區。</p>${button('開始跟拍','session')}</section>${button('看看 10 個節奏挑戰','lessons',false,'list')}`}
+function session(){return `<h2>左右輪流</h2><p class="accent semibold">換你了，跟上節奏！</p><div class="progress" role="progressbar" aria-label="練習示範進度" aria-valuenow="35" aria-valuemin="0" aria-valuemax="100"><div class="progress-fill" style="width:35%"></div></div><section class="card stack">${beats()}${lane(['R','L','R','L'],1)}</section>`}
+function result(){return `<section class="card stack"><div class="row" style="color:var(--reward)">${icon('star')}<span class="small semibold">結果示範</span></div><h1>做到了！<br>節奏跟上了</h1><div class="stars" aria-label="示範三顆星">★★★</div><p class="muted">星星已保存。準備好，就試試下一個節奏。</p><div class="stats"><div class="stat"><strong class="numbers">16/16</strong><span class="small muted">跟上的拍</span></div><div class="stat"><strong class="numbers">100%</strong><span class="small muted">剛剛好</span></div></div>${button('挑戰下一關','practice',true,'arrow')}${button('再練一次','session',false,'tap')}</section>${button('回到課程列表','lessons',false,'list')}`}
+function bottom(key){if(key==='metronome')return `<div class="bottom">${button(playing?'停止節拍':'開始節拍','transport',true,playing?'stop':'play')}</div>`;if(key==='session')return `<div class="bottom"><button class="tap" data-action="tap" aria-label="跟拍區">${icon('check')}<strong id="feedback">剛剛好！</strong><span class="small muted">跟著格子，點這裡</span></button>${button('停止練習','practice',false,'stop')}<p class="caption muted center">停止後，這次不計成績。</p><button class="plain" data-action="result">查看結果示範</button></div>`;return ''}
+function shell(key){const title={home:'BeatLab',metronome:'節拍器',practice:'練習',session:'練習',result:'練習'}[key];const body={home,metronome,practice,session,result}[key]();return `<div class="shell"><div class="top">${title}</div><div class="content">${body}</div>${bottom(key)}${tabs(['session','result'].includes(key)?'practice':key)}</div>`}
+function render(){const board=document.querySelector('#board').checked;app.innerHTML=board?`<div class="board">${[['home','首頁'],['metronome','節拍器'],['session','練習中 · 示範'],['result','結果 · 示範成績']].map(([key,label])=>`<div><div class="board-label">${label}</div>${shell(key)}</div>`).join('')}</div>`:shell(screen)}
+function navigate(key){screen=key;render();window.scrollTo(0,0)}
+app.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.screen){navigate(b.dataset.screen);return}if(b.dataset.delta){tempo=Math.max(30,Math.min(240,tempo+Number(b.dataset.delta)));render();return}const a=b.dataset.action;if(['home','metronome','practice','session','result'].includes(a)){navigate(a);return}if(a==='transport'){playing=!playing;render()}if(a==='tap'){document.querySelector('#feedback').textContent='剛剛好！'}if(a==='tap-tempo'){document.querySelector('#tap-status').textContent='預覽不計算 Tap Tempo；App 使用 audio host clock。'}if(a==='lessons'){document.querySelector('#lesson-rows').innerHTML=catalog.lessons.map((l,i)=>`<button class="lesson-row" data-lesson="${i}" ${i?'disabled':''}><span class="lesson-number">${i?icon('stop'):'01'}</span><span><strong>${l.title.slice(3)}</strong><br><span class="muted small">${i?`完成第 ${i} 關後解鎖`:`${l.bpm} BPM · 準備開始`}</span></span></button>`).join('');dialog.showModal()}});
+app.addEventListener('input',e=>{if(e.target.id==='tempo-slider'){tempo=Number(e.target.value);document.querySelector('#tempo-value').textContent=tempo}});
+dialog.addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;if(b.dataset.action==='close-dialog')dialog.close();if(b.dataset.lesson==='0'){dialog.close();navigate('practice')}});
+['dark','large','board'].forEach(id=>document.querySelector('#'+id).addEventListener('change',e=>{if(id==='board')render();else document.body.classList.toggle(id,e.target.checked)}));
+const params=new URLSearchParams(location.search);for(const id of ['dark','large','board'])if(params.has(id)){document.querySelector('#'+id).checked=true;document.body.classList.toggle(id,id!=='board')}screen=params.get('screen')||'home';if(!['home','metronome','practice','session','result'].includes(screen))screen='home';render();
+</script></body></html>

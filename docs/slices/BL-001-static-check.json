@@ -1,0 +1,27 @@
+{
+  "scope": "BL-001 source/structure only; no compiler or runtime assertions",
+  "swift_files_parsed": 17,
+  "syntax_failures": [],
+  "xcode_project_objects": 65,
+  "xcode_targets": [
+    "BeatLab",
+    "BeatLabTests",
+    "BeatLabUITests"
+  ],
+  "local_core_package_reference": "PASS",
+  "scheme_target_references": "PASS",
+  "privacy_and_assets_parse": "PASS",
+  "audio_scope_exclusion": "PASS",
+  "unit_tests": "NOT RUN: Swift compiler unavailable",
+  "iOS_build_and_UI_tests": "NOT RUN: Xcode unavailable",
+  "parsers": {
+    "openstep-parser": "2.0.3",
+    "tree-sitter": "0.26.0",
+    "tree-sitter-swift": "0.7.4"
+  },
+  "tests_defined_not_executed": {
+    "Tests/BeatLabCoreTests": 19,
+    "BeatLabTests": 5,
+    "BeatLabUITests": 2
+  }
+}

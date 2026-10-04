@@ -1,0 +1,188 @@
+{
+  "scope": "Measured token pairs; not native rendered sampling or WCAG conformance",
+  "result": "PASS",
+  "pairs": [
+    {
+      "mode": "light",
+      "foreground": "Ink",
+      "background": "Canvas",
+      "ratio": 14.0597,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "Ink",
+      "background": "Surface",
+      "ratio": 15.3187,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "Ink",
+      "background": "AccentSoft",
+      "ratio": 12.5388,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "MutedInk",
+      "background": "Canvas",
+      "ratio": 5.7269,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "MutedInk",
+      "background": "Surface",
+      "ratio": 6.2397,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "MutedInk",
+      "background": "AccentSoft",
+      "ratio": 5.1074,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "AccentColor",
+      "background": "Canvas",
+      "ratio": 6.1198,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "AccentColor",
+      "background": "Surface",
+      "ratio": 6.6678,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "AccentColor",
+      "background": "AccentSoft",
+      "ratio": 5.4578,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "OnAccent",
+      "background": "AccentColor",
+      "ratio": 6.6678,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "Success",
+      "background": "SuccessSoft",
+      "ratio": 5.8452,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "Reward",
+      "background": "Surface",
+      "ratio": 6.7291,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "light",
+      "foreground": "Reward",
+      "background": "RewardSoft",
+      "ratio": 5.9945,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "Ink",
+      "background": "Canvas",
+      "ratio": 15.9307,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "Ink",
+      "background": "Surface",
+      "ratio": 13.5644,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "Ink",
+      "background": "AccentSoft",
+      "ratio": 11.4429,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "MutedInk",
+      "background": "Canvas",
+      "ratio": 9.3786,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "MutedInk",
+      "background": "Surface",
+      "ratio": 7.9855,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "MutedInk",
+      "background": "AccentSoft",
+      "ratio": 6.7366,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "AccentColor",
+      "background": "Canvas",
+      "ratio": 7.5922,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "AccentColor",
+      "background": "Surface",
+      "ratio": 6.4644,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "AccentColor",
+      "background": "AccentSoft",
+      "ratio": 5.4534,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "OnAccent",
+      "background": "AccentColor",
+      "ratio": 7.3314,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "Success",
+      "background": "SuccessSoft",
+      "ratio": 7.5569,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "Reward",
+      "background": "Surface",
+      "ratio": 10.7745,
+      "normal_text_4_5": true
+    },
+    {
+      "mode": "dark",
+      "foreground": "Reward",
+      "background": "RewardSoft",
+      "ratio": 8.2012,
+      "normal_text_4_5": true
+    }
+  ]
+}

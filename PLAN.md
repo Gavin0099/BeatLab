@@ -6,23 +6,23 @@
 
 ## Current Phase
 
-Planning / Governance baseline READY；App implementation NOT STARTED（G0 凍結時）。Runtime 自動化未完成為非阻塞 KNOWN DEBT。
+Planning / Governance baseline READY；G0 已凍結於 d872bad（純治理）。S0～S17 全 MVP 原始碼已建立，狀態 IN_PROGRESS（實作完成、Apple／真機／使用者驗收待跑）。Runtime 自動化未完成為非阻塞 KNOWN DEBT。
 產品目標：節拍準、孩子看得懂、練習有成就感。先驗證時間軸，再做互動與課程。
 
 ## Active Sprint
 
-本次授權：先提交 G0 純治理 baseline，再實作 BL-001；不進入 BL-002。主線：G0 → BL-001 → BL-002 → BL-002A → BL-003 → BL-004 → BL-005 → BL-006 → Device Timing Gate → GO / FIX / STOP。
-BL-006 後停在 G1 真機 gate；沒有 PASS 證據不開始 BL-007。
+本次授權：G0 已提交；owner 明確選擇「完成整個 iOS MVP S0～S17，再統一到 Mac 驗收」，因此允許跨 M1～M4 實作；不代表接受 device gates。主線：G0 → BL-001 → BL-002 → BL-002A → BL-003 → BL-004 → BL-005 → BL-006 → Device Timing Gate → GO / FIX / STOP。
+依 owner 最新指示，先完成所有來源實作，再按 BL-002A／G1→G2→G3→G4 順序驗收；缺 PASS 不標 VERIFIED／DONE、不發行。
 
 | PR Slice | 原始 Slice | 範圍與依賴 | 完成標準／證據 | 風險 | 狀態 |
 |---|---|---|---|---|---|
-| BL-001 Project Foundation | S0 | BeatLabApp、Home／Metronome／Practice；Tempo／TimeSignature／Subdivision／MetronomeConfiguration；四項設定保存；不做 audio scheduling | launch／三頁導航；configuration 單一權威；tempo／拍號／細分／accent 重啟保存；domain boundaries tests；build + tests PASS；無 audio engine | L1 | TODO |
-| BL-002 Metronome Audio Engine | S1 | 依 BL-001；BPM 30–240、Start/Stop、sample/host timeline、click scheduling | 30/60/120/240 scheduler 測試；啟停無殘留 click；時間不累加浮點誤差；真機 baseline；中斷／route change 安全停止並需重新 Start | L2 | TODO |
-| BL-002A Engineering Timing Sanity | S1 engineering evidence | BL-002 後、BL-003 前；60／120／180 BPM 各 5 分鐘；中斷與復原 | interval distribution／max deviation／cumulative drift／recovery 原始資料；GO／FIX／STOP；不是產品 SLA | L2 | TODO |
-| BL-003 Beat Visualizer | S2 | 依 BL-002A GO；4/4 大拍點、高亮、Reduce Motion | UI 讀 engine beat/time snapshot；不另起節拍 clock；音畫同步量測保留原始資料 | L1 | TODO |
-| BL-004 Controls + Tap Tempo | S3 | 依 BL-003；slider、±1/±5、tap tempo、音量 | clamp 30–240；顯示 pending BPM；下一個未承諾拍生效；异常 tap/reset 測試；手動改 BPM 清 tap history；音量只影響 gain | L1 | TODO |
-| BL-005 Time Signature + Accent | S4 | 依 BL-004；2/4、3/4、4/4、6/8、首拍 accent | 下一小節原子生效；舊小節完成；新小節首拍只有一次；6/8 定義見 Decision Log | L2 | TODO |
-| BL-006 Subdivision Engine | S5 | 依 BL-005；Quarter、8th、16th、Triplet | 同 transport 分拍；下一拍生效；快速切換無漏／重拍；6/8 不適用選項不可選；進 G1 | L2 | TODO |
+| BL-001 Project Foundation | S0 | BeatLabApp、Home／Metronome／Practice；Tempo／TimeSignature／Subdivision／MetronomeConfiguration；四項設定保存；不做 audio scheduling | launch／三頁導航；configuration 單一權威；tempo／拍號／細分／accent 重啟保存；domain boundaries tests；build + tests PASS；無 audio engine | L1 | IN_PROGRESS |
+| BL-002 Metronome Audio Engine | S1 | 依 BL-001；BPM 30–240、Start/Stop、sample/host timeline、click scheduling | 30/60/120/240 scheduler 測試；啟停無殘留 click；時間不累加浮點誤差；真機 baseline；中斷／route change 安全停止並需重新 Start | L2 | IN_PROGRESS |
+| BL-002A Engineering Timing Sanity | S1 engineering evidence | BL-002 後、BL-003 前；60／120／180 BPM 各 5 分鐘；中斷與復原 | interval distribution／max deviation／cumulative drift／recovery 原始資料；GO／FIX／STOP；不是產品 SLA | L2 | IN_PROGRESS |
+| BL-003 Beat Visualizer | S2 | 依 BL-002A GO；4/4 大拍點、高亮、Reduce Motion | UI 讀 engine beat/time snapshot；不另起節拍 clock；音畫同步量測保留原始資料 | L1 | IN_PROGRESS |
+| BL-004 Controls + Tap Tempo | S3 | 依 BL-003；slider、±1/±5、tap tempo、音量 | clamp 30–240；顯示 pending BPM；下一個未承諾拍生效；异常 tap/reset 測試；手動改 BPM 清 tap history；音量只影響 gain | L1 | IN_PROGRESS |
+| BL-005 Time Signature + Accent | S4 | 依 BL-004；2/4、3/4、4/4、6/8、首拍 accent | 下一小節原子生效；舊小節完成；新小節首拍只有一次；6/8 定義見 Decision Log | L2 | IN_PROGRESS |
+| BL-006 Subdivision Engine | S5 | 依 BL-005；Quarter、8th、16th、Triplet | 同 transport 分拍；下一拍生效；快速切換無漏／重拍；6/8 不適用選項不可選；進 G1 | L2 | IN_PROGRESS |
 
 每個 slice 開始前定義 allowed/forbidden files、行為、failure paths、驗證、rollback。
 TODO → IN_PROGRESS → VERIFIED → DONE；缺陷標 BLOCKED。實作與測試才可 VERIFIED；必要 review／交付完成才可 DONE。
@@ -49,7 +49,7 @@ PR、merge、push 依使用者授權；roadmap PR 名稱本身不代表發送授
 | M4 差異化 | BL-017 / S16 | Beginner / Standard UI | Beginner 隱藏 ms；手動選模式、不蒐集生日；tap／score model 不分叉 |
 | M4 差異化 | BL-018 / S17 | Polish、latency、background、VoiceOver、真機、TestFlight | G4 裝置矩陣 PASS；非第一次處理 interruption／accessibility |
 
-M2～M4 為 backlog，前一 gate 未過不開始。內容與裝置矩陣在對應 slice 細化。
+M2～M4 原 backlog 已依 owner 最新授權實作；所有 Apple 與真人驗收仍 NOT RUN。內容與裝置矩陣見 docs/slices/MVP-implementation.md 與 docs/mac-acceptance.md。
 
 ### 第一版排除
 
@@ -78,4 +78,32 @@ M2～M4 為 backlog，前一 gate 未過不開始。內容與裝置矩陣在對�
 - 孩子理解／好玩／replay 意願需 playtest；技術 gate 不等於產品驗證。
 - 治理為 submodule consumer 初次導入；hooks、CI、平台 lifecycle、validator 分別記錄，檔案存在不代表 enforcement。
 
-- G0：runtime smoke、hooks、領域 validator、memory 自動接線為已接受的非阻塞 KNOWN DEBT；不阻塞 BL-001。BL-002A 是第一輪工程量測，BL-006 是正式固定裝置 gate。
+- G0：runtime smoke、hooks、領域 validator、memory 自動接線為已接受的非阻塞 KNOWN DEBT；不阻塞 BL-001。BL-002A 是第一輪工程量測，BL-006 是正式固定裝置 gate；本次 owner 將兩者延至整批實作後，沒有視為通過。
+
+- D09：G0 凍結採初始化 a74c8cc → 官方 refresh 記錄該來源 → 凍結 d872bad；freeze checkpoint 工作樹乾淨。BL-001 在 codex/bl-001-app-foundation 實作，iOS 16.0／Swift 5 language mode／SwiftPM tools 5.9，單一 main-actor store 與本機 versioned settings。
+
+
+- D10：owner 2026-10-04 明確授權 S0～S17 整批來源實作後再到 Mac 驗收，覆蓋舊 implementation stop；device／child／release acceptance 保留。後續 owner 已授權 App commit／GitHub branch push；PR／merge／TestFlight 未執行。
+- D11：C11 sample renderer + AVAudioSourceNode；pre-render speech、原子控制／history；Gap 只 mute，Ladder 下一小節 +5；詳 docs/adr/0002-audio-and-practice-timeline.md。
+- D12：共用 versioned rhythm JSON → lane／targets；UIKit touch-down 映射 audio host time；最近 target、tie earlier、已命中最近 target 的重複 tap 為 extra。±50 ms Perfect／180 ms 配對窗。過關包含 miss／extra。
+- D13：對齊為 user alignment estimate，含人為偏差、route/rate 綁定；未校正／Bluetooth／VoiceOver input 不顯示 calibrated ms；独立 latency／child playtest 待 G2。
+
+### Implementation batch evidence
+
+| 範圍 | 原始碼 | 尚待驗收 |
+|---|---|---|
+| S0～S5 / M1 | shell／保存、C render、拍點、Tap Tempo、拍號／accent／細分 | Swift compile/tests、BL-002A、G1 |
+| S6～S9 / M2 | Apple speech PCM、lane、touch-down taps、grading／summary／alignment | Voice 清楚度／onset、input latency、G2、child playtest |
+| S10～S12 / M3 | versioned JSON、10 lessons、星星／解鎖／best BPM／保存 | 真人 walkthrough／relaunch、G3 |
+| S13～S17 / M4 | Gap、Ladder、daily／continue、Beginner／Standard、lifecycle／accessibility／icon／測試腳本 | 真機／VoiceOver／Dynamic Type／最低 OS、G4；未上傳 TestFlight |
+
+Windows 實際 C renderer：156 組（44.1／48 kHz × 30/60/120/137/180/240 × 全支援 meter/subdivision），每組 15 分鐘、總計模擬 39 小時；無漏／重 onset、最大理想位置誤差 0.5 sample。live boundary／restart／silence／Gap／Ladder／voice fixture 與 undefined-behavior sanitizer PASS。這是離線 samples，不是喇叭或 UI 真機 evidence。
+35 Swift files source syntax／89-object Xcode membership checks PASS；58 Swift test definitions 尚未執行。Python capture-analysis regression 3 tests PASS；source checks 不等於 Swift compiler。
+Canonical evidence：docs/slices/MVP-source-check.json、MVP-dsp-tests.json、MVP-local-verification.json；Mac：docs/mac-acceptance.md。
+
+
+### UIUX-01
+
+Owner 另授權先完成 UI/UX。已套用 native shared styles/light-dark assets、Home 今日入口、metronome 固定 transport／progressive settings、Practice 準備／進行／結果／課程 sheet、Tap Pad 固定／大字 reflow、鎖定原因、unsaved progress retry／explicit discard。
+風險 L1：presentation state/retry 保留 repository authority；不改 DSP／targets／scoring／framework pin。slice：docs/slices/UIUX-01.md。
+37 Swift files／93 project objects／61 Swift test definitions，compile/tests NOT RUN；HTML reference 33 layouts 與 26 measured palette pairs PASS。原始 MVP DSP evidence 仍有效。Status IN_PROGRESS：UI source 完成，native rendering／accessibility／child acceptance 待 Mac。

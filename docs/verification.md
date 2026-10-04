@@ -18,7 +18,7 @@ Swift package tests 僅證明 domain／storage，不可代替 simulator App laun
 ## BL-002A — Engineering Timing Sanity Check
 
 BL-002 後、BL-003 前，60／120／180 BPM 各連續 5 分鐘。保存原始 timestamps／capture、裝置／OS／route／build／sample rate／方法。報告 interval distribution、max deviation、cumulative drift、interruption recovery。
-這是工程 evidence，不是產品 SLA：review 後判 GO（架構值得繼續）、FIX（先修 scheduler）、STOP（方法／架構不足）。沒有粗量測證據不進 BL-003；正式產品數字仍由 BL-006 的 G1 驗收。
+這是工程 evidence，不是產品 SLA：review 後判 GO（架構值得繼續）、FIX（先修 scheduler）、STOP（方法／架構不足）。原規則為沒有粗量測證據不進 BL-003；2026-10-04 owner 明確授權整批 S0～S17 先實作、後 Mac 驗收，此 implementation gate 已調整，BL-002A acceptance 仍 NOT RUN；正式產品數字仍由 BL-006 的 G1 驗收。
 
 ## G1 — BL-006 後，進互動前
 
@@ -35,7 +35,7 @@ BL-002 先建立量測工具，G1 不只看 callback log。
 
 數字為初始產品預算，未經真機驗證。capture 自身 clock drift／noise／resolution 必須記錄；未校驗儀器不能宣稱 engine 精準度。
 全列 PASS 才通過；單一長跑不取代矩陣。保留原始 capture／timestamps／分析方式／結果／簽核。
-使用者或指定 reviewer 接受實測才開 M2。engine／timing contract 改動重跑受影響項。
+使用者或指定 reviewer 接受實測才驗收 M2；本次 owner 另授權在驗收前完成 M2～M4 原始碼，不等於 gate PASS。engine／timing contract 改動重跑受影響項。
 
 ## G2 — BL-010 互動驗證
 
@@ -58,3 +58,6 @@ BL-001 固定 OS；release 至少測最低支援 OS／目前支援 OS 真機、�
 audio matrix、Gap 回拍、Ladder／手動、語音、長時間／lifecycle、保存、10 關／daily practice、Dynamic Type／Reduce Motion／VoiceOver／contrast／觸控、crash、素材授權。
 background playback 納入就驗證 route／lock screen／interruption，否則安全停止。
 逐列 PASS／FAIL／NOT RUN，不自動勾選。TestFlight 上傳另需使用者授權／Apple provisioning 環境。
+
+
+目前完整來源驗收入口：docs/mac-acceptance.md。S17 來源含安全 background stop、VoiceOver controls、Reduce Motion、Dynamic Type 配置與 release checklist；Apple rendering／device checklist 尚未執行。

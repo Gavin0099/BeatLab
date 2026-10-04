@@ -10,6 +10,10 @@ DerivedData/
 __pycache__/
 *.pyc
 .pytest_cache/
+.build/
+.swiftpm/
+TestResults/
+artifacts/development/
 
 # >>> ai-governance hygiene (managed by adopt_governance.py; do not edit inside markers) >>>
 # Runtime governance artifacts and Python bytecode are regenerated every

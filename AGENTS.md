@@ -430,11 +430,11 @@ Source of truth: PLAN.md and docs/verification.md. Read AGENTS.base.md first.
 - Must-test: scheduler phase/precision, queued buffer transitions, repeated start/stop, interruption/route change; matching ties/misses/extra/rests; persistence corruption/restart. L2 needs failure cases and applicable real-device evidence.
 - Escalate L1 to L2 on timing authority changes, audio/UI/input clock boundaries, scoring claims, or data migrations.
 - No UI Timer for sound scheduling; no animation-derived targets; no fabricated ms precision; silence never resets internal transport.
-- BL-006 stops at G1. Do not implement M2 until the physical-device gate is accepted. S0-S17 backlog is not blanket implementation authorization.
+- Latest owner direction (2026-10-04) explicitly authorizes S0-S17 source implementation as one batch before Mac tests. G1/G2/G3/G4 remain unaccepted; do not claim VERIFIED/DONE/release readiness without applicable evidence. Future backlog remains outside this authorization.
 - Scope excludes microphone drum detection, MIDI, accounts/cloud, social/ranking, AI Coach, notation editor. Do not add permissions or services for excluded features.
 - macOS/Xcode/iPhone checks unavailable here must be NOT RUN. Governance checks do not prove iOS build, timing, child usability or release readiness.
 - Each slice defines exact allowed/forbidden files, dependencies, failure paths, checks and rollback before edits; update PLAN when its status changes.
 - Initial adoption is a submodule consumer with static guidance. Do not claim installed hooks, CI enforcement, lifecycle closeout or domain validators without observed evidence.
-- G0 baseline commits and BL-001 implementation are now explicitly authorized. Push/PR/merge/TestFlight upload are not authorized by this request. Preserve pinned framework and protected AGENTS.base.md; use governed updater for later framework updates.
+- G0 baseline commits were authorized and completed; full S0-S17 source implementation is now explicitly authorized. Owner direction (2026-10-04) now explicitly authorizes App commit and GitHub branch push. PR/merge/TestFlight upload remain unauthorized. Preserve pinned framework and protected AGENTS.base.md; use governed updater for later framework updates.
 
-- Planning / Governance baseline is READY for BL-001. Incomplete runtime automation is accepted non-blocking debt; it does not relax App build/test gates. BL-002A timing sanity precedes BL-003.
+- Planning / Governance baseline is READY for BL-001. Incomplete runtime automation is accepted non-blocking debt; it does not relax App build/test gates. BL-002A timing sanity precedes acceptance of the upper layers; owner has deferred Mac/device acceptance until the full source batch is ready.

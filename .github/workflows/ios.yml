@@ -1,0 +1,56 @@
+name: iOS MVP
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main, 'codex/**']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  mvp:
+    runs-on: macos-15
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - name: Record Apple toolchain
+        run: |
+          xcodebuild -version
+          swift --version
+          xcrun simctl list devices available
+      - name: Domain, rhythm, scoring and persistence tests
+        run: swift test
+      - name: Actual C renderer long matrix and capture analysis tests
+        run: |
+          mkdir -p TestResults
+          xcrun clang -std=c11 -Wall -Wextra -Werror -O2 \
+            -I Sources/BeatLabDSP/include Sources/BeatLabDSP/BeatLabDSP.c \
+            Tests/DSPKernelTests/main.c -o TestResults/dsp-tests
+          TestResults/dsp-tests > TestResults/dsp-tests.json
+          python3 -m unittest discover -s Tests/TimingCaptureTests -v
+      - name: Select an available iPhone simulator
+        run: |
+          DEVICE_ID=$(xcrun simctl list devices available -j | python3 -c 'import sys,json; devices=json.load(sys.stdin)["devices"]; phones=[d for runtime,items in devices.items() if "iOS" in runtime for d in items if d.get("isAvailable") and d["name"].startswith("iPhone")]; assert phones, "No available iPhone simulator"; print(phones[0]["udid"])')
+          echo "BEATLAB_SIMULATOR_ID=$DEVICE_ID" >> "$GITHUB_ENV"
+      - name: Build iOS MVP
+        run: |
+          xcodebuild build -project BeatLab.xcodeproj -scheme BeatLab \
+            -destination "platform=iOS Simulator,id=$BEATLAB_SIMULATOR_ID" \
+            CODE_SIGNING_ALLOWED=NO
+      - name: Store, audio, practice, launch and relaunch tests
+        run: |
+          mkdir -p TestResults
+          xcodebuild test -project BeatLab.xcodeproj -scheme BeatLab \
+            -destination "platform=iOS Simulator,id=$BEATLAB_SIMULATOR_ID" \
+            -parallel-testing-enabled NO \
+            -resultBundlePath TestResults/MVP.xcresult \
+            CODE_SIGNING_ALLOWED=NO
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: mvp-xcresult
+          path: TestResults/
+          if-no-files-found: ignore

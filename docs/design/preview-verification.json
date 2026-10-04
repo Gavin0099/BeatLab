@@ -1,0 +1,288 @@
+{
+  "scope": "HTML design-reference prototype only; NOT SwiftUI / iOS acceptance",
+  "result": "PASS",
+  "browser": "Chrome/152.0.7977.84",
+  "browser_executable": "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+  "browser_sha256": "07713e9e085f8346245e2989a5f38f2cbb30e5298a96c44a00b88f3c0c496509",
+  "cases": [
+    {
+      "screen": "home",
+      "width": 320,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 320,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "practice",
+      "width": 320,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "session",
+      "width": 320,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "result",
+      "width": 320,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "practice",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "session",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "result",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 768,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 768,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "practice",
+      "width": 768,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "session",
+      "width": 768,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "result",
+      "width": 768,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 390,
+      "height": 844,
+      "flags": "&dark",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 390,
+      "height": 844,
+      "flags": "&dark",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "practice",
+      "width": 390,
+      "height": 844,
+      "flags": "&dark",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "session",
+      "width": 390,
+      "height": 844,
+      "flags": "&dark",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "result",
+      "width": 390,
+      "height": 844,
+      "flags": "&dark",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 320,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 320,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "practice",
+      "width": 320,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "session",
+      "width": 320,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "result",
+      "width": 320,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 390,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 390,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "practice",
+      "width": 390,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "session",
+      "width": 390,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "result",
+      "width": 390,
+      "height": 844,
+      "flags": "&large",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 1500,
+      "height": 1220,
+      "flags": "&board",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "home",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    },
+    {
+      "screen": "metronome",
+      "width": 390,
+      "height": 844,
+      "flags": "",
+      "horizontal_overflow": false,
+      "interactive_height_44": "PASS"
+    }
+  ],
+  "interaction_checks": [
+    "home to lesson",
+    "course modal / nine locked lessons",
+    "Escape dismissal",
+    "lesson to tap pad",
+    "results reference",
+    "tempo adjustment",
+    "start/stop reference",
+    "reduced motion media",
+    "keyboard focus"
+  ],
+  "javascript_errors": [],
+  "native_build": "NOT RUN",
+  "native_rendering": "NOT RUN",
+  "native_voiceover": "NOT RUN"
+}

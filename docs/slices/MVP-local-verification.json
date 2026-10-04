@@ -1,0 +1,84 @@
+{
+  "date": "2026-10-04",
+  "host": "Windows / PowerShell",
+  "product_changes": "uncommitted",
+  "g0": "d872bad",
+  "framework_pin": "15722daadca7f7f28eb00250170b34844caf600b",
+  "c_compiler": {
+    "name": "Zig cc",
+    "version": "0.13.0",
+    "executable": "artifacts/development/compiler/ziglang/zig.exe",
+    "sha256": "2e44af5bbf7a72ef8cbdae370284687c95d65a19affa469d2ad0364d905b8e84",
+    "origin": "official PyPI ziglang win_amd64 wheel; published wheel SHA256 verified before extraction",
+    "trust_boundary": "Ambient Windows trust only; no executable security boundary claimed"
+  },
+  "c_compile": {
+    "command": "zig cc -std=c11 -Wall -Wextra -Werror -O2 -I Sources/BeatLabDSP/include Sources/BeatLabDSP/BeatLabDSP.c Tests/DSPKernelTests/main.c -o artifacts/development/dsp-tests.exe",
+    "exit_code": 0
+  },
+  "c_long_matrix": {
+    "result": "PASS",
+    "exit_code": 0,
+    "runs": 156,
+    "seconds_each": 900,
+    "simulated_hours": 39,
+    "max_error_samples": 0.5,
+    "evidence": "MVP-dsp-tests.json",
+    "kernel_sha256": "a4fda6608a22a36fabfe9a09a85b1883088558ae7dc8067a8f6be549410b7bd5",
+    "header_sha256": "3ef154ad711f056621ae8c8dd66b4047a55b7600b509764b93360291d5d0468b",
+    "harness_sha256": "06fa1a15bbd236f7a0e15fa814027dbd33637afb252b048cb9136f964c0eb7f5"
+  },
+  "undefined_behavior_sanitizer": {
+    "result": "PASS",
+    "exit_code": 0,
+    "scope": "boundary/restart/silence/gap/ladder/preloaded voice fixtures only",
+    "flags": "-O1 -fsanitize=undefined -fno-sanitize-recover=all",
+    "evidence": "MVP-ubsan-tests.json"
+  },
+  "capture_analysis_tests": {
+    "result": "PASS",
+    "exit_code": 0,
+    "count": 3,
+    "command": "python -m unittest discover -s Tests/TimingCaptureTests -v",
+    "scope": "known offset/jitter, drift, invalid pairing and insufficient resolution"
+  },
+  "source": {
+    "result": "PASS",
+    "swift_files": 35,
+    "test_definitions": 58,
+    "evidence": "MVP-source-check-before-uiux.json",
+    "claim_boundary": "No Swift typechecking or test execution"
+  },
+  "governance": {
+    "drift": "PASS",
+    "static_checks": 18,
+    "protected_baseline": "UNCHANGED",
+    "framework_pin": "UNCHANGED",
+    "memory_guard": "RAN; zero current-diff blockers",
+    "debt": [
+      "canonical writer routing NOT FOUND",
+      "missing canonical memory warning",
+      "runtime/hooks/domain enforcement not established"
+    ],
+    "claim_boundary": "Curated milestone documents updated; no canonical session closeout claimed"
+  },
+  "not_run": [
+    "Swift compiler and 58 Swift tests",
+    "iOS simulator build and UI tests",
+    "BL-002A physical sanity",
+    "G1 audio/visual device acceptance",
+    "G2 independent latency and child playtest",
+    "G3 human ten-lesson walkthrough",
+    "G4 device/OS/accessibility/release checklist",
+    "CI",
+    "TestFlight"
+  ],
+  "delivery": {
+    "app_commit": "NOT CREATED",
+    "push": "NOT RUN",
+    "pr": "NOT CREATED",
+    "merge": "NOT RUN",
+    "testflight": "NOT RUN"
+  },
+  "scope": "MVP checkpoint before UIUX-01; DSP evidence remains applicable"
+}

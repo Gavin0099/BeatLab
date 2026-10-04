@@ -1,0 +1,247 @@
+{
+  "schemaVersion": 1,
+  "lessons": [
+    {
+      "id": "first-beat",
+      "title": "01 找到大拍",
+      "instruction": "跟著大拍，用右手點螢幕。",
+      "bpm": 60,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 1,
+        "steps": [
+          "R",
+          "R",
+          "R",
+          "R"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "quarter-hands",
+      "title": "02 左右輪流",
+      "instruction": "大拍交替右手、左手。",
+      "bpm": 65,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 1,
+        "steps": [
+          "R",
+          "L",
+          "R",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "eighth",
+      "title": "03 一拍兩下",
+      "instruction": "聽到 1 & 2 &，每個格子都打一聲。",
+      "bpm": 60,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "eighth-hands",
+      "title": "04 八分左右手",
+      "instruction": "右、左交替，一拍兩下。",
+      "bpm": 65,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "quarter-rest",
+      "title": "05 留白也是節奏",
+      "instruction": "看到 — 休息，手不要點。",
+      "bpm": 70,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 1,
+        "steps": [
+          "R",
+          "-",
+          "R",
+          "-"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "eighth-rest",
+      "title": "06 八分與休止",
+      "instruction": "跟著 R/L 點，空格保持安靜。",
+      "bpm": 70,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "R",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L",
+          "R",
+          "-"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "sixteenth",
+      "title": "07 一拍四格",
+      "instruction": "每個大拍分四下，先慢慢打。",
+      "bpm": 60,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 4,
+        "steps": [
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R",
+          "R"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "sixteenth-hands",
+      "title": "08 十六分左右",
+      "instruction": "右左輪流，保持均勻。",
+      "bpm": 65,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 4,
+        "steps": [
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L",
+          "R",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "offbeat",
+      "title": "09 反拍留白",
+      "instruction": "大拍也會休息，跟著格子走。",
+      "bpm": 75,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 2,
+        "steps": [
+          "-",
+          "R",
+          "-",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    },
+    {
+      "id": "mixed",
+      "title": "10 節奏小高手",
+      "instruction": "把左右手、十六分和休止放在一起。",
+      "bpm": 70,
+      "bars": 4,
+      "pattern": {
+        "stepsPerBeat": 4,
+        "steps": [
+          "R",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L",
+          "R",
+          "L",
+          "-",
+          "R",
+          "-",
+          "L",
+          "R",
+          "-",
+          "L",
+          "-"
+        ]
+      },
+      "requiredHitRate": 0.85,
+      "requiredPerfectRate": 0.55,
+      "maxExtraRate": 0.1
+    }
+  ]
+}

@@ -1,0 +1,801 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+		54AA34C71344DDCA02498FDF = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/App/BeatLabApp.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		3B24DCDDAAA745BF0BD22165 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/App/ConfigurationStore.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		37548BB6C55A36A94CA3CF1E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/App/PracticeStore.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		8BB67E09F46787EE1B944709 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Audio/CountVoice.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		E6A5E4844E77BE675190C159 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Audio/MetronomeAudio.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		0AFC6797B4AC886B93F501A7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Design/BeatLabStyle.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		F8AC14CAEA49A11404C24D65 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/BeatVisualizer.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		A5190032C89E87A80A82CB17 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/ConfigurationSummary.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		5149120AAC991E8E2848ADB1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/HomeView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		AFAA7180CFD6ACDD985FF4B6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/MetronomeView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		FA660BEABE868E71DDEDF52B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/PracticeView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		3A5BB64A2112BA697731EA63 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/RhythmLane.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		F5C574910BA46349A511B488 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/RootView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		051999634EB9004F9A33783E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/TapPad.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		EF7241289A7CAD8096419F02 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabTests/ConfigurationStoreTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		E35ED123BA6D0800BAA868A5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabTests/MetronomeAudioTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		D0840374FAC37A8DA203B37F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabTests/PracticeStoreTests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		7C8BC8C750D6AF10C3EA900A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabUITests/FoundationUITests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		1541C493DCFD22E4A0145998 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabUITests/InterfaceUITests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		BA2229EE5A48ABF7DC33F9C7 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabUITests/MetronomeUITests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		91FEAA003673B1D5E51F65E5 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLabUITests/PracticeUITests.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		977AAE2D4C00BFD1DE907B8A = {
+			isa = PBXFileReference;
+			lastKnownFileType = folder.assetcatalog;
+			path = BeatLab/Resources/Assets.xcassets;
+			sourceTree = SOURCE_ROOT;
+		};
+		DD6F9401629D9291B0612C15 = {
+			isa = PBXFileReference;
+			lastKnownFileType = text.xml;
+			path = BeatLab/Resources/PrivacyInfo.xcprivacy;
+			sourceTree = SOURCE_ROOT;
+		};
+		EE580F67C02D988388DD842C = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+		0623307547F9355693915220 = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE580F67C02D988388DD842C;
+			productName = BeatLabCore;
+		};
+		C8B08B9BDAD62E926E19A335 = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE580F67C02D988388DD842C;
+			productName = BeatLabCore;
+		};
+		E8194A2BF156FE6A67751514 = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE580F67C02D988388DD842C;
+			productName = BeatLabDSP;
+		};
+		546627D46691BCC35B6D2A1D = {
+			isa = XCSwiftPackageProductDependency;
+			package = EE580F67C02D988388DD842C;
+			productName = BeatLabDSP;
+		};
+		540FBEB2CFC443DE373E9CFA = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.application;
+			includeInIndex = 0;
+			path = BeatLab.app;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0EE420CDDE3971DDCB0BA115 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = BeatLabTests.xctest;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		9CEC02B5DDDE6CF758D14555 = {
+			isa = PBXFileReference;
+			explicitFileType = wrapper.cfbundle;
+			includeInIndex = 0;
+			path = BeatLabUITests.xctest;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		FF500CF801C14E1A3EE6C332 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				SDKROOT = iphoneos;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				SWIFT_OPTIMIZATION_LEVEL = -Onone;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		EC28DA6D282277E08EB6D0CF = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				SDKROOT = iphoneos;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				SWIFT_VERSION = 5.0;
+				SWIFT_STRICT_CONCURRENCY = targeted;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				SWIFT_OPTIMIZATION_LEVEL = -O;
+				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+			};
+			name = Release;
+		};
+		6A8F326296F948BAF713B058 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FF500CF801C14E1A3EE6C332,
+				EC28DA6D282277E08EB6D0CF,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		27040D02FA2705CC36E15A6C = {
+			isa = PBXBuildFile;
+			fileRef = 54AA34C71344DDCA02498FDF;
+		};
+		3D7BAC7E750925A325C525BB = {
+			isa = PBXBuildFile;
+			fileRef = 3B24DCDDAAA745BF0BD22165;
+		};
+		42A597D2966D37D1198DAE12 = {
+			isa = PBXBuildFile;
+			fileRef = 37548BB6C55A36A94CA3CF1E;
+		};
+		4A387D62DBA0B32FA3243B7E = {
+			isa = PBXBuildFile;
+			fileRef = 8BB67E09F46787EE1B944709;
+		};
+		77506C3DF89953F1E9E85C66 = {
+			isa = PBXBuildFile;
+			fileRef = E6A5E4844E77BE675190C159;
+		};
+		19E3F2668EA797434F2CA03C = {
+			isa = PBXBuildFile;
+			fileRef = 0AFC6797B4AC886B93F501A7;
+		};
+		90CDE34D6DECEFA9377B1B45 = {
+			isa = PBXBuildFile;
+			fileRef = F8AC14CAEA49A11404C24D65;
+		};
+		3992EE84715474587BE2B7D5 = {
+			isa = PBXBuildFile;
+			fileRef = A5190032C89E87A80A82CB17;
+		};
+		27755105DDDB2FFE5D1A36DA = {
+			isa = PBXBuildFile;
+			fileRef = 5149120AAC991E8E2848ADB1;
+		};
+		0A63264C3EE75C68A7E1F788 = {
+			isa = PBXBuildFile;
+			fileRef = AFAA7180CFD6ACDD985FF4B6;
+		};
+		29DBBE1C0AB1F0A1E15C2075 = {
+			isa = PBXBuildFile;
+			fileRef = FA660BEABE868E71DDEDF52B;
+		};
+		A9CE51944BFD41EE74576E30 = {
+			isa = PBXBuildFile;
+			fileRef = 3A5BB64A2112BA697731EA63;
+		};
+		DCEF74A7058EA875E7A9B59E = {
+			isa = PBXBuildFile;
+			fileRef = F5C574910BA46349A511B488;
+		};
+		C6CF394C659EC8527D787128 = {
+			isa = PBXBuildFile;
+			fileRef = 051999634EB9004F9A33783E;
+		};
+		5C42095767685960832D8232 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				27040D02FA2705CC36E15A6C,
+				3D7BAC7E750925A325C525BB,
+				42A597D2966D37D1198DAE12,
+				4A387D62DBA0B32FA3243B7E,
+				77506C3DF89953F1E9E85C66,
+				19E3F2668EA797434F2CA03C,
+				90CDE34D6DECEFA9377B1B45,
+				3992EE84715474587BE2B7D5,
+				27755105DDDB2FFE5D1A36DA,
+				0A63264C3EE75C68A7E1F788,
+				29DBBE1C0AB1F0A1E15C2075,
+				A9CE51944BFD41EE74576E30,
+				DCEF74A7058EA875E7A9B59E,
+				C6CF394C659EC8527D787128,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		CEDD428770CB0B133D422445 = {
+			isa = PBXBuildFile;
+			productRef = 0623307547F9355693915220;
+		};
+		F160E27BD59A6ACC63423362 = {
+			isa = PBXBuildFile;
+			productRef = E8194A2BF156FE6A67751514;
+		};
+		F3DCD6E32B2604B89B3B5698 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				CEDD428770CB0B133D422445,
+				F160E27BD59A6ACC63423362,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D8016E44E9A160D0DB7F055D = {
+			isa = PBXBuildFile;
+			fileRef = 977AAE2D4C00BFD1DE907B8A;
+		};
+		A97FC81C2288D6B3D119130B = {
+			isa = PBXBuildFile;
+			fileRef = DD6F9401629D9291B0612C15;
+		};
+		4D611460EB49508D0CB31F63 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				D8016E44E9A160D0DB7F055D,
+				A97FC81C2288D6B3D119130B,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1D3230985756243D7378FBAA = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beatlab.app;
+				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = BeatLab;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = -Onone;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		BED69CF6EA719ED86B71B660 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beatlab.app;
+				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 0.1.0;
+				CURRENT_PROJECT_VERSION = 1;
+				INFOPLIST_KEY_CFBundleDisplayName = BeatLab;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				SUPPORTS_MACCATALYST = NO;
+				SWIFT_OPTIMIZATION_LEVEL = -O;
+				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+			};
+			name = Release;
+		};
+		D41B1EF9E4D56945573FD999 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1D3230985756243D7378FBAA,
+				BED69CF6EA719ED86B71B660,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		71DD0263B92C31F624AD19A1 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = D41B1EF9E4D56945573FD999;
+			buildPhases = (
+				5C42095767685960832D8232,
+				F3DCD6E32B2604B89B3B5698,
+				4D611460EB49508D0CB31F63,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = BeatLab;
+			packageProductDependencies = (
+				0623307547F9355693915220,
+				E8194A2BF156FE6A67751514,
+			);
+			productName = BeatLab;
+			productReference = 540FBEB2CFC443DE373E9CFA;
+			productType = com.apple.product-type.application;
+		};
+		44F04476A347C95D324683F5 = {
+			isa = PBXBuildFile;
+			fileRef = EF7241289A7CAD8096419F02;
+		};
+		7B658A83E4D5A64E07B8BEBB = {
+			isa = PBXBuildFile;
+			fileRef = E35ED123BA6D0800BAA868A5;
+		};
+		5C3B21258D400791BD3ABB93 = {
+			isa = PBXBuildFile;
+			fileRef = D0840374FAC37A8DA203B37F;
+		};
+		27E8BEA77F2784B4DAC3D492 = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				44F04476A347C95D324683F5,
+				7B658A83E4D5A64E07B8BEBB,
+				5C3B21258D400791BD3ABB93,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		1956AC2FE3EDBC9D7F02A5A2 = {
+			isa = PBXBuildFile;
+			productRef = C8B08B9BDAD62E926E19A335;
+		};
+		9A299C7D52A2F41E6D643B4D = {
+			isa = PBXBuildFile;
+			productRef = 546627D46691BCC35B6D2A1D;
+		};
+		DE862F1C33C75F8F4BF059A0 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				1956AC2FE3EDBC9D7F02A5A2,
+				9A299C7D52A2F41E6D643B4D,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		0833F7FDB457D3F0AF1F0FB8 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D729A1153A0FC75DE7E50716 = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 501D3DCBB32EA27A9C3C3C2A;
+			proxyType = 1;
+			remoteGlobalIDString = 71DD0263B92C31F624AD19A1;
+			remoteInfo = BeatLab;
+		};
+		C628EC26E07F7F48610F4322 = {
+			isa = PBXTargetDependency;
+			target = 71DD0263B92C31F624AD19A1;
+			targetProxy = D729A1153A0FC75DE7E50716;
+		};
+		BA44701E06C82BF719650EDA = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beatlab.app.tests;
+				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BeatLab.app/BeatLab";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				SWIFT_OPTIMIZATION_LEVEL = -Onone;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		E81BF53F42D4C859F666A094 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beatlab.app.tests;
+				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/BeatLab.app/BeatLab";
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				SWIFT_OPTIMIZATION_LEVEL = -O;
+				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+			};
+			name = Release;
+		};
+		B0E693C1FF80471E38124EE1 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BA44701E06C82BF719650EDA,
+				E81BF53F42D4C859F666A094,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2980B0C306057C5D4C48A516 = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = B0E693C1FF80471E38124EE1;
+			buildPhases = (
+				27E8BEA77F2784B4DAC3D492,
+				DE862F1C33C75F8F4BF059A0,
+				0833F7FDB457D3F0AF1F0FB8,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				C628EC26E07F7F48610F4322,
+			);
+			name = BeatLabTests;
+			packageProductDependencies = (
+				C8B08B9BDAD62E926E19A335,
+				546627D46691BCC35B6D2A1D,
+			);
+			productName = BeatLabTests;
+			productReference = 0EE420CDDE3971DDCB0BA115;
+			productType = com.apple.product-type.bundle.unit-test;
+		};
+		A201FCDAE94B8EC6238BC900 = {
+			isa = PBXBuildFile;
+			fileRef = 7C8BC8C750D6AF10C3EA900A;
+		};
+		7399AEBD4D2F6999940DC8D7 = {
+			isa = PBXBuildFile;
+			fileRef = 1541C493DCFD22E4A0145998;
+		};
+		F5A5ABD4500E07A2333641CD = {
+			isa = PBXBuildFile;
+			fileRef = BA2229EE5A48ABF7DC33F9C7;
+		};
+		8B0ECF0604359BDBEC4E7078 = {
+			isa = PBXBuildFile;
+			fileRef = 91FEAA003673B1D5E51F65E5;
+		};
+		33E2DE9015C0200A3177F73B = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A201FCDAE94B8EC6238BC900,
+				7399AEBD4D2F6999940DC8D7,
+				F5A5ABD4500E07A2333641CD,
+				8B0ECF0604359BDBEC4E7078,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BEA4F59B136CDE862F42BB47 = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		28AD84C85BC1BDF77189D353 = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		31BD49E8ED947BC672E9A777 = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 501D3DCBB32EA27A9C3C3C2A;
+			proxyType = 1;
+			remoteGlobalIDString = 71DD0263B92C31F624AD19A1;
+			remoteInfo = BeatLab;
+		};
+		D6652614F8711187C6C0437B = {
+			isa = PBXTargetDependency;
+			target = 71DD0263B92C31F624AD19A1;
+			targetProxy = 31BD49E8ED947BC672E9A777;
+		};
+		8ACFF339EB41EA3F8B6A55C7 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beatlab.app.uitests;
+				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_TARGET_NAME = BeatLab;
+				SWIFT_OPTIMIZATION_LEVEL = -Onone;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				ENABLE_TESTABILITY = YES;
+				ONLY_ACTIVE_ARCH = YES;
+			};
+			name = Debug;
+		};
+		2CCF3A5623E7D87DE5B0CB35 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PRODUCT_BUNDLE_IDENTIFIER = com.beatlab.app.uitests;
+				GENERATE_INFOPLIST_FILE = YES;
+				CODE_SIGN_STYLE = Automatic;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				TEST_TARGET_NAME = BeatLab;
+				SWIFT_OPTIMIZATION_LEVEL = -O;
+				DEBUG_INFORMATION_FORMAT = dwarf-with-dsym;
+			};
+			name = Release;
+		};
+		BFAB8B735109C81A779D1192 = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8ACFF339EB41EA3F8B6A55C7,
+				2CCF3A5623E7D87DE5B0CB35,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FEB7BE2FAA25579E2EFDA04E = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BFAB8B735109C81A779D1192;
+			buildPhases = (
+				33E2DE9015C0200A3177F73B,
+				BEA4F59B136CDE862F42BB47,
+				28AD84C85BC1BDF77189D353,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				D6652614F8711187C6C0437B,
+			);
+			name = BeatLabUITests;
+			packageProductDependencies = (
+			);
+			productName = BeatLabUITests;
+			productReference = 9CEC02B5DDDE6CF758D14555;
+			productType = com.apple.product-type.bundle.ui-testing;
+		};
+		BF61121A5CB6C5C34F7E02C7 = {
+			isa = PBXGroup;
+			children = (
+				54AA34C71344DDCA02498FDF,
+				3B24DCDDAAA745BF0BD22165,
+				37548BB6C55A36A94CA3CF1E,
+				8BB67E09F46787EE1B944709,
+				E6A5E4844E77BE675190C159,
+				0AFC6797B4AC886B93F501A7,
+				F8AC14CAEA49A11404C24D65,
+				A5190032C89E87A80A82CB17,
+				5149120AAC991E8E2848ADB1,
+				AFAA7180CFD6ACDD985FF4B6,
+				FA660BEABE868E71DDEDF52B,
+				3A5BB64A2112BA697731EA63,
+				F5C574910BA46349A511B488,
+				051999634EB9004F9A33783E,
+				977AAE2D4C00BFD1DE907B8A,
+				DD6F9401629D9291B0612C15,
+			);
+			name = BeatLab;
+			sourceTree = "<group>";
+		};
+		681DECB0CB12FD92E98BEB8B = {
+			isa = PBXGroup;
+			children = (
+				EF7241289A7CAD8096419F02,
+				E35ED123BA6D0800BAA868A5,
+				D0840374FAC37A8DA203B37F,
+			);
+			name = BeatLabTests;
+			sourceTree = "<group>";
+		};
+		737D01375B3A7124CA29BD96 = {
+			isa = PBXGroup;
+			children = (
+				7C8BC8C750D6AF10C3EA900A,
+				1541C493DCFD22E4A0145998,
+				BA2229EE5A48ABF7DC33F9C7,
+				91FEAA003673B1D5E51F65E5,
+			);
+			name = BeatLabUITests;
+			sourceTree = "<group>";
+		};
+		F4AFBCA1EAFA6F56F1516AED = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = Package.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		9956EECC874A7265E94E8BDA = {
+			isa = PBXGroup;
+			children = (
+				540FBEB2CFC443DE373E9CFA,
+				0EE420CDDE3971DDCB0BA115,
+				9CEC02B5DDDE6CF758D14555,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2F1A7454AB5EB0E7A6B80155 = {
+			isa = PBXGroup;
+			children = (
+				BF61121A5CB6C5C34F7E02C7,
+				681DECB0CB12FD92E98BEB8B,
+				737D01375B3A7124CA29BD96,
+				F4AFBCA1EAFA6F56F1516AED,
+				9956EECC874A7265E94E8BDA,
+			);
+			sourceTree = "<group>";
+		};
+		501D3DCBB32EA27A9C3C3C2A = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastSwiftUpdateCheck = 1600;
+				LastUpgradeCheck = 1600;
+				TargetAttributes = {
+					71DD0263B92C31F624AD19A1 = {
+						CreatedOnToolsVersion = 16.0;
+					};
+					2980B0C306057C5D4C48A516 = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 71DD0263B92C31F624AD19A1;
+					};
+					FEB7BE2FAA25579E2EFDA04E = {
+						CreatedOnToolsVersion = 16.0;
+						TestTargetID = 71DD0263B92C31F624AD19A1;
+					};
+				};
+			};
+			buildConfigurationList = 6A8F326296F948BAF713B058;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = zh-Hant;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				zh-Hant,
+				en,
+				Base,
+			);
+			mainGroup = 2F1A7454AB5EB0E7A6B80155;
+			packageReferences = (
+				EE580F67C02D988388DD842C,
+			);
+			productRefGroup = 9956EECC874A7265E94E8BDA;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				71DD0263B92C31F624AD19A1,
+				2980B0C306057C5D4C48A516,
+				FEB7BE2FAA25579E2EFDA04E,
+			);
+		};
+	};
+	rootObject = 501D3DCBB32EA27A9C3C3C2A;
+}
