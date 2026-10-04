@@ -1,0 +1,11 @@
+{
+  "missing_links": [],
+  "trailing_whitespace": [],
+  "missing_slices": [],
+  "lines": {
+    "README.md": 12,
+    "PLAN.md": 78,
+    "docs/verification.md": 46,
+    "docs/governance-adoption.md": 56
+  }
+}

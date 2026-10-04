@@ -1,0 +1,12 @@
+[quickstart_smoke]
+ok=False
+summary=ok=False | pre_task_ok=True | session_start_ok=False
+project_root=D:\BeatLab
+plan_path=PLAN.md
+contract_path=D:\BeatLab\contract.yaml
+contract_mode=explicit
+pre_task_ok=True
+session_start_ok=False
+pre_task_suggested_rules_preview=common
+contract_risk_tier=unknown
+pre_task_warnings=3

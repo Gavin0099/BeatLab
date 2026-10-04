@@ -1,0 +1,90 @@
+External Repo Readiness
+
+ready              = True
+repo_root          = D:\BeatLab
+project_facts      = status=available | artifact_exists=False | artifact_drift=False | source=02_workflow.md
+
+[checks]
+contract_files_complete  = True
+contract_resolved        = True
+framework_release_compatible = True
+framework_source_canonical = True
+framework_version_current = True
+framework_version_known  = True
+git_repo_present         = True
+gitlab_adapter_scope_consistent = True
+governance_baseline_present = True
+governance_drift_clean   = False
+hooks_ready              = False
+plan_fresh_enough        = True
+plan_present             = True
+project_facts_drift_free = True
+project_facts_intakeable = True
+project_facts_present    = True
+project_facts_schema_complete = True
+
+[governance_drift]  ← authoritative governance compliance check
+severity           = warning
+baseline_version   = 1.0.0
+  [warning] source_commit_recorded: source_commit is missing or 'unknown' in baseline.yaml — provenance cannot be traced; re-run adopt_governance.py to record
+  hint: python governance_tools/adopt_governance.py --target D:\BeatLab
+
+[contract]
+source             = discovery
+path               = D:\BeatLab\contract.yaml
+name               = beatlab-contract
+domain             = ios-rhythm-training
+plugin_version     = 1.0.0
+documents          = 6
+rule_roots         = 1
+validators         = 0
+
+[framework_version]
+state              = current
+current_release    = 1.3.0
+adopted_release    = 1.3.0
+adopted_commit     = 15722daadca7f7f28eb00250170b34844caf600b
+framework_repo     = https://github.com/Gavin0099/ai-governance-framework.git
+canonical_repo     = https://github.com/Gavin0099/ai-governance-framework.git
+interface_version  = 1
+compatible_range   = >=1.0.0,<2.0.0
+lock_file          = D:\BeatLab\governance\framework.lock.json
+
+[plan]
+status             = FRESH
+days_since_update  = 0
+threshold_days     = 7
+
+[hooks]
+valid              = False
+framework_root     = D:\BeatLab\ai-governance-framework
+
+[project_facts]
+status             = available
+available          = True
+source_file        = D:\BeatLab\memory\02_workflow.md
+source_filename    = 02_workflow.md
+schema_status      = complete
+missing_logical    = []
+sync_direction     = external_to_framework
+artifact_path      = D:\BeatLab\ai-governance-framework\artifacts\external-project-facts\BeatLab.json
+artifact_exists    = False
+artifact_drift     = False
+reason             = None
+remediation_hint   = None
+
+[agents_calibration]
+status             = repo_specific_minimal
+reason             = repo_local_paths_commands_or_boundaries_detected
+path               = D:\BeatLab\AGENTS.md
+reviewer_signal    = None
+repo_specific_signals = ['path_or_file:- Before claiming completion for any change touching `memory/**`, run `python -m governance_tools.memory_workflow --check --repo .`.', 'command:- For memory completion claims, run `python -m governance_tools.memory_workflow --check --repo . --run-guard` and report blockers before claiming DONE.', 'path_or_file:- Canonical writer signal: `governance_tools.memory_record` / `memory_record.py`.']
+
+warnings: 7
+- hooks (optional): missing AI Governance pre-commit hook: D:\BeatLab\.git\hooks\pre-commit
+- hooks (optional): missing AI Governance pre-push hook: D:\BeatLab\.git\hooks\pre-push
+- hooks (optional): missing external-tree repository identity config: D:\BeatLab\governance\external-tree-inventory-guard.json
+- hooks (optional): copilot-instructions.md not found: D:\BeatLab\.github\copilot-instructions.md — run install-hooks.sh to deploy DONE boundary rules for Copilot Workspace
+- hooks (optional): Copilot lifecycle hooks are not fully installed; expected managed .github/hooks lifecycle bridge plus VS Code Stop and Copilot sessionEnd configs. Note that the VS Code config declares Stop only: VS Code loads every *.json under .github/hooks and normalizes the Copilot config's sessionStart to SessionStart, so adding SessionStart to the VS Code config registers a second start handler and writes the session envelope twice
+- hooks (optional): ai-governance-framework-root not found; using explicit framework root: D:\BeatLab\ai-governance-framework
+- governance-drift: source_commit_recorded: source_commit is missing or 'unknown' in baseline.yaml — provenance cannot be traced; re-run adopt_governance.py to record

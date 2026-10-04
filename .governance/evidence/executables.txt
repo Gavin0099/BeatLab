@@ -1,0 +1,7 @@
+
+Name       Source
+----       ------
+python.exe C:\Users\daish\AppData\Local\Programs\Python\Python312\python.exe
+git.exe    C:\Program Files\Git\cmd\git.exe
+
+Python 3.12.10
