@@ -11,18 +11,18 @@
 # ── PROVENANCE ────────────────────────────────────────────────────────────────
 schema_version: "1"
 baseline_version: 1.0.0
-source_commit: unknown
+source_commit: a74c8cc4e67a22ccd2cfcd827c60e217e2a5cad0
 framework_root: D:\BeatLab\ai-governance-framework
-initialized_at: 2026-10-04T06:03:31Z
+initialized_at: 2026-10-04T06:23:05Z
 initialized_by: governance_tools/adopt_governance.py
 
 # ── INTEGRITY ─────────────────────────────────────────────────────────────────
 # sha256.<file>: canonical-LF hash recorded at init/refresh time; "protected" files are hash-verified
 # overridable.<file>: protected = must not change | overridable = repo may extend freely
 sha256.AGENTS.base.md: 20f247a26575cc0e2e9f09be68ea057ac9a8f5d81ab56717e21a94e43ee3043b
-sha256.PLAN.md: 4222615a111070795ca99ba8748680f39a8c29dcf93b87e682d5cb0328afe592
-sha256.contract.yaml: 5ee1a5537e6854c7aa90af566e89a73986a6ff2e324ea938aaca3a8b7ecfb847
-sha256.AGENTS.md: f2e241018a84db15438435eb0577b7a115464a10db5ba1b13d937dde1a7b19e0
+sha256.PLAN.md: 1e59c3deb0414e65d3628703cb918c07a01f2debe5bdec2c60bf60a67bbf6982
+sha256.contract.yaml: b99aa02de94a80bc8e03e9a0f116ccad02606372133a7a7198b48d03b9482b20
+sha256.AGENTS.md: 8d85a16486a09851482c8e09d283ba17810b421615420ee456a5471265f99265
 overridable.AGENTS.base.md: protected
 overridable.PLAN.md: overridable
 overridable.contract.yaml: overridable

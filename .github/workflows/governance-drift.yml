@@ -48,4 +48,3 @@ jobs:
             --repo . \
             --framework-root ai-governance-framework \
             --format human
-

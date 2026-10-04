@@ -1,0 +1,14 @@
+{
+  "static_check": "PASS: ok=True, severity=ok; 18 checks pass",
+  "framework_pin": "15722daadca7f7f28eb00250170b34844caf600b",
+  "lock_gitlink_checkout_match": true,
+  "framework_worktree_clean": true,
+  "source_commit": "a74c8cc4e67a22ccd2cfcd827c60e217e2a5cad0",
+  "known_nonblocking_debt": [
+    "runtime governance validation incomplete: version manifest absent",
+    "Git/Codex lifecycle hooks not installed",
+    "domain validator absent",
+    "memory workflow routing incomplete"
+  ],
+  "app_implementation": "NOT STARTED at G0 freeze"
+}

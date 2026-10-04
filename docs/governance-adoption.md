@@ -61,3 +61,5 @@ python -X utf8 ai-governance-framework/governance_tools/external_repo_readiness.
 Planning / Governance baseline READY；App implementation NOT STARTED（freeze 時）。使用者授權 G0 純治理提交後直接進 BL-001。Runtime smoke／hooks／domain validator／memory workflow 為 KNOWN DEBT、非 BL-001 blocker；不要求先補治理自動化。
 移除 runtime debt 的條件為後續明確接線／驗證需求，不為解除 App 開發的人造 blocker 而擴張治理。
 G0 的靜態完整性／framework pin／乾淨工作樹需驗證；App build／launch／UI tests 則依 BL-001 done gate 獨立驗收。
+
+G0 static checks：18 項 PASS、severity=ok；framework lock／index gitlink／nested HEAD 完全一致。官方 refresh 的 source_commit 指向初始治理提交 a74c8cc；凍結結果見 .governance/evidence/g0-freeze.json。較早 logs 是歷史失敗／未提交狀態，不代表本次 G0 結果。
