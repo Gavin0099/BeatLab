@@ -1,0 +1,123 @@
+{
+  "date": "2026-10-04",
+  "slice": "MAC-01",
+  "source_sha": "12587401aa989663098aba605ef800648f175633",
+  "toolchain": {
+    "xcode": "26.6",
+    "build": "17F113",
+    "swift": "6.3.3"
+  },
+  "scope": "Build, tests, personal development signing, owner iPhone install and launch; no App behavior changes",
+  "checks": {
+    "swiftpm": {
+      "status": "PASS",
+      "tests": 42,
+      "command": "swift test",
+      "evidence": "TestResults/20261004T094443Z/core-tests.log"
+    },
+    "dsp": {
+      "status": "PASS",
+      "runs": 156,
+      "seconds_each": 900,
+      "max_error_samples": 0.5,
+      "boundary_restart_silence_gap_ladder_voice_tests": "PASS",
+      "evidence": "TestResults/20261004T094443Z/dsp-tests.json"
+    },
+    "capture_analyzer": {
+      "status": "PASS",
+      "tests": 3,
+      "command": "python3 -m unittest discover -s Tests/TimingCaptureTests -v",
+      "evidence": "TestResults/20261004T094443Z/capture-tests.log"
+    },
+    "simulator_build": {
+      "status": "PASS",
+      "device": "iPhone 16 Pro",
+      "os": "18.0",
+      "evidence": "TestResults/20261004T094443Z/build.log"
+    },
+    "simulator_tests": [
+      {
+        "status": "INTERRUPTED",
+        "os": "18.0",
+        "exit_code": 73,
+        "executed_tests": "NOT VERIFIED",
+        "reason": "Test startup stalled; operator interrupted. Result bundle action log could not finish writing.",
+        "evidence": "TestResults/20261004T094443Z/app-tests.log",
+        "result_bundle": "TestResults/20261004T094443Z/MVP.xcresult",
+        "result_bundle_complete": false
+      },
+      {
+        "status": "FAIL",
+        "os": "26.5",
+        "exit_code": 65,
+        "executed_tests": "NOT VERIFIED",
+        "reason": "No testmanagerd unix-domain socket; communication with test runner failed for App and UI test targets.",
+        "evidence": "TestResults/20261004T094443Z/app-tests-current.log",
+        "result_bundle": "TestResults/20261004T094443Z/MVP-current.xcresult"
+      }
+    ],
+    "iphoneos_build": {
+      "status": "PASS",
+      "unsigned_evidence": "TestResults/20261004T094443Z/device-unsigned-build.log",
+      "signed_evidence": "TestResults/20261004T094443Z/device-signed-build.log"
+    },
+    "signature_profile": {
+      "status": "PASS",
+      "bundle_id": "com.beatlab.app",
+      "team": [
+        "P358EB3X9H"
+      ],
+      "profile_name": "iOS Team Provisioning Profile: *",
+      "owner_device_covered": true,
+      "development_signature": true,
+      "command": "codesign --verify --deep --strict --verbose=2 <app>; inspect embedded profile and signed entitlements",
+      "receipt": "TestResults/20261004T094443Z/BUILD.json"
+    },
+    "install": {
+      "status": "PASS",
+      "device": "Owner paired iPhone 16 Pro",
+      "version": "0.1.0",
+      "build": "1",
+      "bundle_id": "com.beatlab.app",
+      "command": "xcrun devicectl device install app --device <fresh owner identifier> --json-output <receipt> <verified iphoneos app>",
+      "evidence": "TestResults/20261004T094443Z/device-install.json"
+    },
+    "launch": {
+      "status": "PASS",
+      "command": "xcrun devicectl device process launch --device <fresh owner identifier> --json-output <receipt> com.beatlab.app",
+      "evidence": "TestResults/20261004T094443Z/device-launch.json",
+      "post_launch_process_observed": true,
+      "post_launch_process_evidence": "TestResults/20261004T094443Z/device-processes.json"
+    }
+  },
+  "open_risks": [
+    "App/UI tests did not pass; simulator test-service failure remains unresolved",
+    "BL-002A, G1-G4 timing/device/child/release acceptance NOT RUN",
+    "iPad orientation build warning remains; no release acceptance claimed"
+  ],
+  "not_claimed": [
+    "native visual/accessibility acceptance",
+    "audio output or input precision",
+    "child usability",
+    "release readiness",
+    "TestFlight delivery"
+  ],
+  "memory_writer": {
+    "status": "NOT AVAILABLE",
+    "reason": "governance_tools module unavailable; pinned framework submodule is not initialized",
+    "no_memory_write": true,
+    "no_session_closeout_claim": true
+  },
+  "delivery": {
+    "new_commit": "NOT CREATED",
+    "push": "NOT RUN",
+    "pr": "NOT CREATED",
+    "merge": "NOT RUN",
+    "testflight": "NOT RUN"
+  },
+  "reference_skills": [
+    "/Users/pc49-58/.codex/skills/install-garden-on-iphone/SKILL.md",
+    "/Users/pc49-58/Desktop/english-vocab-trainer/.codex/skills/garden-ios-ux/SKILL.md",
+    "/Users/pc49-58/Desktop/english-vocab-trainer/.codex/skills/upload-english-vocab-testflight/SKILL.md"
+  ]
+}

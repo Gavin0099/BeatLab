@@ -1,0 +1,109 @@
+{
+  "date": "2026-10-05",
+  "slice": "TF-02",
+  "status": "TESTFLIGHT_OWNER_TRIAL_AVAILABLE",
+  "owner_authorization": "Approved HOME-01 native preview and explicitly requested owner-only TestFlight update; no App Store submission",
+  "source_state": "Uncommitted authorized local candidate; no new commit/push/PR/merge",
+  "source_manifest": "TestResults/TF-02/source-hashes.json",
+  "source_file_count": 61,
+  "production_changes_this_slice": [
+    "BeatLab.xcodeproj/project.pbxproj App build number 9 to 10"
+  ],
+  "configuration": "Release",
+  "display_name": "拍拍冒險",
+  "bundle_id": "com.gavin0099.beatlab",
+  "version": "0.1.0",
+  "build": "10",
+  "xcode": "26.6 (17F113)",
+  "sdk": "iphoneos26.5",
+  "archive": "TestResults/TF-02/BeatLab.xcarchive",
+  "archive_validation": "TestResults/TF-02/archive-validation.json",
+  "archive_log": "TestResults/TF-02/archive.log",
+  "checks": {
+    "archive": "PASS",
+    "manual_local_distribution_export": "PASS; separate artifact, not uploaded",
+    "exact_uploaded_distribution_package": "PASS",
+    "source_manifest": "PASS; 61 hashes",
+    "compiled_home_assets_present": true,
+    "compiled_app_icons_unchanged": true,
+    "privacy_unchanged": true,
+    "uploaded_asset_catalog_matches_archive": true,
+    "diff_check": "PASS",
+    "reused_ui_evidence": {
+      "cases": 7,
+      "failed": 0,
+      "reexecuted_this_slice": false,
+      "evidence": "docs/slices/HOME-01-verification.json",
+      "reason": "UI production inputs unchanged except build metadata"
+    },
+    "reused_core_evidence": {
+      "cases": 50,
+      "failed": 0,
+      "reexecuted_this_slice": false,
+      "evidence": "docs/slices/TF-01-verification.json",
+      "reason": "Sources and Package.swift hashes unchanged"
+    },
+    "reuse_manifest": "TestResults/TF-02/check-reuse.json"
+  },
+  "upload": "PASS; Xcode GUI Internal Testing Only, version 0.1.0 (10)",
+  "upload_time_local": "2026-10-05 14:28 Asia/Taipei (Organizer)",
+  "upload_receipt": "TestResults/TF-02/upload-success.png",
+  "uploaded_ipa": "TestResults/TF-02/xcode-upload-20261005-1432/BeatLab.ipa",
+  "uploaded_ipa_sha256": "82bd13feaaed50ddd74bc007dc21ed643917e0c1a421ba7e014eea795f87b712",
+  "uploaded_package_validation": "TestResults/TF-02/uploaded-package-validation.json",
+  "uploaded_export_options": {
+    "destination": "upload",
+    "generateAppStoreInformation": false,
+    "manageAppVersionAndBuildNumber": true,
+    "method": "app-store-connect",
+    "signingStyle": "automatic",
+    "stripSwiftSymbols": true,
+    "teamID": "P358EB3X9H",
+    "testFlightInternalTestingOnly": true,
+    "uploadSymbols": true
+  },
+  "observed_version_build_unchanged": true,
+  "distribution_signature_verified": true,
+  "distribution_get_task_allow": false,
+  "distribution_profile_expires": "2027-08-14T07:07:49",
+  "uploaded_assets_sha256": "567d5436a6cd2fe9eb2f56bcde1ef3ce2d9c12824146a1ffe1cec69906b2de75",
+  "apple_processing": "PASS; completed, build 10 ready for testing",
+  "owner_tester_assignment": "PASS; build 10 assigned to existing 本人試玩, one internal tester; 正在測試",
+  "app_store_connect": {
+    "authenticated": true,
+    "app_id": "6819149808",
+    "build_id": "eeb756c8-362b-4436-bc41-f478088c24f2",
+    "group_id": "f22292e2-82b7-4d27-a534-820bb2cef5d1",
+    "group_name": "本人試玩",
+    "group_testers": 1,
+    "group_assigned_builds_visible": [
+      "0.1.0 (10)",
+      "0.1.0 (9)"
+    ],
+    "build_status": "TESTING",
+    "new_testers_invited": false,
+    "external_testing": false,
+    "url": "https://appstoreconnect.apple.com/teams/7d6e8665-b844-4e3c-bbba-86ed0cf73e1b/apps/6819149808/testflight/ios"
+  },
+  "what_to_test_saved": "PASS; zh-Hant; 已儲存 observed",
+  "what_to_test": "TestResults/TF-02/what-to-test-zh-Hant.txt",
+  "notes_and_group_proof": "TestResults/TF-02/test-notes-and-group.png",
+  "availability_proof": "TestResults/TF-02/testflight-ready.png",
+  "homepage_native_preview": "OWNER_APPROVED; phone update and style acceptance pending",
+  "testflight_device_install": "NOT RUN for build 10; owner update pending. Owner reported prior build 9 downloaded.",
+  "not_claimed": [
+    "App Store release readiness",
+    "G1-G4 acceptance",
+    "Physical timing or child enjoyment",
+    "Build 10 phone installation/runtime acceptance",
+    "New commits/push/PR/merge",
+    "Memory/session closeout"
+  ],
+  "owner_phone_feedback_20261005": {
+    "homepage_style": "ACCEPTED by owner report and screenshot",
+    "metronome_and_practice_style": "NOT ACCEPTED; mismatch reported",
+    "exact_installed_build": "NOT VERIFIED; screenshots omit version number",
+    "requested_action": "Analyze existing functions, define slices, commit/push current progress",
+    "evidence": "docs/design/FEATURE-AUDIT-20261005.md"
+  }
+}

@@ -1,32 +1,42 @@
-# BeatLab
+# 拍拍冒險（BeatLab）
 
-iOS MVP：節拍準、孩子看得懂、練習有成就感。
-G0 baseline 已凍結；S0～S17 原始碼已建立。Swift／Xcode／真機／兒童與 release 驗收尚未執行，不宣稱可發行。
+iOS 本機節奏練習 App：自由節拍器＋恐龍跟拍課程。目前 owner-only TestFlight 為 **0.1.0（10）**，bundle `com.gavin0099.beatlab`。首頁黃綠恐龍風格已獲 owner 手機回饋認可；節拍器與練習風格仍待下一輪改版。內部 beta 可測不等於正式上架 ready，G1～G4／物理 timing／兒童與完整 accessibility 尚未接受。
 
-已實作：30–240 BPM、音訊 sample clock、拍點、Tap Tempo、2/4／3/4／4/4／6/8、細分／重音、Click／Voice／Both、rhythm lane／跟拍回饋、10 JSON 課程、星星／解鎖／best BPM、Gap Click、Tempo Ladder、daily／continue、Beginner／Standard 與安全中斷停止。
+## 目前功能
 
-- [Roadmap 與狀態](PLAN.md)
-- [Mac 一次驗收](docs/mac-acceptance.md)
+- 30–240 BPM、slider／±1／±5／Tap Tempo、tempo undo/redo；2/4／3/4／4/4／6/8 與合法細分。
+- 每大拍重音／一般／靜音；電子／木魚／機械合成音色；節拍聲／預渲染數拍／兩種；音量、擺針、畫面與 best-effort 震動。播放中變更由 audio engine 決定生效邊界；volume 0／靜音不重設 transport。
+- 入門／標準；標準 Gap Click、Tempo Ladder、跟拍對齊與本機成績 JSON Share。
+- 三篇章／十個 JSON 關卡，四分→左右→八分→休止→十六分→反拍／混合；四拍 count-in、R/L/rest、真實判定與 runner 障礙呈現。
+- 星星、逐關解鎖、最佳成績／BPM、daily／continue；保存失敗重試／放棄。三個夥伴的選擇是當次 View state。
+- 背景／中斷／route change 安全停止；本機設定與進度損壞／未知版本防護。無帳號／雲端／麥克風／MIDI。
+
+原生 runner 沿用課程判定，沒有瀏覽器概念的生命／救援經濟、完整配樂或跑步 sprite。6/8 的 BPM 是附點四分音符的大拍、每小節兩大拍。早期開發 bundle `com.beatlab.app` 與現在 beta 不同，舊資料不自動遷移。
+
+## 下一輪切分
+
+[功能盤點與六個 slice](docs/design/FEATURE-AUDIT-20261005.md)：共用品牌 → 節拍器 → 旅程／準備 → 遊玩／結果 → 整體驗證 → 接受候選後 TestFlight。這轮完成分析與來源 checkpoint，後續契約皆 PLANNED，未新增畫面或變更時計／評分。
+
+- [Roadmap 與當前狀態](PLAN.md)
+- [首頁證據與 owner 回饋](docs/slices/HOME-01-verification.json)
+- [當前 TestFlight delivery](docs/slices/TF-02-verification.json)
+- [目前進度 push evidence](docs/slices/PROGRESS-01-verification.json)
+- [Mac／iPhone 驗收入口](docs/mac-acceptance.md)
 - [Timing／互動／Release gates](docs/verification.md)
-- [完整 slice 契約](docs/slices/MVP-implementation.md)
-- [音訊／跟拍架構](docs/adr/0002-audio-and-practice-timeline.md)
-- [Repo AI 規則](AGENTS.md)／[治理導入狀態](docs/governance-adoption.md)
+- [歷史設計與未接受概念](docs/design/GAME-DESIGN.md)
 
-在 Mac 開 BeatLab.xcodeproj，shared BeatLab scheme；最低 iOS 16，Swift 5 language mode。App 無第三方依賴；Apple speech 在播放前預渲染，聲音只由音訊 callback 排程。真機需自己的 signing team／bundle ID。
+## 開發與驗證
+
+Swift／SwiftUI、iOS 16+，App 使用本地 Swift package，沒有第三方 App 套件。用 Xcode 開 BeatLab.xcodeproj，選擇自己的 team 與唯一 bundle。App 的 release／distribution signing credentials 不在 repo。
 
 ```sh
-bash scripts/run_macos_checks.sh
-# 或只跑 core
 swift test
+python3 -m unittest discover -s Tests/TimingCaptureTests -v
+bash scripts/run_macos_checks.sh <BEATLAB_SIMULATOR_UUID>
 ```
 
-自動測試結果存 TestResults；真機與 child gates 按 docs/mac-acceptance.md 執行。未到 Mac 前，37 Swift files 僅 syntax parse，61 Swift test definitions 均 NOT RUN。
-Windows 實際 C kernel 已通過 156 組各 15 分鐘離線長測（總計模擬 39 小時）、最大 onset 誤差 0.5 sample；boundary／restart／Gap／Ladder／voice fixture 與 UBSan 通過。這不證明喇叭 onset、UI 同步或 touch 硬體延遲。
-證據：[source](docs/slices/MVP-source-check.json)／[C kernel](docs/slices/MVP-dsp-tests.json)／[local verification](docs/slices/MVP-local-verification.json)。
+原始 C renderer 測試、App/store/UI checks 與 logs 由 macOS 腳本收集於 ignored TestResults/，不自動勾選 device／兒童／release gates。Source check `python3 scripts/check_source.py` 只做 syntax／結構，需 scripts/requirements-sourcechecks.txt 中開發工具，不能替代 Swift typecheck 或 App runtime；該腳本會更新其對應 source-check evidence。
 
-開發用 source checks：依 scripts/requirements-sourcechecks.txt 安裝檢查工具後跑 `python scripts/check_source.py`；不屬於 App 依賴。Capture analysis 用 Python 標準函式庫；`python -m unittest discover -s Tests/TimingCaptureTests`。
-Clone repo 後可 `git submodule update --init --recursive` 載入治理框架。原始碼 ZIP 不含 Git/framework，但包含 App、package、resources、tests、docs、驗收腳本。
-Owner 已授權提交與推送 GitHub 開發分支；PR／merge／TestFlight 不在本次授權範圍。Apple／真機驗收仍待執行。
+Clone 可 `git submodule update --init --recursive` 取得 pinned 治理框架；本輪沒有更新框架或保護的 AGENTS.base.md。個人遊戲 skill 不在 repo，設計決策與素材 provenance 已存 docs/design。原圖與必要 app assets 入庫，IPA／archive／DerivedData／credentials／raw logs 留在本機。
 
-
-UI/UX 已套用：暖白／紫色 light/dark、固定 transport／tap pad、課程 sheet、清楚的準備／進行／結果與 recovery。[設計預覽](docs/design/interface-preview.html)／[設計與驗證](docs/design/UIUX.md)；reference 不是 SwiftUI render，Apple 驗收未跑。
+Owner 授權提交與 push 目前進度到既有開發分支；本輪不建立 PR／merge／新 TestFlight 或 App Store submission。歷史試玩及檢查以各 slice evidence 的當時 source hashes／status 為準。

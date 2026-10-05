@@ -1,0 +1,156 @@
+{
+  "date": "2026-10-05",
+  "slice": "GAME-07",
+  "risk": "L1: rendering/layout only, no timing or score authority change",
+  "status": "SOURCE_AND_FOCUSED_NATIVE_CHECKS_PASS_INSTALLED_FOR_TRIAL",
+  "owner_direction": "Dinosaur runner with approaching obstacles and rhythm-timed jumps",
+  "root_cause": "Build-6 inset held the entire scene plus controls and consumed the rhythm scroll viewport",
+  "implementation": "One height-aware composition with whole-page scroll fallback; native approaching obstacles rendered from existing elapsed/pattern; only judged hits clear them; existing stars/unlocks/save unchanged",
+  "source": {
+    "base_sha": "12587401aa989663098aba605ef800648f175633",
+    "state": "uncommitted, prior work preserved",
+    "production_manifest": "TestResults/GAME-07/source-hashes.json",
+    "production_changed_from_build6": [
+      "BeatLab/Views/PracticeView.swift"
+    ],
+    "test_files": [
+      "BeatLabTests/PracticeStoreTests.swift",
+      "BeatLabUITests/PracticeUITests.swift"
+    ]
+  },
+  "checks": {
+    "presentation_fixtures": {
+      "passed": 11,
+      "new_runner_fixtures": 4,
+      "summary": "TestResults/GAME-07/normal-summary.json",
+      "scope": "Quarter/eighth visual positioning, rest/invalid inputs, actual-hit/duplicate/extra invariants; unchanged models after this run"
+    },
+    "native_normal_final": {
+      "passed": 2,
+      "failed": 0,
+      "summary": "TestResults/GAME-07/normal-final-summary.json",
+      "scope": "All required live controls in viewport, extra feedback, stop/no unlock, actual no-input failure"
+    },
+    "native_dark_max_text": {
+      "passed": 1,
+      "failed": 0,
+      "summary": "TestResults/GAME-07/dark-max-retry-summary.json",
+      "scope": "Scene/rhythm/pad/stop reachable by scrolling; not simultaneously all visible or full accessibility"
+    },
+    "native_narrow": {
+      "passed": 2,
+      "failed": 0,
+      "summary": "TestResults/GAME-07/narrow-summary.json",
+      "scope": "iPhone SE 3 (375x667), complete viewport, real matched touch clearance and restart reset"
+    },
+    "prior_navigation": {
+      "passed": 2,
+      "summary": "TestResults/GAME-07/normal-summary.json",
+      "scope": "Daily cancellation and companion/chapter/settings/navigation before only compact strip/color/scene-height/result copy refinement"
+    },
+    "preserved_attempts": [
+      {
+        "path": "TestResults/GAME-07/normal.xcresult",
+        "passed": 14,
+        "failed": 1,
+        "reason": "New geometry test queried a duplicate inherited lane identifier; repaired by measuring union of all lane frames"
+      },
+      {
+        "path": "TestResults/GAME-07/dark-max.xcresult",
+        "total": 0,
+        "reason": "Single-method filter selected no tests; no validation claimed. Class-minus-other-methods retry executed the new test"
+      }
+    ],
+    "reduce_motion": {
+      "passed": 1,
+      "failed": 0,
+      "summary": "TestResults/GAME-07/reduced-motion-summary.json",
+      "setting": "Owned iPhone SE 3 Simulator Settings UI REDUCE_MOTION observed Value 1 before test, restored Value 0 afterwards",
+      "setting_evidence": "TestResults/GAME-07/reduce-motion-setting.png",
+      "restoration_evidence": "TestResults/GAME-07/reduce-motion-restored.png",
+      "scope": "Real matched touch clearance/restart with reduced motion and screenshot review; not full accessibility or measured motion/frame timing"
+    },
+    "contrast_ratios": {
+      "selected beat": 5.21,
+      "jump label": 7.45,
+      "inactive beat": 8.2,
+      "scene cue": 10.18
+    },
+    "signed_device_build": {
+      "result": "PASS",
+      "build_log": "TestResults/GAME-07/device-build.log",
+      "source_signature_profile_hash": "PASS"
+    },
+    "skill_validation": "PASS",
+    "diff_check": "PASS",
+    "final_source_manifest_match": "PASS"
+  },
+  "candidate": {
+    "source_base_sha": "12587401aa989663098aba605ef800648f175633",
+    "source_state": "Uncommitted GAME-07 runner and viewport repair; prior work preserved",
+    "source_hashes": "TestResults/GAME-07/source-hashes.json",
+    "source_file_count": 52,
+    "changed_from_build6": [
+      "BeatLab/Views/PracticeView.swift"
+    ],
+    "configuration": "Debug",
+    "platform": "iphoneos",
+    "app_path": "/Users/pc49-58/Desktop/BeatLab/TestResults/GAME-07/BeatLab.app",
+    "bundle_id": "com.beatlab.app",
+    "version": "0.1.0",
+    "build": "7",
+    "signature_verified": true,
+    "owner_device_covered": true,
+    "team": [
+      "P358EB3X9H"
+    ],
+    "executable_sha256": "57b5fa49867c8e8e88d448ecc782805c047575f40a691cab8add95f84742a23f",
+    "assets_car_sha256": "e04c5f2f2f05b8ac591c461ab5037de39b2ced6ce6354085b2b0fe3088a804b1",
+    "build_log": "TestResults/GAME-07/device-build.log",
+    "install": "PASS",
+    "launch": "PASS",
+    "delivery_reason": "Owner explicitly requested installing the GAME-07 trial candidate; in-place installation and launch succeeded",
+    "inventory_receipt": "TestResults/PHONE-07/devices.json",
+    "install_receipt": "TestResults/PHONE-07/install.json",
+    "launch_receipt": "TestResults/PHONE-07/launch.json"
+  },
+  "screenshots": {
+    "light": "TestResults/GAME-07/normal-final-shots/657AD163-D340-4599-979F-9D7BCC6CA29F.png",
+    "narrow_matched": "TestResults/GAME-07/narrow-shots/C2740EC7-4D08-4819-BA66-D9241192549D.png",
+    "dark_max_text": "TestResults/GAME-07/dark-max-shots/843D54E3-B2DA-48F1-B6CD-0DD19B3E70A9.png",
+    "reduced_motion": "TestResults/GAME-07/reduced-motion-shots/3E24FCD0-751D-4B6C-A33A-0FF4AD4B01E9.png"
+  },
+  "design_acceptance": "PENDING owner trial; selected gameplay is not palette or enjoyment approval",
+  "currently_installed": "0.1.0 (7), installed and launched by PHONE-07",
+  "blocker": null,
+  "not_claimed": [
+    "physical timing/input/sync",
+    "owner visual approval or child enjoyment",
+    "composed soundtrack or running sprite animation",
+    "all ten runner lessons native walkthrough",
+    "full accessibility/minimum OS",
+    "G1-G4 acceptance or release readiness",
+    "baseline regression test execution against old source",
+    "canonical memory/session closeout"
+  ],
+  "delivery": {
+    "install": "PASS",
+    "launch": "PASS",
+    "data_reset": false,
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "testflight": false
+  },
+  "cleanup": {
+    "owned_devices": [
+      "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+      "7A5E53D5-112F-41DF-8CEA-9E6DE09F8E85"
+    ],
+    "settings_restored": true,
+    "shutdown": true,
+    "other_simulators_untouched": true
+  },
+  "phone_delivery_evidence": "docs/slices/PHONE-07-verification.json"
+}

@@ -2,6 +2,7 @@ import SwiftUI
 import BeatLabCore
 import AVFoundation
 import Darwin
+import UIKit
 
 struct MetronomeView: View {
     @EnvironmentObject private var store: ConfigurationStore
@@ -28,6 +29,13 @@ struct MetronomeView: View {
                 BLCard {
                     VStack(spacing: 16) {
                         Text("找到舒服的速度").font(.subheadline.weight(.semibold)).foregroundStyle(BeatLabStyle.muted)
+                        HStack {
+                            Spacer()
+                            Button { tapTempo.reset(); tempoFeedback = nil; store.undoTempo() } label: { Image(systemName: "arrow.uturn.backward") }
+                                .disabled(store.undoTempos.isEmpty).accessibilityLabel("復原速度").accessibilityIdentifier("undoTempo")
+                            Button { tapTempo.reset(); tempoFeedback = nil; store.redoTempo() } label: { Image(systemName: "arrow.uturn.forward") }
+                                .disabled(store.redoTempos.isEmpty).accessibilityLabel("重做速度").accessibilityIdentifier("redoTempo")
+                        }.buttonStyle(BLSecondaryButtonStyle())
                         HStack(alignment: .firstTextBaseline, spacing: 8) {
                             Text("\(store.configuration.tempo.bpm)")
                                 .font(.system(size: tempoSize, weight: .bold, design: .rounded)).monospacedDigit()
@@ -35,7 +43,8 @@ struct MetronomeView: View {
                                 .accessibilityLabel("速度 \(store.configuration.tempo.bpm) BPM")
                             Text("BPM").font(.headline).foregroundStyle(BeatLabStyle.muted).accessibilityHidden(true)
                         }
-                        Slider(value: Binding(get: { Double(store.configuration.tempo.bpm) }, set: { manualTempo(Int($0.rounded())) }), in: 30...240, step: 1)
+                        Slider(value: Binding(get: { Double(store.configuration.tempo.bpm) }, set: { manualTempo(Int($0.rounded())) }), in: 30...240, step: 1,
+                               onEditingChanged: { if $0 { store.beginTempoGesture() } else { store.endTempoGesture() } })
                             .accessibilityLabel("每分鐘拍數").accessibilityValue("\(store.configuration.tempo.bpm)").accessibilityIdentifier("tempoSlider")
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 8), count: textSize.isAccessibilitySize ? 2 : 4), spacing: 8) {
                             tempoButton(-5, identifier: "tempoMinusFive")
@@ -56,7 +65,7 @@ struct MetronomeView: View {
                 BLCard {
                     VStack(alignment: .leading, spacing: 16) {
                         BLSectionHeading(title: "看著大拍，跟上節奏")
-                        BeatVisualizer()
+                        BeatVisualizer(interactive: true)
                         if audio.preparingVoice {
                             ProgressView("準備數拍語音…")
                             Button("先用節拍聲開始") { audio.selectSound(.click) }.buttonStyle(BLSecondaryButtonStyle())
@@ -83,8 +92,12 @@ struct MetronomeView: View {
                             }.padding(.top, 16).disabled(!store.canEdit)
                         } label: {
                             Label("節奏設定 · \(store.configuration.timeSignature.rawValue)", systemImage: "music.note.list").font(.headline)
-                        }.accessibilityIdentifier("rhythmSettings")
+                                .accessibilityIdentifier("rhythmSettings")
+                        }
                         Divider()
+                        Picker("節拍音色", selection: Binding(get: { store.configuration.clickTimbre }, set: { store.setClickTimbre($0) })) {
+                            ForEach(ClickTimbre.allCases, id: \.self) { Text($0.displayName).tag($0) }
+                        }.pickerStyle(.segmented).disabled(!store.canEdit).accessibilityIdentifier("clickTimbrePicker")
                         Picker("數拍聲音", selection: Binding(get: { audio.sound }, set: { audio.selectSound($0) })) {
                             Text("節拍聲").tag(CountSound.click)
                             Text("數拍").tag(CountSound.voice)
@@ -99,6 +112,13 @@ struct MetronomeView: View {
                                 .accessibilityLabel("節拍音量").accessibilityValue("\(Int(audio.volume * 100))%")
                                 .accessibilityIdentifier("volumeSlider")
                         }
+                        Toggle(isOn: Binding(get: { store.configuration.screenPulseEnabled }, set: { store.setScreenPulseEnabled($0) })) {
+                            Label("畫面閃光提示", systemImage: "sun.max")
+                        }.disabled(!store.canEdit).accessibilityIdentifier("screenPulseToggle")
+                        Toggle(isOn: Binding(get: { store.configuration.hapticsEnabled }, set: { store.setHapticsEnabled($0) })) {
+                            Label("震動提示", systemImage: "iphone.radiowaves.left.and.right")
+                        }.disabled(!store.canEdit || UIDevice.current.userInterfaceIdiom != .phone).accessibilityIdentifier("hapticsToggle")
+                        Text("將音量拉到零，可只用畫面或震動跟拍。震動依裝置能力提供；提示不作精準度量測。").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
                     }
                 }
                 BLCard {

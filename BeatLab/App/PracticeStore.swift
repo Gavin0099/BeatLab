@@ -40,7 +40,7 @@ final class PracticeStore: ObservableObject {
         progress = loaded.0
         switch loaded.1 {
         case .corrupt: notice = "上次進度無法讀取。完成練習後會重新保存。"
-        case .futureVersion: notice = "進度需要較新版 BeatLab。請更新 App 或重設進度。"; writable = false
+        case .futureVersion: notice = "進度需要較新版拍拍冒險。請更新 App 或重設進度。"; writable = false
         default: break
         }
         do { lessons = try LessonCatalog.bundled().lessons }

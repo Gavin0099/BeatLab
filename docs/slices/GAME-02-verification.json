@@ -1,0 +1,295 @@
+{
+  "date": "2026-10-04",
+  "slice": "GAME-02",
+  "risk": "L1 presentation and cosmetic companion selection",
+  "status": "IMPLEMENTED_AND_INSTALLED_WAITING_FOR_UNLOCK",
+  "owner_request": "Make native game more attractive; use Garden cat/robot/dinosaur art and update authorized phone candidate",
+  "changes": [
+    "Selectable cat/robot/dinosaur companions throughout map, preparation, challenge and result; five unchanged PNG assets from pinned owner repository",
+    "Three destinations and winding map; three chapter stickers derived only from existing saved stars",
+    "Actual Perfect/read stars drive decorative scale, heart, sparkle and dinosaur-family result art; Reduce Motion suppresses scaling",
+    "Short brand, stacked progress fallback, compact accessibility picker copy and full card hit area"
+  ],
+  "source": {
+    "base_sha": "12587401aa989663098aba605ef800648f175633",
+    "state": "uncommitted",
+    "production_changed_from_build4": [
+      "BeatLab/Views/PracticeView.swift"
+    ],
+    "authority_files_unchanged": true,
+    "new_asset_files": [
+      "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/Contents.json",
+      "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png",
+      "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/Contents.json",
+      "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/artwork.png",
+      "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/Contents.json",
+      "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/artwork.png",
+      "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/Contents.json",
+      "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png",
+      "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/Contents.json",
+      "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/artwork.png"
+    ],
+    "character_sources": "docs/design/game-character-sources.json",
+    "choice_storage": "Current App View state only; not persisted across restart",
+    "manifest": "TestResults/GAME-02/source-hashes-build5.json",
+    "manifest_files": 52,
+    "test_source_hashes": "TestResults/GAME-02/test-source-hashes.json",
+    "shipping_fixture_hooks_added": false
+  },
+  "checks": {
+    "normal_light": {
+      "status": "PASS for scoped evidence",
+      "unique_flows": 3,
+      "before_picker_repair": {
+        "passed": 3,
+        "summary": "TestResults/GAME-02/native-characters-light-summary.json",
+        "bundle": "TestResults/GAME-02/game-characters-light.xcresult",
+        "source_hashes": "TestResults/GAME-02/source-hashes-build5-before-picker-repair.json"
+      },
+      "final_picker_recheck": {
+        "passed": 1,
+        "summary": "TestResults/GAME-02/native-picker-light-summary.json",
+        "bundle": "TestResults/GAME-02/game-picker-light.xcresult",
+        "scope": "Switch robot/dinosaur without progress change; scenes/locks/settings/Home preparation; selected dinosaur in actual challenge and cancel"
+      },
+      "boundary": "Three initial flows plus final focused journey recheck; not a single final three-test suite"
+    },
+    "maximum_text_dark": {
+      "status": "PASS for composite scoped evidence",
+      "unique_flows": 3,
+      "appearance": "dark",
+      "content_size": "accessibility-extra-extra-extra-large",
+      "daily_before_picker_only_repair": {
+        "status": "PASS",
+        "summary": "TestResults/GAME-02/native-characters-large-dark-before-repair-summary.json",
+        "bundle": "TestResults/GAME-02/game-characters-large-dark.xcresult",
+        "source_hashes": "TestResults/GAME-02/source-hashes-build5-before-picker-repair.json",
+        "scope": "Prepare, pad, stop, browse locked lesson; does not enter changed companion picker"
+      },
+      "final_recheck": {
+        "passed": 2,
+        "summary": "TestResults/GAME-02/native-picker-large-dark-summary.json",
+        "bundle": "TestResults/GAME-02/game-picker-large-dark.xcresult",
+        "scope": "Companion selection, scenes/locks/settings/Home/selected live challenge; actual no-input result remains 0 stars, 16 misses, no unlock/sticker"
+      },
+      "boundary": "Composite from retained daily PASS and final two PASS; interrupted earlier suite is not reported as a passing suite"
+    },
+    "native_visual_review": {
+      "status": "PASS for reviewed captured viewports",
+      "screenshots": [
+        {
+          "name": "Journey live drum pad and count-in_0_8347D748-E5AE-40C1-B861-35C87ED40D9C.png",
+          "path": "TestResults/GAME-02/native-characters-light/2270A005-ADBF-4693-8A0D-85E26F501ED9.png"
+        },
+        {
+          "name": "Journey lesson preparation_0_761A9A21-C442-43A2-B164-338A80BB9790.png",
+          "path": "TestResults/GAME-02/native-characters-light/E64AE838-A45B-407B-8071-1C5F707341AE.png"
+        },
+        {
+          "name": "Selected dinosaur in actual challenge_0_6A8DE7FA-01B6-4C9E-BEC5-80047FE37FD8.png",
+          "path": "TestResults/GAME-02/native-characters-light/519632E9-9E3E-41CF-A77F-74320CD50A22.png"
+        },
+        {
+          "name": "Adventure starlight stage_0_9EAC472B-91F8-4760-8BB6-C02526C31696.png",
+          "path": "TestResults/GAME-02/native-characters-light/5CA78DEC-AD7A-4026-B0D0-F60AF6DE182F.png"
+        },
+        {
+          "name": "Adventure echo forest_0_B2C658C5-93B3-4EE5-A7B9-381855A16742.png",
+          "path": "TestResults/GAME-02/native-characters-light/B40C1639-C205-4B1A-8E78-64806F453445.png"
+        },
+        {
+          "name": "Selected dinosaur adventure companion_0_B3F09491-27F7-46B9-B6ED-A96C31590C65.png",
+          "path": "TestResults/GAME-02/native-characters-light/EC70F6D2-02A3-4EF9-89B7-DD2179451224.png"
+        },
+        {
+          "name": "Selected robot adventure companion_0_FB32C6C2-AE48-4E64-B34F-4F50B7FCCBF9.png",
+          "path": "TestResults/GAME-02/native-characters-light/4A7C1126-5001-4570-A971-25DD4AAC65CC.png"
+        },
+        {
+          "name": "Native rhythm journey map_0_2D054CF1-81D5-47FE-B582-5F60CA0CAC3D.png",
+          "path": "TestResults/GAME-02/native-characters-light/AC1C2062-4846-461A-84BC-E00E9C8C595D.png"
+        },
+        {
+          "name": "Native actual no-input result_0_1408BBFE-47A9-43A1-8D0F-4447466FB55A.png",
+          "path": "TestResults/GAME-02/native-characters-light/A7AC6B9E-400C-4E5A-BD23-095AA4758C0E.png"
+        },
+        {
+          "name": "Selected dinosaur in actual challenge_0_2AAC7331-26BA-4F47-B106-84F23123EC61.png",
+          "path": "TestResults/GAME-02/native-picker-light/F2AA13D2-D1AD-4811-AB2E-7946577502CC.png"
+        },
+        {
+          "name": "Adventure starlight stage_0_E3AA5C7E-887A-4236-BD50-3C60209CEC7D.png",
+          "path": "TestResults/GAME-02/native-picker-light/E2FD32CD-3C32-4ABC-8682-B1DB08647AB4.png"
+        },
+        {
+          "name": "Adventure echo forest_0_05772621-6B43-4073-8616-226FCFAAE0A0.png",
+          "path": "TestResults/GAME-02/native-picker-light/D3992965-6CB6-4522-B7B9-997CE13EE619.png"
+        },
+        {
+          "name": "Selected dinosaur adventure companion_0_3D49FC33-C090-4E56-9C91-35995C40E161.png",
+          "path": "TestResults/GAME-02/native-picker-light/B5D4E045-EC01-4AAA-8490-03A3A53578B8.png"
+        },
+        {
+          "name": "Companion picker dinosaur_0_8BB5E899-0DF7-4674-AAC3-0FDF14B70422.png",
+          "path": "TestResults/GAME-02/native-picker-light/9A7B989D-1845-4440-9083-336DF6671897.png"
+        },
+        {
+          "name": "Selected robot adventure companion_0_0CE103F3-FAD1-402D-8F88-38DCDA0A028F.png",
+          "path": "TestResults/GAME-02/native-picker-light/27FCA44E-62A2-4A1C-867E-EAA70674658A.png"
+        },
+        {
+          "name": "Companion picker robot_0_95E47E00-8DDD-428F-ABFF-EF8AB37E4D92.png",
+          "path": "TestResults/GAME-02/native-picker-light/5A981C8E-081E-4296-AD89-FB19DB8B9A8C.png"
+        },
+        {
+          "name": "Native rhythm journey map_0_D4C807F6-702E-4EA0-B34C-4C7CCD2C920B.png",
+          "path": "TestResults/GAME-02/native-picker-light/63472AE0-41A0-4D15-8CAD-D154EE8CEA41.png"
+        },
+        {
+          "name": "Selected dinosaur in actual challenge_0_3C9A027F-0BD2-4A7B-91C6-293778C10FB3.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/4CE96E86-E608-4D54-9412-43E64C524043.png"
+        },
+        {
+          "name": "Adventure starlight stage_0_2648AE37-64E3-4B96-A500-ADBF539F4FF4.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/1F6320DF-E483-4DBA-AC69-B226795D003A.png"
+        },
+        {
+          "name": "Adventure echo forest_0_B2A63D8F-7706-4EB4-B2AC-D4948B25F97F.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/0EB1CAAB-652A-41D5-B9F5-66B9A67B2804.png"
+        },
+        {
+          "name": "Selected dinosaur adventure companion_0_E53E1653-31A0-45DF-9A3E-47CEA68F7DF0.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/05AFF95B-D161-4F0A-B1E8-B3307BCD22EB.png"
+        },
+        {
+          "name": "Companion picker dinosaur_0_E73DCE5B-E62F-44CA-947E-F315F1FF2D2A.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/5D594697-5D74-460A-88A5-AF2572AF5B91.png"
+        },
+        {
+          "name": "Selected robot adventure companion_0_690C47A0-3C5E-4CA9-8333-7B344CC31B01.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/812C0B5A-7288-4790-B379-DF437D144CC8.png"
+        },
+        {
+          "name": "Companion picker robot_0_F349F7F8-2707-4A47-8F40-63796A507CB0.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/518107C5-DC89-40F1-B568-AA91207A7687.png"
+        },
+        {
+          "name": "Native rhythm journey map_0_D63BB51E-08A1-43C5-A906-89D6683A184B.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/FB046270-2964-4836-8D82-D48369805DAC.png"
+        },
+        {
+          "name": "Native actual no-input result_0_E37E61E1-39A2-4573-BCCA-8D41F3523342.png",
+          "path": "TestResults/GAME-02/native-picker-large-dark/F68B8255-2926-452C-AA8B-CAA0B990D416.png"
+        }
+      ],
+      "scope": "Original normal nine screenshots and final light/dark focused screenshots reviewed: companions, picker, three scenes, preparation/count-in and actual failed result. Scrolling is required for long content; no full accessibility or minimum-screen acceptance."
+    },
+    "signed_iphoneos_build": {
+      "status": "PASS",
+      "version": "0.1.0",
+      "build": "5",
+      "bundle_id": "com.beatlab.app",
+      "signature": "PASS",
+      "owner_profile_coverage": "PASS",
+      "source_manifest_match": true,
+      "executable_sha256": "4f9de3727e167bf055cdc701c012fa9eb350b2767d1baadb38c914096b0ab2d2",
+      "assets_car_sha256": "e04c5f2f2f05b8ac591c461ab5037de39b2ced6ce6354085b2b0fe3088a804b1",
+      "five_asset_names_in_catalog": true,
+      "asset_catalog_evidence": "TestResults/GAME-02/device-asset-catalog-info.json",
+      "log": "TestResults/GAME-02/device-build-5-picker-repair.log",
+      "receipt": "TestResults/GAME-02/BUILD.json"
+    },
+    "install": {
+      "status": "PASS",
+      "device": "GavinWu0099 / iPhone 16 Pro",
+      "mode": "in-place update",
+      "inventory": "TestResults/GAME-02/devices-final-before-install.json",
+      "receipt": "TestResults/GAME-02/install-build5.json"
+    },
+    "launch": {
+      "status": "BLOCKED_DEVICE_LOCKED",
+      "receipt": "TestResults/GAME-02/launch-build5.json",
+      "first_locked_receipt": "TestResults/GAME-02/launch-build5-device-locked.json",
+      "claim_boundary": "Launch is distinct from successful install"
+    },
+    "diff_whitespace": {
+      "status": "PASS",
+      "command": "git diff --check"
+    },
+    "simulator_cleanup": {
+      "preferences_restored": true,
+      "appearance": "light",
+      "content_size": "large",
+      "owned_device_shutdown": "PASS",
+      "device_id": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+      "other_devices_changed": false
+    }
+  },
+  "retained_attempts": [
+    {
+      "status": "PASS",
+      "flows": 3,
+      "summary": "TestResults/GAME-02/native-ui-summary.json",
+      "source": "Earlier vector draft before brand fit and Garden assets"
+    },
+    {
+      "status": "PASS",
+      "flows": 3,
+      "summary": "TestResults/GAME-02/native-large-dark-summary.json",
+      "source": "Earlier vector draft; screenshot motivated smaller brand/progress reflow"
+    },
+    {
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 1,
+      "summary": "TestResults/GAME-02/native-large-dark-final-summary.json",
+      "reason": "Fixed-distance drag oscillated above/below tall row; changed harness to centered slow held drag"
+    },
+    {
+      "status": "FAIL",
+      "passed": 2,
+      "failed": 1,
+      "summary": "TestResults/GAME-02/native-large-dark-scroll-summary.json",
+      "reason": "14 drag budget insufficient for long maximum-text footer; increased bounded budget to 24"
+    },
+    {
+      "status": "INTERRUPTED_WITH_FAILURE",
+      "passed": 1,
+      "failed": 1,
+      "canceled": 1,
+      "summary": "TestResults/GAME-02/native-characters-large-dark-before-repair-summary.json",
+      "bundle": "TestResults/GAME-02/game-characters-large-dark.xcresult",
+      "interruption_receipt": "TestResults/GAME-02/characters-large-interruption.json",
+      "source_hashes": "TestResults/GAME-02/source-hashes-build5-before-picker-repair.json",
+      "test_source_hashes": "TestResults/GAME-02/test-source-hashes-before-picker-repair.json",
+      "reason": "Picker dinosaur frame y455.3...820 was incorrectly compared with underlying hidden tab bar at y791. Async XCTFail continued; stopped only owned test process after known failure. Sheet viewport, fail-fast throwing helper and compact full-hit-area card rechecked."
+    }
+  ],
+  "unchanged_authority_evidence": {
+    "core": "Prior GAME-01 50 core tests; NOT RERUN for unchanged authorities",
+    "app": "Prior GAME-01 17 App tests; NOT RERUN for unchanged store/audio/core",
+    "reference": "docs/slices/GAME-01-verification.json"
+  },
+  "not_claimed": [
+    "Measured child appeal/age suitability/engagement",
+    "Physical audio/UI/input timing or physical-phone gameplay walkthrough",
+    "Success/chapter-award UI screenshot; complete Reduce Motion/VoiceOver runtime acceptance",
+    "Smallest screen/minimum OS runtime coverage",
+    "G1-G4 acceptance/release readiness",
+    "Commit/push/PR/merge/TestFlight"
+  ],
+  "delivery": {
+    "commit": "NOT CREATED",
+    "push": "NOT RUN",
+    "pr": "NOT CREATED",
+    "merge": "NOT RUN",
+    "testflight": "NOT RUN",
+    "uninstall_or_data_reset": "NOT RUN"
+  },
+  "memory": {
+    "canonical_writer": "NOT AVAILABLE; pinned framework checkout remains uninitialized",
+    "handwritten_session_memory": "NOT WRITTEN",
+    "session_end": "NOT ESTABLISHED",
+    "closeout": "NOT CLAIMED"
+  }
+}

@@ -16,10 +16,10 @@ static void advance(BLDSP *d, uint32_t frames) {
     }
 }
 static void boundaries(void) {
-    BLSettings initial = {120, 2, 0, 1};
+    BLSettings initial = {120, 2, 0, 1,0,0};
     CHECK(!BLDSPCreate(0, initial));
     CHECK(!BLDSPCreate(192001, initial));
-    CHECK(!BLDSPCreate(48000, (BLSettings){120, 3, 0, 1}));
+    CHECK(!BLDSPCreate(48000, (BLSettings){120, 3, 0, 1,0,0}));
     BLDSP *d = BLDSPCreate(48000, initial);
     CHECK(d);
     BLBeat beat;
@@ -27,7 +27,7 @@ static void boundaries(void) {
     CHECK(!BLDSPReadClock(d, &clock));
     CHECK(!BLDSPReadBeat(d, -1, &beat));
     advance(d, 1000);
-    CHECK(BLDSPRequest(d, (BLSettings){60, 2, 1, 1}));
+    CHECK(BLDSPRequest(d, (BLSettings){60, 2, 1, 1,0,0}));
     advance(d, 23001);
     CHECK(BLDSPReadBeat(d, 23999, &beat));
     CHECK(beat.settings.bpm == 120 && beat.settings.subdivision == 0);
@@ -38,7 +38,7 @@ static void boundaries(void) {
 
     d = BLDSPCreate(48000, initial);
     advance(d, 1);
-    CHECK(BLDSPRequest(d, (BLSettings){120, 3, 4, 0}));
+    CHECK(BLDSPRequest(d, (BLSettings){120, 3, 4, 0,0,0}));
     advance(d, 24000);
     CHECK(BLDSPReadBeat(d, 24000, &beat));
     CHECK(beat.settings.meter == 2 && beat.settings.subdivision == 0 && beat.settings.accent == 1);
@@ -46,9 +46,9 @@ static void boundaries(void) {
     CHECK(BLDSPReadBeat(d, 96000, &beat));
     CHECK(beat.settings.meter == 3 && beat.settings.subdivision == 4 && beat.settings.accent == 0);
     CHECK(beat.beatInBar == 0 && beat.barNumber == 1);
-    CHECK(BLDSPRequest(d, (BLSettings){60, 0, 1, 1}));
-    CHECK(BLDSPRequest(d, (BLSettings){180, 1, 3, 1}));
-    CHECK(!BLDSPRequest(d, (BLSettings){241, 1, 3, 1}));
+    CHECK(BLDSPRequest(d, (BLSettings){60, 0, 1, 1,0,0}));
+    CHECK(BLDSPRequest(d, (BLSettings){180, 1, 3, 1,0,0}));
+    CHECK(!BLDSPRequest(d, (BLSettings){241, 1, 3, 1,0,0}));
     advance(d, 24000);
     CHECK(BLDSPReadBeat(d, 120000, &beat));
     CHECK(beat.settings.bpm == 180 && beat.settings.meter == 3 && beat.settings.subdivision == 4);
@@ -78,7 +78,7 @@ static void boundaries(void) {
 }
 
 static void challenges(void) {
-    BLDSP *d = BLDSPCreate(48000, (BLSettings){120,2,0,1});
+    BLDSP *d = BLDSPCreate(48000, (BLSettings){120,2,0,1,0,0});
     CHECK(d);
     CHECK(!BLDSPSetPracticeOptions(d, 3, 0, 0));
     CHECK(!BLDSPSetPracticeOptions(d, 0, 3, 0));
@@ -100,7 +100,7 @@ static void challenges(void) {
     CHECK(BLDSPReadBeat(d, 480000, &beat) && !beat.muted && beat.barNumber == 5 && beat.beatNumber == 20);
     BLDSPDestroy(d);
 
-    d = BLDSPCreate(48000, (BLSettings){120,2,0,1});
+    d = BLDSPCreate(48000, (BLSettings){120,2,0,1,0,0});
     CHECK(BLDSPSetPracticeOptions(d, 0, 1, 2));
     advance(d, 192001);
     CHECK(BLDSPReadBeat(d, 192000, &beat) && beat.settings.bpm == 125 && beat.barNumber == 2);
@@ -110,13 +110,13 @@ static void challenges(void) {
     CHECK(beat.endFrame == 398474);
     CHECK(BLDSPRequestedSettings(d).bpm == 130);
     CHECK(BLDSPSetPracticeOptions(d, 0, 0, 0));
-    CHECK(BLDSPRequest(d, (BLSettings){60,2,0,1}));
+    CHECK(BLDSPRequest(d, (BLSettings){60,2,0,1,0,0}));
     advance(d, 22154);
     CHECK(BLDSPReadBeat(d, 398474, &beat) && beat.settings.bpm == 60);
     CHECK(beat.endFrame == 446474);
     BLDSPDestroy(d);
 
-    d = BLDSPCreate(48000, (BLSettings){235,0,0,1});
+    d = BLDSPCreate(48000, (BLSettings){235,0,0,1,0,0});
     CHECK(BLDSPSetPracticeOptions(d, 0, 0, 1));
     advance(d, 25000);
     CHECK(BLDSPRequestedSettings(d).bpm == 240);
@@ -124,7 +124,7 @@ static void challenges(void) {
     CHECK(BLDSPRequestedSettings(d).bpm == 240);
     BLDSPDestroy(d);
 
-    d = BLDSPCreate(48000, (BLSettings){120,2,1,1});
+    d = BLDSPCreate(48000, (BLSettings){120,2,1,1,0,0});
     const float word[] = {0.4f,0.2f,0.1f};
     for (int i = 0; i < 5; i++) CHECK(BLDSPSetVoice(d,i,word,3));
     CHECK(!BLDSPSetVoice(d,5,word,3));
@@ -142,10 +142,55 @@ static void challenges(void) {
     BLDSPDestroy(d);
 }
 
+static void beat_controls(void) {
+    float *output = calloc(120001, sizeof(float));
+    CHECK(output);
+    for (int meter = 0; meter < 4; meter++) for (int timbre = 0; timbre < 3; timbre++) {
+        int count = meter == 1 ? 3 : meter == 2 ? 4 : 2;
+        int pattern = 2 | (3 << 2);
+        for (int i = 2; i < count; i++) pattern |= 1 << (i * 2);
+        int sub = meter == 3 ? 4 : 2;
+        BLDSP *d = BLDSPCreate(48000, (BLSettings){120,meter,sub,1,pattern,timbre});
+        CHECK(d);
+        BLDSPRender(d,output,(uint32_t)(24000 * count + 1),12345);
+        CHECK(output[0] != 0 && output[24000 * count] != 0);
+        for (int i = 24000; i < 48000; i++) CHECK(output[i] == 0);
+        if (count > 2) CHECK(output[48000] != 0);
+        BLBeat beat;
+        CHECK(BLDSPReadBeat(d,24000,&beat) && beat.muted && beat.beatNumber == 1);
+        CHECK(BLDSPReadBeat(d,24000 * count,&beat) && !beat.muted && beat.barNumber == 1);
+        CHECK(!BLDSPRequest(d,(BLSettings){120,meter,sub,1,1,timbre}));
+        CHECK(!BLDSPRequest(d,(BLSettings){120,meter,sub,1,pattern,3}));
+        BLDSPDestroy(d);
+    }
+    float voices[3][64];
+    for (int timbre = 0; timbre < 3; timbre++) {
+        BLDSP *d = BLDSPCreate(48000,(BLSettings){120,2,0,1,86,timbre});
+        CHECK(d); BLDSPRender(d,voices[timbre],64,1); BLDSPDestroy(d);
+    }
+    for (int a = 0; a < 3; a++) for (int b = a + 1; b < 3; b++) {
+        float difference = 0;
+        for (int i = 0; i < 64; i++) difference += fabsf(voices[a][i] - voices[b][i]);
+        CHECK(difference > 0.1f);
+    }
+    /* All-muted output still advances the ladder and transport; restore next bar. */
+    BLDSP *d = BLDSPCreate(48000,(BLSettings){120,2,0,1,255,0});
+    CHECK(d && BLDSPSetPracticeOptions(d,0,1,2));
+    BLDSPRender(d,output,96000,1);
+    for (int i = 0; i < 96000; i++) CHECK(output[i] == 0);
+    CHECK(BLDSPRequest(d,(BLSettings){120,2,0,1,86,2}));
+    BLDSPRender(d,output,96001,2);
+    CHECK(output[0] != 0);
+    BLBeat beat;
+    CHECK(BLDSPReadBeat(d,192000,&beat) && beat.beatNumber == 8 && beat.settings.bpm == 125);
+    BLDSPDestroy(d);
+    free(output);
+}
+
 /* Independent oracle: observed nonzero onset after silence versus ideal real-valued
    musical time. Compare every pulse and its count, never just the renderer's history. */
-static void long_run(uint32_t rate, int bpm, int meter, int sub, int divisions, int comma) {
-    BLDSP *d = BLDSPCreate(rate, (BLSettings){bpm, meter, sub, 1});
+static void long_run(uint32_t rate, int bpm, int meter, int sub, int divisions, int timbre, int comma) {
+    BLDSP *d = BLDSPCreate(rate, (BLSettings){bpm, meter, sub, 1,0,timbre});
     CHECK(d);
     float buffer[4096], previous = 0;
     uint64_t total = (uint64_t)rate * 900, cursor = 0, onsets = 0, last = 0;
@@ -175,15 +220,16 @@ static void long_run(uint32_t rate, int bpm, int meter, int sub, int divisions, 
         cursor += n;
     }
     CHECK(onsets == (uint64_t)bpm * divisions * 15);
-    printf("%s{\"rate\":%u,\"bpm\":%d,\"meter\":%d,\"subdivision\":%d,\"duration_seconds\":900,\"onsets\":%" PRIu64 ",\"interval_min_samples\":%" PRIu64 ",\"interval_max_samples\":%" PRIu64 ",\"max_onset_error_samples\":%.9f,\"final_onset_error_samples\":%.9f}", comma ? ",\n" : "", rate, bpm, meter, sub, onsets, min_interval, max_interval, max_error, last_error);
+    printf("%s{\"rate\":%u,\"bpm\":%d,\"meter\":%d,\"subdivision\":%d,\"timbre\":%d,\"duration_seconds\":900,\"onsets\":%" PRIu64 ",\"interval_min_samples\":%" PRIu64 ",\"interval_max_samples\":%" PRIu64 ",\"max_onset_error_samples\":%.9f,\"final_onset_error_samples\":%.9f}", comma ? ",\n" : "", rate, bpm, meter, sub, timbre, onsets, min_interval, max_interval, max_error, last_error);
     fflush(stdout);
     BLDSPDestroy(d);
 }
 int main(int argc, char **argv) {
     boundaries();
     challenges();
+    beat_controls();
     if (argc > 1 && strcmp(argv[1], "--boundaries-only") == 0) {
-        printf("{\"boundary_restart_silence_gap_ladder_voice_tests\":\"PASS\",\"assertions\":%" PRIu64 "}\n", checks);
+        printf("{\"boundary_restart_silence_gap_ladder_voice_tests\":\"PASS\",\"beat_controls\":\"PASS\",\"assertions\":%" PRIu64 "}\n", checks);
         return 0;
     }
     puts("{\"status\":\"PASS\",\"method\":\"actual C renderer, offline samples, independent onset oracle\",\"physical_device_gate\":\"NOT RUN\",\"runs\":[");
@@ -194,7 +240,7 @@ int main(int argc, char **argv) {
         for (int meter = 0; meter < 4; meter++) for (int sub = 0; sub < 5; sub++) {
             if (meter == 3 ? sub != 4 : sub == 4) continue;
             const int divisions[] = {1,2,4,3,3};
-            long_run(rates[r],tempos[t],meter,sub,divisions[sub],run++ != 0);
+            for (int timbre = 0; timbre < 3; timbre++) long_run(rates[r],tempos[t],meter,sub,divisions[sub],timbre,run++ != 0);
         }
     printf("\n],\"assertions\":%" PRIu64 ",\"boundary_restart_silence_gap_ladder_voice_tests\":\"PASS\"}\n", checks);
     return 0;

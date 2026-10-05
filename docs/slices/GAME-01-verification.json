@@ -1,0 +1,177 @@
+{
+  "date": "2026-10-04",
+  "slice": "GAME-01",
+  "risk": "L1 presentation/navigation; existing clock/scoring/storage authority retained",
+  "status": "IMPLEMENTED_AND_INSTALLED",
+  "owner_request": "Add selected rhythm journey game interface to native App and update previously authorized owner phone installation",
+  "native_features": [
+    "Three-chapter journey using actual saved stars, completion and previous-lesson locks",
+    "Preparation with actual catalog instruction, hand/rest pattern and retained standard BPM adjustment",
+    "Four-beat count-in and four-bar visual progress using existing elapsed state",
+    "Circular UIKit touch-down drum pad; stable highlighted rhythm step and actual grade feedback",
+    "Tabs hidden during active or unsaved practice; cancel returns to journey without scoring",
+    "Real results/stars/counts, retry, save retry and confirmed discard; existing next/final guards",
+    "Practice settings sheet retains modes/calibration/free-metronome summary; Home opens selected preparation"
+  ],
+  "source": {
+    "base_sha": "12587401aa989663098aba605ef800648f175633",
+    "state": "uncommitted",
+    "production_changed_from_build3": [
+      "BeatLab/Views/PracticeView.swift",
+      "BeatLab/Views/RootView.swift",
+      "BeatLab/Views/RhythmLane.swift"
+    ],
+    "authority_files_unchanged": true,
+    "shipping_fixture_hooks_added": false,
+    "manifest": "TestResults/GAME-01/source-hashes-build4.json",
+    "manifest_files": 42,
+    "test_source_hashes": "TestResults/GAME-01/native-test-source-hashes.json"
+  },
+  "checks": {
+    "swiftpm": {
+      "status": "PASS",
+      "tests": 50,
+      "command": "swift test",
+      "evidence": "TestResults/GAME-01/core-tests.log"
+    },
+    "native_app": {
+      "status": "PASS",
+      "tests": 17,
+      "evidence": "TestResults/GAME-01/native-first-summary.json",
+      "scope": "Actual store/engine plus 16-note 240-BPM fixture for saved/restart/unlock and failed-save/retry/discard. Input timestamps injected from reviewed quarter-note fixture; not physical input latency evidence. View identifier-only corrections followed this run; store/engine unchanged."
+    },
+    "native_ui": {
+      "status": "PASS",
+      "unique_flows": 6,
+      "passed": 6,
+      "failed": 0,
+      "evidence": "TestResults/GAME-01/native-ui-summary.json",
+      "bundle": "TestResults/GAME-01/game-ui-fixed.xcresult",
+      "scope": "Foundation navigation/shared configuration/relaunch; full browser; daily/cancel; chapters/locks/settings/Home; actual no-tap failure/no unlock"
+    },
+    "large_dark_ui": {
+      "status": "PASS",
+      "passed": 3,
+      "failed": 0,
+      "appearance": "dark",
+      "content_size": "accessibility-extra-extra-extra-large",
+      "evidence": "TestResults/GAME-01/native-large-dark-summary.json",
+      "bundle": "TestResults/GAME-01/game-large-dark.xcresult",
+      "scope": "Same three practice flows; inline pad reached by scrolling; not whole-product accessibility acceptance"
+    },
+    "native_visual_review": {
+      "status": "PASS for captured viewports",
+      "screenshots": [
+        {
+          "name": "Journey live drum pad and count-in_0_0FC6673B-ED94-442D-BD9B-26DF2CE25052.png",
+          "path": "TestResults/GAME-01/native-ui/B98E5B85-F8F4-4BB1-9680-15E37C03FF50.png"
+        },
+        {
+          "name": "Journey lesson preparation_0_187C83EC-98C6-4AC8-A3F6-37522DF9ADCB.png",
+          "path": "TestResults/GAME-01/native-ui/8C3BE26C-7E53-48C0-B896-66FAC474D3CB.png"
+        },
+        {
+          "name": "Native rhythm journey map_0_D910E6D8-5AA8-4322-B503-08D270A04A01.png",
+          "path": "TestResults/GAME-01/native-ui/EA57802A-EB48-4827-A32A-60E686E110F4.png"
+        },
+        {
+          "name": "Native actual no-input result_0_9708B359-A4DE-4562-ADED-DB5AA91505DD.png",
+          "path": "TestResults/GAME-01/native-ui/EE714384-5200-4BB1-A771-E6BA0F0005BA.png"
+        },
+        {
+          "name": "Journey live drum pad and count-in_0_32D3FE08-9100-474C-A2F2-067DB0F7CD2E.png",
+          "path": "TestResults/GAME-01/native-large-dark/C3510A97-3CEE-487A-9510-562B0BCEF9C3.png"
+        },
+        {
+          "name": "Journey lesson preparation_0_06AEA9AE-6DF9-4834-8F3E-E80BE05112EE.png",
+          "path": "TestResults/GAME-01/native-large-dark/982033B8-2A1B-4BF0-92B1-ECB578EF2E87.png"
+        },
+        {
+          "name": "Native rhythm journey map_0_AC827193-E3DA-4BCA-AC29-0839E2DFE42A.png",
+          "path": "TestResults/GAME-01/native-large-dark/AF874DB7-BD98-4594-9A1B-F92654C33B87.png"
+        },
+        {
+          "name": "Native actual no-input result_0_46D9A2D9-DFA7-48C3-B972-D9C53419A84A.png",
+          "path": "TestResults/GAME-01/native-large-dark/BD911264-C2C3-48F2-8CE8-DED31E8A6A2A.png"
+        }
+      ],
+      "scope": "Reviewed journey, preparation, normal live drum/count-in and real failed result; large/dark labels reflow with long scrollable content. Automated interactions reach pad/stop and return. No whole-scroll-content or full accessibility audit claim."
+    },
+    "signed_iphoneos_build": {
+      "status": "PASS",
+      "version": "0.1.0",
+      "build": "4",
+      "bundle_id": "com.beatlab.app",
+      "signature": "PASS",
+      "owner_profile_coverage": "PASS",
+      "executable_sha256": "5d9f557bf2de08d06e6905f7a5141c73dc90a5a3ddfc48023f14fe3252717e6d",
+      "source_manifest_match": true,
+      "evidence": "TestResults/GAME-01/device-build-4-final.log",
+      "receipt": "TestResults/GAME-01/BUILD.json"
+    },
+    "install": {
+      "status": "PASS",
+      "device": "GavinWu0099 / iPhone 16 Pro",
+      "mode": "in-place update",
+      "data_reset": "NOT RUN",
+      "evidence": "TestResults/GAME-01/install-build4.json"
+    },
+    "launch": {
+      "status": "PASS",
+      "evidence": "TestResults/GAME-01/launch-build4.json"
+    },
+    "simulator_cleanup": {
+      "ui_preferences_restored": true,
+      "restoration": "TestResults/GAME-01/simulator-ui-restored.json",
+      "owned_device_shutdown": "PASS",
+      "evidence": "TestResults/GAME-01/simulator-shutdown.log",
+      "other_simulators_changed": false
+    },
+    "diff_whitespace": {
+      "status": "PASS",
+      "command": "git diff --check"
+    }
+  },
+  "retained_attempts": [
+    {
+      "status": "INTERRUPTED",
+      "exit_code": 73,
+      "reason": "Repeated package graph resolution; no test execution claimed",
+      "evidence": "TestResults/GAME-01/first-attempt-interruption.json",
+      "log": "TestResults/GAME-01/game-native.log",
+      "result_completeness": "NOT CLAIMED"
+    },
+    {
+      "status": "FAIL",
+      "app_passed": 17,
+      "ui_passed": 4,
+      "ui_failed": 2,
+      "reason": "Ancestor identifiers replaced journey-node and result-star IDs. Removed map ancestor ID and moved result ID to heading; final six UI flows pass. Failed artifacts retained.",
+      "evidence": "TestResults/GAME-01/native-first-summary.json",
+      "bundle": "TestResults/GAME-01/game-native-fixed-resolution.xcresult"
+    }
+  ],
+  "single_combined_final_suite_green": "NOT CLAIMED; App and final UI evidence are separate runs",
+  "not_claimed": [
+    "Physical audio/UI/input timing or speaker/haptic accuracy",
+    "Real-device game walkthrough or child usability",
+    "VoiceOver/Reduce Motion/Switch Control full runtime acceptance",
+    "Smallest screen/minimum OS runtime coverage",
+    "G1-G4 acceptance",
+    "Release readiness",
+    "Commit/push/PR/merge/TestFlight"
+  ],
+  "delivery": {
+    "new_commit": "NOT CREATED",
+    "push": "NOT RUN",
+    "pr": "NOT CREATED",
+    "merge": "NOT RUN",
+    "testflight": "NOT RUN"
+  },
+  "memory": {
+    "canonical_writer": "NOT AVAILABLE in this checkout (framework submodule remains uninitialized)",
+    "session_end": "NOT ESTABLISHED",
+    "session_closeout": "NOT CLAIMED",
+    "handwritten_session_memory": "NOT WRITTEN"
+  }
+}

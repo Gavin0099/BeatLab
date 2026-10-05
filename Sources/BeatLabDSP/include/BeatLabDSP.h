@@ -12,7 +12,9 @@
 typedef struct BLDSP BLDSP;
 /* Meter: 0=2/4, 1=3/4, 2=4/4, 3=6/8.
    Subdivision: 0=quarter, 1=eighth, 2=sixteenth, 3=triplet, 4=compound eighth. */
-typedef struct { int bpm, meter, subdivision, accent; } BLSettings;
+/* beatPattern: 2 bits per big beat, 1 normal / 2 accent / 3 mute.
+   0 uses legacy first-beat accent. timbre: 0 electronic / 1 wood / 2 mechanical. */
+typedef struct { int bpm, meter, subdivision, accent, beatPattern, timbre; } BLSettings;
 typedef struct {
     int64_t startFrame, endFrame;
     uint64_t beatNumber, barNumber;

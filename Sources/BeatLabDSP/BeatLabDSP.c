@@ -12,7 +12,7 @@ typedef struct {
 } BeatSlot;
 struct BLDSP {
     uint32_t rate, clickLength;
-    float clicks[3][CLICK_MAX];
+    float clicks[3][3][CLICK_MAX];
     atomic_uint_fast64_t requested;
     atomic_uint gain;
     atomic_uint options;
@@ -33,16 +33,23 @@ static int beats(int meter) { return meter == 1 ? 3 : meter == 2 ? 4 : 2; }
 static int pulses(int sub) { return sub == 1 ? 2 : sub == 2 ? 4 : sub >= 3 ? 3 : 1; }
 static bool compatible(int meter, int sub) { return meter == 3 ? sub == 4 : sub >= 0 && sub <= 3; }
 static bool valid(BLSettings s) {
-    return s.bpm >= 30 && s.bpm <= 240 && s.meter >= 0 && s.meter <= 3 &&
-        compatible(s.meter, s.subdivision) && (s.accent == 0 || s.accent == 1);
+    if (!(s.bpm >= 30 && s.bpm <= 240 && s.meter >= 0 && s.meter <= 3 &&
+        compatible(s.meter, s.subdivision) && (s.accent == 0 || s.accent == 1) &&
+        s.timbre >= 0 && s.timbre <= 2 && s.beatPattern >= 0 && s.beatPattern <= 255)) return false;
+    if (!s.beatPattern) return true;
+    if ((s.beatPattern >> (2 * beats(s.meter))) != 0) return false;
+    for (int i = 0; i < beats(s.meter); i++) if (((s.beatPattern >> (i * 2)) & 3) == 0) return false;
+    return true;
 }
 static uint64_t pack(BLSettings s) {
     return (uint64_t)s.bpm | ((uint64_t)s.meter << 8) |
-        ((uint64_t)s.subdivision << 12) | ((uint64_t)s.accent << 16);
+        ((uint64_t)s.subdivision << 12) | ((uint64_t)s.accent << 16) |
+        ((uint64_t)s.beatPattern << 17) | ((uint64_t)s.timbre << 25);
 }
 static BLSettings unpack(uint64_t value) {
     BLSettings s = {(int)(value & 255), (int)((value >> 8) & 15),
-        (int)((value >> 12) & 15), (int)((value >> 16) & 1)};
+        (int)((value >> 12) & 15), (int)((value >> 16) & 1),
+        (int)((value >> 17) & 255), (int)((value >> 25) & 3)};
     return s;
 }
 /* Integer rational positions, rounded independently. No cumulative interval rounding. */
@@ -81,6 +88,7 @@ static void beginBeat(BLDSP *d) {
     if (d->beatInBar == 0) {
         d->applied.meter = desired.meter;
         d->applied.accent = desired.accent;
+        d->applied.beatPattern = desired.beatPattern;
         int ladder = (int)((options >> 8) & 255);
         if (ladder != d->appliedLadder) d->ladderCounter = 0;
         d->appliedLadder = ladder;
@@ -100,7 +108,9 @@ static void beginBeat(BLDSP *d) {
         }
     }
     d->appliedMode = (int)(options & 3);
-    d->muted = d->appliedGap && (d->barNumber % (uint64_t)(4 + d->appliedGap)) >= 4;
+    d->applied.timbre = desired.timbre;
+    bool beatMuted = d->applied.beatPattern && ((d->applied.beatPattern >> (d->beatInBar * 2)) & 3) == 3;
+    d->muted = beatMuted || (d->appliedGap && (d->barNumber % (uint64_t)(4 + d->appliedGap)) >= 4);
     if (compatible(d->applied.meter, desired.subdivision)) {
         d->applied.subdivision = desired.subdivision;
     }
@@ -137,10 +147,14 @@ BLDSP *BLDSPCreate(uint32_t rate, BLSettings settings) {
     }
     d->clickLength = rate / 125; /* 8 ms, generated before the real-time path. */
     const double frequencies[3] = {2100.0, 3200.0, 1400.0};
-    for (int voice = 0; voice < 3; voice++) for (uint32_t i = 0; i < d->clickLength; i++) {
+    for (int timbre = 0; timbre < 3; timbre++) for (int voice = 0; voice < 3; voice++) for (uint32_t i = 0; i < d->clickLength; i++) {
         double t = (double)i / rate;
         /* Start at nonzero amplitude; onset is observable at the target sample. */
-        d->clicks[voice][i] = (float)(0.7 * cos(6.283185307179586 * frequencies[voice] * t) * exp(-650.0 * t));
+        double phase = 6.283185307179586 * frequencies[voice] * t;
+        double value = cos(phase) * exp(-650.0 * t);
+        if (timbre == 1) value = (0.65 * cos(phase * 0.38) + 0.35 * cos(phase * 0.93)) * exp(-450.0 * t);
+        if (timbre == 2) value = (0.5 * cos(phase * 0.7) + 0.3 * cos(phase * 1.83) + 0.2 * cos(phase * 2.61)) * exp(-1000.0 * t);
+        d->clicks[timbre][voice][i] = (float)(0.7 * value);
     }
     d->voiceOffset = (int)d->clickLength;
     return d;
@@ -168,7 +182,7 @@ bool BLDSPRequest(BLDSP *d, BLSettings s) {
     atomic_store_explicit(&d->requested, pack(s), memory_order_release); return true;
 }
 BLSettings BLDSPRequestedSettings(const BLDSP *d) {
-    return d ? unpack(atomic_load_explicit(&d->requested, memory_order_acquire)) : (BLSettings){80,2,0,1};
+    return d ? unpack(atomic_load_explicit(&d->requested, memory_order_acquire)) : (BLSettings){80,2,0,1,0,0};
 }
 void BLDSPSetGain(BLDSP *d, float gain) {
     if (!d || !isfinite(gain)) return;
@@ -188,7 +202,9 @@ void BLDSPRender(BLDSP *d, float *output, uint32_t count, uint64_t host) {
     for (uint32_t i = 0; i < count; i++, d->cursor++) {
         if (!d->started || d->cursor == d->nextBeat) beginBeat(d);
         if (d->cursor == d->nextPulse) {
-            d->voice = d->pulse == 0 ? (d->beatInBar == 0 && d->applied.accent ? 1 : 0) : 2;
+            int emphasis = d->applied.beatPattern ? (d->applied.beatPattern >> (d->beatInBar * 2)) & 3
+                : (d->beatInBar == 0 && d->applied.accent ? 2 : 1);
+            d->voice = d->pulse == 0 ? (emphasis == 2 ? 1 : 0) : 2;
             d->voiceOffset = 0;
             if (d->pulse == 0 || d->applied.subdivision == 1) {
                 d->speechVoice = d->pulse == 0 ? d->beatInBar : 4;
@@ -199,7 +215,7 @@ void BLDSPRender(BLDSP *d, float *output, uint32_t count, uint64_t host) {
                 ? position(d, d->beatNumber, d->pulse, pulses(d->applied.subdivision)) : d->nextBeat;
         }
         float click = d->voiceOffset < (int)d->clickLength
-            ? d->clicks[d->voice][d->voiceOffset++] * gain * (d->voice == 2 ? 0.45f : 1.0f) : 0;
+            ? d->clicks[d->applied.timbre][d->voice][d->voiceOffset++] * gain * (d->voice == 2 ? 0.45f : 1.0f) : 0;
         int word = d->speechVoice;
         float speech = d->voices[word] && d->speechOffset < d->voiceLengths[word]
             ? d->voices[word][d->speechOffset++] * gain : 0;

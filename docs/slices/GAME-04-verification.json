@@ -1,0 +1,98 @@
+{
+  "date": "2026-10-04",
+  "slice": "GAME-04",
+  "status": "PLAYABLE_CONCEPT_OWNER_ACCEPTANCE_PENDING",
+  "risk": "L0 isolated concept; no native authority changes",
+  "reason": "Owner rejected cosmetic jump presentation as insufficient gameplay",
+  "prototype": {
+    "path": "artifacts/development/rhythm-rescue.html",
+    "sha256": "1215492941076a99bd1e98e9e11e19943e84f271aee6e83525d9da9a7dd60e7f",
+    "bytes": 976440,
+    "character_asset": "Existing owner dinosaur PNG embedded unchanged",
+    "audio": "Generated local browser oscillator cues",
+    "persistence": "No App progress accessed; optional host concept outcome only"
+  },
+  "checks": {
+    "interaction": {
+      "status": "PASS",
+      "checks": [
+        "ready",
+        "start with generated audio",
+        "pause/resume",
+        "zero-input failure with zero energy",
+        "retry hearts reset",
+        "real-time first obstacle hit collects energy",
+        "duplicate/extra no bonus and life consequence",
+        "320px dark/reduced-motion no overflow"
+      ],
+      "screenshots": [
+        "rescue-ready.png",
+        "rescue-paused.png",
+        "rescue-jump.png",
+        "rescue-320-dark.png"
+      ],
+      "scope": "Local browser concept only; no native/physical timing/child appeal claim",
+      "errors": []
+    },
+    "completion": {
+      "status": "PASS",
+      "result": "救援成功！恐龍蛋跟你回家了！",
+      "coins": "★ 10 顆",
+      "method": "Browser test sends actual DOM pointer events against a live generated-audio clock; no production state/grade injection",
+      "scope": "Concept functionality only; no device/input precision claim"
+    },
+    "logs": [
+      "TestResults/GAME-03/prototype-check-final.log",
+      "TestResults/GAME-03/prototype-win-check-final.log"
+    ],
+    "preserved_attempts": [
+      {
+        "path": "TestResults/GAME-03/prototype-check-attempt1.log",
+        "reason": "Bundled browser executable unavailable; reused installed Chrome with owned headless profile"
+      },
+      {
+        "path": "TestResults/GAME-03/prototype-check-stale-preview.log",
+        "reason": "Preview wrapper had not regenerated after label polish; old zero-energy label mismatched updated expectation; force regeneration and final checks passed"
+      }
+    ],
+    "screenshots_reviewed": [
+      "rescue-ready.png",
+      "rescue-paused.png",
+      "rescue-jump.png",
+      "rescue-320-dark.png",
+      "rescue-win.png"
+    ],
+    "readback": "Literal fragment under 1 MB; unique root; no network API or undefined query targets observed",
+    "diff_check": "PASS",
+    "pause_capture": {
+      "status": "PASS",
+      "log": "TestResults/GAME-03/prototype-pause-capture.log",
+      "scope": "DOM paused state plus post-paint screenshot; initial pre-paint capture retained"
+    }
+  },
+  "skill": {
+    "name": "beatlab-rhythm-game-design",
+    "path": "/Users/pc49-58/.codex/skills/beatlab-rhythm-game-design/SKILL.md",
+    "validation": "PASS",
+    "hashes": "TestResults/GAME-03/skill-hashes-final.json",
+    "owner_feedback_saved": true
+  },
+  "delivery": {
+    "native_build6": "Retained rejected draft; NOT INSTALLED",
+    "phone_installed_build": "0.1.0 (5) from previous slice",
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "testflight": false
+  },
+  "not_claimed": [
+    "native gameplay implemented from this concept",
+    "child appeal/playtest",
+    "hardware input or timing precision",
+    "full accessibility",
+    "release readiness",
+    "G1-G4 acceptance",
+    "memory/session closeout"
+  ]
+}

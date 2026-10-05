@@ -1,0 +1,137 @@
+{
+  "date": "2026-10-05",
+  "slice": "HOME-01",
+  "risk": "L1 homepage composition and selected home tab tint only",
+  "status": "LOCAL_NATIVE_UI_CHECKS_PASS_OWNER_STYLE_PENDING",
+  "owner_observation": "Owner reports TestFlight build 9 downloaded; supplied homepage screenshot shows purple utility layout inconsistent with selected icon",
+  "implementation": [
+    "Approved icon retained; matching dinosaur derivative on warm yellow homepage hero",
+    "Deep green action/tint, actual recommended lesson and actual 10-lesson progress",
+    "Accessibility sizes give titles full width; whole page scroll and bottom clearance",
+    "Existing configuration summary IDs and navigation retained"
+  ],
+  "source": {
+    "base_sha": "12587401aa989663098aba605ef800648f175633",
+    "state": "uncommitted; prior dirty work preserved",
+    "production_manifest": "TestResults/HOME-01/source-hashes.json",
+    "file_count": 61,
+    "manifest_match": "PASS",
+    "boundary_receipt": "TestResults/HOME-01/change-boundary.json"
+  },
+  "checks": {
+    "simulator_build": {
+      "status": "PASS",
+      "log": "TestResults/HOME-01/build-final.log"
+    },
+    "ui": {
+      "wide": {
+        "passed": 4,
+        "failed": 0,
+        "summary": "TestResults/HOME-01/wide-final-summary.json",
+        "result_bundle": "TestResults/HOME-01/home-wide-final.xcresult",
+        "scope": "Native navigation, shared configuration/relaunch, daily preview without playback, largest text both entry points above tab bar"
+      },
+      "narrow": {
+        "passed": 2,
+        "failed": 0,
+        "summary": "TestResults/HOME-01/narrow-final-summary.json",
+        "result_bundle": "TestResults/HOME-01/home-narrow-final.xcresult",
+        "scope": "375x667 regular daily entry and largest-text entry points reachable by scrolling"
+      },
+      "dark": {
+        "passed": 1,
+        "failed": 0,
+        "summary": "TestResults/HOME-01/dark-final-summary.json",
+        "result_bundle": "TestResults/HOME-01/home-dark-final.xcresult",
+        "scope": "Largest text, native both entry points above tab bar; screenshot review"
+      }
+    },
+    "total_final_ui_cases": 7,
+    "failures": 0,
+    "solid_text_contrast": {
+      "status": "PASS",
+      "minimum_ratio": 5.71,
+      "receipt": "TestResults/HOME-01/palette-contrast.json",
+      "claim": "Listed solid color pairs only; not full accessibility"
+    },
+    "diff_check": "PASS",
+    "assets_json": "PASS",
+    "original_icon_hash_unchanged": "PASS",
+    "timing_scoring_persistence_and_lesson_files_unchanged": "PASS"
+  },
+  "screenshots": {
+    "regular": "TestResults/HOME-01/wide-home-light.png",
+    "narrow_regular": "TestResults/HOME-01/narrow-home-light.png",
+    "narrow_largest": "TestResults/HOME-01/narrow-home-largest-top.png",
+    "largest_start": "TestResults/HOME-01/wide-home-largest-start.png",
+    "largest_metronome": "TestResults/HOME-01/wide-home-largest-metronome.png",
+    "dark_largest": "TestResults/HOME-01/dark-home-largest-top.png",
+    "dark_native": "TestResults/HOME-01/home-dark-native.png"
+  },
+  "artwork_provenance": "docs/design/branding/home-dinosaur-source.json",
+  "preserved_attempts": [
+    {
+      "bundle": "TestResults/HOME-01/home-ui.xcresult",
+      "summary": "TestResults/HOME-01/interrupted-test-summary.json",
+      "executed_test_methods": 0,
+      "runner_launch_error": 1,
+      "reason": "New simulator remained in initialization; interrupted and shut down when reusing owned BeatLab device. No app test failure inference."
+    },
+    {
+      "bundle": "TestResults/HOME-01/home-ui-retry.xcresult",
+      "passed": 4,
+      "scope": "Before full-width accessibility heading refinement"
+    },
+    {
+      "bundle": "TestResults/HOME-01/home-dark-largest.xcresult",
+      "passed": 1,
+      "scope": "Before full-width accessibility heading refinement"
+    }
+  ],
+  "environment_events": [
+    "Native computer-use tool reported Mac locked; purpose-built simulator automation later completed validation without requiring unlock",
+    "Temporary disk-full failure while copying named preview files; copy retried after deleting only unused HOME-01-created disposable simulator and shutting down owned narrow device; all final xcresult summaries exported and PASS"
+  ],
+  "cleanup": {
+    "created_disposable_simulator": "6DDFCE60-C019-4A50-9307-461056D54E4A deleted after shutdown; no successful app installation or owner data",
+    "reused_owned_simulators": [
+      "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+      "7A5E53D5-112F-41DF-8CEA-9E6DE09F8E85"
+    ],
+    "restored_light_large_and_shutdown": true,
+    "other_simulators_untouched": true
+  },
+  "delivery": {
+    "new_testflight_upload": false,
+    "phone_install": false,
+    "distributed_version": "TestFlight 0.1.0 (9) unchanged",
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false
+  },
+  "not_claimed": [
+    "Owner acceptance of new homepage or child appeal",
+    "Game screen brand conversion or gameplay changes",
+    "Physical timing or child usability",
+    "Full VoiceOver/minimum-OS/accessibility acceptance",
+    "G1-G4 or App Store release readiness",
+    "Canonical memory/session closeout"
+  ],
+  "owner_preview_acceptance": "Approved native screenshot 2026-10-05; owner explicitly requested TestFlight update; phone runtime acceptance remains pending",
+  "subsequent_delivery": {
+    "slice": "TF-02",
+    "version": "0.1.0",
+    "build": "10",
+    "status": "TESTFLIGHT_OWNER_TRIAL_AVAILABLE",
+    "evidence": "docs/slices/TF-02-verification.json",
+    "phone_acceptance": "PENDING"
+  },
+  "owner_phone_feedback_20261005": {
+    "homepage_style": "ACCEPTED by owner report and screenshot",
+    "metronome_and_practice_style": "NOT ACCEPTED; mismatch reported",
+    "exact_installed_build": "NOT VERIFIED; screenshots omit version number",
+    "requested_action": "Analyze existing functions, define slices, commit/push current progress",
+    "evidence": "docs/design/FEATURE-AUDIT-20261005.md"
+  }
+}

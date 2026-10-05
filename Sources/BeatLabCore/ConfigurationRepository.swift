@@ -3,7 +3,7 @@ import Foundation
 /// One versioned, local payload. No audio/transport state is persisted here.
 public struct ConfigurationRepository {
     public static let storageKey = "beatlab.metronome.configuration"
-    public static let schemaVersion = 1
+    public static let schemaVersion = 2
     private let defaults: UserDefaults
 
     public enum LoadStatus: Equatable {
@@ -44,7 +44,7 @@ public struct ConfigurationRepository {
         }
         do {
             let header = try JSONDecoder().decode(Header.self, from: data)
-            guard header.schemaVersion == Self.schemaVersion else {
+            guard header.schemaVersion == 1 || header.schemaVersion == Self.schemaVersion else {
                 return LoadResult(
                     configuration: .defaultValue,
                     status: .unsupportedVersion(header.schemaVersion)

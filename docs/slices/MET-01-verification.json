@@ -1,0 +1,258 @@
+{
+  "date": "2026-10-04",
+  "slice": "MET-01",
+  "status": "IN_PROGRESS",
+  "scope": "Reference metronome controls; tuner and song-list destinations excluded from this slice",
+  "source_base_sha": "12587401aa989663098aba605ef800648f175633",
+  "source_state": "uncommitted",
+  "source_hashes": "TestResults/MET-01/source-hashes-build3.json",
+  "features": [
+    "Per-big-beat accent → normal → mute cycling; pattern at next bar",
+    "Electronic / woodblock / mechanical precomputed synthesized PCM; timbre at next beat",
+    "Pendulum driven by audio beat number/phase; Reduce Motion uses stationary indicator",
+    "Optional screen pulse / best-effort big-beat haptics; no camera torch",
+    "Tempo undo/redo; one slider gesture per step",
+    "Read-only v1 settings load; save v2 on successful user edit; future-version protection"
+  ],
+  "checks": {
+    "swiftpm": {
+      "status": "PASS",
+      "tests": 50,
+      "command": "swift test",
+      "evidence": "TestResults/MET-01/core-tests.log"
+    },
+    "actual_configuration_store": {
+      "status": "PASS",
+      "scope": "Actual ConfigurationStore.swift compiled on macOS with real core object files; tempo history, gesture grouping, restart, output settings, invalid/future-schema writes",
+      "harness": "TestResults/MET-01/ConfigurationStoreHarness.swift",
+      "harness_sha256": "24b926aad7f68ba4fc05c67d26a15e0ab43f2b54d1657fa5e549db7c3b97bc76",
+      "evidence": "TestResults/MET-01/store-harness.log",
+      "claim_boundary": "macOS store harness; not App runtime or native UI acceptance"
+    },
+    "dsp_focused": {
+      "status": "PASS",
+      "assertions": 528452,
+      "scope": "Boundaries, restart, silence, Gap, Ladder, voice and beat controls across every meter/timbre",
+      "command": "TestResults/MET-01/dsp-tests --boundaries-only"
+    },
+    "dsp_ubsan": {
+      "status": "PASS",
+      "result": {
+        "boundary_restart_silence_gap_ladder_voice_tests": "PASS",
+        "beat_controls": "PASS",
+        "assertions": 528452
+      },
+      "evidence": "TestResults/MET-01/dsp-ubsan.json"
+    },
+    "dsp_long_matrix": {
+      "status": "PASS",
+      "runs": 468,
+      "seconds_each": 900,
+      "simulated_hours": 117.0,
+      "max_onset_error_samples": 0.5,
+      "evidence": "TestResults/MET-01/dsp-matrix.json",
+      "claim_boundary": "Offline sample onsets; not output/input/haptic device precision"
+    },
+    "iphoneos_build": {
+      "status": "PASS",
+      "version": "0.1.0",
+      "build": "3",
+      "team": [
+        "P358EB3X9H"
+      ],
+      "bundle_id": "com.beatlab.app",
+      "evidence": "TestResults/MET-01/device-build-3.log",
+      "receipt": "TestResults/MET-01/BUILD.json"
+    },
+    "signature": {
+      "status": "PASS",
+      "owner_device_covered": true,
+      "command": "codesign --verify --deep --strict --verbose=2 <verified iphoneos app>; inspect profile"
+    },
+    "simulator_app_ui_tests": {
+      "status": "PASS",
+      "simulator_name": "BeatLab MET-01",
+      "simulator_id": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+      "runtime": "iOS 26.5 (23F77)",
+      "app_tests_passed": 15,
+      "unique_ui_flows_passed": 7,
+      "single_full_suite_all_green": false,
+      "claim_boundary": "15 App and 6 UI tests passed in MET-native-fixed; the remaining UI flow passed in MET-controls. Production sources match build 3; no physical timing or full accessibility acceptance.",
+      "earlier_startup_attempt": {
+        "status": "INTERRUPTED",
+        "exit_code": 73,
+        "simulator_name": "BeatLab MET-01",
+        "simulator_id": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+        "runtime": "iOS 26.5",
+        "evidence": "TestResults/MET-01/app-tests.log",
+        "startup_evidence": "TestResults/MET-01/simulator-boot.log",
+        "reason": "Startup remained blocked at BackBoard/CoreLocation migration for over ten minutes. Test attempt stopped before runtime execution; result bundle action-log saving failed after interruption.",
+        "native_tests_executed": "NOT VERIFIED",
+        "native_screenshots": "NOT CAPTURED",
+        "result_bundle_complete": false,
+        "owned_simulator_shutdown": "PASS",
+        "shutdown_evidence": "TestResults/MET-01/simulator-shutdown.log"
+      },
+      "attempts": [
+        {
+          "bundle": "TestResults/MET-01/MET-retry.xcresult",
+          "log": "TestResults/MET-01/app-tests-retry.log",
+          "exit_code": 65,
+          "app_passed": 15,
+          "ui_passed": 5,
+          "ui_failed": 2,
+          "reason": "DisclosureGroup identifier covered child pickers; beat tap targeted obscured offscreen control"
+        },
+        {
+          "bundle": "TestResults/MET-01/MET-native-fixed.xcresult",
+          "log": "TestResults/MET-01/app-tests-fixed.log",
+          "exit_code": 65,
+          "app_passed": 15,
+          "ui_passed": 6,
+          "ui_failed": 1,
+          "reason": "Picker regression fixed; one-direction full swipe overshot beat control"
+        },
+        {
+          "bundle": "TestResults/MET-01/MET-controls.xcresult",
+          "log": "TestResults/MET-01/met-controls.log",
+          "exit_code": 0,
+          "ui_passed": 1,
+          "ui_failed": 0,
+          "scope": "Reference controls, beat cycle, timbre, screen pulse, undo/redo, relaunch settings"
+        },
+        {
+          "bundle": "TestResults/MET-01/MET-large-dark.xcresult",
+          "log": "TestResults/MET-01/met-large-dark.log",
+          "exit_code": 65,
+          "ui_failed": 1,
+          "reason": "Large-text tempo action failed; log did not show current reveal helper, cause not established"
+        },
+        {
+          "bundle": "TestResults/MET-01/MET-large-dark-signed.xcresult",
+          "log": "TestResults/MET-01/met-large-dark-signed.log",
+          "exit_code": 73,
+          "status": "INTERRUPTED",
+          "reason": "Test helper queried frame of virtualized offscreen element before checking existence; stopped failed run to correct fixture. Result completeness not claimed"
+        },
+        {
+          "bundle": "TestResults/MET-01/MET-large-dark-final.xcresult",
+          "log": "TestResults/MET-01/met-large-dark-final.log",
+          "exit_code": 0,
+          "ui_passed": 1,
+          "ui_failed": 0,
+          "scope": "Same reference control flow at accessibility-extra-extra-extra-large and dark with ad-hoc signed simulator artifacts"
+        }
+      ],
+      "summaries": [
+        "TestResults/MET-01/native-fixed-summary.json",
+        "TestResults/MET-01/native-controls-summary.json",
+        "TestResults/MET-01/native-large-dark-summary.json"
+      ],
+      "native_screenshots": [
+        "TestResults/MET-01/native-controls",
+        "TestResults/MET-01/native-large-dark"
+      ],
+      "owned_simulator_shutdown": "PASS",
+      "shutdown_evidence": "TestResults/MET-01/simulator-continuation-shutdown.log",
+      "original_ui_preferences_restored": true
+    },
+    "install": {
+      "status": "PASS",
+      "device": "GavinWu0099 / iPhone 16 Pro",
+      "device_id": "0F60A459-7EE8-5B1B-BDF6-6B4D6047FAB8",
+      "version": "0.1.0",
+      "build": "3",
+      "source_manifest_match": "PASS (42 production files)",
+      "in_place_update": true,
+      "uninstall_or_data_reset": "NOT RUN",
+      "evidence": "TestResults/MET-01/phone-build3/install.json",
+      "candidate_check": "TestResults/MET-01/phone-build3/candidate-check.json"
+    },
+    "launch": {
+      "status": "PASS",
+      "bundle_id": "com.beatlab.app",
+      "device_id": "0F60A459-7EE8-5B1B-BDF6-6B4D6047FAB8",
+      "evidence": "TestResults/MET-01/phone-build3/launch.json",
+      "claim_boundary": "Process launch succeeded; functional, physical timing and accessibility acceptance remain pending"
+    },
+    "diff_whitespace": {
+      "status": "PASS",
+      "command": "git diff --check"
+    },
+    "native_visual_review": {
+      "status": "PASS for six captured stopped-metronome views",
+      "variants": [
+        "iPhone 17 Pro iOS 26.5; large/light",
+        "iPhone 17 Pro iOS 26.5; accessibility-extra-extra-extra-large/dark"
+      ],
+      "surfaces": [
+        "tempo",
+        "editable beats/pendulum",
+        "timbre and cue toggles"
+      ],
+      "observed": "Visible controls and labels readable; accessibility beat controls reflow to two columns; transport stays reachable. Long content scrolls. No whole-product acceptance claim.",
+      "not_tested": [
+        "VoiceOver",
+        "Reduce Motion runtime",
+        "Switch Control",
+        "Smallest supported screen",
+        "Physical cues and audio/visual sync"
+      ]
+    },
+    "candidate_identity": {
+      "status": "PASS",
+      "receipt": "TestResults/MET-01/BUILD.json",
+      "previous_candidate_receipt": "TestResults/MET-01/BUILD-2.json",
+      "bundle_id": "com.beatlab.app",
+      "version": "0.1.0",
+      "build": "3",
+      "executable_sha256": "835bdc19e3550920e127bc774caa3b91aa468315a88ba7dd6e4d107e04b63620",
+      "production_sources_match_build_manifest": true
+    }
+  },
+  "remaining": [
+    "Physical sound-timbre/cue experience and changed G1 output matrix",
+    "VoiceOver/Reduce Motion/Switch Control runtime, smallest supported screen, all existing G1-G4 acceptance"
+  ],
+  "authority": {
+    "implementation_authorized": true,
+    "prior_phone_installation_authorization_reused_when_device_available": true,
+    "new_release_upload_authorized": false,
+    "framework_pin_changed": false,
+    "protected_baseline_changed": false
+  },
+  "delivery": {
+    "new_commit": "NOT CREATED",
+    "push": "NOT RUN",
+    "pr": "NOT CREATED",
+    "merge": "NOT RUN",
+    "testflight": "NOT RUN"
+  },
+  "memory": {
+    "writer": "NOT AVAILABLE in this checkout; framework submodule uninitialized",
+    "memory_write": "NOT RUN",
+    "manual_daily_record": "NOT WRITTEN",
+    "session_closeout": "NOT CLAIMED"
+  },
+  "not_claimed": [
+    "VERIFIED/DONE for L2 acceptance",
+    "Physical timing or haptic precision",
+    "Full native accessibility acceptance",
+    "Single final full-suite green run",
+    "Release readiness"
+  ],
+  "native_test_source_hashes": "TestResults/MET-01/native-test-source-hashes.json",
+  "device_install_history": [
+    {
+      "install": {
+        "status": "NOT RUN",
+        "reason": "Build 3 owner iPhone unavailable in fresh continuation inventory; data and existing build 1 preserved",
+        "evidence": "TestResults/MET-01/devices-build3.json"
+      },
+      "launch": {
+        "status": "NOT RUN",
+        "reason": "Build 3 not installed; build 1 receipt not reused"
+      }
+    }
+  ]
+}

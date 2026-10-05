@@ -1,0 +1,13 @@
+{
+  "slice": "HOME-01",
+  "generator": "built-in image_gen",
+  "reference": "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+  "reference_sha256": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+  "artwork": "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png",
+  "artwork_sha256": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889",
+  "purpose": "Homepage mascot derived from approved AppIcon; original icon unchanged; no replacement of game mascots",
+  "transparent_background_requested": true,
+  "prompt": "docs/design/branding/home-dinosaur-prompt.txt",
+  "owner_style_acceptance": "PENDING",
+  "owner_preview_acceptance": "Approved native screenshot 2026-10-05; owner explicitly requested TestFlight update; phone runtime acceptance remains pending"
+}

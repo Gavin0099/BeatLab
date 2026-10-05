@@ -1,0 +1,153 @@
+{
+  "date": "2026-10-04",
+  "slice": "GAME-05",
+  "risk": "L1 isolated browser UI/presentation and scene tap surface",
+  "status": "OWNER_REJECTED_COLOR_AND_GAMEPLAY",
+  "reason": "Owner rejected previous visual quality; requested current web references",
+  "official_sources": [
+    {
+      "url": "https://www.nintendo.com/us/store/products/donkey-kong-country-returns-hd-switch/",
+      "observed_image": "https://assets.nintendo.com/image/upload/ar_16%3A9%2Cb_auto%3Aborder%2Cc_lpad/b_white/f_auto/q_auto/dpr_1.5/store/software/switch/70010000084604/003165ce519ad10a971134a4502dbef4f35df9ee264306be497acf8ac1648bab",
+      "observation": "Beach scene: layered rock/vegetation/water/sky, corner health, foreground action",
+      "scope": "Visual reference only; Nintendo page timed out, official asset inspected in browser"
+    },
+    {
+      "url": "https://www.playstation.com/en-us/games/sackboy-a-big-adventure/",
+      "observed_image": "https://gmedia.playstation.com/is/image/SIEPDC/sackboy-a-big-adventure-screenshot-01-disclaimer-en-01oct20?$1600px$",
+      "observation": "Tactile textile/materials, illuminated platforms, spatial depth",
+      "scope": "Visual reference only; image inspected in browser"
+    }
+  ],
+  "prototype": {
+    "path": "artifacts/development/rhythm-rescue-v2.html",
+    "sha256": "a9ed6a5e8008aa4eac2f64fb07d7d62130639e1dcc81c06c9215e31304483b55",
+    "bytes": 951029,
+    "asset_generation": "artifacts/development/rhythm-rescue-v2-assets/generation.json",
+    "prompt_mode": "built-in image_gen; style/palette reference is owner dinosaur",
+    "new_input": "Scene pointer forwards to the unchanged press function",
+    "mission": "Hidden while running/paused to keep the jump arc clear"
+  },
+  "checks": {
+    "interaction": {
+      "status": "PASS",
+      "checks": [
+        "ready",
+        "start with generated audio",
+        "pause/resume",
+        "zero-input failure with zero energy",
+        "retry hearts reset",
+        "real-time first obstacle hit collects energy",
+        "duplicate/extra no bonus and life consequence",
+        "320px dark/reduced-motion no overflow"
+      ],
+      "screenshots": [
+        "rescue-ready.png",
+        "rescue-paused.png",
+        "rescue-jump.png",
+        "rescue-320-dark.png"
+      ],
+      "scope": "Local browser concept only; no native/physical timing/child appeal claim",
+      "errors": []
+    },
+    "completion": {
+      "status": "PASS",
+      "result": "救援成功！恐龍蛋跟你回家了！",
+      "coins": "★ 10 顆",
+      "method": "Browser test sends actual DOM pointer events against a live generated-audio clock; no production state/grade injection",
+      "scope": "Concept functionality only; no device/input precision claim"
+    },
+    "scene_keyboard": {
+      "status": "PASS",
+      "checks": [
+        "actual scene touch matched",
+        "keyboard Space extra uses same judgment",
+        "mission hidden during active/paused play",
+        "320px controls fit",
+        "no runtime error"
+      ],
+      "boxes": {
+        "overflow": false,
+        "missionHidden": true,
+        "state": "paused",
+        "canvasHeight": 470
+      }
+    },
+    "pause_capture": {
+      "status": "PASS",
+      "log": "TestResults/GAME-05/pause.log"
+    },
+    "gameplay_functions_unchanged": {
+      "clock": true,
+      "schedule": true,
+      "finish": true,
+      "fail": true,
+      "press": true,
+      "start": true,
+      "tick": true,
+      "clearSound": true
+    },
+    "native_52_source_files_unchanged": true,
+    "character_codec": {
+      "status": "PASS",
+      "dimensions": [
+        1288,
+        1221
+      ],
+      "visibleDiff": 0,
+      "alphaDiff": 0,
+      "source": "Owner PNG unchanged; WebP codec only"
+    },
+    "screenshots_reviewed": [
+      "rescue-ready.png",
+      "rescue-jump.png",
+      "rescue-win.png",
+      "rescue-320-dark.png",
+      "rescue-paused.png",
+      "scene-touch-keyboard.png"
+    ],
+    "layout_review": "HUD brand received opaque capsule; task title hidden during jump/paused after first screenshot review",
+    "preserved_attempts": "before-hud-repair-* results retained",
+    "logs": [
+      "TestResults/GAME-05/interactions-final.log",
+      "TestResults/GAME-05/completion-final.log",
+      "TestResults/GAME-05/scene-input.log",
+      "TestResults/GAME-05/pause.log"
+    ],
+    "diff_check": "PASS"
+  },
+  "skill": {
+    "path": "/Users/pc49-58/.codex/skills/beatlab-rhythm-game-design",
+    "validation": "PASS",
+    "hashes": {
+      "SKILL.md": "c1d6924b4b88c5ba108cdac17ffd705d54e2640743073371e9d5bc14e20e77e2",
+      "references/visual-direction.md": "769d5ef0cc714557b1d8be99bc05ccb71b6640ef0a5f3e7dece0a47eb4a7edf9",
+      "references/games.md": "bab515a35677c6d57d4a2db9e12821cdeccc861796d74a2fd21ca633e0e8d7c8",
+      "agents/openai.yaml": "de4bd611ec43fbe37c8bff21b43ea69d2cd9002266a129991a800ebf2c3c2844"
+    }
+  },
+  "delivery": {
+    "phone_install": "NOT RUN; no native gameplay/visual candidate built in this slice",
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "testflight": false
+  },
+  "not_claimed": [
+    "owner visual acceptance",
+    "child appeal or developmental suitability",
+    "complete animated sprite set",
+    "native implementation of the runner",
+    "physical timing/input precision",
+    "full accessibility",
+    "G1-G4 acceptance",
+    "release readiness",
+    "memory closeout"
+  ],
+  "owner_feedback": {
+    "color": "顏色不符合，看起來很怪",
+    "gameplay": "遊戲玩起來不好玩",
+    "conclusion": "Preserve functional evidence; rejected visual/gameplay acceptance",
+    "follow_up": "GAME-06 diagnosis; preference questions pending"
+  }
+}

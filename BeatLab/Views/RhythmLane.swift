@@ -45,7 +45,10 @@ struct RhythmLane: View {
         }
         .foregroundStyle(selected ? BeatLabStyle.onAccent : stroke == .rest ? BeatLabStyle.muted : BeatLabStyle.ink)
         .frame(maxWidth: .infinity, minHeight: 44).padding(.vertical, 4)
-        .background(selected ? Color.accentColor : BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 12))
+        .background(selected ? Color.accentColor : stroke == .rest ? BeatLabStyle.canvas : BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 12))
+        .overlay(RoundedRectangle(cornerRadius: 12).strokeBorder(
+            stroke == .rest && !selected ? BeatLabStyle.line : Color.clear,
+            style: StrokeStyle(lineWidth: 1, dash: [4, 3])))
         .accessibilityElement(children: .ignore)
         .accessibilityLabel("第 \(index / pattern.stepsPerBeat + 1) 拍，第 \(index % pattern.stepsPerBeat + 1) 格，\(stroke == .rest ? "休止" : stroke == .right ? "右手" : "左手")")
         .accessibilityValue(selected ? "目前" : "")

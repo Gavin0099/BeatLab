@@ -1,0 +1,54 @@
+{
+  "date": "2026-10-05",
+  "slice": "BRAND-01",
+  "risk": "L0: branding and user-facing text only",
+  "owner_direction": "Adopt concept A name 拍拍冒險 and yellow-background jumping dinosaur icon",
+  "status": "BUILD_AND_FOCUSED_UI_PASS",
+  "source": "Uncommitted; prior work preserved",
+  "bundle_id": "com.beatlab.app",
+  "display_name": "拍拍冒險",
+  "simulator_candidate": "0.1.0 (8)",
+  "checks": {
+    "project_plist_lint": "PASS",
+    "debug_release_display_name_and_unchanged_bundle_id": "PASS",
+    "icon": "1024x1024 opaque PNG; packaged iPhone/iPad icon preview inspected",
+    "simulator_build": "PASS",
+    "existing_foundation_ui_tests": {
+      "passed": 2,
+      "failed": 0,
+      "summary": "TestResults/BRAND-01/test-summary.json",
+      "xcresult": "TestResults/BRAND-01/foundation.xcresult"
+    },
+    "build7_production_manifest_comparison": {
+      "entries": 52,
+      "changed": "TestResults/BRAND-01/changed-from-build7.json"
+    },
+    "preserved_diagnostics": [
+      "Initial source-inventory assertion accidentally omitted the authorized AppIcon change; corrected expected inventory passed",
+      "Post-test preview launch found simulator Shutdown; boot required before preview"
+    ],
+    "diff_check": "PASS"
+  },
+  "assets": "docs/design/branding/brand.json",
+  "app_icon_sha256": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+  "preview": {
+    "result": "PASS: inspected 首页 navigation title 拍拍冒險 and compiled dinosaur icon",
+    "home_screenshot": "TestResults/BRAND-01/home-ready.png",
+    "early_launch_screenshot": "TestResults/BRAND-01/home.png (captured before content ready; not claimed as final preview)"
+  },
+  "phone_install": "NOT RUN; owner phone remains build 7",
+  "store_name_subtitle_metadata": "NOT WRITTEN",
+  "not_claimed": [
+    "App Store name or trademark availability",
+    "gameplay character artwork updated",
+    "physical timing or G1-G4 acceptance",
+    "release readiness",
+    "phone installation",
+    "commit/push/PR/merge/TestFlight/submission"
+  ],
+  "cleanup": {
+    "owned_simulator": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+    "shutdown": true,
+    "other_simulators_untouched": true
+  }
+}

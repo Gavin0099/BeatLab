@@ -1,0 +1,76 @@
+{
+  "date": "2026-10-05",
+  "slice": "PHONE-07",
+  "status": "INSTALLED_AND_LAUNCHED_FOR_TRIAL",
+  "completed_at_utc": "2026-10-05T00:25:50.253924+00:00",
+  "candidate": {
+    "source_base_sha": "12587401aa989663098aba605ef800648f175633",
+    "source_state": "Uncommitted GAME-07 runner and viewport repair; prior work preserved",
+    "source_hashes": "TestResults/GAME-07/source-hashes.json",
+    "source_file_count": 52,
+    "changed_from_build6": [
+      "BeatLab/Views/PracticeView.swift"
+    ],
+    "configuration": "Debug",
+    "platform": "iphoneos",
+    "app_path": "/Users/pc49-58/Desktop/BeatLab/TestResults/GAME-07/BeatLab.app",
+    "bundle_id": "com.beatlab.app",
+    "version": "0.1.0",
+    "build": "7",
+    "signature_verified": true,
+    "owner_device_covered": true,
+    "team": [
+      "P358EB3X9H"
+    ],
+    "executable_sha256": "57b5fa49867c8e8e88d448ecc782805c047575f40a691cab8add95f84742a23f",
+    "assets_car_sha256": "e04c5f2f2f05b8ac591c461ab5037de39b2ced6ce6354085b2b0fe3088a804b1",
+    "build_log": "TestResults/GAME-07/device-build.log",
+    "install": "PASS",
+    "launch": "PASS",
+    "delivery_reason": "Owner explicitly requested installing the GAME-07 trial candidate; in-place installation and launch succeeded",
+    "inventory_receipt": "TestResults/PHONE-07/devices.json",
+    "install_receipt": "TestResults/PHONE-07/install.json",
+    "launch_receipt": "TestResults/PHONE-07/launch.json"
+  },
+  "device": {
+    "identifier": "0F60A459-7EE8-5B1B-BDF6-6B4D6047FAB8",
+    "name": "GavinWu0099",
+    "model": "iPhone 16 Pro"
+  },
+  "checks": {
+    "candidate": "TestResults/GAME-07/BUILD.json",
+    "source_manifest_52_files": "PASS",
+    "recorded_artifact_hashes": "PASS",
+    "signature": "PASS",
+    "bundle_build_platform": "PASS",
+    "owner_profile_coverage_and_expiry": "PASS",
+    "install": "PASS",
+    "launch": "PASS"
+  },
+  "receipts": {
+    "inventory": "TestResults/PHONE-07/devices.json",
+    "install": "TestResults/PHONE-07/install.json",
+    "install_log": "TestResults/PHONE-07/install.log",
+    "launch": "TestResults/PHONE-07/launch.json",
+    "launch_log": "TestResults/PHONE-07/launch.log"
+  },
+  "design_acceptance": "PENDING owner gameplay/visual trial",
+  "not_claimed": [
+    "physical timing/input/sync",
+    "owner gameplay/visual acceptance",
+    "child usability",
+    "G1-G4 acceptance",
+    "release readiness"
+  ],
+  "delivery": {
+    "install": "PASS",
+    "launch": "PASS",
+    "uninstall": false,
+    "data_reset": false,
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "testflight": false
+  }
+}

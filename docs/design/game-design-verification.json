@@ -1,0 +1,150 @@
+{
+  "slice": "GAME-DESIGN-01",
+  "date": "2026-10-04",
+  "risk": "L0 design only",
+  "status": "DESIGN_COMPLETE",
+  "native_implementation": "NOT CHANGED",
+  "design": {
+    "source": "docs/design/beatlab-rhythm-quest.html",
+    "alternatives": [
+      "節奏旅程",
+      "練鼓工作台"
+    ],
+    "recommended": "節奏旅程",
+    "lesson_count": 10,
+    "count_in_beats": 4,
+    "bars": 4,
+    "fixture_feedback": true,
+    "silent": true
+  },
+  "browser": {
+    "engine": "Chromium",
+    "version": "153.0.8010.12",
+    "playwright": "1.63.0",
+    "checks": [
+      "JavaScript parses",
+      "All ten lesson IDs, BPM, instructions, patterns and four bars match repository catalog",
+      "Locked chapter lessons show disabled control and previous-lesson reason",
+      "Lesson selection opens preparation with actual R/L pattern",
+      "Four-beat count-in blocks drum pad",
+      "Pad enables after count-in; exactly one current step",
+      "Tap updates visible feedback",
+      "Four-bar silent run ends with clearly labeled fixture result",
+      "Pass unlocks next preparation",
+      "Private state preserves demo progress independently of model choices",
+      "State restoration preserves newly unlocked next lesson",
+      "Stopping returns to unchanged map with explicit no-score notice",
+      "Failure offers retry and no next-lesson control",
+      "Failed fixture keeps next lesson locked",
+      "Unsaved result exposes retry and explicit discard, with no navigation bypass",
+      "Discard keeps progression unchanged",
+      "Successful save enables next lesson",
+      "Final lesson has no nonexistent next and one map action",
+      "Rest tap provides rest-specific feedback",
+      "Keyboard Enter starts challenge",
+      "OS reduced motion suppresses decorative drum animation",
+      "Design motion switch suppresses decorative drum animation",
+      "Named carousel switches to alternate layout",
+      "Carousel preserves local preparation state",
+      "96 responsive view/theme/scale/layout cases have no horizontal content clipping",
+      "All enabled product controls meet 44px targets in 96 cases",
+      "Explicit light and dark appearance apply",
+      "No browser runtime errors"
+    ],
+    "runtime_errors": [],
+    "layout_cases": 96,
+    "widths_px": [
+      320,
+      390,
+      736
+    ],
+    "themes": [
+      "light",
+      "dark"
+    ],
+    "font_scales": [
+      1,
+      1.75
+    ],
+    "views": [
+      "關卡",
+      "準備",
+      "挑戰",
+      "結果"
+    ],
+    "enabled_control_min_px": 44,
+    "host_Tweak_actual_runtime": "NOT RUN; standalone renderer does not provide Tweak; registration is guarded"
+  },
+  "palette_contrast": {
+    "checks": 26,
+    "minimum_ratio": 5.107,
+    "threshold": 4.5,
+    "scope": "Reviewed text/surface token pairs; not a full accessibility audit"
+  },
+  "catalog_fixture_checks": {
+    "lesson_catalog": "Sources/BeatLabCore/Resources/lessons.json",
+    "exact_catalog_content": "PASS",
+    "outcome_examples": 20,
+    "grade_and_save_authority": "Existing native stores/rules remain authoritative; prototype does not score user input"
+  },
+  "visual_review": {
+    "status": "PASS",
+    "screenshots": [
+      "TestResults/GAME-DESIGN/map.png",
+      "TestResults/GAME-DESIGN/studio.png",
+      "TestResults/GAME-DESIGN/ready.png",
+      "TestResults/GAME-DESIGN/game.png",
+      "TestResults/GAME-DESIGN/result.png",
+      "TestResults/GAME-DESIGN/large-dark.png",
+      "TestResults/GAME-DESIGN/save-failure.png"
+    ],
+    "observed": "Reviewed map, alternate list, rhythm grid, drum pad, result, save failure and large/dark screenshot. Sixteenth subdivisions use one beat per row."
+  },
+  "design_defects_fixed": [
+    {
+      "problem": "Host echoes of saved preview state restored a static game view during count-in",
+      "change": "Ignore own state echo while retaining external restore",
+      "regression": "Four-beat count-in and four-bar completion browser checks pass"
+    },
+    {
+      "problem": "Preview restore lost locally unlocked lesson progress",
+      "change": "Store demo progress in private state",
+      "regression": "Newly unlocked next lesson stays enabled after state restoration"
+    },
+    {
+      "problem": "Unsaved result could be left through bottom navigation without explicit discard",
+      "change": "Hide navigation and provide explicit discard",
+      "regression": "No bypass, discard preserves locks, successful retry unlocks next"
+    },
+    {
+      "problem": "Two-by-two subdivision blocks obscured sixteenth reading order",
+      "change": "Each beat is one row of four cells",
+      "regression": "96 layout cases and large/dark visual review"
+    }
+  ],
+  "evidence_refs": {
+    "command": "node TestResults/GAME-DESIGN/verify.cjs",
+    "report": "TestResults/GAME-DESIGN/report.json",
+    "harness": "TestResults/GAME-DESIGN/verify.cjs",
+    "layouts": "TestResults/GAME-DESIGN/layout-results.json",
+    "contrast": "TestResults/GAME-DESIGN/contrast.json",
+    "fixtures": "TestResults/GAME-DESIGN/fixtures.json",
+    "prior_failure_preserved": "TestResults/GAME-DESIGN/failure.json"
+  },
+  "sha256": {
+    "docs/design/beatlab-rhythm-quest.html": "070102a15cb702c96b90bc2761c7123c32a8192e6144dfa35f39c2c3003b0032",
+    "TestResults/GAME-DESIGN/verify.cjs": "35c17e0f83efe577e661ce91337b377715bc0a5eca1b5172b2c606e0885ac8f2",
+    "Sources/BeatLabCore/Resources/lessons.json": "66f0ecadc951cf4ff7d9b8e3d871323dada21d5dcb3553428136b84eb6903b4b"
+  },
+  "not_claimed": [
+    "Native game implementation",
+    "Actual host Tweak controls execution",
+    "Native audio/UI/input timing or true grading",
+    "VoiceOver walkthrough",
+    "Physical iPhone layout or updated installation",
+    "Child enjoyment/understanding",
+    "G1-G4 acceptance",
+    "Release readiness",
+    "Commit/push/PR/merge/TestFlight"
+  ]
+}

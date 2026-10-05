@@ -5,6 +5,52 @@ import BeatLabCore
 
 final class ConfigurationStoreTests: XCTestCase {
     @MainActor
+    func testTempoUndoRedoGroupsSliderAndPreservesOtherSettings() async throws {
+        try withRepository { repository, _ in
+            let store = ConfigurationStore(repository: repository)
+            store.setTempo(120)
+            store.beginTempoGesture()
+            store.setTempo(121); store.setTempo(137); store.setTempo(150)
+            store.endTempoGesture()
+            store.setClickTimbre(.woodblock)
+            store.cycleBeat(at: 1)
+            store.undoTempo()
+            XCTAssertEqual(store.configuration.tempo.bpm, 120)
+            XCTAssertEqual(store.configuration.clickTimbre, .woodblock)
+            XCTAssertEqual(store.configuration.beatEmphases[1], .muted)
+            store.undoTempo()
+            XCTAssertEqual(store.configuration.tempo.bpm, 80)
+            store.redoTempo()
+            XCTAssertEqual(store.configuration.tempo.bpm, 120)
+            store.setTempo(100)
+            XCTAssertTrue(store.redoTempos.isEmpty)
+            let history = store.undoTempos
+            store.setTempo(241)
+            XCTAssertEqual(store.undoTempos, history)
+            XCTAssertEqual(repository.load().configuration.tempo.bpm, 100)
+        }
+    }
+
+    @MainActor
+    func testFutureSchemaBlocksUndoAndNewSettingsWithoutLosingHistory() async throws {
+        try withRepository { repository, defaults in
+            let store = ConfigurationStore(repository: repository)
+            store.setTempo(120)
+            let future = Data(#"{"schemaVersion":99}"#.utf8)
+            defaults.set(future, forKey: ConfigurationRepository.storageKey)
+            store.undoTempo()
+            store.setClickTimbre(.mechanical)
+            store.cycleBeat(at: 0)
+            store.setHapticsEnabled(true)
+            XCTAssertEqual(store.configuration.tempo.bpm, 120)
+            XCTAssertEqual(store.undoTempos, [80])
+            XCTAssertTrue(store.redoTempos.isEmpty)
+            XCTAssertEqual(store.configuration.beatEmphases[0], .accent)
+            XCTAssertEqual(defaults.data(forKey: ConfigurationRepository.storageKey), future)
+        }
+    }
+
+    @MainActor
     private func withRepository(_ body: (ConfigurationRepository, UserDefaults) throws -> Void) throws {
         let suite = "BeatLabStoreTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
@@ -73,7 +119,7 @@ final class ConfigurationStoreTests: XCTestCase {
     @MainActor
     func testUnsupportedSettingsRemainUntouchedUntilExplicitReset() async throws {
         try withRepository { repository, defaults in
-            let future = Data(#"{"schemaVersion":2,"future":"preserve"}"#.utf8)
+            let future = Data(#"{"schemaVersion":99,"future":"preserve"}"#.utf8)
             defaults.set(future, forKey: ConfigurationRepository.storageKey)
             let store = ConfigurationStore(repository: repository)
             XCTAssertFalse(store.canEdit)

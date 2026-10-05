@@ -1,0 +1,210 @@
+{
+  "date": "2026-10-05",
+  "slice": "TF-01",
+  "status": "TESTFLIGHT_OWNER_TRIAL_AVAILABLE",
+  "owner_authorization": "TestFlight upload for owner trial only; no App Store submission",
+  "base_sha": "12587401aa989663098aba605ef800648f175633",
+  "source_state": "Uncommitted authorized local candidate; exact file manifest retained",
+  "source_manifest": "TestResults/TF-01/source-hashes.json",
+  "archive": "TestResults/TF-01/BeatLab.xcarchive",
+  "configuration": "Release",
+  "display_name": "拍拍冒險",
+  "bundle_id": "com.gavin0099.beatlab",
+  "version": "0.1.0",
+  "build": "9",
+  "xcode": "26.6 (17F113)",
+  "sdk": "iphoneos26.5",
+  "archive_signature_verified": true,
+  "archive_profile_type": "development (before App Store distribution re-signing)",
+  "team": [
+    "P358EB3X9H"
+  ],
+  "archive_profile_expires": "2027-10-04T09:53:58",
+  "archive_executable_sha256": "d978099f8f9ebb2d090a80de5b613b968f631670f79f0270c916aca6ea93f8c6",
+  "archive_assets_sha256": "1f1f59fcce6bfa6ccff8ee27550749542ab0279ebcb573f51b3f4285241c0a3c",
+  "checks": {
+    "core_tests": {
+      "passed": 50,
+      "failed": 0,
+      "log": "TestResults/TF-01/core-tests.log"
+    },
+    "brand_ui_prior_slice": {
+      "passed": 2,
+      "evidence": "docs/slices/BRAND-01-verification.json",
+      "scope": "Previous build 8; not TestFlight build runtime acceptance"
+    },
+    "archive_and_bundle_validation": "TestResults/TF-01/archive-validation.json",
+    "privacy_plist_and_project_lint": "PASS",
+    "diff_check": "PASS",
+    "source_manifest_match": "PASS; 53 files after necessary bundle ID correction"
+  },
+  "attempts": [
+    {
+      "stage": "first_archive",
+      "result": "PASS_WITH_IPAD_WARNING",
+      "log": "TestResults/TF-01/archive-before-ipad-fix.log",
+      "artifact": "TestResults/TF-01/BeatLab-before-ipad-fix.xcarchive"
+    },
+    {
+      "stage": "corrected_archive",
+      "result": "PASS",
+      "log": "TestResults/TF-01/archive.log",
+      "orientation_warning_resolved": true
+    },
+    {
+      "stage": "local_distribution_export",
+      "result": "FAIL",
+      "exit_code": 70,
+      "log": "TestResults/TF-01/export.log",
+      "errors": [
+        "No Accounts",
+        "No profiles for com.beatlab.app were found"
+      ]
+    },
+    {
+      "stage": "Xcode_UI_export_fallback",
+      "result": "BLOCKED",
+      "reason": "Mac locked; automatic unlock unavailable; owner unlock requested"
+    },
+    {
+      "stage": "CLI_export_without_online_provisioning",
+      "result": "FAIL",
+      "exit_code": 70,
+      "log": "TestResults/TF-01/export-unlocked-attempt.log",
+      "errors": [
+        "No profiles for com.beatlab.app"
+      ]
+    },
+    {
+      "stage": "CLI_export_with_online_provisioning",
+      "result": "FAIL",
+      "exit_code": 70,
+      "log": "TestResults/TF-01/export-auth-retry.log",
+      "errors": [
+        "No Accounts",
+        "No profiles for com.beatlab.app"
+      ]
+    },
+    {
+      "stage": "explicit_app_id_registration",
+      "result": "FAIL",
+      "errors": [
+        "com.beatlab.app is not available"
+      ],
+      "artifact": "TestResults/TF-01/BeatLab-unavailable-bundle-id.xcarchive"
+    },
+    {
+      "stage": "owner_namespace_app_id_registration",
+      "result": "PASS",
+      "bundle_id": "com.gavin0099.beatlab",
+      "team": "P358EB3X9H"
+    },
+    {
+      "stage": "identity_corrected_archive",
+      "result": "PASS",
+      "log": "TestResults/TF-01/archive.log"
+    },
+    {
+      "stage": "manual_distribution_export",
+      "result": "PASS",
+      "log": "TestResults/TF-01/export-manual.log"
+    },
+    {
+      "stage": "manual_CLI_upload",
+      "result": "FAIL",
+      "exit_code": 70,
+      "log": "TestResults/TF-01/upload-manual.log",
+      "errors": [
+        "Failed to Use Accounts"
+      ]
+    },
+    {
+      "stage": "Xcode_UI_upload",
+      "result": "BLOCKED",
+      "reason": "Mac locked; owner unlock requested asynchronously"
+    },
+    {
+      "stage": "Xcode_GUI_internal_only_upload",
+      "result": "PASS",
+      "time_local": "2026-10-05 13:30 Asia/Taipei",
+      "version": "0.1.0",
+      "build": "9",
+      "receipt": "TestResults/TF-01/xcode-upload-complete.png",
+      "export": "TestResults/TF-01/xcode-upload-20261005-1331",
+      "manage_version_build": true,
+      "observed_version_build_unchanged": true
+    },
+    {
+      "stage": "Apple_processing",
+      "result": "PASS",
+      "build_id": "ed547988-c59f-4e71-adf0-f55b57f600d3"
+    },
+    {
+      "stage": "build_notes_saved",
+      "result": "PASS",
+      "locale": "zh-Hant"
+    },
+    {
+      "stage": "owner_internal_group_assignment",
+      "result": "PASS",
+      "group_builds": 1,
+      "group_testers": 1,
+      "build_status": "TESTING",
+      "owner_invitation": "INVITED"
+    }
+  ],
+  "app_store_connect": {
+    "authenticated": true,
+    "app_id": "6819149808",
+    "name": "拍拍冒險",
+    "bundle_id": "com.gavin0099.beatlab",
+    "sku": "com.gavin0099.beatlab",
+    "primary_language": "zh-Hant",
+    "group_id": "f22292e2-82b7-4d27-a534-820bb2cef5d1",
+    "group_name": "本人試玩",
+    "group_testers": 1,
+    "group_builds": 1,
+    "automatic_distribution": false,
+    "owner_role": "Account holder/admin",
+    "other_testers_invited": false,
+    "builds": "0.1.0 (9), internal-only, TESTING",
+    "proof": "TestResults/TF-01/testflight-ready.jpg",
+    "url": "https://appstoreconnect.apple.com/teams/7d6e8665-b844-4e3c-bbba-86ed0cf73e1b/apps/6819149808/testflight",
+    "build_id": "ed547988-c59f-4e71-adf0-f55b57f600d3",
+    "owner_invitation": "INVITED 2026-10-05"
+  },
+  "distribution_export": "PASS; manual signing with existing Apple Distribution certificate",
+  "upload": "PASS; Xcode GUI uploaded 0.1.0 (9), Organizer Uploaded to Apple",
+  "apple_processing": "PASS; completed, build 9 ready for testing",
+  "owner_tester_assignment": "PASS; 本人試玩 has 1 owner tester and 0.1.0 (9), 正在測試; owner 已邀請",
+  "testflight_device_install": "NOT RUN; owner invitation acceptance and phone installation not observed",
+  "testflight_internal_only": true,
+  "what_to_test": "TestResults/TF-01/what-to-test-zh-Hant.txt",
+  "not_claimed": [
+    "App Store release readiness",
+    "G1-G4 acceptance",
+    "physical timing or child enjoyment",
+    "new commits/push/PR/merge",
+    "memory/session closeout",
+    "Owner invitation acceptance or phone installation"
+  ],
+  "distribution_ipa": "TestResults/TF-01/export-manual/BeatLab.ipa",
+  "distribution_validation": "TestResults/TF-01/distribution-validation.json",
+  "distribution_ipa_sha256": "1260be7f199951906452637f60f91876ff8f74eeab9f24c2e219bee1dc1a1272",
+  "distribution_profile_expires": "2027-08-14 07:07:49",
+  "distribution_get_task_allow": false,
+  "identity_correction": {
+    "reason": "Original generic ID rejected by Apple as unavailable",
+    "previous_bundle": "com.beatlab.app",
+    "current_bundle": "com.gavin0099.beatlab",
+    "data_effect": "Separate installation; existing development app practice data not migrated",
+    "old_archive_preserved": true
+  },
+  "uploaded_package_validation": "TestResults/TF-01/uploaded-package-validation.json",
+  "uploaded_ipa": "TestResults/TF-01/xcode-upload-20261005-1331/BeatLab.ipa",
+  "uploaded_ipa_sha256": "b4525adef62eaea434650f3932ab257e5fe1637cd0b9cc05361753d2c6cb8307",
+  "upload_receipt": "TestResults/TF-01/xcode-upload-complete.png",
+  "availability_proof": "TestResults/TF-01/testflight-ready.jpg",
+  "owner_invitation_proof": "TestResults/TF-01/testflight-owner-invited.jpg",
+  "what_to_test_saved": "PASS; zh-Hant build 9 notes saved"
+}

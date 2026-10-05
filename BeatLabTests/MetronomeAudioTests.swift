@@ -15,6 +15,8 @@ final class MetronomeAudioTests: XCTestCase {
         XCTAssertEqual(settings.meter, 3)
         XCTAssertEqual(settings.subdivision, 4)
         XCTAssertEqual(settings.accent, 0)
+        XCTAssertEqual(settings.beatPattern, 5)
+        XCTAssertEqual(settings.timbre, 0)
     }
 
     @MainActor

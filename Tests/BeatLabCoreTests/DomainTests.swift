@@ -3,6 +3,34 @@ import XCTest
 @testable import BeatLabCore
 
 final class DomainTests: XCTestCase {
+    func testBeatCycleAndMeterResizePreserveStatesAndRejectBadIndex() throws {
+        var config = MetronomeConfiguration.defaultValue
+        XCTAssertEqual(config.beatEmphases, [.accent, .normal, .normal, .normal])
+        try config.cycleBeat(at: 0)
+        XCTAssertEqual(config.beatEmphases[0], .normal)
+        try config.cycleBeat(at: 0)
+        XCTAssertEqual(config.beatEmphases[0], .muted)
+        try config.cycleBeat(at: 0)
+        XCTAssertEqual(config.beatEmphases[0], .accent)
+        try config.cycleBeat(at: 1)
+        config.setTimeSignature(.sixEight)
+        XCTAssertEqual(config.beatEmphases, [.accent, .muted])
+        XCTAssertEqual(config.subdivision, .compoundEighth)
+        config.setTimeSignature(.fourFour)
+        XCTAssertEqual(config.beatEmphases, [.accent, .muted, .normal, .normal])
+        XCTAssertThrowsError(try config.cycleBeat(at: -1))
+        XCTAssertThrowsError(try config.cycleBeat(at: 4))
+        XCTAssertEqual(config.beatEmphases, [.accent, .muted, .normal, .normal])
+    }
+
+    func testInvalidPatternsAndTimbresCannotBeDecoded() throws {
+        for extra in [#",\"beatEmphases\":[2,1]"#, #",\"beatEmphases\":[2,0,1,1]"#, #",\"clickTimbre\":3"#] {
+            let suffix = extra.replacingOccurrences(of: "\\\"", with: "\"")
+            let json = "{\"tempo\":120,\"timeSignature\":\"4/4\",\"subdivision\":\"quarter\",\"accentEnabled\":true" + suffix + "}"
+            XCTAssertThrowsError(try JSONDecoder().decode(MetronomeConfiguration.self, from: Data(json.utf8)))
+        }
+    }
+
     func testTempoAcceptsInclusiveBoundaries() throws {
         XCTAssertEqual(try Tempo(bpm: 30).bpm, 30)
         XCTAssertEqual(try Tempo(bpm: 240).bpm, 240)

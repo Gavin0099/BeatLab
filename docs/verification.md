@@ -1,5 +1,39 @@
 # BeatLab 驗收與證據
 
+> **目前基準（2026-10-05）**：TestFlight 0.1.0（10）已提供本人試玩，Release／實際上傳包／Apple 處理／群組可測已驗證。Owner 手機回饋接受首頁風格，節拍器與練習待六個後續 slice。下面各舊 build 與未上傳敘述是歷史狀態；最新交付以 TF-02 evidence 為準。G1-G4、物理 timing、三頁／十關完整 accessibility 與兒童體驗仍未接受。此輪 PROGRESS-01 只分析、checkpoint 與 Git push；沒有重跑整個 native suite。
+> [目前功能與切分](design/FEATURE-AUDIT-20261005.md) · [當前 beta](slices/TF-02-verification.json) · [checkpoint evidence](slices/PROGRESS-01-verification.json)
+
+
+## GAME-05：視覺改版草稿（owner 已拒絕）
+
+owner 已指出顏色不符合且遊戲不好玩；先前操作驗證不能取代這個接受結果。原創背景／精簡 HUD／大角色與落地光圈已套入隔離的瀏覽器概念；原生 App 未修改。核心 browser clock／判定／生命／通關函式與 GAME-04 比對一致，新增場景觸控仍接同一個 press。開始／暫停／重試、零輸入失敗、真實 DOM tap 命中、duplicate／extra 及通關都有檢查；小螢幕 light／dark 與圖片需分開人工檢視。這些不證明兒童吸引力、native timing 或 G1～G4。原始命令、來源與圖像見 `docs/slices/GAME-05-verification.json`。
+
+## GAME-03／GAME-04：玩法重想
+
+GAME-03 原生跳島草稿：50 core／24 App（含 7 個獨立 presentation fixtures）通過；一般 light 與最大字級 dark 各 3 個原生流程通過。App 測試在單純鼓墊高度／識別碼修正前完成，模型及 authority 未變；保留最初 compile failure 和 2 個 native UI failures。確切來源邊界見 `docs/slices/GAME-03-verification.json`。這不代表 GAME-03 玩法被接受；owner 已拒絕，簽署 build 6 未安裝，手機仍為先前 build 5。
+
+GAME-04 以隔離的瀏覽器救援跑酷概念重新檢查玩法。概念音訊／判定／生命只供試玩，不接入原生時間軸、星星或保存。真正遊戲的原生實作需新契約，不能把瀏覽器結果當成真機精度、兒童吸引力或 G1～G4 驗收。個人 skill 已保存五個官方參考及 owner 回饋。
+
+## GAME-02 遊戲夥伴與冒險呈現
+
+GAME-02 已加入貓咪／機器人／恐龍夥伴、三個冒險場景與篇章徽章；最新 BeatLab 0.1.0（5）已原地安裝於 owner iPhone 16 Pro。啟動被手機鎖定阻擋，待 owner 解鎖。 三種夥伴、三個場景、路線及篇章徽章沿用真實 grade／已保存星星。只改 PracticeView 與新增五個原始 imagesets；來源與 52-file manifest、簽署/profile、素材打包、install 已確認；launch 狀態以此節摘要與 receipt 為準。
+
+一般 light 原有 3 個練習流程通過，選擇卡片修正後重驗旅程流程通過；最大字級＋dark 採組合證據：修正前不進入選擇器的每日流程通過，修正後夥伴旅程與零輸入結果共 2 個流程通過。不是單一最終 3 測試套件；保留中斷與失敗結果。 最終一般／大字深色的選擇器、場景、鼓墊與實際零輸入失敗畫面已檢視。修正 sheet 可視範圍／fail-fast 測試腳本與大字卡片後重跑，未改音訊／輸入／評分。歷史 core 50／App 17 未重跑，不能累計成新增流程。完整原始與來源邊界見 `docs/slices/GAME-02-verification.json`。
+
+兒童吸引力仍需試玩；真機遊戲操作、物理 timing、成功徽章畫面、完整 VoiceOver／Reduce Motion、最小螢幕與 G1～G4 仍待驗收。
+
+## GAME-01 原生遊戲介面
+
+「節奏旅程」已套入原生 App：三篇章十關、真實星星與解鎖、準備／圓形鼓墊挑戰／結果、保存重試與放棄。既有 audio/input clock、matching、評分與 persistence 未修改。50 core tests、17 App tests、最終 6 個 UI 流程 PASS；最大 accessibility 字級＋dark 重跑 3 個練習流程 PASS。保留 package resolution 中斷及祖先識別碼覆蓋造成的 2 個 UI 失敗，修正後通過；App 與最終 UI 為分開執行，沒有單次 full-suite 全綠宣稱。
+
+Debug iphoneos 0.1.0（4）建置／簽署／owner profile coverage PASS，42 個 production files 與 build manifest 一致；已原地安裝並成功啟動於 owner iPhone 16 Pro。契約與精確結果見 docs/slices/GAME-01.md、docs/slices/GAME-01-verification.json。原生截圖檢視與大字捲動操作通過，不代表完整 accessibility 或真機操作驗收。真機音畫／輸入 timing、兒童體驗、最小螢幕／最低 OS 與 G1～G4 仍待驗收。
+
+## MET-01 圖片參考功能
+
+逐拍重音／一般／靜音、三種合成音色、擺針、畫面／震動及 tempo undo／redo 的契約在 docs/slices/MET-01.md。50 項 core tests、actual store macOS harness、C focused／UBSan 與 468 組離線長測通過；Debug iphoneos 0.1.0（3）build 與簽署通過。模擬器重啟後已取得 15 項 App tests、7 個 UI 流程的通過證據（含修正後 focused rerun），最大字級／dark 控制流程通過。保留原先 startup 中斷、UI 失敗與後續修正證據，不宣稱單次 full-suite 全綠。原生截圖與精確結果在 docs/slices/MET-01-verification.json。 0.1.0（3）已由 devicectl 原地安裝並成功啟動於 owner iPhone 16 Pro；本次安裝未執行額外真機 timing 或功能驗收。
+
+手機驗收需涵蓋：四種拍號逐拍切換、靜音包含細分與數拍、下一小節生效提示、音色播放中切換、Gap／Ladder 組合、volume 0 的畫面／震動模式、關閉／背景／中斷不再產生提示、Reduce Motion 保留高亮但停用擺針與 pulse、VoiceOver 逐拍狀態、大字 reflow、undo／redo 與重啟保存。新音色與逐拍靜音改動需重新取得受影響 G1 output／sync evidence；離線 sample 與 UI haptics 不能作物理精準度宣稱。
+
 ## 每個 slice
 
 契約記錄目的、scope、風險、依賴、邊界、failure paths、測試與 rollback。
@@ -61,3 +95,13 @@ background playback 納入就驗證 route／lock screen／interruption，否則�
 
 
 目前完整來源驗收入口：docs/mac-acceptance.md。S17 來源含安全 background stop、VoiceOver controls、Reduce Motion、Dynamic Type 配置與 release checklist；Apple rendering／device checklist 尚未執行。
+
+GAME-04 瀏覽器操作與完整通關檢查通過：開始／暫停／重試、零輸入失敗且不給能量、實際敲擊命中、重複／多按後果與成功抵達；320px 深色／Reduce Motion 版型已檢視。只證明概念可操作；owner 接受與兒童試玩仍待確認。精確來源、方法及保留嘗試見 `slices/GAME-04-verification.json`。
+
+PHONE-06（2026-10-04）：既有簽署 build 6 的 52 個來源檔與 executable／Assets.car hash、簽章及 owner profile coverage 驗證通過；原地安裝 PASS，開啟因 Locked 阻擋。未重建、未刪除資料；真機操作與既有 timing／child／release gates 未因此通過。見 `slices/PHONE-06-verification.json`。
+
+GAME-07：11 項呈現 fixtures 通過；修正後一般尺寸 2 個流程、最大字級 dark 1 個可達性流程、iPhone SE 3 短螢幕 2 個版面／真實觸控跨障礙／重新開始流程通過。保留初次元件 ID 檢查失敗與零測試 filter 的結果；零測試不算驗證。完整矩陣、來源／簽章與尚未安裝狀態見 `slices/GAME-07-verification.json`。沒有改 timing／matching／星星／保存權威；focused checks 不代表好玩、child／full accessibility／G1～G4 或 release 通過。
+
+GAME-07 補驗：專用 SE 3 模擬器實際設定「減少動態效果」開啟，真實觸控命中／重新開始 1 個流程通過，截圖已檢視；設定恢復關閉。僅本次擁有的兩台模擬器恢復偏好並關機，其餘模擬器未變動。
+
+PHONE-07（2026-10-05）：來源／artifact hash、簽章、bundle/build/platform 與 owner profile coverage／有效期通過；既有 GAME-07 build 7 已原地安裝並成功啟動。沒有重建或重跑未改動測試，未刪除 learner data；安裝／啟動不等於真機遊戲體驗或 timing／release gates 通過。見 `slices/PHONE-07-verification.json`。

@@ -6,6 +6,7 @@
 *.xcuserstate
 xcuserdata/
 DerivedData/
+Build/
 .DS_Store
 __pycache__/
 *.pyc
@@ -33,3 +34,6 @@ artifacts/*.db
 **/artifacts/governance/version_compatibility.json
 **/artifacts/*.db
 # <<< ai-governance hygiene (managed) <<<
+
+# Xcode build log stubs remain local.
+.derived-data-log-*

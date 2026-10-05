@@ -1,0 +1,369 @@
+<div id="beatlab-rhythm-quest">
+  <div class="bl-preview-label">互動設計稿 · 無聲示範 · 進度與結果為範例</div>
+  <div class="viz-carousel viz-dotted-background" aria-label="BeatLab 練習遊戲設計" data-previous-label="上一個方向" data-next-label="下一個方向">
+    <section data-variant="節奏旅程" aria-label="節奏旅程">
+      <div class="bl-stage"><div class="bl-phone" data-design="journey" aria-label="節奏旅程設計"></div></div>
+    </section>
+    <section data-variant="練鼓工作台" aria-label="練鼓工作台" hidden>
+      <div class="bl-stage"><div class="bl-phone" data-design="studio" aria-label="練鼓工作台設計"></div></div>
+    </section>
+  </div>
+</div>
+<style>
+#beatlab-rhythm-quest { --bl-canvas:light-dark(#F7F5F0,#161827);--bl-surface:light-dark(#FFFFFF,#222638);--bl-ink:light-dark(#202438,#F4F3F8);--bl-muted:light-dark(#5B6073,#B8BDCD);--bl-line:light-dark(#D8D5E4,#454A60);--bl-accent:light-dark(#6940C6,#B99AFA);--bl-soft:light-dark(#EDE5FA,#343048);--bl-on:light-dark(#FFFFFF,#211638);--bl-success:light-dark(#226746,#8FE0B4);--bl-success-soft:light-dark(#E2F2E8,#233D32);--bl-reward:light-dark(#8A4C0E,#FFD496);--bl-reward-soft:light-dark(#FFF0D8,#473726); }
+#beatlab-rhythm-quest * { box-sizing:border-box; }
+#beatlab-rhythm-quest [hidden] { display:none!important; }
+#beatlab-rhythm-quest .bl-preview-label { text-align:center;font:400 12px/1.5 -apple-system,BlinkMacSystemFont,sans-serif;color:var(--bl-muted);padding:0 12px 14px; }
+#beatlab-rhythm-quest .bl-stage { min-height:880px;padding:18px 12px 24px; }
+#beatlab-rhythm-quest .bl-phone { --bl-scale:1;font:400 calc(15px * var(--bl-scale))/1.5 -apple-system,BlinkMacSystemFont,"Segoe UI","Microsoft JhengHei",sans-serif;letter-spacing:.01em;color:var(--bl-ink);background:var(--bl-canvas);width:min(100%,410px);margin:auto;border:1px solid var(--bl-line);border-radius:30px;overflow:hidden; }
+#beatlab-rhythm-quest .bl-phone button { font:inherit;letter-spacing:inherit;min-height:44px;color:inherit;touch-action:manipulation; }
+#beatlab-rhythm-quest .bl-phone button:disabled { color:var(--bl-muted); }
+#beatlab-rhythm-quest .bl-phone p,#beatlab-rhythm-quest .bl-phone h1,#beatlab-rhythm-quest .bl-phone h2 { margin:0;overflow-wrap:anywhere; }
+#beatlab-rhythm-quest .bl-top { display:flex;align-items:center;justify-content:space-between;gap:8px;padding:16px 20px 12px; }
+#beatlab-rhythm-quest .bl-brand { display:flex;align-items:center;gap:8px;font-weight:500; }
+#beatlab-rhythm-quest .bl-brand b { font-weight:500; }
+#beatlab-rhythm-quest .bl-icon { width:20px;height:20px;flex:none;stroke-width:1.8; }
+#beatlab-rhythm-quest .bl-wordmark { color:var(--bl-accent); }
+#beatlab-rhythm-quest .bl-preview-chip { color:var(--bl-muted);font-size:.8em; }
+#beatlab-rhythm-quest .bl-main { padding:12px 22px 22px;display:flex;flex-direction:column;gap:22px;min-width:0; }
+#beatlab-rhythm-quest .bl-eyebrow { color:var(--bl-accent);font-size:.82em;font-weight:500;display:flex;align-items:center;gap:7px; }
+#beatlab-rhythm-quest .bl-title { font-size:2em;font-weight:500;line-height:1.2;letter-spacing:-.025em;margin-top:8px!important; }
+#beatlab-rhythm-quest .bl-muted { color:var(--bl-muted); }
+#beatlab-rhythm-quest .bl-caption { font-size:.85em; }
+#beatlab-rhythm-quest .bl-row { display:flex;gap:10px;align-items:center;flex-wrap:wrap; }
+#beatlab-rhythm-quest .bl-spread { justify-content:space-between; }
+#beatlab-rhythm-quest .bl-stack { display:flex;flex-direction:column;gap:12px; }
+#beatlab-rhythm-quest .bl-group-tabs { display:flex;flex-wrap:wrap;gap:4px;border-bottom:1px solid var(--bl-line);padding-bottom:6px; }
+#beatlab-rhythm-quest .bl-group-tabs button { flex:1;min-width:70px;padding:8px 5px;border:0;background:transparent;font-size:.8em;color:var(--bl-muted);border-radius:10px; }
+#beatlab-rhythm-quest .bl-group-tabs button[aria-pressed=true] { background:var(--bl-soft);color:var(--bl-accent); }
+#beatlab-rhythm-quest .bl-trail { position:relative;display:flex;flex-direction:column;gap:20px;padding:4px 0; }
+#beatlab-rhythm-quest .bl-trail:before { content:"";position:absolute;top:30px;bottom:30px;left:50%;width:1px;background:var(--bl-line); }
+#beatlab-rhythm-quest .bl-quest { position:relative;display:flex;align-items:center;gap:12px;max-width:92%;align-self:flex-start;border:0;background:var(--bl-canvas);text-align:left;padding:8px 10px 8px 0;border-radius:18px; }
+#beatlab-rhythm-quest .bl-quest:nth-child(even) { align-self:flex-end; }
+#beatlab-rhythm-quest .bl-node { width:64px;height:64px;flex:none;display:grid;place-items:center;border-radius:50%;background:var(--bl-surface);font-size:1.5em;font-weight:500;border:1px solid var(--bl-line);color:var(--bl-muted); }
+#beatlab-rhythm-quest .bl-quest.current .bl-node { background:var(--bl-accent);color:var(--bl-on);border-color:transparent;outline:5px solid var(--bl-soft); }
+#beatlab-rhythm-quest .bl-quest.completed .bl-node { color:var(--bl-reward);background:var(--bl-reward-soft);border-color:transparent; }
+#beatlab-rhythm-quest .bl-quest:disabled .bl-node { background:var(--bl-canvas); }
+#beatlab-rhythm-quest .bl-quest-name { font-weight:500;display:block; }
+#beatlab-rhythm-quest .bl-quest-meta { color:var(--bl-muted);font-size:.8em;display:block;margin-top:4px; }
+#beatlab-rhythm-quest .bl-stars-small { color:var(--bl-reward);font-size:.85em;letter-spacing:.1em; }
+#beatlab-rhythm-quest .bl-next { padding:18px;background:var(--bl-surface);border-radius:20px;display:flex;flex-direction:column;gap:12px; }
+#beatlab-rhythm-quest .bl-next h2 { font-size:1.25em;font-weight:500; }
+#beatlab-rhythm-quest .bl-primary { display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:16px;padding:13px 16px;background:var(--bl-accent);color:var(--bl-on)!important;font-weight:500!important; }
+#beatlab-rhythm-quest .bl-primary:disabled { background:var(--bl-soft);color:var(--bl-muted)!important; }
+#beatlab-rhythm-quest .bl-secondary { display:flex;align-items:center;justify-content:center;gap:8px;width:100%;border:0;border-radius:16px;padding:12px;background:var(--bl-soft);color:var(--bl-accent)!important;font-weight:500!important; }
+#beatlab-rhythm-quest .bl-quiet { background:transparent;border:0;padding:8px;color:var(--bl-muted)!important;display:flex;gap:7px;align-items:center;justify-content:center; }
+#beatlab-rhythm-quest .bl-nav { display:flex;align-items:center;border-top:1px solid var(--bl-line);padding:8px 18px 14px;background:var(--bl-canvas); }
+#beatlab-rhythm-quest .bl-nav button { flex:1;display:flex;align-items:center;justify-content:center;gap:7px;border:0;border-radius:12px;padding:7px;background:transparent;font-size:.78em;color:var(--bl-muted); }
+#beatlab-rhythm-quest .bl-nav button[aria-current=page] { background:var(--bl-soft);color:var(--bl-accent); }
+#beatlab-rhythm-quest .bl-toolbar { display:flex;align-items:center;gap:10px; }
+#beatlab-rhythm-quest .bl-toolbar .bl-quiet { padding:5px 0; }
+#beatlab-rhythm-quest .bl-toolbar span { color:var(--bl-muted);font-size:.85em; }
+#beatlab-rhythm-quest .bl-pills { display:flex;flex-wrap:wrap;gap:8px; }
+#beatlab-rhythm-quest .bl-pill { display:flex;align-items:center;gap:6px;border-radius:10px;padding:7px 10px;background:var(--bl-soft);color:var(--bl-accent);font-size:.85em; }
+#beatlab-rhythm-quest .bl-learn { padding:18px;border-radius:22px;background:var(--bl-surface);display:flex;flex-direction:column;gap:18px; }
+#beatlab-rhythm-quest .bl-beat-grid { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px; }
+#beatlab-rhythm-quest .bl-beat { display:flex;flex-direction:column;gap:7px;min-width:0; }
+#beatlab-rhythm-quest .bl-beat-number { color:var(--bl-muted);font-size:.75em;text-align:center;font-variant-numeric:tabular-nums; }
+#beatlab-rhythm-quest .bl-steps { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:4px; }
+#beatlab-rhythm-quest .bl-steps.single { grid-template-columns:1fr; }
+#beatlab-rhythm-quest .bl-note { min-height:50px;display:flex;align-items:center;justify-content:center;gap:2px;background:var(--bl-soft);border-radius:10px;font-size:1.1em;font-weight:500;position:relative; }
+#beatlab-rhythm-quest .bl-note.rest { color:var(--bl-muted);background:var(--bl-canvas);border:1px dashed var(--bl-line); }
+#beatlab-rhythm-quest .bl-note.active { background:var(--bl-accent);color:var(--bl-on);border-color:transparent; }
+#beatlab-rhythm-quest .bl-note.active:after { content:"";position:absolute;bottom:6px;width:4px;height:4px;border-radius:50%;background:var(--bl-on); }
+#beatlab-rhythm-quest .bl-legend { display:flex;flex-wrap:wrap;gap:14px;color:var(--bl-muted);font-size:.85em; }
+#beatlab-rhythm-quest .bl-instruction { font-size:1.1em; }
+#beatlab-rhythm-quest .bl-drum-decor { position:relative;display:grid;place-items:center;width:132px;aspect-ratio:1;margin:6px auto;border-radius:50%;background:var(--bl-soft);border:6px solid var(--bl-surface);box-shadow:0 0 0 1px var(--bl-line); }
+#beatlab-rhythm-quest .bl-drum-decor .bl-icon { width:46px;height:46px;color:var(--bl-accent); }
+#beatlab-rhythm-quest .bl-game-heading { display:flex;flex-direction:column;gap:8px; }
+#beatlab-rhythm-quest .bl-game-heading h2 { font-size:1.6em;line-height:1.25;font-weight:500; }
+#beatlab-rhythm-quest .bl-bar-progress { display:flex;gap:5px; }
+#beatlab-rhythm-quest .bl-bar-progress span { flex:1;height:5px;background:var(--bl-line);border-radius:3px; }
+#beatlab-rhythm-quest .bl-bar-progress span.done { background:var(--bl-accent); }
+#beatlab-rhythm-quest .bl-drum-pad { width:min(100%,250px);aspect-ratio:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;align-self:center;border-radius:50%;border:10px solid var(--bl-surface);background:var(--bl-soft);box-shadow:0 0 0 1px var(--bl-line),inset 0 0 0 2px var(--bl-line);color:var(--bl-accent)!important; }
+#beatlab-rhythm-quest .bl-drum-pad .bl-icon { width:34px;height:34px; }
+#beatlab-rhythm-quest .bl-pad-title { font-size:1.4em;font-weight:500;line-height:1.3; }
+#beatlab-rhythm-quest .bl-drum-pad:disabled { color:var(--bl-muted)!important; }
+#beatlab-rhythm-quest .bl-drum-pad.hit { background:var(--bl-success-soft);color:var(--bl-success)!important; }
+#beatlab-rhythm-quest .bl-feedback { min-height:1.5em;text-align:center;color:var(--bl-success);font-weight:500; }
+#beatlab-rhythm-quest .bl-game-tools { display:flex;gap:8px;align-items:center;justify-content:space-between; }
+#beatlab-rhythm-quest .bl-game-tools .bl-quiet { font-size:.9em; }
+#beatlab-rhythm-quest .bl-result { text-align:center;display:flex;flex-direction:column;align-items:center;gap:16px;padding:16px 0 6px; }
+#beatlab-rhythm-quest .bl-result-stamp { width:90px;aspect-ratio:1;border-radius:50%;display:grid;place-items:center;background:var(--bl-reward-soft);color:var(--bl-reward); }
+#beatlab-rhythm-quest .bl-result-stamp .bl-icon { width:38px;height:38px; }
+#beatlab-rhythm-quest .bl-result h1 { font-size:1.8em;line-height:1.3;font-weight:500; }
+#beatlab-rhythm-quest .bl-result-stars { display:flex;gap:12px;color:var(--bl-reward); }
+#beatlab-rhythm-quest .bl-result-stars .bl-icon { width:34px;height:34px; }
+#beatlab-rhythm-quest .bl-result-stars .earned { fill:var(--bl-reward); }
+#beatlab-rhythm-quest .bl-result-stars .empty { color:var(--bl-line); }
+#beatlab-rhythm-quest .bl-stats { display:grid;grid-template-columns:1fr 1fr;gap:12px;width:100%;padding:18px 0;border-top:1px solid var(--bl-line);border-bottom:1px solid var(--bl-line); }
+#beatlab-rhythm-quest .bl-stat strong { display:block;font-size:1.6em;font-weight:500;font-variant-numeric:tabular-nums; }
+#beatlab-rhythm-quest .bl-stat span { color:var(--bl-muted);font-size:.85em; }
+#beatlab-rhythm-quest .bl-save-warning { padding:15px;border-radius:16px;background:var(--bl-reward-soft);color:var(--bl-reward); }
+#beatlab-rhythm-quest .bl-setlist { display:flex;flex-direction:column;gap:0; }
+#beatlab-rhythm-quest .bl-track { display:flex;align-items:center;gap:12px;width:100%;padding:16px 0;text-align:left;background:transparent;border:0;border-bottom:1px solid var(--bl-line); }
+#beatlab-rhythm-quest .bl-track-num { width:42px;flex:none;font-variant-numeric:tabular-nums;font-size:1.3em;color:var(--bl-muted); }
+#beatlab-rhythm-quest .bl-track.current .bl-track-num { color:var(--bl-accent); }
+#beatlab-rhythm-quest .bl-track-name { flex:1;min-width:0; }
+#beatlab-rhythm-quest .bl-track-name strong { font-weight:500;display:block; }
+#beatlab-rhythm-quest .bl-track-name span { font-size:.8em;display:block;color:var(--bl-muted);margin-top:4px; }
+#beatlab-rhythm-quest [data-design=studio] .bl-next { padding:18px 0;background:transparent;border-top:1px solid var(--bl-line);border-radius:0; }
+#beatlab-rhythm-quest [data-large=true] .bl-beat-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#beatlab-rhythm-quest .bl-beat-grid.sixteenth { grid-template-columns:1fr; }
+#beatlab-rhythm-quest .bl-beat-grid.sixteenth .bl-beat { flex-direction:row;align-items:center; }
+#beatlab-rhythm-quest .bl-beat-grid.sixteenth .bl-beat-number { width:20px;flex:none; }
+#beatlab-rhythm-quest .bl-beat-grid.sixteenth .bl-steps { grid-template-columns:repeat(4,minmax(0,1fr));flex:1; }
+#beatlab-rhythm-quest [data-large=true] .bl-stats { grid-template-columns:1fr; }
+#beatlab-rhythm-quest [data-large=true] .bl-nav button { flex-direction:column; }
+#beatlab-rhythm-quest [data-large=true] .bl-game-tools { flex-wrap:wrap; }
+#beatlab-rhythm-quest [data-large=true] .bl-drum-pad { border-width:7px; }
+#beatlab-rhythm-quest .bl-phone[data-motion=true] .bl-drum-pad.hit { animation:bl-pad-tap .18s ease-out; }
+@keyframes bl-pad-tap { 50% { transform:scale(.97); } }
+@media(prefers-reduced-motion:reduce) { #beatlab-rhythm-quest .bl-drum-pad { animation:none!important; } }
+@media(max-width:360px) { #beatlab-rhythm-quest .bl-main { padding:10px 16px 20px;gap:18px; } #beatlab-rhythm-quest .bl-top { padding:14px 16px 10px; } #beatlab-rhythm-quest .bl-quest { max-width:100%; } #beatlab-rhythm-quest .bl-node { width:56px;height:56px; } }
+</style>
+<script>
+(() => {
+  const root = document.getElementById('beatlab-rhythm-quest');
+  const lessons = [
+    {id:'first-beat',title:'找到大拍',instruction:'跟著大拍，用右手點螢幕。',bpm:60,steps:['R','R','R','R'],k:1},
+    {id:'quarter-hands',title:'左右輪流',instruction:'大拍交替右手、左手。',bpm:65,steps:['R','L','R','L'],k:1},
+    {id:'eighth',title:'一拍兩下',instruction:'聽到 1 & 2 &，每個格子都打一聲。',bpm:60,steps:['R','R','R','R','R','R','R','R'],k:2},
+    {id:'eighth-hands',title:'八分左右手',instruction:'右、左交替，一拍兩下。',bpm:65,steps:['R','L','R','L','R','L','R','L'],k:2},
+    {id:'quarter-rest',title:'留白也是節奏',instruction:'看到 — 休息，手不要點。',bpm:70,steps:['R','-','R','-'],k:1},
+    {id:'eighth-rest',title:'八分與休止',instruction:'跟著 R/L 點，空格保持安靜。',bpm:70,steps:['R','L','-','R','-','L','R','-'],k:2},
+    {id:'sixteenth',title:'一拍四格',instruction:'每個大拍分四下，先慢慢打。',bpm:60,steps:Array(16).fill('R'),k:4},
+    {id:'sixteenth-hands',title:'十六分左右',instruction:'右左輪流，保持均勻。',bpm:65,steps:Array.from({length:16},(_,i)=>i%2?'L':'R'),k:4},
+    {id:'offbeat',title:'反拍留白',instruction:'大拍也會休息，跟著格子走。',bpm:75,steps:['-','R','-','L','-','R','-','L'],k:2},
+    {id:'mixed',title:'節奏小高手',instruction:'把左右手、十六分和休止放在一起。',bpm:70,steps:['R','L','-','R','-','L','R','L','-','R','-','L','R','-','L','-'],k:4}
+  ];
+  const groups = [[0,1],[2,3,4,5],[6,7,8,9]];
+  const groupNames = ['大拍起步','分拍與留白','節奏高手'];
+  const instances = [];
+  let lastSentState = '';
+  const icon = (name,extra='') => '<i class="bl-icon '+extra+'" data-lucide="'+name+'" aria-hidden="true"></i>';
+  const escape = value => String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+  const viewValues = ['關卡','準備','挑戰','結果'];
+  const resultValues = ['通過','再挑戰','保存失敗'];
+  const progressValues = ['完成第一關','第一次練習','十關完成'];
+  function sanitize(raw={}) {
+    return {
+      view:viewValues.includes(raw.view)?raw.view:'關卡',
+      theme:['auto','light','dark'].includes(raw.theme)?raw.theme:'auto',
+      scale:Number.isFinite(raw.scale)?Math.min(1.75,Math.max(1,raw.scale)):1,
+      motion:raw.motion!==false,
+      result:resultValues.includes(raw.result)?raw.result:'通過',
+      progress:progressValues.includes(raw.progress)?raw.progress:'完成第一關'
+    };
+  }
+  function persist() {
+    if (!window.openai?.setWidgetState) return;
+    const designs=instances.map(x=>({layout:x.layout,selected:lessons[x.selected].id,group:x.group,settings:x.settings}));
+    const privateDesigns=designs.map((d,i)=>({...d,demoProgress:instances[i].demoProgress}));
+    lastSentState=JSON.stringify(privateDesigns);
+    window.openai.setWidgetState({
+      modelContent:{direction:'rhythm-quest',designs},
+      privateContent:{designs:privateDesigns}
+    }).catch(()=>{});
+  }
+  function stored() { return window.openai?.widgetState?.privateContent?.designs || []; }
+  function mount(phone) {
+    const layout=phone.dataset.design;
+    const saved=stored().find(x=>x.layout===layout)||{};
+    const settings=sanitize(saved.settings);
+    let selected=Math.max(0,lessons.findIndex(x=>x.id===saved.selected));
+    if (!saved.selected) selected=1;
+    let group=Number.isInteger(saved.group)&&saved.group>=0&&saved.group<3?saved.group:0;
+    let progress={},raf=0,epoch=0,feedback='',hitTimer=0,hitCount=0,stopped='';
+    let running=false,elapsed=0;
+    const instance={layout,settings,get selected(){return selected},get group(){return group},get demoProgress(){return {...progress}}};
+    instances.push(instance);
+    function seedProgress() {
+      progress=settings.progress==='十關完成'?Object.fromEntries(lessons.map(x=>[x.id,2])):
+        settings.progress==='完成第一關'?{'first-beat':2}:{};
+      if (settings.progress==='第一次練習' && selected>0) selected=0;
+    }
+    function restoreProgress(raw) {
+      if (!raw || typeof raw!=='object' || Array.isArray(raw)) return;
+      progress=Object.fromEntries(lessons.filter(l=>Number.isInteger(raw[l.id])&&raw[l.id]>0&&raw[l.id]<=3).map(l=>[l.id,raw[l.id]]));
+    }
+    seedProgress();
+    restoreProgress(saved.demoProgress);
+    elapsed=settings.view==='挑戰'?6*60/lessons[selected].bpm:0;
+    function unlocked(index) { return index===0 || (progress[lessons[index-1].id]||0)>0; }
+    function stopLoop() { cancelAnimationFrame(raf);running=false;clearTimeout(hitTimer); }
+    function button(label,action,style='bl-primary',extra='') {
+      return '<button type="button" class="'+style+'" data-action="'+action+'" '+extra+'>'+label+'</button>';
+    }
+    function header() {
+      return '<header class="bl-top"><div class="bl-brand"><span class="bl-wordmark">'+icon('drum')+'</span><b>BeatLab</b></div><span class="bl-preview-chip">設計預覽</span></header>';
+    }
+    function nav() {
+      if (settings.view==='挑戰' || (settings.view==='結果'&&settings.result==='保存失敗')) return '';
+      return '<nav class="bl-nav" aria-label="練習導覽">'+button(icon('map')+'關卡','map','', 'aria-current="'+(settings.view==='關卡'?'page':'false')+'"')+
+        button(icon('drum')+'跟拍','ready','', 'aria-current="'+(settings.view!=='關卡'?'page':'false')+'"')+'</nav>';
+    }
+    function grid(active=-1) {
+      const l=lessons[selected];
+      return '<div class="bl-beat-grid '+(l.k===4?'sixteenth':'')+'" aria-label="節奏格，R 右手、L 左手、橫線休止">'+Array.from({length:4},(_,b)=>{
+        const cells=l.steps.slice(b*l.k,(b+1)*l.k).map((s,j)=>{
+          const index=b*l.k+j,hand=s==='-'?'休止':s==='R'?'右手':'左手';
+          return '<div class="bl-note '+(s==='-'?'rest ':'')+(index===active?'active':'')+'" data-step="'+index+'" aria-label="第'+(b+1)+'拍，第'+(j+1)+'格，'+hand+(index===active?'，目前':'')+'">'+(s==='-'?'—':s)+'</div>';
+        }).join('');
+        return '<div class="bl-beat"><span class="bl-beat-number">'+(b+1)+'</span><div class="bl-steps '+(l.k===1?'single':'')+'">'+cells+'</div></div>';
+      }).join('')+'</div>';
+    }
+    function groupTabs() {
+      return '<div class="bl-group-tabs" aria-label="關卡篇章">'+groupNames.map((n,i)=>button(n,'group-'+i,'','aria-pressed="'+(group===i)+'"')).join('')+'</div>';
+    }
+    function mapView() {
+      const completed=lessons.filter(l=>(progress[l.id]||0)>0).length;
+      const nextIndex=lessons.findIndex((l,i)=>unlocked(i)&&!(progress[l.id]>0));
+      const next=nextIndex<0?selected:nextIndex;
+      const rows=groups[group].map(i=>{
+        const l=lessons[i],available=unlocked(i),stars=progress[l.id]||0,current=i===next;
+        const state=stars?'completed':current?'current':'';
+        const meta=stars?'已完成 · '+l.bpm+' BPM':available?'準備挑戰 · '+l.bpm+' BPM':'完成第 '+i+' 關解鎖';
+        if (layout==='studio') return '<button type="button" class="bl-track '+state+'" data-action="lesson-'+i+'" '+(!available?'disabled':'')+' aria-label="第'+(i+1)+'關，'+escape(l.title)+'，'+meta+'"><span class="bl-track-num">'+String(i+1).padStart(2,'0')+'</span><span class="bl-track-name"><strong>'+escape(l.title)+'</strong><span>'+meta+'</span></span>'+icon(stars?'check-circle-2':available?'arrow-up-right':'lock-keyhole')+'</button>';
+        return '<button type="button" class="bl-quest '+state+'" data-action="lesson-'+i+'" '+(!available?'disabled':'')+' aria-label="第'+(i+1)+'關，'+escape(l.title)+'，'+meta+'"><span class="bl-node">'+(available?String(i+1).padStart(2,'0'):icon('lock-keyhole'))+'</span><span><span class="bl-quest-name">'+escape(l.title)+'</span><span class="bl-quest-meta">'+meta+'</span>'+(stars?'<span class="bl-stars-small" aria-label="'+stars+'顆星">'+('★'.repeat(stars))+('☆'.repeat(3-stars))+'</span>':'')+'</span></button>';
+      }).join('');
+      return '<div class="bl-stack"><div class="bl-eyebrow">'+icon(layout==='journey'?'route':'list-music')+(layout==='journey'?'節奏旅程':'練鼓工作台')+'</div><h1 class="bl-title">'+(layout==='journey'?'一步一步，<br>打出你的節奏。':'今天，練穩一個節奏。')+'</h1><div class="bl-row bl-spread bl-caption bl-muted"><span>'+completed+' / 10 關完成</span><span>示範進度</span></div></div>'+
+        (stopped?'<p role="status" class="bl-caption bl-muted">'+stopped+'</p>':'')+groupTabs()+
+        '<div class="'+(layout==='journey'?'bl-trail':'bl-setlist')+'">'+rows+'</div>'+
+        '<section class="bl-next" aria-label="下一個挑戰"><div class="bl-eyebrow">'+(nextIndex<0?'再練一次':'下一個挑戰')+'</div><h2>第 '+(next+1)+' 關 · '+escape(lessons[next].title)+'</h2><p class="bl-caption bl-muted">'+escape(lessons[next].instruction)+'</p>'+button(icon('play')+'準備挑戰','lesson-'+next)+'</section>';
+    }
+    function readyView() {
+      const l=lessons[selected];
+      return '<div class="bl-toolbar">'+button(icon('arrow-left')+'關卡','map','bl-quiet')+'<span>第 '+(selected+1)+' 關 / 10</span></div>'+
+        '<div class="bl-stack"><div class="bl-eyebrow">下一個節奏，由你打出來</div><h1 class="bl-title">'+escape(l.title)+'</h1><p class="bl-instruction">'+escape(l.instruction)+'</p></div>'+
+        '<div class="bl-pills"><span class="bl-pill">'+icon('gauge')+l.bpm+' BPM</span><span class="bl-pill">'+icon('music-2')+'4 小節</span></div>'+
+        '<section class="bl-learn" aria-label="關卡節奏"><div class="bl-drum-decor">'+icon('drum')+'</div>'+grid()+'<div class="bl-legend"><span>R 右手</span><span>L 左手</span><span>— 休止</span></div></section>'+
+        '<p class="bl-caption bl-muted">先看 4 拍準備提示，再跟著格子點鼓墊。R/L 是手別提示。</p>'+
+        button(icon('play')+'開始挑戰','start','bl-primary',!unlocked(selected)?'disabled':'')+
+        '<p class="bl-caption bl-muted" style="text-align:center">短回合，專心把這個節奏打穩。</p>';
+    }
+    function gameView() {
+      const l=lessons[selected],beat=elapsed*l.bpm/60;
+      const started=beat>=4;
+      const active=started?Math.floor((beat-4)*l.k)%l.steps.length:-1;
+      return '<div class="bl-row bl-spread bl-caption bl-muted"><span>第 '+(selected+1)+' 關 · '+escape(l.title)+'</span><span>'+l.bpm+' BPM</span></div>'+
+        '<section class="bl-game-heading"><div class="bl-row bl-spread"><h2 data-game-prompt>'+(started?'換你了，跟上節奏！':'準備 · '+Math.max(1,4-Math.floor(beat)))+'</h2><span class="bl-caption bl-muted" data-game-bar>'+(started?'第 '+Math.min(4,Math.floor((beat-4)/4)+1)+' / 4 小節':'先看 4 拍')+'</span></div><div class="bl-bar-progress" role="progressbar" aria-label="挑戰進度" aria-valuemin="0" aria-valuemax="4" aria-valuenow="'+(started?Math.min(4,Math.floor((beat-4)/4)):0)+'">'+Array.from({length:4},(_,i)=>'<span data-bar="'+i+'" class="'+(started&&i<Math.floor((beat-4)/4)?'done':'')+'"></span>').join('')+'</div></section>'+
+        '<section class="bl-learn">'+grid(active)+'<div class="bl-legend"><span>R 右手</span><span>L 左手</span><span>— 休止</span></div></section>'+
+        '<p class="bl-feedback" role="status" data-feedback>'+escape(feedback||'跟著拍點，打穩每一下。')+'</p>'+
+        '<button type="button" class="bl-drum-pad" data-action="tap" aria-label="跟拍鼓墊，點一下示範命中回饋" '+(!started?'disabled':'')+'>'+icon(started?'hand':'headphones')+'<span class="bl-pad-title" data-pad-title>'+(started?'點這裡跟拍':'先看拍子')+'</span><span class="bl-caption">螢幕鼓墊</span></button>'+
+        '<div class="bl-game-tools">'+button(icon('square')+'停止挑戰','cancel','bl-quiet')+'<span class="bl-caption bl-muted">停止後不計成績</span></div>';
+    }
+    function resultView() {
+      const l=lessons[selected],retry=settings.result==='再挑戰',unsaved=settings.result==='保存失敗';
+      const targets=l.steps.filter(s=>s!=='-').length*4;
+      const matched=Math.round(targets*(retry?.75:.9375)),perfect=Math.round(targets*(retry?.375:.875));
+      const stars=retry?0:2,last=selected===9;
+      const title=retry?'再來一次，<br>這次慢慢打。':unsaved?'挑戰通過，<br>星星等待保存。':last?'十關完成，<br>節奏由你掌握。':'節奏跟上了！';
+      const advice=retry?(l.steps.includes('-')?'先把大拍跟穩。看到 —，記得讓手休息。':'先看清楚每一拍，再跟著 R/L 把手輪流打穩。'):unsaved?'成績還沒保存，星星與下一關尚未更新。':last?'可以回到喜歡的關卡，再把每一下打得更穩。':'大多數拍點都跟上了，下一個節奏等著你。';
+      return '<div class="bl-row bl-spread bl-caption bl-muted"><span>第 '+(selected+1)+' 關 · '+escape(l.title)+'</span><span>示範結果</span></div>'+
+        '<section class="bl-result"><div class="bl-result-stamp">'+icon(retry?'rotate-ccw':last?'trophy':'drum')+'</div><h1>'+title+'</h1><div class="bl-result-stars" aria-label="示範得到 '+stars+' 顆星">'+Array.from({length:3},(_,i)=>icon('star',i<stars?'earned':'empty')).join('')+'</div><p class="bl-muted">'+advice+'</p><div class="bl-stats"><div class="bl-stat"><strong>'+matched+' / '+targets+'</strong><span>跟上的拍</span></div><div class="bl-stat"><strong>'+perfect+' / '+targets+'</strong><span>剛剛好</span></div></div></section>'+
+        '<p class="bl-caption bl-muted" style="text-align:center">漏拍 '+(targets-matched)+' 下 · 多打 0 下</p>'+
+        (unsaved?'<div class="bl-save-warning" role="alert">'+icon('cloud-off')+' 尚未保存 · 下一關保持鎖定</div>'+button('重試保存','save'):
+          retry?button(icon('rotate-ccw')+'再挑戰一次','start'):
+          last?button(icon('map')+'回到關卡','map'):button(icon('arrow-right')+'挑戰下一關','next'))+
+        (!retry&&!unsaved?button(icon('rotate-ccw')+'再練一次','start','bl-secondary'):'')+
+        (unsaved?button('放棄這次成績，回到關卡','discard','bl-quiet'):!last?button('回到關卡','map','bl-quiet'):'');
+    }
+    function render() {
+      phone.style.setProperty('--bl-scale',settings.scale);
+      phone.style.colorScheme=settings.theme==='auto'?'inherit':settings.theme;
+      phone.dataset.large=settings.scale>1.25;
+      phone.dataset.motion=settings.motion;
+      const view=settings.view==='關卡'?mapView():settings.view==='準備'?readyView():settings.view==='挑戰'?gameView():resultView();
+      phone.innerHTML=header()+'<main class="bl-main">'+view+'</main>'+nav();
+      if (globalThis.lucide) lucide.createIcons({attrs:{width:20,height:20}});
+      phone.parentElement.style.minHeight=(880*settings.scale)+'px';
+    }
+    function applyExampleCompletion() {
+      if (settings.result==='通過') progress[lessons[selected].id]=2;
+    }
+    function tick(now) {
+      if (!running) return;
+      elapsed=(now-epoch)/1000;
+      const l=lessons[selected],beat=elapsed*l.bpm/60;
+      if (beat>=20) {
+        stopLoop();settings.view='結果';applyExampleCompletion();render();persist();return;
+      }
+      const started=beat>=4,active=started?Math.floor((beat-4)*l.k)%l.steps.length:-1;
+      phone.querySelector('[data-game-prompt]').textContent=started?'換你了，跟上節奏！':'準備 · '+Math.max(1,4-Math.floor(beat));
+      phone.querySelector('[data-game-bar]').textContent=started?'第 '+Math.min(4,Math.floor((beat-4)/4)+1)+' / 4 小節':'先看 4 拍';
+      phone.querySelector('[role=progressbar]').setAttribute('aria-valuenow',started?Math.floor((beat-4)/4):0);
+      phone.querySelectorAll('[data-bar]').forEach((n,i)=>n.classList.toggle('done',started&&i<Math.floor((beat-4)/4)));
+      phone.querySelectorAll('[data-step]').forEach(n=>{
+        const index=Number(n.dataset.step),s=l.steps[index];
+        n.classList.toggle('active',index===active);
+        n.setAttribute('aria-label','第'+(Math.floor(index/l.k)+1)+'拍，第'+(index%l.k+1)+'格，'+(s==='-'?'休止':s==='R'?'右手':'左手')+(index===active?'，目前':''));
+      });
+      const pad=phone.querySelector('[data-action=tap]');
+      pad.disabled=!started;phone.querySelector('[data-pad-title]').textContent=started?'點這裡跟拍':'先看拍子';
+      raf=requestAnimationFrame(tick);
+    }
+    phone.addEventListener('click',event=>{
+      const target=event.target.closest('[data-action]');
+      if (!target || target.disabled) return;
+      const action=target.dataset.action;
+      if (action==='tap') {
+        const l=lessons[selected],pos=Math.max(0,Math.floor((elapsed*l.bpm/60-4)*l.k))%l.steps.length;
+        feedback=l.steps[pos]==='-'?'這一格休息，等下一下。':['剛剛好！','早了一點，下拍再跟上。','晚了一點，下拍再跟上。'][hitCount++%3];
+        phone.querySelector('[data-feedback]').textContent=feedback;
+        target.classList.add('hit');clearTimeout(hitTimer);
+        hitTimer=setTimeout(()=>target.classList.remove('hit'),180);
+        return;
+      }
+      stopLoop();feedback='';elapsed=0;
+      if (action.startsWith('lesson-')) {
+        const i=Number(action.slice(7));if(!unlocked(i)) return;
+        selected=i;settings.view='準備';stopped='';
+      } else if (action.startsWith('group-')) {
+        group=Number(action.slice(6));settings.view='關卡';
+      } else if (action==='start') {
+        if (!unlocked(selected)) return;
+        settings.view='挑戰';running=true;epoch=performance.now();hitCount=0;render();raf=requestAnimationFrame(tick);persist();return;
+      } else if (action==='cancel') {
+        settings.view='關卡';stopped='本次挑戰已停止，沒有計入成績。';
+      } else if (action==='discard') {
+        settings.view='關卡';stopped='已放棄這次未保存的成績，關卡進度保持不變。';
+      } else if (action==='map') settings.view='關卡';
+      else if (action==='ready') settings.view='準備';
+      else if (action==='next') {
+        applyExampleCompletion();selected=Math.min(9,selected+1);settings.view='準備';group=groups.findIndex(g=>g.includes(selected));
+      } else if (action==='save') {
+        settings.result='通過';progress[lessons[selected].id]=2;settings.view='結果';
+      }
+      render();persist();
+    });
+    instance.restore = raw => {
+      stopLoop();Object.assign(settings,sanitize(raw.settings));seedProgress();restoreProgress(raw.demoProgress);
+      const i=lessons.findIndex(x=>x.id===raw.selected);if(i>=0)selected=i;
+      if(Number.isInteger(raw.group)&&raw.group>=0&&raw.group<3)group=raw.group;
+      elapsed=settings.view==='挑戰'?6*60/lessons[selected].bpm:0;
+      render();
+    };
+    render();
+    if (globalThis.Tweak) {
+      const tweak=new Tweak({container:phone,onChange:()=>{
+        stopLoop();seedProgress();elapsed=settings.view==='挑戰'?6*60/lessons[selected].bpm:0;
+        render();persist();
+      }});
+      tweak.addSelect(settings,'view',{label:'畫面',options:viewValues});
+      tweak.addSelect(settings,'theme',{label:'外觀',options:[{label:'跟隨系統',value:'auto'},{label:'淺色',value:'light'},{label:'深色',value:'dark'}]});
+      tweak.addSlider(settings,'scale',{label:'文字大小',min:1,max:1.75,step:.25});
+      tweak.addSelect(settings,'progress',{label:'示範進度',options:progressValues});
+      tweak.addSelect(settings,'result',{label:'結果情境',options:resultValues});
+      tweak.addToggle(settings,'motion',{label:'鼓墊回饋動態'});
+    }
+  }
+  root.querySelectorAll('[data-design]').forEach(mount);
+  window.addEventListener('openai:set_globals',event=>{
+    const saved=event.detail?.globals?.widgetState?.privateContent?.designs;
+    if (!Array.isArray(saved)) return;
+    if (JSON.stringify(saved)===lastSentState) return;
+    instances.forEach(x=>{const raw=saved.find(s=>s.layout===x.layout);if(raw)x.restore(raw)});
+  });
+})();
+</script>

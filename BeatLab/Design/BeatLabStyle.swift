@@ -97,3 +97,26 @@ struct BLModePicker: View {
         }.pickerStyle(.segmented).accessibilityIdentifier("interfaceMode")
     }
 }
+
+// Homepage palette derived from the owner's approved yellow dinosaur icon.
+// Existing transport/game screens keep their own styles and behavior.
+enum HomeBrand {
+    static let canvas = Color("HomeCanvas")
+    static let surface = Color("HomeSurface")
+    static let hero = Color("HomeHero")
+    static let ink = Color("HomeInk")
+    static let muted = Color("HomeMuted")
+    static let forest = Color("HomeForest")
+    static let heroInk = Color(red: 32 / 255, green: 62 / 255, blue: 49 / 255)
+}
+
+struct HomeAdventureButtonStyle: ButtonStyle {
+    @Environment(\.isEnabled) private var enabled
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label.font(.headline.bold()).multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, minHeight: 24).padding(.horizontal, 16).padding(.vertical, 16)
+            .foregroundStyle(HomeBrand.canvas)
+            .background(HomeBrand.forest, in: RoundedRectangle(cornerRadius: 18))
+            .opacity(!enabled ? 0.45 : configuration.isPressed ? 0.8 : 1)
+    }
+}

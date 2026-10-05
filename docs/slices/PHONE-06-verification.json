@@ -1,0 +1,69 @@
+{
+  "date": "2026-10-04",
+  "slice": "PHONE-06",
+  "status": "INSTALLED_LAUNCH_BLOCKED_LOCKED",
+  "authorization": "Owner: install first so I can try it",
+  "candidate": {
+    "source_base_sha": "12587401aa989663098aba605ef800648f175633",
+    "source_state": "GAME-03 jump presentation plus prior GAME-02 and earlier changes; uncommitted",
+    "source_hashes": "TestResults/GAME-03/source-hashes-build6.json",
+    "source_file_count": 52,
+    "source_manifest_match": true,
+    "configuration": "Debug",
+    "platform": "iphoneos",
+    "app_path": "/Users/pc49-58/Desktop/BeatLab/TestResults/GAME-03/device-build-6/Products/Debug-iphoneos/BeatLab.app",
+    "bundle_id": "com.beatlab.app",
+    "version": "0.1.0",
+    "build": "6",
+    "signature_verified": true,
+    "owner_device_covered": true,
+    "team": [
+      "P358EB3X9H"
+    ],
+    "executable_sha256": "f1b6143fe1ee53484de85b8b353fb6dd42277196d740e962b64dc8a1dccf4f98",
+    "assets_car_sha256": "d4b5d6bd50787a810a8eb3ffebd8f662131fcc92f5d5dff473e271307581fecb",
+    "build_log": "TestResults/GAME-03/device-build-6-final.log",
+    "install": "PASS",
+    "launch": "BLOCKED: Locked",
+    "delivery_reason": "Owner explicitly requested installation for trial after concept rejection",
+    "install_receipt": "TestResults/PHONE-06/install.json",
+    "launch_receipt": "TestResults/PHONE-06/launch.json"
+  },
+  "device": {
+    "name": "GavinWu0099",
+    "model": "iPhone 16 Pro",
+    "identifier": "0F60A459-7EE8-5B1B-BDF6-6B4D6047FAB8",
+    "transport": "localNetwork"
+  },
+  "checks": {
+    "fresh_inventory": "TestResults/PHONE-06/devices.json",
+    "recorded_artifact_hashes": "PASS",
+    "source_manifest_52_files": "PASS",
+    "signature_and_profile": "PASS",
+    "install": "PASS",
+    "launch": "BLOCKED: Locked"
+  },
+  "receipts": {
+    "install_log": "TestResults/PHONE-06/install.log",
+    "launch_log": "TestResults/PHONE-06/launch.log"
+  },
+  "next_step": "Owner unlocks and opens BeatLab, or replies unlocked for launch-only retry",
+  "design_acceptance": "Still unaccepted; installation request is for trial",
+  "included": "Native GAME-01/02/03 journey, companions and jump presentation",
+  "excluded": "GAME-04/05 browser runners and proposed GAME-06 cat catch",
+  "not_claimed": [
+    "physical timing/input/sync",
+    "child usability/game appeal",
+    "G1-G4 acceptance",
+    "release readiness"
+  ],
+  "delivery": {
+    "uninstall": false,
+    "data_reset": false,
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "testflight": false
+  }
+}

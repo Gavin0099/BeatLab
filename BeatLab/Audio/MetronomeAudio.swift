@@ -25,6 +25,7 @@ final class MetronomeAudio: ObservableObject {
         let configuration: MetronomeConfiguration
         let bar: UInt64
         let muted: Bool
+        let number: UInt64
     }
 
     @Published private(set) var isPlaying = false
@@ -223,7 +224,8 @@ final class MetronomeAudio: ObservableObject {
               let configuration = Self.configuration(beat.settings) else { return nil }
         let phase = Double(frame - beat.startFrame) / Double(beat.endFrame - beat.startFrame)
         return DisplayBeat(index: Int(beat.beatInBar), count: configuration.timeSignature.beatsPerBar,
-                           phase: min(1, max(0, phase)), configuration: configuration, bar: beat.barNumber, muted: beat.muted)
+                           phase: min(1, max(0, phase)), configuration: configuration, bar: beat.barNumber,
+                           muted: beat.muted, number: beat.beatNumber)
     }
 
     private enum AudioFailure: Error { case unsupportedRoute }
@@ -253,15 +255,22 @@ final class MetronomeAudio: ObservableObject {
         let meter = TimeSignature.allCases.firstIndex(of: configuration.timeSignature) ?? 2
         let sub = Subdivision.allCases.firstIndex(of: configuration.subdivision) ?? 0
         return BLSettings(bpm: Int32(configuration.tempo.bpm), meter: Int32(meter),
-                          subdivision: Int32(sub), accent: configuration.accentEnabled ? 1 : 0)
+                          subdivision: Int32(sub), accent: configuration.accentEnabled ? 1 : 0,
+                          beatPattern: Int32(configuration.encodedBeatPattern), timbre: Int32(configuration.clickTimbre.rawValue))
     }
 
     private static func configuration(_ settings: BLSettings) -> MetronomeConfiguration? {
         guard TimeSignature.allCases.indices.contains(Int(settings.meter)),
               Subdivision.allCases.indices.contains(Int(settings.subdivision)),
-              let tempo = try? Tempo(bpm: Int(settings.bpm)) else { return nil }
+              let tempo = try? Tempo(bpm: Int(settings.bpm)),
+              let timbre = ClickTimbre(rawValue: Int(settings.timbre)) else { return nil }
+        let signature = TimeSignature.allCases[Int(settings.meter)]
+        let pattern: [BeatEmphasis]? = settings.beatPattern == 0 ? nil : (0..<signature.beatsPerBar).compactMap {
+            BeatEmphasis(rawValue: (Int(settings.beatPattern) >> ($0 * 2)) & 3)
+        }
         return try? MetronomeConfiguration(tempo: tempo,
-            timeSignature: TimeSignature.allCases[Int(settings.meter)],
-            subdivision: Subdivision.allCases[Int(settings.subdivision)], accentEnabled: settings.accent != 0)
+            timeSignature: signature,
+            subdivision: Subdivision.allCases[Int(settings.subdivision)], accentEnabled: settings.accent != 0,
+            beatEmphases: pattern, clickTimbre: timbre)
     }
 }

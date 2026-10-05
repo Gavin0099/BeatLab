@@ -1,5 +1,17 @@
 # Mac／iPhone 一次驗收
 
+> **目前基準（2026-10-05）**：TestFlight 0.1.0（10）已提供本人試玩，Release／實際上傳包／Apple 處理／群組可測已驗證。Owner 手機回饋接受首頁風格，節拍器與練習待六個後續 slice。下面各舊 build 與未上傳敘述是歷史狀態；最新交付以 TF-02 evidence 為準。G1-G4、物理 timing、三頁／十關完整 accessibility 與兒童體驗仍未接受。此輪 PROGRESS-01 只分析、checkpoint 與 Git push；沒有重跑整個 native suite。
+> [目前功能與切分](design/FEATURE-AUDIT-20261005.md) · [當前 beta](slices/TF-02-verification.json) · [checkpoint evidence](slices/PROGRESS-01-verification.json)
+
+
+> GAME-02 已加入貓咪／機器人／恐龍夥伴、三個冒險場景與篇章徽章；最新 BeatLab 0.1.0（5）已原地安裝於 owner iPhone 16 Pro。啟動被手機鎖定阻擋，待 owner 解鎖。 一般 light 原有 3 個練習流程通過，選擇卡片修正後重驗旅程流程通過；最大字級＋dark 採組合證據：修正前不進入選擇器的每日流程通過，修正後夥伴旅程與零輸入結果共 2 個流程通過。不是單一最終 3 測試套件；保留中斷與失敗結果。 精確結果見 `docs/slices/GAME-02-verification.json`。兒童吸引力仍需試玩；真機遊戲操作、物理 timing、成功徽章畫面、完整 VoiceOver／Reduce Motion、最小螢幕與 G1～G4 仍待驗收。
+
+> 先前 GAME-01：原生「節奏旅程」已加入；50 core tests、17 App tests、修正後 6 個 UI 流程及最大字級＋dark 的 3 個練習流程 PASS。App／最終 UI 為分開執行；保留中斷與修正前失敗證據。BeatLab 0.1.0（4）簽署建置通過，已原地安裝並啟動於 owner iPhone 16 Pro。精確結果見 `docs/slices/GAME-01-verification.json`；真機遊戲操作、timing、兒童／完整 accessibility 與 G1～G4 仍待驗收。
+
+> 先前 MET-01：模擬器重啟後已取得 15 項 App tests、7 個 UI 流程的通過證據（包含修正後 focused rerun）；最大字級＋dark 的新增控制流程與原生截圖已補。手機候選版 0.1.0（3）簽署建置通過，已原地安裝並成功啟動於 owner iPhone 16 Pro。以下 MAC-01 的失敗紀錄保留；該階段結果看 `docs/slices/MET-01-verification.json`。G1～G4 沒有因此接受。
+
+> 2026-10-04 MAC-01 更新：SwiftPM 42 tests、C 長測、capture 3 tests 與 simulator／signed iphoneos build PASS；owner iPhone 已安裝並啟動 0.1.0（1）。App／UI tests 未通過：iOS 18 attempt 中斷，iOS 26.5 attempt 因 testmanagerd 通訊失敗。以下首次交接敘述是本輪執行前的基線；最新結果以 `docs/slices/MAC-01-verification.json` 為準。真機 timing、真人與 release gates 仍未接受。
+
 本批涵蓋 S0～S17 原始碼。Windows 已執行 C kernel／source／capture analyzer checks；Swift typechecking、App build、UI、真人與真機 gate 一律 NOT RUN。先跑自動測試，再依 gate 順序判斷 GO／FIX／STOP。來源完成不等於可發行。
 
 ## 1. 自動測試

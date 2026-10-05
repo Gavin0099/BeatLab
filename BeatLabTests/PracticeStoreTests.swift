@@ -69,15 +69,22 @@ final class PracticeStoreTests: XCTestCase {
         store.select(lesson); store.setPracticeBPM(240); store.start(lesson, audio: audio)
         for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
         XCTAssertEqual(store.phase, .playing, store.notice ?? "Actual practice graph did not start")
+        let anchor = try XCTUnwrap(audio.audibleEpoch())
+        // Four-bar quarter-note fixture at 240 BPM: four count-in beats, then
+        // sixteen exact target timestamps. Injected input is not device latency evidence.
+        for beat in 0..<16 { store.tap(at: anchor + Double(4 + beat) * 0.25) }
         // A version change between load and finish must fail the repository write.
         let future = Data("{\"schemaVersion\":99,\"future\":true}".utf8)
         defaults.set(future, forKey: ProgressRepository.storageKey)
         for _ in 0..<160 where store.phase == .playing { try await Task.sleep(nanoseconds: 50_000_000) }
         XCTAssertEqual(store.phase, .finished)
         XCTAssertNotNil(store.summary)
+        XCTAssertEqual(store.stars, 3)
+        XCTAssertEqual(store.summary?.missedCount, 0)
         XCTAssertFalse(store.resultSaved)
         XCTAssertTrue(store.needsSaveRetry)
         XCTAssertNil(store.progress.lastLessonID)
+        XCTAssertFalse(store.unlocked(store.lessons[1]), "Unsaved stars cannot unlock the journey")
         store.retrySave()
         XCTAssertFalse(store.resultSaved)
         XCTAssertEqual(defaults.data(forKey: ProgressRepository.storageKey), future)
@@ -89,5 +96,144 @@ final class PracticeStoreTests: XCTestCase {
         XCTAssertTrue(store.resultSaved)
         XCTAssertFalse(store.needsSaveRetry)
         XCTAssertEqual(ProgressRepository(defaults: defaults).load().0.lastLessonID, lesson.id)
+        XCTAssertEqual(ProgressRepository(defaults: defaults).load().0.results[lesson.id]?.stars, 3)
+        XCTAssertTrue(store.unlocked(store.lessons[1]))
+    }
+    @MainActor
+    func testPerfectActualSessionSavesStarsAndUnlocksAfterRestart() async throws {
+        let name = "BeatLabTests.JourneyPass.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let repository = ProgressRepository(defaults: defaults)
+        let store = PracticeStore(repository: repository)
+        let audio = MetronomeAudio(); defer { audio.stop() }
+        let first = store.lessons[0]
+        store.select(first); store.setPracticeBPM(240); store.start(first, audio: audio)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing)
+        let anchor = try XCTUnwrap(audio.audibleEpoch())
+        for beat in 0..<16 { store.tap(at: anchor + Double(4 + beat) * 0.25) }
+        for _ in 0..<160 where store.phase == .playing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .finished)
+        XCTAssertEqual(store.summary?.targetCount, 16)
+        XCTAssertEqual(store.summary?.matched.count, 16)
+        XCTAssertEqual(store.summary?.extraCount, 0)
+        XCTAssertEqual(store.summary?.missedCount, 0)
+        XCTAssertEqual(store.stars, 3)
+        XCTAssertTrue(store.resultSaved); XCTAssertFalse(store.needsSaveRetry)
+        let restored = PracticeStore(repository: repository)
+        XCTAssertEqual(restored.progress.results[first.id]?.stars, 3)
+        XCTAssertTrue(restored.unlocked(restored.lessons[1]))
+        XCTAssertFalse(restored.unlocked(restored.lessons[2]))
+        XCTAssertEqual(restored.recommended?.id, "quarter-hands")
+    }
+    @MainActor
+    func testDiscardingUnsavedPerfectResultPreservesStorageAndLocks() async throws {
+        let name = "BeatLabTests.JourneyDiscard.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = PracticeStore(repository: ProgressRepository(defaults: defaults))
+        let audio = MetronomeAudio(); defer { audio.stop() }
+        store.select(store.lessons[0]); store.setPracticeBPM(240); store.start(store.lessons[0], audio: audio)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing)
+        let anchor = try XCTUnwrap(audio.audibleEpoch())
+        for beat in 0..<16 { store.tap(at: anchor + Double(4 + beat) * 0.25) }
+        let future = Data("{\"schemaVersion\":99,\"future\":true}".utf8)
+        defaults.set(future, forKey: ProgressRepository.storageKey)
+        for _ in 0..<160 where store.phase == .playing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertTrue(store.needsSaveRetry); XCTAssertEqual(store.stars, 3)
+        store.discardUnsavedResult()
+        XCTAssertEqual(store.phase, .idle); XCTAssertNil(store.summary)
+        XCTAssertEqual(store.stars, 0); XCTAssertFalse(store.needsSaveRetry)
+        XCTAssertTrue(store.progress.results.isEmpty)
+        XCTAssertFalse(store.unlocked(store.lessons[1]))
+        XCTAssertEqual(defaults.data(forKey: ProgressRepository.storageKey), future)
+    }
+}
+
+final class RhythmJumpPresentationTests: XCTestCase {
+    private let pattern = RhythmPattern(stepsPerBeat: 1, steps: [.right, .left, .rest, .right])
+    private func hit(_ id: Int?, _ grade: TimingGrade) -> TimingHit {
+        let target = id.map(String.init) ?? "null"
+        return try! JSONDecoder().decode(TimingHit.self, from: Data("{\"targetID\":\(target),\"inputTime\":42,\"error\":null,\"grade\":\"\(grade.rawValue)\"}".utf8))
+    }
+    func testMatchedPressLightsOnlyItsPlatformAndDuplicateDoesNotAdvance() {
+        var scene = RhythmJumpPresentation()
+        XCTAssertTrue(scene.record(hit(0, .perfect), pattern: pattern, bars: 2))
+        XCTAssertEqual(scene.accepted, [0]); XCTAssertEqual(scene.landedStep, 0)
+        XCTAssertFalse(scene.record(hit(0, .perfect), pattern: pattern, bars: 2))
+        XCTAssertEqual(scene.accepted, [0]); XCTAssertEqual(scene.landedStep, 0)
+    }
+    func testEarlyAndLateAreMatchedButExtraNeverLightsOrAdvances() {
+        var scene = RhythmJumpPresentation()
+        XCTAssertTrue(scene.record(hit(1, .early), pattern: pattern, bars: 2))
+        XCTAssertTrue(scene.record(hit(3, .late), pattern: pattern, bars: 2))
+        XCTAssertFalse(scene.record(hit(nil, .extra), pattern: pattern, bars: 2))
+        XCTAssertFalse(scene.record(hit(4, .extra), pattern: pattern, bars: 2))
+        XCTAssertEqual(scene.accepted, [1, 3]); XCTAssertEqual(scene.landedStep, 3)
+    }
+    func testRestOutOfRangeAndInvalidTargetsCannotCreateSuccess() {
+        var scene = RhythmJumpPresentation()
+        for id in [-1, 2, 6, 8, 99] { XCTAssertFalse(scene.record(hit(id, .perfect), pattern: pattern, bars: 2)) }
+        XCTAssertTrue(scene.accepted.isEmpty); XCTAssertEqual(scene.landedStep, -1)
+    }
+    func testCountInAndKnownQuarterNoteCues() {
+        XCTAssertNil(RhythmJumpPresentation.cueStep(elapsed: 3.99, pattern: pattern, bpm: 60, bars: 2))
+        XCTAssertEqual(RhythmJumpPresentation.cueStep(elapsed: 4, pattern: pattern, bpm: 60, bars: 2), 0)
+        XCTAssertEqual(RhythmJumpPresentation.cueStep(elapsed: 5, pattern: pattern, bpm: 60, bars: 2), 1)
+        XCTAssertEqual(RhythmJumpPresentation.cueStep(elapsed: 6, pattern: pattern, bpm: 60, bars: 2), 2)
+        XCTAssertEqual(RhythmJumpPresentation.cueStep(elapsed: 12, pattern: pattern, bpm: 60, bars: 2), 7)
+    }
+    func testEighthNotesAndSafetyCatchAwardNothingForMisses() {
+        let eighths = RhythmPattern(stepsPerBeat: 2, steps: Array(repeating: .right, count: 8))
+        XCTAssertEqual(RhythmJumpPresentation.cueStep(elapsed: 4.5, pattern: eighths, bpm: 60, bars: 1), 1)
+        let scene = RhythmJumpPresentation()
+        XCTAssertEqual(scene.displayStep(cue: 3), 2)
+        XCTAssertTrue(scene.accepted.isEmpty); XCTAssertEqual(scene.landedStep, -1)
+        XCTAssertEqual(scene.displayStep(cue: nil), -1)
+    }
+    func testLatePriorTargetDoesNotMoveCharacterBackwardAndRestartClearsArt() {
+        var scene = RhythmJumpPresentation()
+        XCTAssertTrue(scene.record(hit(3, .early), pattern: pattern, bars: 2))
+        XCTAssertTrue(scene.record(hit(1, .late), pattern: pattern, bars: 2))
+        XCTAssertEqual(scene.landedStep, 3); XCTAssertEqual(scene.accepted, [1, 3])
+        scene = RhythmJumpPresentation()
+        XCTAssertEqual(scene.landedStep, -1); XCTAssertTrue(scene.accepted.isEmpty)
+    }
+    func testInvalidVisualInputsDoNotProduceCues() {
+        XCTAssertNil(RhythmJumpPresentation.cueStep(elapsed: .nan, pattern: pattern, bpm: 60, bars: 2))
+        XCTAssertNil(RhythmJumpPresentation.cueStep(elapsed: 4, pattern: pattern, bpm: 0, bars: 2))
+        XCTAssertNil(RhythmJumpPresentation.cueStep(elapsed: 4, pattern: .init(stepsPerBeat: 1, steps: []), bpm: 60, bars: 2))
+    }
+}
+
+final class RhythmRunnerPresentationTests: XCTestCase {
+    func testQuarterNoteDistanceUsesFourBeatCountIn() {
+        // At 60 BPM: 4 seconds count-in; note 0 at 4s, note 1 at 5s.
+        XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: 0, bpm: 60, stepsPerBeat: 1), -4)
+        XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: 4, bpm: 60, stepsPerBeat: 1), 0)
+        XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: 4.5, bpm: 60, stepsPerBeat: 1), 0.5)
+        XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: 5, bpm: 60, stepsPerBeat: 1), 1)
+    }
+    func testSubdivisionAndTempoChangeOnlyVisualSpacing() {
+        // 120 BPM count-in ends at 2s; each eighth note is 0.25s.
+        XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: 2.25, bpm: 120, stepsPerBeat: 2), 1)
+    }
+    func testVisibleObstaclesSkipRestsAndEndAtActualCourseLength() {
+        let pattern = RhythmPattern(stepsPerBeat: 1, steps: [.right, .rest, .left, .right])
+        XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: -4, pattern: pattern, bars: 2), [0])
+        XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: 0, pattern: pattern, bars: 2), [0, 2, 3, 4])
+        XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: 7, pattern: pattern, bars: 2), [6, 7])
+        XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: 10, pattern: pattern, bars: 2), [])
+    }
+    func testInvalidCameraInputsDoNotCreateObstacles() {
+        let pattern = RhythmPattern(stepsPerBeat: 1, steps: [.right, .left, .rest, .right])
+        for position in [Double.nan, Double.infinity, -999, 999] {
+            XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: position, pattern: pattern, bars: 1), [])
+        }
+        XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: 0, pattern: pattern, bars: 0), [])
+        XCTAssertEqual(RhythmRunnerPresentation.visibleSteps(position: 0, pattern: .init(stepsPerBeat: 1, steps: []), bars: 1), [])
+        XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: .nan, bpm: 60, stepsPerBeat: 1), -4)
     }
 }

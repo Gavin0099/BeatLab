@@ -1,0 +1,112 @@
+{
+  "date": "2026-10-04",
+  "slice": "GAME-03",
+  "status": "OWNER_REJECTED_GAMEPLAY_REWORK_IN_GAME-04",
+  "source": {
+    "base_sha": "12587401aa989663098aba605ef800648f175633",
+    "state": "uncommitted; prior work preserved",
+    "production_manifest": "TestResults/GAME-03/source-hashes-build6.json",
+    "files": 52,
+    "changed_from_build5": [
+      "BeatLab/Views/PracticeView.swift"
+    ],
+    "audio_input_matching_score_persistence_unchanged": true,
+    "test_manifest": "TestResults/GAME-03/test-source-hashes.json"
+  },
+  "checks": {
+    "core": {
+      "passed": 50,
+      "log": "TestResults/GAME-03/core-tests.log"
+    },
+    "app": {
+      "passed": 24,
+      "new_presentation_fixtures": 7,
+      "summary": "TestResults/GAME-03/app-summary.json",
+      "boundary": "Before only native pad-height/accessibility identifier repair; presentation model/store/core unchanged afterwards"
+    },
+    "native_light": {
+      "passed": 3,
+      "failed": 0,
+      "summary": "TestResults/GAME-03/jump-light-final-summary.json"
+    },
+    "native_dark_max_text": {
+      "passed": 3,
+      "failed": 0,
+      "summary": "TestResults/GAME-03/jump-dark-max-summary.json",
+      "scope": "Three native navigation/control/failure flows; not full accessibility"
+    },
+    "preserved_failures": [
+      {
+        "path": "TestResults/GAME-03/app-tests.xcresult",
+        "reason": "Public TimingHit memberwise initializer unavailable; repaired test fixture to JSON decoding"
+      },
+      {
+        "path": "TestResults/GAME-03/jump-light.xcresult",
+        "passed": 1,
+        "failed": 2,
+        "reason": "Container identifiers replaced actionable pad/leaf identifiers; flexible pad grew too tall; repaired IDs and height"
+      }
+    ],
+    "native_observed_match_test": "NOT RUN; unexecuted proposed test removed after owner redirected task"
+  },
+  "candidate": {
+    "source_base_sha": "12587401aa989663098aba605ef800648f175633",
+    "source_state": "GAME-03 jump presentation plus prior GAME-02 and earlier changes; uncommitted",
+    "source_hashes": "TestResults/GAME-03/source-hashes-build6.json",
+    "source_file_count": 52,
+    "source_manifest_match": true,
+    "configuration": "Debug",
+    "platform": "iphoneos",
+    "app_path": "/Users/pc49-58/Desktop/BeatLab/TestResults/GAME-03/device-build-6/Products/Debug-iphoneos/BeatLab.app",
+    "bundle_id": "com.beatlab.app",
+    "version": "0.1.0",
+    "build": "6",
+    "signature_verified": true,
+    "owner_device_covered": true,
+    "team": [
+      "P358EB3X9H"
+    ],
+    "executable_sha256": "f1b6143fe1ee53484de85b8b353fb6dd42277196d740e962b64dc8a1dccf4f98",
+    "assets_car_sha256": "d4b5d6bd50787a810a8eb3ffebd8f662131fcc92f5d5dff473e271307581fecb",
+    "build_log": "TestResults/GAME-03/device-build-6-final.log",
+    "install": "NOT RUN",
+    "launch": "NOT RUN",
+    "delivery_reason": "Owner rejected GAME-03 gameplay and requested concept rework before phone update"
+  },
+  "installed_phone_build": "0.1.0 (5), previously installed; launch blocked by Locked",
+  "skill": {
+    "path": "/Users/pc49-58/.codex/skills/beatlab-rhythm-game-design",
+    "validation": "PASS",
+    "hashes": "TestResults/GAME-03/skill-hashes-final.json",
+    "references_date": "2026-10-04"
+  },
+  "cleanup": {
+    "owned_simulator": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+    "preferences_restored": "light / large",
+    "shutdown": true
+  },
+  "not_claimed": [
+    "native success-hop runtime",
+    "physical timing/input/sync",
+    "child appeal",
+    "full VoiceOver/Reduce Motion",
+    "minimum OS/screen",
+    "G1-G4 acceptance",
+    "release readiness",
+    "canonical memory/session closeout"
+  ],
+  "delivery": {
+    "commit": false,
+    "push": false,
+    "pr": false,
+    "merge": false,
+    "testflight": false
+  },
+  "later_delivery": {
+    "slice": "PHONE-06",
+    "evidence": "docs/slices/PHONE-06-verification.json",
+    "install": "PASS",
+    "launch": "BLOCKED: Locked",
+    "acceptance_unchanged": true
+  }
+}

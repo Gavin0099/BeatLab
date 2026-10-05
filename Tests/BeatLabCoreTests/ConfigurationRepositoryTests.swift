@@ -3,6 +3,42 @@ import XCTest
 @testable import BeatLabCore
 
 final class ConfigurationRepositoryTests: XCTestCase {
+    func testLegacyV1LoadIsReadOnlyAndUserEditSavesV2WithNewDefaults() throws {
+        try withDefaults { defaults, _ in
+            let legacy = Data(#"{"schemaVersion":1,"configuration":{"tempo":137,"timeSignature":"3/4","subdivision":"eighth","accentEnabled":false}}"#.utf8)
+            defaults.set(legacy, forKey: ConfigurationRepository.storageKey)
+            let repository = ConfigurationRepository(defaults: defaults)
+            var restored = repository.load().configuration
+            XCTAssertEqual(repository.load().status, .restored)
+            XCTAssertEqual(restored.tempo.bpm, 137)
+            XCTAssertEqual(restored.beatEmphases, [.normal, .normal, .normal])
+            XCTAssertEqual(restored.clickTimbre, .electronic)
+            XCTAssertFalse(restored.screenPulseEnabled)
+            XCTAssertFalse(restored.hapticsEnabled)
+            XCTAssertEqual(defaults.data(forKey: ConfigurationRepository.storageKey), legacy)
+            try restored.cycleBeat(at: 1)
+            restored.setClickTimbre(.woodblock)
+            restored.setScreenPulseEnabled(true)
+            restored.setHapticsEnabled(true)
+            try repository.save(restored)
+            XCTAssertEqual(repository.load().configuration, restored)
+            let raw = try XCTUnwrap(defaults.data(forKey: ConfigurationRepository.storageKey))
+            let envelope = try XCTUnwrap(JSONSerialization.jsonObject(with: raw) as? [String: Any])
+            XCTAssertEqual(envelope["schemaVersion"] as? Int, 2)
+        }
+    }
+
+    func testMalformedV2PatternRecoversWithoutOverwritingPayload() throws {
+        try withDefaults { defaults, _ in
+            let raw = Data(#"{"schemaVersion":2,"configuration":{"tempo":120,"timeSignature":"4/4","subdivision":"quarter","accentEnabled":true,"beatEmphases":[2,3]}}"#.utf8)
+            defaults.set(raw, forKey: ConfigurationRepository.storageKey)
+            let repository = ConfigurationRepository(defaults: defaults)
+            XCTAssertEqual(repository.load().status, .corrupt)
+            XCTAssertEqual(defaults.data(forKey: ConfigurationRepository.storageKey), raw)
+            XCTAssertEqual(repository.load().configuration, .defaultValue)
+        }
+    }
+
     private func withDefaults(_ body: (UserDefaults, String) throws -> Void) throws {
         let suite = "BeatLabCoreTests.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: suite))
@@ -32,7 +68,7 @@ final class ConfigurationRepositoryTests: XCTestCase {
             XCTAssertEqual(result.configuration, config)
             let stored = try XCTUnwrap(defaults.data(forKey: ConfigurationRepository.storageKey))
             let json = try XCTUnwrap(JSONSerialization.jsonObject(with: stored) as? [String: Any])
-            XCTAssertEqual(json["schemaVersion"] as? Int, 1)
+            XCTAssertEqual(json["schemaVersion"] as? Int, 2)
         }
     }
 
@@ -79,13 +115,13 @@ final class ConfigurationRepositoryTests: XCTestCase {
 
     func testUnsupportedSchemaIsPreservedAndBlocksOverwrite() throws {
         try withDefaults { defaults, _ in
-            let raw = Data(#"{"schemaVersion":2,"futureValue":"keep this"}"#.utf8)
+            let raw = Data(#"{"schemaVersion":99,"futureValue":"keep this"}"#.utf8)
             defaults.set(raw, forKey: ConfigurationRepository.storageKey)
             let repository = ConfigurationRepository(defaults: defaults)
-            XCTAssertEqual(repository.load().status, .unsupportedVersion(2))
+            XCTAssertEqual(repository.load().status, .unsupportedVersion(99))
             XCTAssertEqual(repository.load().configuration, .defaultValue)
             XCTAssertThrowsError(try repository.save(.defaultValue)) {
-                XCTAssertEqual($0 as? ConfigurationRepository.PersistenceError, .unsupportedVersion(2))
+                XCTAssertEqual($0 as? ConfigurationRepository.PersistenceError, .unsupportedVersion(99))
             }
             XCTAssertEqual(defaults.data(forKey: ConfigurationRepository.storageKey), raw)
         }
@@ -104,7 +140,7 @@ final class ConfigurationRepositoryTests: XCTestCase {
 
     func testExplicitResetAllowsFreshSaveAfterUnsupportedSchema() throws {
         try withDefaults { defaults, _ in
-            defaults.set(Data(#"{"schemaVersion":2}"#.utf8), forKey: ConfigurationRepository.storageKey)
+            defaults.set(Data(#"{"schemaVersion":99}"#.utf8), forKey: ConfigurationRepository.storageKey)
             let repository = ConfigurationRepository(defaults: defaults)
             repository.reset()
             XCTAssertEqual(repository.load().status, .new)

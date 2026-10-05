@@ -1,0 +1,18 @@
+{
+  "date": "2026-10-05",
+  "brand_name": "拍拍冒險",
+  "owner_direction": "Adopt concept A name and yellow-background jumping dinosaur icon",
+  "subtitle_proposal": "節拍器與恐龍節奏挑戰",
+  "bundle_identifier": "com.beatlab.app",
+  "generator": "built-in image_gen.imagegen",
+  "prompt": "docs/design/branding/icon-a-prompt.txt",
+  "generated_original": "docs/design/branding/papai-adventure-icon-original.png",
+  "original_sha256": "f9b6502fadd0af9c2bf94825693e3a8bca5fc5e7c68e19adc9b00e54faa64d3f",
+  "app_icon": "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+  "app_icon_sha256": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+  "packaging": "sips resampling only, 1254x1254 opaque PNG to 1024x1024 opaque PNG; no creative changes",
+  "name_availability": "NOT CHECKED",
+  "trademark_clearance": "NOT CHECKED",
+  "store_metadata_written": false,
+  "game_character_changed": false
+}

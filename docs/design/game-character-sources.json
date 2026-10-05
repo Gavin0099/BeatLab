@@ -1,0 +1,54 @@
+{
+  "source_repository": "https://github.com/Gavin0099/english-vocab-trainer",
+  "source_commit": "51302d20bf2917e41313a794382ac8400946b9cf",
+  "authorization": "Owner explicitly requests reusing cat/robot/dinosaur art as BeatLab game companions",
+  "import": "Original PNG bytes unchanged; layout scaling occurs in SwiftUI",
+  "formats": "Static RGBA PNG; no animated sprite sheets imported",
+  "assets": [
+    {
+      "source": "ios/App/App/Assets.xcassets/CatRaisedPaw.imageset/artwork.png",
+      "blob": "f96179e324f8ba086102ee9f0e8163d07e24e357",
+      "file": "CatRaisedPaw.png",
+      "sha256": "9d77b5ba7b6174a0f4a5bec9849ea8fd47e67f407de00e66642a6f0107792f30",
+      "bytes": 1255317,
+      "asset": "AdventureCat",
+      "destination": "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png"
+    },
+    {
+      "source": "ios/App/App/Assets.xcassets/CatCompletionHeart.imageset/artwork.png",
+      "blob": "e56e1da4c3f7927df1211f6bf0e54795ac5a7056",
+      "file": "CatCompletionHeart.png",
+      "sha256": "bcc0c9c110974ac95abd310c55017cb3ab59412d6ffa5a5bc0356ce521b585ca",
+      "bytes": 431364,
+      "asset": "AdventureCatCelebration",
+      "destination": "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/artwork.png"
+    },
+    {
+      "source": "ios/App/App/Assets.xcassets/DinosaurJunior.imageset/artwork.png",
+      "blob": "12b135410a14742275d39218a75918db9de0e64c",
+      "file": "DinosaurJunior.png",
+      "sha256": "4048570545258386a1cbd54df1af5186bc19726de27ff5a085901e917828cf55",
+      "bytes": 722928,
+      "asset": "AdventureDinosaur",
+      "destination": "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/artwork.png"
+    },
+    {
+      "source": "ios/App/App/Assets.xcassets/DinosaurFamily.imageset/artwork.png",
+      "blob": "1a906c25c5d85db01cf74d34880d646ae99f957d",
+      "file": "DinosaurFamily.png",
+      "sha256": "e02cb053fb601e70a385e7766cbc034ee1776dcf8c1deebe0e71ecef04263641",
+      "bytes": 936139,
+      "asset": "AdventureDinosaurCelebration",
+      "destination": "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/artwork.png"
+    },
+    {
+      "source": "ios/App/App/Assets.xcassets/RobotSkinMascot.imageset/robot.png",
+      "blob": "975519a133ef048401ebf92ccba35f685651dcb9",
+      "file": "RobotSkinMascot.png",
+      "sha256": "2a7b4b8c8c75aa0f1ec98337e94b42b9dd94a39bfe2c87dff38f6388f0d69b51",
+      "bytes": 1534882,
+      "asset": "AdventureRobot",
+      "destination": "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png"
+    }
+  ]
+}
