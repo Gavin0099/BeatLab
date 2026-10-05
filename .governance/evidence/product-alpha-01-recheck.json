@@ -1,0 +1,21 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "command": "xcodebuild -project BeatLab.xcodeproj -scheme BeatLab -configuration Debug -destination platform=iOS\\ Simulator,id=7A5E53D5-112F-41DF-8CEA-9E6DE09F8E85 -derivedDataPath TestResults/PRODUCT-ALPHA-01/DerivedData -resultBundlePath TestResults/PRODUCT-ALPHA-01/largest-viewport.xcresult -parallel-testing-enabled NO -only-testing:BeatLabUITests/PracticeUITests/testRunnerLargeTextCanReachSceneRhythmJumpAndStop test-without-building",
+  "started_at": "2026-10-05T12:08:19.263000+00:00",
+  "finished_at": "2026-10-05T12:10:06.454000+00:00",
+  "runner": "Xcode26.6 XCTest, owned iPhone SE3 iOS26.5 Simulator; explicit accessibility XXXL",
+  "linked_commit": "8bd945378cab5870266c01be9995350b4ace214c",
+  "exit_code": 0,
+  "output_artifacts": [
+    "docs/slices/QA-01-verification.json",
+    "docs/design/branding/previews/manifest.json",
+    "TestResults/PRODUCT-ALPHA-01/largest-viewport-summary.json"
+  ],
+  "cannot_claim": [
+    "single full suite green",
+    "physical timing or child acceptance",
+    "public release",
+    "new hit-feedback sound implemented"
+  ],
+  "source_manifest_sha256": "7d21d318b8c55b9ce3169399cdbb4f94a38422ca85ce953aae709b03ec0c0b05"
+}
