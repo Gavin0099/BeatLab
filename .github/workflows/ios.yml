@@ -17,6 +17,8 @@ concurrency:
 
 jobs:
   mvp:
+    # Owner paused all hosted macOS jobs; restore through a reviewed workflow change.
+    if: ${{ false }}
     runs-on: macos-15
     timeout-minutes: 30
     steps:
