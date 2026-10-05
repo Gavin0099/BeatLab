@@ -135,8 +135,9 @@ final class MetronomeAudio: ObservableObject {
 
     var practiceFeedbackAvailable: Bool { feedbackVoice != nil }
     var practiceFeedbackIsPlaying: Bool { isPlaying && feedbackVoice?.node.isPlaying == true }
+    private(set) var practiceGrooveAvailable = false
 
-    func start(configuration: MetronomeConfiguration, practiceFeedback: Bool = false) {
+    func start(configuration: MetronomeConfiguration, practiceFeedback: Bool = false, eggMission: Bool = false) {
         guard !isPlaying else { return }
         stop()
         let session = AVAudioSession.sharedInstance()
@@ -156,6 +157,14 @@ final class MetronomeAudio: ObservableObject {
                 throw AudioFailure.unsupportedRoute
             }
             kernel = owner
+            if eggMission, practiceFeedback, sound == .click, gapBars == 0, ladderBars == 0,
+               configuration.tempo.bpm == 60, configuration.timeSignature == .fourFour,
+               configuration.subdivision == .quarter,
+               let samples = PracticeGroove.samples(sampleRate: sampleRate) {
+                practiceGrooveAvailable = samples.withUnsafeBufferPointer {
+                    BLDSPSetPracticeBed(owner.pointer, $0.baseAddress, UInt32($0.count), UInt32(sampleRate) * 4)
+                }
+            }
             for (index, samples) in voiceSamples.enumerated() where voiceRate == sampleRate {
                 let loaded = samples.withUnsafeBufferPointer {
                     BLDSPSetVoice(owner.pointer, Int32(index), $0.baseAddress, UInt32($0.count))
@@ -206,6 +215,7 @@ final class MetronomeAudio: ObservableObject {
         engine = nil
         // The callback retains RenderKernel, so an in-flight callback never sees freed state.
         kernel = nil
+        practiceGrooveAvailable = false
         isPlaying = false
         status = reason
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)

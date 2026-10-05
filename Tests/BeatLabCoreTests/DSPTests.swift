@@ -2,6 +2,79 @@ import XCTest
 import BeatLabDSP
 
 final class DSPTests: XCTestCase {
+    func testFinitePracticeBedStartsOnExistingCursorAndDoesNotChangeBeatHistory() throws {
+        let settings = BLSettings(bpm: 60, meter: 2, subdivision: 0, accent: 1, beatPattern: 0, timbre: 0)
+        let plain = try XCTUnwrap(BLDSPCreate(8000, settings)), bed = try XCTUnwrap(BLDSPCreate(8000, settings))
+        defer { BLDSPDestroy(plain); BLDSPDestroy(bed) }
+        BLDSPSetGain(plain, 1); BLDSPSetGain(bed, 1)
+        let fixture: [Float] = [0.1, -0.1, 0.2, 0]
+        // Four seconds count-in at 8k = 32,000. Deliberately nonbeat offset
+        // proves indexing follows samples, not pulse/animation events.
+        XCTAssertTrue(fixture.withUnsafeBufferPointer { BLDSPSetPracticeBed(bed, $0.baseAddress, 4, 32001) })
+        let a = render(plain, 32010), b = render(bed, 32010)
+        XCTAssertEqual(Array(a[..<32001]), Array(b[..<32001]))
+        for i in 0..<4 { XCTAssertEqual(b[32001 + i] - a[32001 + i], fixture[i], accuracy: 0.000001) }
+        XCTAssertEqual(Array(a[32005...]), Array(b[32005...]))
+        for frame in [0, 7999, 8000, 16000, 24000, 32000] {
+            var x = BLBeat(), y = BLBeat()
+            XCTAssertTrue(BLDSPReadBeat(plain, Int64(frame), &x)); XCTAssertTrue(BLDSPReadBeat(bed, Int64(frame), &y))
+            XCTAssertEqual(x.startFrame, y.startFrame); XCTAssertEqual(x.endFrame, y.endFrame)
+            XCTAssertEqual(x.beatNumber, y.beatNumber); XCTAssertEqual(x.barNumber, y.barNumber)
+        }
+        var x = BLClock(), y = BLClock()
+        XCTAssertTrue(BLDSPReadClock(plain, &x)); XCTAssertTrue(BLDSPReadClock(bed, &y))
+        XCTAssertEqual(x.renderStartFrame, y.renderStartFrame); XCTAssertEqual(x.hostTime, y.hostTime)
+        XCTAssertEqual(x.frameCount, y.frameCount)
+        XCTAssertFalse(fixture.withUnsafeBufferPointer { BLDSPSetPracticeBed(bed, $0.baseAddress, 4, 0) })
+    }
+
+    func testPracticeBedRejectsInvalidDataAndIsIndependentOfRenderQuantum() throws {
+        let settings = BLSettings(bpm: 60, meter: 2, subdivision: 0, accent: 1, beatPattern: 0, timbre: 0)
+        let a = try XCTUnwrap(BLDSPCreate(8000, settings)), b = try XCTUnwrap(BLDSPCreate(8000, settings))
+        defer { BLDSPDestroy(a); BLDSPDestroy(b) }
+        XCTAssertFalse(BLDSPSetPracticeBed(a, nil, 0, 0))
+        for invalid: Float in [.nan, .infinity, 0.201, -0.201] {
+            var value = invalid
+            XCTAssertFalse(BLDSPSetPracticeBed(a, &value, 1, 0))
+        }
+        var value: Float = 0.1
+        XCTAssertFalse(BLDSPSetPracticeBed(a, &value, 128001, 0))
+        XCTAssertFalse(BLDSPSetPracticeBed(a, &value, 1, 64001))
+        let fixture = [Float](repeating: 0.1, count: 2000)
+        for dsp in [a,b] { XCTAssertTrue(fixture.withUnsafeBufferPointer { BLDSPSetPracticeBed(dsp, $0.baseAddress, 2000, 32000) }) }
+        let whole = render(a, 35000)
+        var chunks: [Float] = []
+        for _ in 0..<350 { chunks += render(b, 100) }
+        XCTAssertEqual(whole, chunks)
+    }
+
+    func testPracticeBedRespectsMuteGainAndDisablesOnTempoMeterOrSubdivisionChange() throws {
+        let settings = BLSettings(bpm: 60, meter: 2, subdivision: 0, accent: 1, beatPattern: 0, timbre: 0)
+        let fixture = [Float](repeating: 0.1, count: 128000)
+        for mode in 0..<5 {
+            var initial = settings
+            if mode == 0 { initial.beatPattern = 255 }
+            let dsp = try XCTUnwrap(BLDSPCreate(8000, initial)); defer { BLDSPDestroy(dsp) }
+            XCTAssertTrue(fixture.withUnsafeBufferPointer { BLDSPSetPracticeBed(dsp, $0.baseAddress, UInt32($0.count), 0) })
+            if mode == 1 { BLDSPSetGain(dsp, 0) }
+            if mode <= 1 {
+                XCTAssertTrue(render(dsp, 32001).allSatisfy { $0 == 0 })
+                var beat = BLBeat(); XCTAssertTrue(BLDSPReadBeat(dsp, 32000, &beat)); XCTAssertEqual(beat.beatNumber, 4)
+            } else {
+                _ = render(dsp, 1)
+                var changed = settings
+                if mode == 2 { changed.bpm = 120 }
+                if mode == 3 { changed.meter = 1 }
+                if mode == 4 { changed.subdivision = 1 }
+                XCTAssertTrue(BLDSPRequest(dsp, changed))
+                // Meter applies at next bar; tempo/subdivision at next beat.
+                _ = render(dsp, 32100)
+                XCTAssertTrue(render(dsp, 32).allSatisfy { $0 == 0 }, "Bed must be silent after transport changes")
+                XCTAssertTrue(BLDSPRequest(dsp, settings)); _ = render(dsp, 32100)
+                XCTAssertTrue(render(dsp, 32).allSatisfy { $0 == 0 }, "A changed bed cannot rejoin at the wrong phrase")
+            }
+        }
+    }
     func testMutedBeatSuppressesEverySubdivisionAndVoiceWhileClockAdvances() throws {
         // Independent fixture: 120 BPM / 48 kHz = 24,000 samples per big beat.
         // Accent, mute, normal, accent = 158 in the documented 2-bit format.

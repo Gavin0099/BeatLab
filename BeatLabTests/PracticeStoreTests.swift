@@ -5,6 +5,32 @@ import BeatLabCore
 
 final class PracticeStoreTests: XCTestCase {
     @MainActor
+    func testEggMissionUsesOriginalMatchingAndClearsMusicOnCancelCalibrationAndTempoChange() async throws {
+        let name = "BeatLabTests.EggMission.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = PracticeStore(repository: ProgressRepository(defaults: defaults)), audio = MetronomeAudio()
+        defer { audio.stop() }
+        let first = store.lessons[0]
+        store.select(first); store.start(first, audio: audio, eggMission: true)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing); XCTAssertTrue(store.isEggMission); XCTAssertTrue(audio.practiceGrooveAvailable)
+        let epoch = try XCTUnwrap(audio.audibleEpoch())
+        store.tap(at: epoch + 1); XCTAssertNil(store.latestHit)
+        store.tap(at: epoch + 4); XCTAssertEqual(store.latestHit?.grade, .perfect); XCTAssertEqual(store.latestHit?.targetID, 0)
+        store.tap(at: epoch + 4); XCTAssertEqual(store.latestHit?.grade, .extra)
+        store.cancel(audio: audio)
+        XCTAssertFalse(store.isEggMission); XCTAssertFalse(audio.practiceGrooveAvailable); XCTAssertTrue(store.progress.results.isEmpty)
+        store.startCalibration(audio: audio)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing); XCTAssertFalse(store.isEggMission); XCTAssertFalse(audio.practiceGrooveAvailable)
+        store.cancel(audio: audio); store.select(first); store.setPracticeBPM(65)
+        store.start(first, audio: audio, eggMission: true)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing); XCTAssertFalse(store.isEggMission); XCTAssertFalse(audio.practiceGrooveAvailable)
+        store.cancel(audio: audio)
+    }
+    @MainActor
     func testRealMatcherStartsFeedbackButCountInAndCalibrationDoNot() async throws {
         let name = "BeatLabTests.Feedback.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
@@ -219,6 +245,27 @@ final class PracticeStoreTests: XCTestCase {
         XCTAssertTrue(store.progress.results.isEmpty)
         XCTAssertFalse(store.unlocked(store.lessons[1]))
         XCTAssertEqual(defaults.data(forKey: ProgressRepository.storageKey), future)
+    }
+}
+
+final class EggMissionPresentationTests: XCTestCase {
+    func testOpenTargetIsNeverReportedMissedAndAcceptedTargetCannotStumble() {
+        XCTAssertNil(EggMissionPresentation.missed(elapsed: 4.43, accepted: []))
+        XCTAssertEqual(EggMissionPresentation.missed(elapsed: 4.431, accepted: []), 0)
+        XCTAssertNil(EggMissionPresentation.missed(elapsed: 4.7, accepted: [0]))
+        XCTAssertNil(EggMissionPresentation.missed(elapsed: 4.95, accepted: []))
+        XCTAssertEqual(EggMissionPresentation.missed(elapsed: 5.5, accepted: []), 1)
+        for value in [Double.nan, .infinity, -.infinity, 1e100] { XCTAssertNil(EggMissionPresentation.missed(elapsed: value, accepted: [])) }
+    }
+    func testMatchedExtraAndMissHaveDifferentActionsAndReducedMotionDoesNotHop() {
+        XCTAssertEqual(EggMissionPresentation.pose(elapsed: 5, hitAge: 0.2, grade: .perfect, recovering: false, reduceMotion: false), .jump)
+        XCTAssertEqual(EggMissionPresentation.pose(elapsed: 5, hitAge: 0.2, grade: .extra, recovering: false, reduceMotion: false), .ready)
+        XCTAssertEqual(EggMissionPresentation.pose(elapsed: 5, hitAge: nil, grade: nil, recovering: true, reduceMotion: false), .catchEgg)
+        XCTAssertEqual(EggMissionPresentation.hop(hitAge: 0.24, grade: .perfect, reduceMotion: false), 74, accuracy: 0.001)
+        XCTAssertEqual(EggMissionPresentation.hop(hitAge: 0.24, grade: .extra, reduceMotion: false), 12, accuracy: 0.001)
+        XCTAssertEqual(EggMissionPresentation.hop(hitAge: 0.24, grade: .perfect, reduceMotion: true), 0)
+        XCTAssertEqual(EggMissionPresentation.hop(hitAge: 0.5, grade: .perfect, reduceMotion: false), 0)
+        XCTAssertEqual(EggMissionPresentation.pose(elapsed: .nan, hitAge: nil, grade: nil, recovering: false, reduceMotion: false), .ready)
     }
 }
 

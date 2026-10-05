@@ -6,6 +6,49 @@ import BeatLabDSP
 @testable import BeatLab
 
 final class MetronomeAudioTests: XCTestCase {
+    func testOriginalGrooveHasBoundedPCMAndAnIndependentFourBeatCountIn() throws {
+        for rate in [8_000.0, 44_100, 48_000, 96_000, 192_000] {
+            let samples = try XCTUnwrap(PracticeGroove.samples(sampleRate: rate))
+            XCTAssertEqual(samples.count, Int(rate) * 16)
+            XCTAssertEqual(samples.first, 0); XCTAssertEqual(samples.last, 0)
+            XCTAssertTrue(samples.allSatisfy(\.isFinite))
+            XCTAssertLessThanOrEqual(samples.map { abs($0) }.max() ?? 1, 0.20)
+        }
+        for rate in [Double.nan, .infinity, 0, 7999, 192001, 48000.5] { XCTAssertNil(PracticeGroove.samples(sampleRate: rate)) }
+        let samples = try XCTUnwrap(PracticeGroove.samples(sampleRate: 8000))
+        let dsp = try XCTUnwrap(BLDSPCreate(8000, BLSettings(bpm: 60, meter: 2, subdivision: 0, accent: 1, beatPattern: 0, timbre: 0)))
+        defer { BLDSPDestroy(dsp) }
+        // Speech-only with no voice buffers isolates actual bed output from clicks.
+        XCTAssertTrue(BLDSPSetPracticeOptions(dsp, 1, 0, 0)); BLDSPSetGain(dsp, 1)
+        XCTAssertTrue(samples.withUnsafeBufferPointer { BLDSPSetPracticeBed(dsp, $0.baseAddress, UInt32($0.count), 32000) })
+        var output = [Float](repeating: 0, count: 160128)
+        output.withUnsafeMutableBufferPointer { BLDSPRender(dsp, $0.baseAddress, UInt32($0.count), 999) }
+        XCTAssertTrue(output[..<32000].allSatisfy { $0 == 0 })
+        XCTAssertEqual(Array(output[32000..<160000]), samples)
+        XCTAssertTrue(output[160000...].allSatisfy { $0 == 0 })
+        for beat in 0..<16 {
+            let start = 32000 + beat * 8000
+            XCTAssertGreaterThan(output[start..<(start + 800)].reduce(0.0) { $0 + Double($1 * $1) }, 0.01, "Every musical beat has real original percussion")
+        }
+    }
+
+    @MainActor
+    func testMissionGrooveIsPreparedOnlyForTheScopedGraphAndReleasedOnRestart() async throws {
+        let audio = MetronomeAudio(); defer { audio.stop() }
+        let configuration = try MetronomeConfiguration(tempo: Tempo(bpm: 60), timeSignature: .fourFour, subdivision: .quarter, accentEnabled: true)
+        audio.start(configuration: configuration, practiceFeedback: true, eggMission: true)
+        XCTAssertTrue(audio.isPlaying, audio.status ?? "Graph failed"); XCTAssertTrue(audio.practiceGrooveAvailable)
+        for _ in 0..<20 where audio.displayBeat() == nil { try await Task.sleep(nanoseconds: 50_000_000) }
+        let before = try XCTUnwrap(audio.displayBeat())
+        audio.setGain(0); try await Task.sleep(nanoseconds: 150_000_000)
+        let after = try XCTUnwrap(audio.displayBeat())
+        XCTAssertGreaterThan(Double(after.number) + after.phase, Double(before.number) + before.phase)
+        audio.stop(); XCTAssertFalse(audio.practiceGrooveAvailable)
+        audio.start(configuration: configuration); XCTAssertTrue(audio.isPlaying); XCTAssertFalse(audio.practiceGrooveAvailable)
+        audio.stop()
+        audio.start(configuration: .defaultValue, practiceFeedback: true, eggMission: true)
+        XCTAssertTrue(audio.isPlaying); XCTAssertFalse(audio.practiceGrooveAvailable, "80 BPM cannot reuse a 60 BPM phrase")
+    }
     @MainActor
     func testFeedbackBuffersAreShortQuietTaperedMonoAndRejectInvalidRates() throws {
         for rate in [8_000.0, 44_100, 48_000, 96_000, 192_000] {

@@ -228,3 +228,25 @@ GAME-09A 已先建立 L2 exact-file 契約，開始實作既有要求的短 inpu
 GAME-09A 本機回歸：focused 9／0；完整 App tests 36／0 加實際 UIKit matched／extra／重開與零輸入流程 2／0，共 38／0。實際 AVAudioEngine offline output 證明音效有輸出、20 次連點不累積長 queue、gain0 靜音；實際 graph 檢查 count-in／校正禁用、mute 不重設節拍、中斷清理與重開。36 App 與 2 UI 由同次 test action 執行；不擴大成完整 UI suite 或真機 timing PASS。37 Swift files／104 test definitions source check 通過；18 條 protected paths 與 UI checkpoint bytes 一致。未新增內容或公開分發。
 
 同一來源 unsigned Release iphoneos compile 通過，bundle／build 維持 com.gavin0099.beatlab／0.1.0（10）；未封存／驗 distribution signature。工程證據記錄於 docs/slices/GAME-09A-verification.json；目前 source 與已分發 build10 不同，不能拿舊 IPA 當新候選。
+
+### 2026-10-05 — 最新 alpha 手機安裝
+
+Owner 明確要求安裝。INSTALL-ALPHA-01 只交付目前 source 6a9677e，不改 App／bundle／team／build／progress schema。66 個來源檔案在 build／install 前後 hashes 一致；Debug iphoneos 建置、development signature、profile 有效期與本人裝置覆蓋核對通過。devicectl install 成功原地更新 GavinWu0099 的 com.gavin0099.beatlab，沒有 uninstall／reset／Apple upload。版本仍 0.1.0（10），來源包含新版三頁與 GAME-09A，和 TestFlight distributed build10 不同。首次 launch 被實際 Locked error 拒絕；已請 owner 解鎖，下一步只重試 launch。本機 candidate／signature／install／launch receipts 在 ignored TestResults/INSTALL-ALPHA-01/BUILD.json；安裝不代表物理 timing、玩法或 public gate 接受。
+
+Owner 再次明確要求重裝：核對同一份 source／artifact hashes 與 development signature 後，直接重用候選，沒有重建或改來源。22:44 原地重新安裝通過，22:45 devicectl launch 通過，首次鎖屏的開啟阻擋已解除。重裝與開啟 receipts 為 install-repeat1.json／launch-repeat1.json，同一 BUILD.json 保留歷史結果；沒有清除 learner data、新上傳或 release gate 接受。
+
+### 最新 owner 試玩回饋 — 畫面一致，遊戲吸引力未接受
+
+Owner 提供新版真機 screenshot，明確表示「畫面是一致了」，但仍覺得不像遊戲、吸引力不足，要求先研究網路 App 做法與分析。此為三頁風格一致的 owner 回饋，不能推廣成 timing／兒童／首次使用 gate 通過；GAME-09／09A 的玩法接受仍未通過。當前工作轉為 analysis-only：核對 Duet Cats、Geometry Dash、A Dance of Fire and Ice 的官方 App Store 說明／宣傳圖，以及 Simogo 的 Beat Sneak Bandit 開發紀錄；沒有實際試玩參考 App。原生 source 確認固定背景、同張角色圖位移與既有 lesson clock 驅動進度。任務目標、角色動作、世界隨節拍的反應與簡短音樂 loop 屬待評估提案，未授權或實作新增玩法／內容；本輪不改 App、不安裝、不 build、不 push、不公開分發。
+
+### 2026-10-06 — GAME-10 送蛋回巢試玩
+
+Owner 接受前輪提案並指示「好，這樣做做看」。開始實作第一關送蛋回巢：可見目標、動作素材、匹配／漏拍／多打後果、真實結果與重試、原創簡短鼓組。先可操作概念再 native；新增 L2 exact-file 契約 `docs/slices/GAME-10.md`。不增加關卡／角色／skin／模式／保存規則；音樂使用原有 DSP cursor，動畫與碰撞不取得 timing/score authority。Status IN_PROGRESS；本輪工程驗證、owner 遊戲接受与硬體 timing 均尚未完成，未授權公開分發。
+
+GAME-10 已落地並原地安裝開啟 owner iPhone：首頁第一關、恐龍、60 BPM 的約20秒「把恐龍蛋帶回家」。原創九格 alpha atlas 保留與 icon 的恐龍身份；新的跑／跳／接蛋／抵達動作、可見巢與靠近的石頭、Perfect 蛋亮與連續拍、extra 小跳／miss 安全接蛋，結果與保存仍用原分數。原創四小節 kick/snare/hat PCM 在 graph.start 前完成，在 C render 的既有 cursor 上於四拍數拍後混合；gain/mute/transport transitions 不改 timing authority。12 條 core/input/configuration paths 與6a9677e bytes相同；DSP與音訊/PracticeStore則確實因配樂而改，不宣稱全authority路徑未改。
+
+驗證：可玩瀏覽器概念15項，真实clock-cued16次輸入達成16命中／15Perfect／0extra，零輸入失敗／重試／取消及duplicate通過。core53、capture3、C renderer468組各900秒與UBSan boundaries通過。凍結來源的 SE / dark / 系統Reduce Motion ON 原生App41＋UIKit input/restart、一般viewport、明確最大字級分兩輪到達scene/rhythm/pad/stop3項，共44／0；最大字級 stop maxY659在667pt viewport內。寬機零輸入／重試與一般viewport另驗。39 Swift files／112 test definitions／project membership結構檢查通過。初始語法/欄位錯、冷啟動/取消、兩次測試查詢超過真實20秒挑戰、building DB contention的失敗均保留；沒有延長課程、改判分或假成功。實際圖示裁切/場景背景intrinsic width造成的接縫已修正並納入凍結來源。
+
+Debug iphoneos 71來源檔案／artifact hashes、簽章／team／本人裝置profile覆蓋檢查通過；GavinWu0099的 com.gavin0099.beatlab install與launch PASS，既有學習資料未重設。版本仍0.1.0（10），為直接安裝的新source，TestFlight distributed build10未更新。Status IMPLEMENTED_AND_INSTALLED_LOCAL_CHECKS_PASS_OWNER_PENDING；物理音畫/input timing、audibility/frame pacing、VoiceOver與兒童是否想重玩仍NOT RUN，不能稱public readiness。凍結與安裝收據在ignored TestResults/GAME-10/；canonical evidence見docs/slices/GAME-10-verification.json。只推工程分支；沒有PR/merge/Apple upload/public link/App Store submit。
+
+凍結來源的寬機實際零輸入／重試／保留第二關鎖定與一般viewport停止另跑2／0通過；最後工程證據為SE44／0＋wide2／0的組合，不稱完整UI suite全綠。SE測試後appearance已還原light；Reduce Motion原值OFF，目前ON。CUA還原時Mac實際Locked，已請owner解鎖，這項測試環境還原仍待；不影響已安裝手機。未動其他模擬器／手機的輔助使用設定。

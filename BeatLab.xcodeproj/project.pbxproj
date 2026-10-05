@@ -5,6 +5,20 @@
 	};
 	objectVersion = 56;
 	objects = {
+		AB10AB10AB10AB10AB100001 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Views/EggMissionView.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB10AB10AB10AB10AB100002 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.swift;
+			path = BeatLab/Audio/PracticeGroove.swift;
+			sourceTree = SOURCE_ROOT;
+		};
+		AB10AB10AB10AB10AB100003 = { isa = PBXBuildFile; fileRef = AB10AB10AB10AB10AB100001; };
+		AB10AB10AB10AB10AB100004 = { isa = PBXBuildFile; fileRef = AB10AB10AB10AB10AB100002; };
 		54AA34C71344DDCA02498FDF = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
@@ -290,6 +304,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AB10AB10AB10AB10AB100003,
+				AB10AB10AB10AB10AB100004,
 				27040D02FA2705CC36E15A6C,
 				3D7BAC7E750925A325C525BB,
 				42A597D2966D37D1198DAE12,
@@ -701,6 +717,8 @@
 				5149120AAC991E8E2848ADB1,
 				AFAA7180CFD6ACDD985FF4B6,
 				FA660BEABE868E71DDEDF52B,
+				AB10AB10AB10AB10AB100001,
+				AB10AB10AB10AB10AB100002,
 				3A5BB64A2112BA697731EA63,
 				F5C574910BA46349A511B488,
 				051999634EB9004F9A33783E,

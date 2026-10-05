@@ -28,6 +28,10 @@ struct BLDSP {
     uint64_t beatNumber, barNumber, segmentBeat;
     int beatInBar, pulse, voice, voiceOffset;
     bool started;
+    float *practiceBed;
+    uint32_t bedLength, bedStart;
+    BLSettings bedSettings;
+    bool bedEnabled;
 };
 static int beats(int meter) { return meter == 1 ? 3 : meter == 2 ? 4 : 2; }
 static int pulses(int sub) { return sub == 1 ? 2 : sub == 2 ? 4 : sub >= 3 ? 3 : 1; }
@@ -120,6 +124,10 @@ static void beginBeat(BLDSP *d) {
         d->applied.bpm = desired.bpm;
     }
     d->beatStart = d->cursor;
+    if (d->bedEnabled && (d->applied.bpm != d->bedSettings.bpm ||
+            d->applied.meter != d->bedSettings.meter || d->applied.subdivision != d->bedSettings.subdivision)) {
+        d->bedEnabled = false;
+    }
     d->nextBeat = position(d, d->beatNumber + 1, 0, 1);
     d->pulse = 0;
     d->nextPulse = d->cursor;
@@ -161,7 +169,18 @@ BLDSP *BLDSPCreate(uint32_t rate, BLSettings settings) {
 }
 void BLDSPDestroy(BLDSP *d) {
     if (d) for (int i = 0; i < 5; i++) free(d->voices[i]);
+    if (d) free(d->practiceBed);
     free(d);
+}
+bool BLDSPSetPracticeBed(BLDSP *d, const float *samples, uint32_t count, uint32_t start) {
+    if (!d || d->started || !samples || !count || count > d->rate * 16U || start > d->rate * 8U) return false;
+    for (uint32_t i = 0; i < count; i++) if (!isfinite(samples[i]) || fabsf(samples[i]) > 0.20f) return false;
+    float *copy = malloc(sizeof(float) * count);
+    if (!copy) return false;
+    for (uint32_t i = 0; i < count; i++) copy[i] = samples[i];
+    free(d->practiceBed); d->practiceBed = copy;
+    d->bedLength = count; d->bedStart = start; d->bedSettings = d->applied; d->bedEnabled = true;
+    return true;
 }
 bool BLDSPSetVoice(BLDSP *d, int index, const float *samples, uint32_t count) {
     if (!d || d->started || index < 0 || index >= 5 || !samples || !count || count > d->rate) return false;
@@ -220,6 +239,9 @@ void BLDSPRender(BLDSP *d, float *output, uint32_t count, uint64_t host) {
         float speech = d->voices[word] && d->speechOffset < d->voiceLengths[word]
             ? d->voices[word][d->speechOffset++] * gain : 0;
         float value = d->appliedMode == 0 ? click : d->appliedMode == 1 ? speech : click * 0.45f + speech * 0.7f;
+        if (d->bedEnabled && d->cursor >= d->bedStart && d->cursor - d->bedStart < d->bedLength) {
+            value += d->practiceBed[d->cursor - d->bedStart] * gain;
+        }
         output[i] = d->muted ? 0 : fmaxf(-1, fminf(1, value));
     }
 }

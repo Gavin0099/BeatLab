@@ -38,6 +38,10 @@ BL_API bool BLDSPSetVoice(BLDSP *dsp, int index, const float *samples, uint32_t 
 /* mode: 0 click, 1 voice, 2 both. Gap: 0 off, 1/2 silent bars after four.
    Ladder: 0 off, otherwise +5 BPM every ladderBars complete bars. */
 BL_API bool BLDSPSetPracticeOptions(BLDSP *dsp, int mode, int gapBars, int ladderBars);
+/* Optional finite accompaniment. Control owner only, before first render.
+   Copies <=16 seconds of finite PCM at peak <=.20; delay <=8 seconds.
+   Existing sample cursor supplies its position. Tempo/meter/sub changes disable it. */
+BL_API bool BLDSPSetPracticeBed(BLDSP *dsp, const float *samples, uint32_t count, uint32_t startFrame);
 /* Single render-thread owner; no allocations, locks or Objective-C calls. */
 BL_API void BLDSPRender(BLDSP *dsp, float *output, uint32_t count, uint64_t hostTime);
 /* Control thread reads atomic history; false means no coherent snapshot yet. */

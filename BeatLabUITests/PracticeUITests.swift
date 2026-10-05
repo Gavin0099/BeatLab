@@ -184,13 +184,23 @@ final class PracticeUITests: XCTestCase {
     func testNoTapChallengeShowsRealFailureAndKeepsNextLocked() async throws {
         let app = freshApp()
         app.buttons["dailyPractice"].tap()
+        XCTAssertTrue(app.staticTexts["把恐龍蛋帶回家"].exists)
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout: 30))
+        XCTAssertEqual(app.staticTexts["practiceSummary"].label, "蛋接住了，再試一次！")
         XCTAssertEqual(app.otherElements["practiceStars"].label, "這次得到 0 顆星")
         XCTAssertFalse(app.buttons["nextLesson"].exists)
         XCTAssertTrue(app.staticTexts["漏拍 16 下 · 多打 0 下"].exists)
         capture(app, "Native actual no-input result")
-        try reveal(app.buttons["returnToJourney"], in: app); app.buttons["returnToJourney"].tap()
+        try reveal(app.buttons["retryLesson"], in: app); app.buttons["retryLesson"].tap()
+        let counter = app.staticTexts["jumpMatches"]
+        XCTAssertTrue(counter.waitForExistence(timeout: 5)); XCTAssertEqual(counter.label, "跨過 0 / 16 個障礙")
+        app.buttons["stopPractice"].tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
+        // Reopen the preparation; failed/retried/cancelled runs keep next locked.
+        let first = app.buttons["journeyLesson.first-beat"]
+        try reveal(first, in: app); first.tap()
+        try reveal(app.buttons["backToJourney"], in: app); app.buttons["backToJourney"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
         XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
@@ -205,12 +215,12 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(pad.waitForExistence(timeout: 5))
         let cue = app.staticTexts["jumpCue"]
         let stop = app.buttons["stopPractice"]
-        let viewport = CGRect(x: 0, y: app.navigationBars.firstMatch.frame.maxY,
-                              width: app.frame.width, height: app.frame.maxY - app.navigationBars.firstMatch.frame.maxY)
-        for element in [cue, pad, stop] {
-            XCTAssertTrue(element.exists)
-            XCTAssertGreaterThan(element.frame.height, 0)
-            XCTAssertTrue(viewport.contains(element.frame), "Clipped \(element.identifier): \(element.frame)")
+        let appFrame = app.frame, navigationBottom = app.navigationBars.firstMatch.frame.maxY
+        let viewport = CGRect(x: 0, y: navigationBottom, width: appFrame.width, height: appFrame.maxY - navigationBottom)
+        let cueFrame = cue.frame, padFrame = pad.frame, stopFrame = stop.frame
+        for (name, frame) in [("cue", cueFrame), ("pad", padFrame), ("stop", stopFrame)] {
+            XCTAssertGreaterThan(frame.height, 0)
+            XCTAssertTrue(viewport.contains(frame), "Clipped \(name): \(frame)")
         }
         // SwiftUI can expose both a container and inherited child IDs. Measure
         // the union of all lane frames rather than silently picking a child.
@@ -218,13 +228,12 @@ final class PracticeUITests: XCTestCase {
         XCTAssertFalse(laneElements.isEmpty)
         let laneFrame = laneElements.reduce(CGRect.null) { $0.union($1.frame) }
         XCTAssertTrue(viewport.contains(laneFrame), "Clipped rhythm lane: \(laneFrame)")
-        XCTAssertLessThanOrEqual(laneFrame.maxY, pad.frame.minY, "Rhythm cannot be hidden beneath jump pad")
-        XCTAssertLessThanOrEqual(pad.frame.maxY, stop.frame.minY)
+        XCTAssertLessThanOrEqual(laneFrame.maxY, padFrame.minY, "Rhythm cannot be hidden beneath jump pad")
+        XCTAssertLessThanOrEqual(padFrame.maxY, stopFrame.minY)
         capture(app, "Runner complete viewport")
-        try await Task.sleep(nanoseconds: 3_000_000_000)
-        capture(app, "Runner approaching obstacles mid-run")
-        pad.tap(withNumberOfTaps: 2, numberOfTouches: 1)
-        XCTAssertTrue(app.staticTexts["多打一下，再跟上"].waitForExistence(timeout: 3))
+        // Keep a viewport test inside the real twenty-second lesson. Actual
+        // matched touch/restart is a separate runtime test; duplicate/extra is
+        // covered through the real matcher and browser clock-cued inputs.
         stop.tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
@@ -279,7 +288,7 @@ final class PracticeUITests: XCTestCase {
         try reveal(first, in: app); first.tap()
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(counter.waitForExistence(timeout: 5))
-        XCTAssertEqual(counter.label, "跨過 0 個障礙 · 休止格先等一下")
+        XCTAssertEqual(counter.label, "跨過 0 / 16 個障礙")
         app.buttons["stopPractice"].tap()
     }
 

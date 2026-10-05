@@ -224,10 +224,37 @@ static void long_run(uint32_t rate, int bpm, int meter, int sub, int divisions, 
     fflush(stdout);
     BLDSPDestroy(d);
 }
+static void practice_bed(void) {
+    BLSettings settings = {60, 2, 0, 1, 0, 0};
+    BLDSP *plain = BLDSPCreate(8000, settings), *bed = BLDSPCreate(8000, settings);
+    CHECK(plain && bed);
+    float fixture[] = {.1f, -.1f, .2f, 0};
+    CHECK(!BLDSPSetPracticeBed(NULL, fixture, 4, 0));
+    CHECK(!BLDSPSetPracticeBed(bed, NULL, 4, 0));
+    CHECK(!BLDSPSetPracticeBed(bed, fixture, 128001, 0));
+    CHECK(!BLDSPSetPracticeBed(bed, fixture, 4, 64001));
+    float invalid = NAN;
+    CHECK(!BLDSPSetPracticeBed(bed, &invalid, 1, 0));
+    CHECK(BLDSPSetPracticeBed(bed, fixture, 4, 32001));
+    BLDSPSetGain(plain, 1); BLDSPSetGain(bed, 1);
+    advance(plain, 32000); advance(bed, 32000);
+    float a[16], b[16];
+    BLDSPRender(plain, a, 16, 999); BLDSPRender(bed, b, 16, 999);
+    for (int i = 0; i < 16; i++) {
+        float expected = i >= 1 && i <= 4 ? fixture[i - 1] : 0;
+        CHECK(fabsf(b[i] - a[i] - expected) < .000001f);
+    }
+    BLBeat x, y;
+    CHECK(BLDSPReadBeat(plain, 32000, &x) && BLDSPReadBeat(bed, 32000, &y));
+    CHECK(x.startFrame == y.startFrame && x.endFrame == y.endFrame && x.beatNumber == y.beatNumber);
+    CHECK(!BLDSPSetPracticeBed(bed, fixture, 4, 0));
+    BLDSPDestroy(plain); BLDSPDestroy(bed);
+}
 int main(int argc, char **argv) {
     boundaries();
     challenges();
     beat_controls();
+    practice_bed();
     if (argc > 1 && strcmp(argv[1], "--boundaries-only") == 0) {
         printf("{\"boundary_restart_silence_gap_ladder_voice_tests\":\"PASS\",\"beat_controls\":\"PASS\",\"assertions\":%" PRIu64 "}\n", checks);
         return 0;

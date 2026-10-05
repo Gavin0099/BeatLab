@@ -22,6 +22,7 @@ final class PracticeStore: ObservableObject {
     @Published private(set) var resultSaved = false
     @Published private(set) var calibrationSaved = false
     @Published private(set) var needsSaveRetry = false
+    @Published private(set) var isEggMission = false
     private let repository: ProgressRepository
     private var writable = true
     private var session: TimingSession?
@@ -72,7 +73,7 @@ final class PracticeStore: ObservableObject {
 
     func select(_ lesson: Lesson) {
         guard phase != .playing && phase != .preparing, !needsSaveRetry, unlocked(lesson) else { return }
-        selected = lesson; summary = nil; latestHit = nil; stars = 0; isCalibrating = false; phase = .idle
+        selected = lesson; summary = nil; latestHit = nil; stars = 0; isCalibrating = false; isEggMission = false; phase = .idle
         practiceBPM = lesson.bpm
     }
     func setPracticeBPM(_ value: Int) {
@@ -99,17 +100,18 @@ final class PracticeStore: ObservableObject {
         stars = 0; notice = nil; isCalibrating = false
     }
 
-    func start(_ lesson: Lesson, audio: MetronomeAudio) {
+    func start(_ lesson: Lesson, audio: MetronomeAudio, eggMission: Bool = false) {
         guard canPractice, unlocked(lesson), !needsSaveRetry, phase != .playing && phase != .preparing else { return }
         do { selected = try lesson.atTempo(max(lesson.bpm, practiceBPM)) }
         catch { notice = "練習速度無法使用。"; return }
         isCalibrating = false
+        isEggMission = eggMission && selected?.id == "first-beat" && selected?.bpm == 60
         begin(audio: audio, bpm: selected!.bpm)
     }
     func startCalibration(audio: MetronomeAudio) {
         guard writable, !needsSaveRetry, phase != .playing && phase != .preparing else { return }
         guard audio.supportsCalibration else { notice = "校正請使用內建喇叭或有線耳機。"; return }
-        isCalibrating = true; selected = nil
+        isCalibrating = true; selected = nil; isEggMission = false
         begin(audio: audio, bpm: 60)
     }
     private func begin(audio: MetronomeAudio, bpm: Int) {
@@ -126,7 +128,7 @@ final class PracticeStore: ObservableObject {
         summary = nil; latestHit = nil; stars = 0; session = nil; elapsed = 0; calibrated = false
         resultSaved = false; calibrationSaved = false; pendingProgress = nil; needsSaveRetry = false; notice = nil
         phase = .preparing
-        audio.start(configuration: configuration, practiceFeedback: !isCalibrating)
+        audio.start(configuration: configuration, practiceFeedback: !isCalibrating, eggMission: isEggMission)
         task = Task { [weak self, weak audio] in
             guard let self, let audio else { return }
             let deadline = Self.now() + 2
@@ -176,7 +178,7 @@ final class PracticeStore: ObservableObject {
         feedbackAudio = nil
         generation += 1; task?.cancel(); task = nil
         audio.stop(); restoreOptions(audio)
-        session = nil; phase = .idle; summary = nil; notice = message
+        session = nil; phase = .idle; summary = nil; notice = message; isEggMission = false
     }
     private func finish(audio: MetronomeAudio) {
         feedbackAudio = nil

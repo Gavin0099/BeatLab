@@ -23,10 +23,16 @@ struct PracticeView: View {
     @State private var hasAppeared = false
     @AccessibilityFocusState private var resultFocused: Bool
 
-    var body: some View {
+    private var phaseContent: some View {
         Group {
         if practice.phase == .playing && !practice.isCalibrating, let lesson = practice.selected {
+            if practice.isEggMission {
+                EggMissionView(accepted: jump.accepted, streak: reward.perfectStreak) {
+                    practice.cancel(audio: audio, message: "這次挑戰已停止，沒有計入成績。"); showingJourney = true
+                }
+            } else {
             runnerChallenge(lesson)
+            }
         } else {
         ScrollViewReader { proxy in
             ScrollView {
@@ -69,7 +75,9 @@ struct PracticeView: View {
         }
         }
         }
-        .background(BeatLabStyle.canvas).foregroundStyle(BeatLabStyle.ink)
+    }
+    var body: some View {
+        phaseContent.background(BeatLabStyle.canvas).foregroundStyle(BeatLabStyle.ink)
         .onChange(of: practice.phase) { phase in
             hopTask?.cancel(); hopTask = nil; hopHeight = 0
             if phase == .preparing || phase == .idle { jump = RhythmJumpPresentation(); reward = RhythmRewardPresentation() }
@@ -100,19 +108,7 @@ struct PracticeView: View {
             guard !hasAppeared else { return }; hasAppeared = true
             showingJourney = practice.selected == nil
         }
-        .onChange(of: practice.latestHit) { hit in
-            guard let hit, let lesson = practice.selected, !practice.isCalibrating else { return }
-            let matched = jump.record(hit, pattern: lesson.pattern, bars: lesson.bars)
-            reward.record(hit, accepted: matched, pattern: lesson.pattern)
-            hopTask?.cancel(); hopHeight = 0
-            guard !reduceMotion else { return }
-            hopTask = Task { @MainActor in
-                withAnimation(.easeOut(duration: 0.12)) { hopHeight = matched ? (hit.grade == .perfect ? -60 : -44) : -12 }
-                try? await Task.sleep(nanoseconds: 130_000_000)
-                guard !Task.isCancelled else { return }
-                withAnimation(.easeIn(duration: 0.18)) { hopHeight = 0 }
-            }
-        }
+        .onChange(of: practice.latestHit) { hit in recordPresentation(hit) }
         .onChange(of: reduceMotion) { enabled in
             if enabled { hopTask?.cancel(); hopHeight = 0 }
         }
@@ -123,6 +119,20 @@ struct PracticeView: View {
         }
         .confirmationDialog("這次成績還沒有保存。確定要離開結果嗎？", isPresented: $confirmDiscard, titleVisibility: .visible) {
             Button("不保存，離開結果", role: .destructive) { practice.discardUnsavedResult(); showingJourney = true }
+        }
+    }
+
+    private func recordPresentation(_ hit: TimingHit?) {
+        guard let hit, let lesson = practice.selected, !practice.isCalibrating else { return }
+        let matched = jump.record(hit, pattern: lesson.pattern, bars: lesson.bars)
+        reward.record(hit, accepted: matched, pattern: lesson.pattern)
+        hopTask?.cancel(); hopHeight = 0
+        guard !reduceMotion, !practice.isEggMission else { return }
+        hopTask = Task { @MainActor in
+            withAnimation(.easeOut(duration: 0.12)) { hopHeight = matched ? (hit.grade == .perfect ? -60 : -44) : -12 }
+            try? await Task.sleep(nanoseconds: 130_000_000)
+            guard !Task.isCancelled else { return }
+            withAnimation(.easeIn(duration: 0.18)) { hopHeight = 0 }
         }
     }
 
@@ -361,6 +371,9 @@ struct PracticeView: View {
             Button { showingJourney = true } label: { Label("關卡", systemImage: "arrow.left") }
                 .frame(minHeight: 44).accessibilityIdentifier("backToJourney")
             if let lesson = practice.selected ?? practice.recommended {
+                if missionEligible(lesson) {
+                    missionPreparation(lesson)
+                } else {
                 BLCard {
                     VStack(alignment: .leading, spacing: 18) {
                         Text("第 \(lessonNumber(lesson)) 關 · 下一個節奏，由你打出來").font(.subheadline.weight(.semibold)).foregroundStyle(Color.accentColor)
@@ -382,15 +395,43 @@ struct PracticeView: View {
                         RhythmLane(pattern: lesson.pattern, elapsed: 0, bpm: lesson.bpm, isPlaying: false)
                         strokeLegend
                         Text("先聽 4 拍。石頭到達腳下時，跟著拍子按「跳！」。休止格沒有石頭，先等一下。R/L 是手別提示，不辨識使用哪隻手。").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
-                        Button { practice.start(lesson, audio: audio) } label: { Label("開始挑戰", systemImage: "play.fill") }
+                        Button { startLesson(lesson) } label: { Label("開始挑戰", systemImage: "play.fill") }
                             .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice).accessibilityIdentifier("startLesson")
                     }
+                }
                 }
                 Button { showLessons = true } label: { Label("看看 10 個節奏挑戰", systemImage: "list.number") }
                     .buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("browseLessons")
             } else {
                 BLStatusMessage(text: "課程暫時無法載入。請重新開啟 App，或先使用自由節拍器。", symbol: "music.note")
             }
+        }
+    }
+
+    private func missionEligible(_ lesson: Lesson) -> Bool {
+        companion == .dinosaur && lesson.id == "first-beat" && max(lesson.bpm, practice.practiceBPM) == 60
+    }
+    private func startLesson(_ lesson: Lesson) {
+        practice.start(lesson, audio: audio, eggMission: missionEligible(lesson))
+    }
+    private func missionPreparation(_ lesson: Lesson) -> some View {
+        VStack(alignment: .leading, spacing: 16) {
+            Text("第 1 關 · 找到大拍").font(.subheadline.bold()).foregroundStyle(BeatLabStyle.muted)
+                .accessibilityIdentifier("preparedLessonNumber")
+            Text("把恐龍蛋帶回家").font(.system(.title, design: .rounded).bold())
+            EggMissionScene(elapsed: 0, preparing: true).frame(height: 260)
+            Text("先聽 4 拍。石頭到腳下，跟鼓聲按一下「跳！」。")
+                .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
+            Text("用右手跟拍 · 60 BPM · 約 20 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            Text("漏拍時恐龍會接住蛋，下一拍再接上；多打只會原地小跳。")
+                .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            if practice.mode == .standard {
+                Stepper("挑戰速度：\(practice.practiceBPM) BPM", value: Binding(
+                    get: { practice.practiceBPM }, set: { practice.setPracticeBPM($0) }
+                ), in: lesson.bpm...240, step: 5)
+            }
+            Button { startLesson(lesson) } label: { Label("帶蛋出發！", systemImage: "play.fill") }
+                .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice).accessibilityIdentifier("startLesson")
         }
     }
 
@@ -656,7 +697,11 @@ struct PracticeView: View {
                             .foregroundStyle(Color.accentColor).padding(24)
                             .background(BeatLabStyle.accentSoft, in: Circle()).accessibilityHidden(true)
                     } else {
-                        AdventureFinish(companion: companion, celebrating: practice.stars > 0).frame(height: 170)
+                        if practice.isEggMission {
+                            EggMissionScene(elapsed: 20, finishedPassed: practice.stars > 0).frame(height: 220)
+                        } else {
+                            AdventureFinish(companion: companion, celebrating: practice.stars > 0).frame(height: 170)
+                        }
                         if let selected = practice.selected, let index = practice.lessons.firstIndex(where: { $0.id == selected.id }),
                            practice.resultSaved && practice.stars > 0 && [1, 5, 9].contains(index) {
                             Label("\(worldNames[index == 1 ? 0 : index == 5 ? 1 : 2])徽章已點亮！", systemImage: "seal.fill")
@@ -696,9 +741,9 @@ struct PracticeView: View {
                         if let next = nextLesson, practice.resultSaved {
                             Button { openPreparation(next) } label: { Label("挑戰下一關", systemImage: "arrow.right") }
                                 .buttonStyle(BLPrimaryButtonStyle()).accessibilityIdentifier("nextLesson")
-                            Button("再練一次") { practice.start(lesson, audio: audio) }.buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("retryLesson")
+                            Button("再練一次") { startLesson(lesson) }.buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("retryLesson")
                         } else {
-                            Button { practice.start(lesson, audio: audio) } label: { Label("再挑戰一次", systemImage: "arrow.clockwise") }
+                            Button { startLesson(lesson) } label: { Label("再挑戰一次", systemImage: "arrow.clockwise") }
                                 .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice).accessibilityIdentifier("retryLesson")
                         }
                     }
@@ -717,6 +762,7 @@ struct PracticeView: View {
             return practice.calibrationSaved ? "對齊完成" : "對齊需要再試一次"
         }
         if practice.needsSaveRetry { return "星星等待保存" }
+        if practice.isEggMission { return practice.stars > 0 ? "蛋安全回到巢了！" : "蛋接住了，再試一次！" }
         if practice.stars > 0 && completed == practice.lessons.count { return "十關完成，節奏由你掌握" }
         return practice.stars > 0 ? "跑到終點，挑戰成功！" : "還沒通過，再跑一次！"
     }

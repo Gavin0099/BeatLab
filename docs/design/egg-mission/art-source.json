@@ -1,0 +1,15 @@
+{
+  "asset": "BeatLab/Resources/Assets.xcassets/EggMissionAtlas.imageset/artwork.png",
+  "mode": "built-in image_gen",
+  "date": "2026-10-06",
+  "prompt": "docs/design/egg-mission/art-prompt.txt",
+  "reference": "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png",
+  "referenceRole": "identity and style, derived original poses",
+  "size": [1254, 1254],
+  "format": "RGBA PNG; original alpha preserved; no post-generation image edits",
+  "regions": {"x": [0, 440, 880, 1254], "y": [0, 478, 933, 1254]},
+  "regionReason": "Inspected generated layout; source rectangles use actual row boundaries to avoid clipping. Cropping only at render time.",
+  "order": ["runA", "runB", "ready", "jump", "catch", "celebrate", "egg", "nest", "rock"],
+  "thirdPartyArtOrMusic": "none added",
+  "childAppeal": "pending owner playtest"
+}
