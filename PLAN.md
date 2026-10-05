@@ -220,3 +220,11 @@ Owner 指示「繼續做下去，直到可以推到 public」。目的地（App 
 目前 iPhone 為 unavailable，已請 owner 恢復 USB／Wi-Fi 連線；外部 capture、音畫／touch／frame pacing、三位目標年齡試玩與最低 OS 真機仍 NOT RUN。公開交付準備與 Apple 官方流程見 docs/release/public-release-plan.md；沒有新 upload、Beta App Review submit、public link、App Store submit 或 GitHub Release。
 
 當前 UI 工程 checkpoint：詳見六個 slice 的 verification JSON 與 `docs/design/branding/previews/manifest.json`。最新 unsigned Release iphoneos compile 通過；沒有封存／安裝／上傳。聲音回饋仍未實作，下一步需另立 GAME-09A L2 契約補齊既有要求的 input feedback，再驗負載／遮蔽／lifecycle 與真機；不新增玩法／角色／課程。
+
+UI checkpoint 已提交 8bd9453，canonical milestone companion 52820b5；原分支 push 因遠端新增兩個 CI-only commits 被拒絕。改以 `product-alpha/ui-checkpoint` 保存並 push，remote SHA 52820b59985d4257d0b2ea1181be95be75ab8914 已核對；沒有 PR／merge。此分支不符合既有自動 push 的 main／codex filter，沒有重新啟動 hosted macOS job。原 default branch CI 調整保留。canonical memory writer／run-guard 已實際執行，無 blocker；consumer 的工具探索／證據根目錄及歷史覆蓋 warnings 保留，未宣稱完整治理／memory DONE。
+
+GAME-09A 已先建立 L2 exact-file 契約，開始實作既有要求的短 input feedback。這片改音訊 graph 與判定後副作用，不能沿用先前「所有 Audio／App authority paths 未修改」作新的全片 claim；Sources/DSP、判定／targets／保存公式仍禁止改。真機及 public gate 待驗。
+
+GAME-09A 本機回歸：focused 9／0；完整 App tests 36／0 加實際 UIKit matched／extra／重開與零輸入流程 2／0，共 38／0。實際 AVAudioEngine offline output 證明音效有輸出、20 次連點不累積長 queue、gain0 靜音；實際 graph 檢查 count-in／校正禁用、mute 不重設節拍、中斷清理與重開。36 App 與 2 UI 由同次 test action 執行；不擴大成完整 UI suite 或真機 timing PASS。37 Swift files／104 test definitions source check 通過；18 條 protected paths 與 UI checkpoint bytes 一致。未新增內容或公開分發。
+
+同一來源 unsigned Release iphoneos compile 通過，bundle／build 維持 com.gavin0099.beatlab／0.1.0（10）；未封存／驗 distribution signature。工程證據記錄於 docs/slices/GAME-09A-verification.json；目前 source 與已分發 build10 不同，不能拿舊 IPA 當新候選。

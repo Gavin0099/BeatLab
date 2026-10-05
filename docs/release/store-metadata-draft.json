@@ -5,7 +5,7 @@
   "description": "跟著恐龍夥伴一起練節奏。先聽四拍，再跟著拍子跳過障礙；十個短練習帶你探索大拍、分拍、左右手與休止。也能使用自由節拍器，自行調整 BPM、拍號、細分與每拍的聲音。練習設定與進度保存在裝置上，無需帳號。",
   "keywords": "節奏,節拍器,練鼓,恐龍,音樂,節拍,打鼓,練習",
   "support_url": "https://github.com/Gavin0099/BeatLab/issues",
-  "privacy_policy_candidate_url": "https://github.com/Gavin0099/BeatLab/blob/codex/bl-001-app-foundation/docs/release/privacy-policy.md",
+  "privacy_policy_candidate_url": "https://github.com/Gavin0099/BeatLab/blob/product-alpha/ui-checkpoint/docs/release/privacy-policy.md",
   "review_notes": "No login or server required. Open the recommended lesson on Home, tap Start Challenge, listen to the four-beat count-in, then tap Jump on beats. Rhythm labels R/L are instructional, no microphone or hand detection. Metronome sound controls are available under the sound and cue disclosure.",
   "review_contact": null,
   "price": null,

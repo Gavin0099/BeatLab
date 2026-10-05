@@ -22,4 +22,6 @@ Apple 官方指出外部測試需要 external group、build 及審核，再以 p
 
 正式送審需支援及隱私頁、完整審查資訊：[App Review](https://developer.apple.com/app-store/review/)。年齡分級需依實際內容回答問卷：[Submitting](https://developer.apple.com/app-store/submitting/)。目前沒有對 pricing／商店年齡分級／Kids category 代填或新公開送審的完成宣稱。
 
-TF-03 只交付最後合格 candidate，不在封存時加關卡／Skin／角色／模式。UI-BRAND-01、MET-02、GAME-08、GAME-09 的 owner 視覺／玩法接受仍需明確記錄；新聲音 feedback 尚未實作，不把既有節拍 click 說成命中音效。
+TF-03 只交付最後合格 candidate，不在封存時加關卡／Skin／角色／模式。UI-BRAND-01、MET-02、GAME-08、GAME-09 的 owner 視覺／玩法接受仍需明確記錄。GAME-09A 已補入判定後的短音效，9 項 focused audio／integration 與 36 App＋2 UIKit 回歸通過；需真機檢查它不遮蔽 cue、touch response／音畫／frame pacing 無 regression，不能把 offline PCM 或 Simulator graph 當作物理 timing gate。
+
+已推送的 UI 工程 checkpoint 位於 `product-alpha/ui-checkpoint`，沒有 PR／merge。新版 App 尚未安裝或分發；手機仍 unavailable，公開目的地仍待 owner 回答。不要以 GitHub source public 代替對 App 發行的決定。

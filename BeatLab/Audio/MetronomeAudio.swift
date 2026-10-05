@@ -16,6 +16,71 @@ private final class RenderKernel: @unchecked Sendable {
     deinit { BLDSPDestroy(pointer) }
 }
 
+/// A bounded input-feedback voice. Musical cues and judgments remain elsewhere.
+@MainActor
+final class PracticeFeedbackVoice {
+    let node = AVAudioPlayerNode()
+    private weak var graph: AVAudioEngine?
+    private let buffers: [TimingGrade: AVAudioPCMBuffer]
+    private var gain: Float
+
+    init?(graph: AVAudioEngine, sampleRate: Double, gain: Float) {
+        guard sampleRate.isFinite, (8_000...192_000).contains(sampleRate),
+              let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1),
+              let perfect = Self.makeBuffer(grade: .perfect, sampleRate: sampleRate),
+              let matched = Self.makeBuffer(grade: .early, sampleRate: sampleRate),
+              let extra = Self.makeBuffer(grade: .extra, sampleRate: sampleRate) else { return nil }
+        buffers = [.perfect: perfect, .early: matched, .late: matched, .extra: extra]
+        self.gain = gain.isFinite ? min(1, max(0, gain)) : 0
+        self.graph = graph
+        graph.attach(node)
+        graph.connect(node, to: graph.mainMixerNode, format: format)
+        node.volume = self.gain
+        node.prepare(withFrameCount: perfect.frameLength)
+    }
+
+    static func makeBuffer(grade: TimingGrade, sampleRate: Double) -> AVAudioPCMBuffer? {
+        guard sampleRate.isFinite, (8_000...192_000).contains(sampleRate),
+              let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1) else { return nil }
+        let duration = grade == .perfect ? 0.040 : grade == .extra ? 0.030 : 0.024
+        let count = Int(sampleRate * duration)
+        guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(count)),
+              let samples = buffer.floatChannelData?.pointee else { return nil }
+        buffer.frameLength = AVAudioFrameCount(count)
+        for index in 0..<count {
+            let time = Double(index) / sampleRate
+            let taper = pow(sin(.pi * Double(index) / Double(count - 1)), 2)
+            let wave: Double
+            switch grade {
+            case .perfect: wave = 0.07 * (sin(2 * .pi * 880 * time) + sin(2 * .pi * 1320 * time))
+            case .early, .late: wave = 0.06 * sin(2 * .pi * 660 * time)
+            case .extra: wave = 0.055 * sin(2 * .pi * 220 * time)
+            }
+            samples[index] = index == 0 || index == count - 1 ? 0 : Float(taper * wave)
+        }
+        return buffer
+    }
+
+    @discardableResult
+    func play(_ grade: TimingGrade) -> Bool {
+        guard graph?.isRunning == true, gain > 0, let buffer = buffers[grade] else { return false }
+        // Replace the previous short effect; rapid/extra inputs cannot queue a song.
+        node.scheduleBuffer(buffer, at: nil, options: .interrupts)
+        if !node.isPlaying { node.play() }
+        return true
+    }
+    func setGain(_ value: Float) {
+        gain = value.isFinite ? min(1, max(0, value)) : 0
+        node.volume = gain
+        if gain == 0 { node.stop() }
+    }
+    func detach() {
+        node.stop()
+        graph?.detach(node)
+        graph = nil
+    }
+}
+
 @MainActor
 final class MetronomeAudio: ObservableObject {
     struct DisplayBeat: Equatable {
@@ -43,6 +108,7 @@ final class MetronomeAudio: ObservableObject {
     private var requestedTempo = 80
     private var engine: AVAudioEngine?
     private var source: AVAudioSourceNode?
+    private var feedbackVoice: PracticeFeedbackVoice?
     private var kernel: RenderKernel?
     private var observers: [NSObjectProtocol] = []
     private var latencyEstimate: Double = 0
@@ -67,7 +133,10 @@ final class MetronomeAudio: ObservableObject {
         for observer in observers { NotificationCenter.default.removeObserver(observer) }
     }
 
-    func start(configuration: MetronomeConfiguration) {
+    var practiceFeedbackAvailable: Bool { feedbackVoice != nil }
+    var practiceFeedbackIsPlaying: Bool { isPlaying && feedbackVoice?.node.isPlaying == true }
+
+    func start(configuration: MetronomeConfiguration, practiceFeedback: Bool = false) {
         guard !isPlaying else { return }
         stop()
         let session = AVAudioSession.sharedInstance()
@@ -114,6 +183,9 @@ final class MetronomeAudio: ObservableObject {
             source = node
             graph.attach(node)
             graph.connect(node, to: graph.mainMixerNode, format: format)
+            if practiceFeedback {
+                feedbackVoice = PracticeFeedbackVoice(graph: graph, sampleRate: sampleRate, gain: volume)
+            }
             graph.prepare()
             // An estimate for display, not a measured score/calibration guarantee.
             latencyEstimate = session.outputLatency + session.ioBufferDuration
@@ -128,6 +200,7 @@ final class MetronomeAudio: ObservableObject {
     func stop(reason: String? = nil) {
         // stop() closes rendering before detached node releases its callback capture.
         engine?.stop()
+        feedbackVoice?.detach(); feedbackVoice = nil
         if let source { engine?.detach(source) }
         source = nil
         engine = nil
@@ -210,6 +283,13 @@ final class MetronomeAudio: ObservableObject {
     func setGain(_ value: Float) {
         volume = min(1, max(0, value))
         if let kernel { BLDSPSetGain(kernel.pointer, volume) }
+        feedbackVoice?.setGain(volume)
+    }
+
+    @discardableResult
+    func playPracticeFeedback(_ grade: TimingGrade) -> Bool {
+        guard isPlaying else { return false }
+        return feedbackVoice?.play(grade) ?? false
     }
 
     func displayBeat(now: Double? = nil) -> DisplayBeat? {

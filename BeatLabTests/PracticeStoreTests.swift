@@ -5,6 +5,41 @@ import BeatLabCore
 
 final class PracticeStoreTests: XCTestCase {
     @MainActor
+    func testRealMatcherStartsFeedbackButCountInAndCalibrationDoNot() async throws {
+        let name = "BeatLabTests.Feedback.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = PracticeStore(repository: ProgressRepository(defaults: defaults))
+        let audio = MetronomeAudio()
+        defer { audio.stop() }
+        store.select(store.lessons[0]); store.setPracticeBPM(240)
+        store.start(store.lessons[0], audio: audio)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing)
+        let epoch = try XCTUnwrap(audio.audibleEpoch())
+        XCTAssertTrue(audio.practiceFeedbackAvailable); XCTAssertFalse(audio.practiceFeedbackIsPlaying)
+        store.tap(at: epoch + 0.5)
+        XCTAssertNil(store.latestHit); XCTAssertFalse(audio.practiceFeedbackIsPlaying)
+        // Independent quarter fixture: four count-in beats at 240 BPM = 1s.
+        // Injected timestamp proves integration, not real touch-to-sound latency.
+        store.tap(at: epoch + 1)
+        XCTAssertEqual(store.latestHit?.grade, .perfect); XCTAssertEqual(store.latestHit?.targetID, 0)
+        XCTAssertTrue(audio.practiceFeedbackIsPlaying)
+        store.cancel(audio: audio)
+        XCTAssertFalse(audio.practiceFeedbackIsPlaying)
+        XCTAssertTrue(store.progress.results.isEmpty)
+        store.startCalibration(audio: audio)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing)
+        XCTAssertFalse(audio.practiceFeedbackAvailable)
+        let calibrationEpoch = try XCTUnwrap(audio.audibleEpoch())
+        store.tap(at: calibrationEpoch + 4)
+        XCTAssertEqual(store.latestHit?.grade, .perfect)
+        XCTAssertFalse(audio.practiceFeedbackIsPlaying)
+        store.cancel(audio: audio)
+    }
+
+    @MainActor
     func testAllTenCatalogLessonsStartCancelAndRestoreSeededProgress() async throws {
         let ids = ["first-beat", "quarter-hands", "eighth", "eighth-hands", "quarter-rest", "eighth-rest", "sixteenth", "sixteenth-hands", "offbeat", "mixed"]
         let name = "BeatLabTests.TenLessons.\(UUID().uuidString)"

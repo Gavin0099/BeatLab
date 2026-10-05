@@ -8,7 +8,7 @@
 
 既有匹配成功才清除障礙、跳躍；Perfect 的較高跳躍與 sparkles、當次連續 Perfect 提示讀取已判定的結果。Extra 只做小跳，不能清除障礙；Early／Late 使用原有文字，不冒充 Perfect。漏拍的石頭保留且變色，「站穩，聽下一拍再跳」讓玩家恢復。漏拍呈現等待 matching window 加最大允許 calibration offset，避免仍可配對時過早提示。
 
-當次 combo 不影響計分、星星、解鎖或保存；停止、重試、回準備頁清除。聲音仍是既有節拍 cue；新增命中／落地音效未實作，需另立 L2 音訊契約及負載／遮蔽／真機 timing 驗證，不能宣稱四段 feedback loop 的聲音部分完成。
+當次 combo 不影響計分、星星、解鎖或保存；停止、重試、回準備頁清除。GAME-09A 在既有輸入判定後發出短音：Perfect 為亮音，Early／Late 為較輕提示，Extra 為低音且不清除障礙。音效預先合成，快速輸入替換上一個音，沿用音量；靜音不停止節拍。自由節拍器與校正不啟用。漏拍維持視覺恢復提示；動畫、落地與 UI deadline 不觸發音訊。實際 PCM／graph／中斷回歸已通過，真機遮蔽與 touch-to-sound latency 待驗，不能宣稱物理四段 loop 已接受。
 
 ## 尺寸與 Accessibility
 
@@ -18,7 +18,7 @@ Reduce Motion 保留固定角色、逐格障礙與拍點狀態，停用連續跳
 
 ## 判定邊界與驗證
 
-View 只讀既有 elapsed、pattern、hit 與 accepted targets。TapPad 的 UIKit 時戳、audio transport、matching、score、progress schema 與 catalog 不變；動畫、碰撞與 frame rate 不創造目標或判分。
+View 只讀既有 elapsed、pattern、hit 與 accepted targets。TapPad 的 UIKit 時戳、cue clock、matching、score、progress schema 與 catalog 不變；動畫、碰撞與 frame rate 不創造目標或判分。GAME-09A 修改 practice graph 與判定後副作用，另見 L2 契約／驗證，不能沿用 UI checkpoint 的「所有 Audio files 不變」作當前 claim。
 
 自動化證據見 QA-01-verification.json：實際 touch 清除／重啟、zero-input 失敗、純呈現 fixtures、一般／小螢幕／大字／亮暗檢查分開列出。十關準備及 active HUD 必須顯示實際選定關卡號碼，不能只用截圖檔名當正確關卡證據。
 

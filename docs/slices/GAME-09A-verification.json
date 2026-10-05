@@ -1,0 +1,341 @@
+{
+  "slice": "GAME-09A",
+  "date": "2026-10-05",
+  "risk": "L2",
+  "status": "IN_PROGRESS; local engineering checks pass, physical acceptance pending",
+  "base_commit": "52820b59985d4257d0b2ea1181be95be75ab8914",
+  "source_sha256": {
+    "BeatLab/Audio/MetronomeAudio.swift": "b4a94bb11e2bafd3a7681d31d3f0e449369d309cd56d3900e62d53609b85499b",
+    "BeatLab/App/PracticeStore.swift": "691d657ca2a483d7ac0a1210eb093c5b99b33445656a43cc503f549a57954a6f",
+    "BeatLabTests/MetronomeAudioTests.swift": "31ae267dfe59c38cd47d7016ce151465b5931ee31ee587e73d24eff9fa9328c3",
+    "BeatLabTests/PracticeStoreTests.swift": "9bc1adaf87f6c85dc1c6af4e5ac43332ed299159c1e8d71998360e66df59e1d6",
+    "BeatLab.xcodeproj/project.pbxproj": "83118cefe7de63f53ab580521475a085224a3b7db9c8feadeae2bf86a0f31d87"
+  },
+  "implementation": {
+    "practice_only": "precomputed optional AVAudioPlayerNode; effect after existing grade; no calibration/free-metronome feedback",
+    "buffer_budget": "mono finite PCM, <=50ms, peak<=0.14, zero endpoints, 8k-192kHz",
+    "rapid_input": "interrupts replaces previous effect; no queue growth",
+    "lifecycle": "shared app volume; gain0 silences effect without stopping transport; cancellation, completion and audio stop detach voice"
+  },
+  "checks": {
+    "build_for_testing": "PASS",
+    "focused_audio_and_real_matcher": {
+      "passed": 9,
+      "failed": 0,
+      "result_bundle": "TestResults/GAME-09A/feedback-native-attempt1.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+              "deviceName": "BeatLab MET-01",
+              "modelName": "iPhone 17 Pro",
+              "osBuildNumber": "23F77",
+              "osVersion": "26.5",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 9,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "BeatLab \u00b7 Built with macOS 26.6.2",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791203729.456,
+        "passedTests": 9,
+        "result": "Passed",
+        "skippedTests": 0,
+        "startTime": 1791203705.907,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - BeatLab",
+        "topInsights": [],
+        "totalTestCount": 9
+      }
+    },
+    "app_and_selected_native_UI": {
+      "app_passed": 36,
+      "ui_passed": 2,
+      "failed": 0,
+      "result_bundle": "TestResults/GAME-09A/app-regression.xcresult",
+      "summary": {
+        "devicesAndConfigurations": [
+          {
+            "device": {
+              "architecture": "arm64",
+              "deviceId": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+              "deviceName": "BeatLab MET-01",
+              "modelName": "iPhone 17 Pro",
+              "osBuildNumber": "23F77",
+              "osVersion": "26.5",
+              "platform": "iOS Simulator"
+            },
+            "expectedFailures": 0,
+            "failedTests": 0,
+            "passedTests": 38,
+            "skippedTests": 0,
+            "testPlanConfiguration": {
+              "configurationId": "1",
+              "configurationName": "Test Scheme Action"
+            }
+          }
+        ],
+        "environmentDescription": "BeatLab \u00b7 Built with macOS 26.6.2",
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "finishTime": 1791203841.985,
+        "passedTests": 38,
+        "result": "Passed",
+        "skippedTests": 0,
+        "startTime": 1791203753.387,
+        "statistics": [],
+        "testFailures": [],
+        "title": "Test - BeatLab",
+        "topInsights": [
+          {
+            "category": "Longest Test Runs",
+            "impact": "88% of duration",
+            "text": "3 longest test runs with outlier durations exceeding 4.83s (three standard deviations)"
+          }
+        ],
+        "totalTestCount": 38
+      },
+      "scope": "actual touch matched/extra/restart and zero-input failure; not full UI suite"
+    },
+    "source_check": {
+      "scope": "S0-S17 syntax and source/project structure only",
+      "result": "PASS",
+      "swift_files_parsed": 37,
+      "swift_test_definitions": 104,
+      "xcode_objects": 93,
+      "lesson_count": 10,
+      "xcode_membership": "PASS",
+      "asset_privacy_parse": "PASS",
+      "excluded_capabilities": "ABSENT",
+      "realtime_render_allocations": "ABSENT IN INSPECTED FUNCTION",
+      "swift_typechecking": "NOT RUN",
+      "swift_tests": "NOT RUN",
+      "iOS_build_UI_tests": "NOT RUN",
+      "device_gates": "NOT RUN",
+      "source_sha256": {
+        "Sources/BeatLabCore/ConfigurationRepository.swift": "8c979ee3fca706065a21fd84136a17aad5f2159aebbe7380a23e5fbc0549ac9d",
+        "Sources/BeatLabCore/TapTempo.swift": "fa0a8512f19780993319b11b795a417f142bd93cb19f3e552cb9933d377ad5ee",
+        "Sources/BeatLabCore/TimingPractice.swift": "c771e19d11a0d6ac397ac3c9170bd877bb1a90375f2c2df1afaac5783f11655e",
+        "Sources/BeatLabCore/Subdivision.swift": "250349165142b1fdc6a85f5979cdf50743bea9aad735f8c47822b352f73d930d",
+        "Sources/BeatLabCore/MetronomeConfiguration.swift": "6635f5249f30eb85c11b2e5561a4a3f64f1808ddee2efb662b2fff656953b4a6",
+        "Sources/BeatLabCore/RhythmLesson.swift": "6c72debb6916480d38ab9e698c8d126a9e603ff8b7f963e077373e2148ba4140",
+        "Sources/BeatLabCore/Tempo.swift": "2d68c68a91dd68d46f9eb1d9e70adee4619a8a099dbd5b19869cec7e613b5108",
+        "Sources/BeatLabCore/TimeSignature.swift": "f74cd80421e1f92f8c54e9003957ac38e7bd70a3d7a2aa6ad2e0dc03221a6872",
+        "Sources/BeatLabCore/ProgressRepository.swift": "1fe4bcce97c817853743aa3a6a37c6516e80491008fcf3419273baf4b817b037",
+        "Sources/BeatLabDSP/BeatLabDSP.c": "e788cf4224ccaac37bd98020a9c562a2aaf50afc94012ea1f8f2c081dffcdbf0",
+        "Sources/BeatLabCore/Resources/lessons.json": "66f0ecadc951cf4ff7d9b8e3d871323dada21d5dcb3553428136b84eb6903b4b",
+        "Sources/BeatLabDSP/include/BeatLabDSP.h": "195bf1d86b66acd3fa2238e09d0b64300122be9b5020dc4b8e3a822c9cb7ad56",
+        "Tests/DSPKernelTests/main.c": "e28cab370bba4cb0b582cbf4dd8df4cf12e936f3ef8e7d2d2d0ee184248f39cc",
+        "Tests/BeatLabCoreTests/DSPTests.swift": "9960fa0ee53e804b163a052f4d055b90194c5d5d41ee9efd5ef9942dde7b3a27",
+        "Tests/BeatLabCoreTests/ProgressTests.swift": "3f7a02bf1f1fb8261a5243a43ddb717ae21d5f40a3c140cb3847d8292128ebe6",
+        "Tests/BeatLabCoreTests/PracticeTests.swift": "bcd070b62b3fa95a00a8891f18f36e2230e0da289bfab066546d6b6e82712a89",
+        "Tests/BeatLabCoreTests/DomainTests.swift": "0b3ca97217d4cba18a3644472562759c5b217694a7aefd30a446b53a3fa05011",
+        "Tests/BeatLabCoreTests/TapTempoTests.swift": "3bd3406353bcbb79c280095c5cc70942c8507fd03e4f71cd3799f46e05745cf0",
+        "Tests/BeatLabCoreTests/ConfigurationRepositoryTests.swift": "0d0f52e55807811c1c5428fc9eb10b7770e4138007af678d587f691125f8b2bc",
+        "Tests/TimingCaptureTests/test_capture.py": "cbde36faa05ef837aea93ad9bd59a06464043ce6d5831a66d7a9e452c455a2a0",
+        "BeatLab/Design/BeatLabStyle.swift": "6ebe0901cb95b2bd957e6a223db73a82f1fa298f62cebe38d4b7600dca7db3b6",
+        "BeatLab/App/PracticeStore.swift": "691d657ca2a483d7ac0a1210eb093c5b99b33445656a43cc503f549a57954a6f",
+        "BeatLab/App/ConfigurationStore.swift": "5e7468614d839a3dcf3e580aed9ba479fe76d63ffb155127073ba9c977958fe4",
+        "BeatLab/App/BeatLabApp.swift": "eade7cf454c8a51ca79ee578c581f62fd2ceb909b15d1364c33db390b9816797",
+        "BeatLab/Resources/PrivacyInfo.xcprivacy": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+        "BeatLab/Audio/MetronomeAudio.swift": "b4a94bb11e2bafd3a7681d31d3f0e449369d309cd56d3900e62d53609b85499b",
+        "BeatLab/Audio/CountVoice.swift": "070715d9819c4af058e6cbc269cbd7f602ee41ff8f25ac908597bd6bf5c58e5b",
+        "BeatLab/Views/BeatVisualizer.swift": "36e9c000282a4925c16e668a262f6891b276c44cd347d9028a2b35c7a26551af",
+        "BeatLab/Views/MetronomeView.swift": "2b30cf9c40214e383e0387dde5dd520a1cee634aca721de68454625ba1f0399d",
+        "BeatLab/Views/PracticeView.swift": "de05066f2b53e982d2603a7e2b3b31148c47a29f827c7d52b1e5982e05a6c375",
+        "BeatLab/Views/HomeView.swift": "4b224413af07e522335c85fbb0889f91be4cdacc43cf8c5ce206d085a193c937",
+        "BeatLab/Views/RootView.swift": "0c07454f54ec798c93ccd469f167dda94c2ca40c08f9669297148df0e9c474d2",
+        "BeatLab/Views/TapPad.swift": "c0b6d439b3f6d15d142f4a6e9ba2c93a80f0e930a3ad3cd2b19e83db6aaadc4f",
+        "BeatLab/Views/ConfigurationSummary.swift": "4780cf39ac7c181b78cf3567b631b0c44c939e41501a84dd756cc87292663801",
+        "BeatLab/Views/RhythmLane.swift": "8c6b3d35729c97cf1ccf72d2ba6dd0591d400ebcb80b4b826d26beed6dc2ab3f",
+        "BeatLab/Resources/Assets.xcassets/Contents.json": "2320eb3e02f9e3419d35676c6fd470ec13d5aa314c0d29700e09ec76d8e2360a",
+        "BeatLab/Resources/Assets.xcassets/AccentSoft.colorset/Contents.json": "4bced10099c22590e0325fb99df0488ef488067297c7444a889dbd4c9c616261",
+        "BeatLab/Resources/Assets.xcassets/SuccessSoft.colorset/Contents.json": "3de56d04ef6bd21985b5b3f4a97a5c4200f2e79a379eb7d0a39740a6a024783a",
+        "BeatLab/Resources/Assets.xcassets/Reward.colorset/Contents.json": "283098579daf80341abbbcc6d2cffae565ed2a29cd12d34beef2869fbc6222c4",
+        "BeatLab/Resources/Assets.xcassets/HomeSurface.colorset/Contents.json": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc",
+        "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+        "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png": "2a7b4b8c8c75aa0f1ec98337e94b42b9dd94a39bfe2c87dff38f6388f0d69b51",
+        "BeatLab/Resources/Assets.xcassets/Success.colorset/Contents.json": "5dc9fb60f1c1e3ecaac6be0cfdbb040a8d5e956cb64899ada8dd65726d055355",
+        "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+        "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/artwork.png": "e02cb053fb601e70a385e7766cbc034ee1776dcf8c1deebe0e71ecef04263641",
+        "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+        "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/artwork.png": "bcc0c9c110974ac95abd310c55017cb3ab59412d6ffa5a5bc0356ce521b585ca",
+        "BeatLab/Resources/Assets.xcassets/Surface.colorset/Contents.json": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc",
+        "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/Contents.json": "f0946acd61b0b4a62f2ed1e7210b1bf09c601233f0ae9e43f19c36621d074e19",
+        "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/artwork.png": "1c392af81eab914d0710820728e76e00e9956f1736439b7eee75d82b961bcdc2",
+        "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json": "6ad2c5c3bbcf972c7f02d217d6afcac3f24a10e30510c7e2d06c582371ed9d22",
+        "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+        "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/Contents.json": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+        "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889",
+        "BeatLab/Resources/Assets.xcassets/AccentColor.colorset/Contents.json": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4",
+        "BeatLab/Resources/Assets.xcassets/Separator.colorset/Contents.json": "dc4fa6f6f4b2d511285069a49c09b0cce02f322dd3cb632ff4bd3f193b293418",
+        "BeatLab/Resources/Assets.xcassets/Ink.colorset/Contents.json": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179",
+        "BeatLab/Resources/Assets.xcassets/RewardSoft.colorset/Contents.json": "d7ffe748db6f38bb7f18a7bc3e417eccf47a8d7c8e6684d7ed4b4144dcd3661b",
+        "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+        "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png": "9d77b5ba7b6174a0f4a5bec9849ea8fd47e67f407de00e66642a6f0107792f30",
+        "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+        "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/artwork.png": "4048570545258386a1cbd54df1af5186bc19726de27ff5a085901e917828cf55",
+        "BeatLab/Resources/Assets.xcassets/MutedInk.colorset/Contents.json": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0",
+        "BeatLab/Resources/Assets.xcassets/HomeInk.colorset/Contents.json": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179",
+        "BeatLab/Resources/Assets.xcassets/HomeMuted.colorset/Contents.json": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0",
+        "BeatLab/Resources/Assets.xcassets/Canvas.colorset/Contents.json": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8",
+        "BeatLab/Resources/Assets.xcassets/HomeForest.colorset/Contents.json": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4",
+        "BeatLab/Resources/Assets.xcassets/HomeCanvas.colorset/Contents.json": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8",
+        "BeatLab/Resources/Assets.xcassets/HomeHero.colorset/Contents.json": "867b02029807b8e1abe270afa80b4529a5bf6cae9fae833b679fe1ba2ff9f835",
+        "BeatLab/Resources/Assets.xcassets/OnAccent.colorset/Contents.json": "e1abe8f9a069fa1f0bcc17d0a41aaf633972ce45d83fcf3a69d5595a1ceecbac",
+        "BeatLabTests/MetronomeAudioTests.swift": "31ae267dfe59c38cd47d7016ce151465b5931ee31ee587e73d24eff9fa9328c3",
+        "BeatLabTests/ConfigurationStoreTests.swift": "7c65756b98d0963a2e72a17a633a83ba41770f3bd8b2db8d0cb864c8f71ed669",
+        "BeatLabTests/PracticeStoreTests.swift": "9bc1adaf87f6c85dc1c6af4e5ac43332ed299159c1e8d71998360e66df59e1d6",
+        "BeatLabUITests/PracticeUITests.swift": "0ed06f7d6ad2b38dfded4b5329eb00e9589e7ca5a399ed8b8cefc3ace7daf8cf",
+        "BeatLabUITests/FoundationUITests.swift": "85892564bb94a5d2926ec6aaf44a70a4e2e5959d29684ccd73e91fc249484291",
+        "BeatLabUITests/MetronomeUITests.swift": "3ffe491daac4333ecee55cfcfb7de876bfaa9206792b510d58a9db1d28f2be87",
+        "BeatLabUITests/InterfaceUITests.swift": "cd9d2c01a2a333ccfcca4d7820ad00bb1512dc21b6683b89cd4b84cf7ad60871",
+        "BeatLab.xcodeproj/project.pbxproj": "83118cefe7de63f53ab580521475a085224a3b7db9c8feadeae2bf86a0f31d87",
+        "BeatLab.xcodeproj/project.xcworkspace/contents.xcworkspacedata": "5c2b91b67a72f0c341d6fa0eda978eee611ff4a1efee3017a5617c46284973b3",
+        "BeatLab.xcodeproj/xcuserdata/pc49-58.xcuserdatad/xcschemes/xcschememanagement.plist": "df5f9c405e8b7e727f00c6030df86bdb7fb20084ed7c132993b7b2f8014e1683",
+        "BeatLab.xcodeproj/project.xcworkspace/xcuserdata/pc49-58.xcuserdatad/UserInterfaceState.xcuserstate": "852bda908ba29cca7b0b0cbe1035e837f84eba3f3eed5020b5d5dd3c2542a902",
+        "BeatLab.xcodeproj/xcshareddata/xcschemes/BeatLab.xcscheme": "a7ba5678196b03db86d938625668f2b947abcce307ac4ff0b19e86dcc08d0fd7",
+        "scripts/check_source.py": "46799891d49e2ef61baab235c5941ae567876fdde74a84d851d4591e0c349155",
+        "scripts/analyze_capture.py": "411f980a325205b4ef29ce4ec2cd77d9e4c3ff0f0cbc829daec5fa977b4061c9",
+        "scripts/run_macos_checks.sh": "18ade8b8c6d93067201bb8e2f8d3656cacc3bab87c0c4e8d0786cde42c4ab1cf",
+        "scripts/requirements-sourcechecks.txt": "08982a2757a3813d5d6441d0b179ec4887e74640d4a77ab7b0669972a5b7a8fe"
+      }
+    },
+    "protected_paths": {
+      "count": 18,
+      "audio_graph_and_practice_side_effect": "INTENTIONALLY MODIFIED; L2",
+      "paths": [
+        {
+          "path": "BeatLab.xcodeproj/project.pbxproj",
+          "sha256": "83118cefe7de63f53ab580521475a085224a3b7db9c8feadeae2bf86a0f31d87",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "BeatLab/App/ConfigurationStore.swift",
+          "sha256": "5e7468614d839a3dcf3e580aed9ba479fe76d63ffb155127073ba9c977958fe4",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "BeatLab/Audio/CountVoice.swift",
+          "sha256": "070715d9819c4af058e6cbc269cbd7f602ee41ff8f25ac908597bd6bf5c58e5b",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+          "sha256": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json",
+          "sha256": "6ad2c5c3bbcf972c7f02d217d6afcac3f24a10e30510c7e2d06c582371ed9d22",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "BeatLab/Views/TapPad.swift",
+          "sha256": "c0b6d439b3f6d15d142f4a6e9ba2c93a80f0e930a3ad3cd2b19e83db6aaadc4f",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/ConfigurationRepository.swift",
+          "sha256": "8c979ee3fca706065a21fd84136a17aad5f2159aebbe7380a23e5fbc0549ac9d",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/MetronomeConfiguration.swift",
+          "sha256": "6635f5249f30eb85c11b2e5561a4a3f64f1808ddee2efb662b2fff656953b4a6",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/ProgressRepository.swift",
+          "sha256": "1fe4bcce97c817853743aa3a6a37c6516e80491008fcf3419273baf4b817b037",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/Resources/lessons.json",
+          "sha256": "66f0ecadc951cf4ff7d9b8e3d871323dada21d5dcb3553428136b84eb6903b4b",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/RhythmLesson.swift",
+          "sha256": "6c72debb6916480d38ab9e698c8d126a9e603ff8b7f963e077373e2148ba4140",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/Subdivision.swift",
+          "sha256": "250349165142b1fdc6a85f5979cdf50743bea9aad735f8c47822b352f73d930d",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/TapTempo.swift",
+          "sha256": "fa0a8512f19780993319b11b795a417f142bd93cb19f3e552cb9933d377ad5ee",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/Tempo.swift",
+          "sha256": "2d68c68a91dd68d46f9eb1d9e70adee4619a8a099dbd5b19869cec7e613b5108",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/TimeSignature.swift",
+          "sha256": "f74cd80421e1f92f8c54e9003957ac38e7bd70a3d7a2aa6ad2e0dc03221a6872",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabCore/TimingPractice.swift",
+          "sha256": "c771e19d11a0d6ac397ac3c9170bd877bb1a90375f2c2df1afaac5783f11655e",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabDSP/BeatLabDSP.c",
+          "sha256": "e788cf4224ccaac37bd98020a9c562a2aaf50afc94012ea1f8f2c081dffcdbf0",
+          "unchanged_vs_ui_checkpoint": true
+        },
+        {
+          "path": "Sources/BeatLabDSP/include/BeatLabDSP.h",
+          "sha256": "195bf1d86b66acd3fa2238e09d0b64300122be9b5020dc4b8e3a822c9cb7ad56",
+          "unchanged_vs_ui_checkpoint": true
+        }
+      ]
+    },
+    "release_iphoneos_unsigned_compile": {
+      "result": "PASS",
+      "log": "TestResults/GAME-09A/release-unsigned.log",
+      "bundle_id": "com.gavin0099.beatlab",
+      "version": "0.1.0",
+      "build": "10",
+      "executable_sha256": "cb68158d81369a2896fea12cb5ddfbfc5583c3d41bf9dbe58f1e0984c020e8e7",
+      "archive_or_signature": "NOT RUN"
+    }
+  },
+  "failure_evidence": {
+    "invalid_sample_rates": "NaN/inf/negative/zero/out-of-range rejected without attaching node",
+    "muted_stopped_and_rapid_input": "actual offline rendered samples and full graph assertions",
+    "interruption_events": "synthetic NotificationCenter events on actual graph; not physical unplug/call",
+    "count_in_and_calibration": "real matcher integration with injected timestamps; not physical touch latency",
+    "failed_native_attempts_this_slice": []
+  },
+  "limitations": [
+    "Simulator HAL logged overload; no hardware performance/precision claim",
+    "physical cue masking, touch-to-sound latency, audio/UI synchronization and frame pacing NOT RUN",
+    "owner gameplay and three child playtests PENDING",
+    "minimum/current supported OS hardware matrix and human VoiceOver NOT RUN",
+    "no archive, new phone installation, TestFlight upload, public link or App Store submission",
+    "build remains 0.1.0 (10); current source differs from distributed build10"
+  ],
+  "raw_evidence_root": "TestResults/GAME-09A/",
+  "historical_UI_evidence": "docs/slices/QA-01-verification.json; source frozen to earlier UI checkpoint",
+  "public_readiness": "NOT CLAIMED",
+  "device_availability": "unavailable; TestResults/GAME-09A/device-availability.log"
+}

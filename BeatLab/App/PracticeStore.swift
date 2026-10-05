@@ -33,6 +33,7 @@ final class PracticeStore: ObservableObject {
     private var calibrationRate: Double = 0
     private var savedOptions: (CountSound, Int, Int)?
     private var pendingProgress: PracticeProgress?
+    private weak var feedbackAudio: MetronomeAudio?
 
     init(repository: ProgressRepository) {
         self.repository = repository
@@ -112,6 +113,7 @@ final class PracticeStore: ObservableObject {
         begin(audio: audio, bpm: 60)
     }
     private func begin(audio: MetronomeAudio, bpm: Int) {
+        feedbackAudio = nil
         generation += 1; task?.cancel()
         let token = generation
         savedOptions = (audio.sound, audio.gapBars, audio.ladderBars)
@@ -124,7 +126,7 @@ final class PracticeStore: ObservableObject {
         summary = nil; latestHit = nil; stars = 0; session = nil; elapsed = 0; calibrated = false
         resultSaved = false; calibrationSaved = false; pendingProgress = nil; needsSaveRetry = false; notice = nil
         phase = .preparing
-        audio.start(configuration: configuration)
+        audio.start(configuration: configuration, practiceFeedback: !isCalibrating)
         task = Task { [weak self, weak audio] in
             guard let self, let audio else { return }
             let deadline = Self.now() + 2
@@ -149,6 +151,7 @@ final class PracticeStore: ObservableObject {
                 calibrated = !isCalibrating && audio.supportsCalibration
                     && (alignment?.valid(for: calibrationRoute, sampleRate: calibrationRate) ?? false)
                 session = try TimingSession(targets: targets, calibrationOffset: calibrated ? alignment!.offset : 0)
+                feedbackAudio = isCalibrating ? nil : audio
                 phase = .playing
             } catch { cancel(audio: audio, message: "練習資料無法使用。"); return }
             while !Task.isCancelled, token == generation, phase == .playing {
@@ -165,13 +168,18 @@ final class PracticeStore: ObservableObject {
                 - TimingSession.matchingWindow, time <= endTime else { return }
         if accessibility { calibrated = false }
         latestHit = session?.tap(at: time)
+        // Submit only after the existing matcher produced the actual grade.
+        // This effect never provides the cue or changes the timestamp/score.
+        if !isCalibrating, let hit = latestHit { feedbackAudio?.playPracticeFeedback(hit.grade) }
     }
     func cancel(audio: MetronomeAudio, message: String? = nil) {
+        feedbackAudio = nil
         generation += 1; task?.cancel(); task = nil
         audio.stop(); restoreOptions(audio)
         session = nil; phase = .idle; summary = nil; notice = message
     }
     private func finish(audio: MetronomeAudio) {
+        feedbackAudio = nil
         guard let session else { cancel(audio: audio); return }
         audio.stop(); restoreOptions(audio)
         summary = session.summary; phase = .finished
