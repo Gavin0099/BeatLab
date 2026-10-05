@@ -15,6 +15,7 @@ struct PracticeView: View {
     @State private var showCompanions = false
     @State private var companion: AdventureCompanion = .dinosaur
     @State private var jump = RhythmJumpPresentation()
+    @State private var reward = RhythmRewardPresentation()
     @State private var hopHeight: CGFloat = 0
     @State private var hopTask: Task<Void, Never>?
     @State private var showingJourney = true
@@ -60,7 +61,7 @@ struct PracticeView: View {
                 else { withAnimation(.easeOut(duration: 0.2)) { proxy.scrollTo("practiceTop", anchor: .top) } }
                 resultFocused = phase == .finished
                 hopTask?.cancel(); hopTask = nil; hopHeight = 0
-                if phase == .preparing || phase == .idle { jump = RhythmJumpPresentation() }
+                if phase == .preparing || phase == .idle { jump = RhythmJumpPresentation(); reward = RhythmRewardPresentation() }
             }
             .onChange(of: practice.selected?.id) { _ in
                 proxy.scrollTo("practiceTop", anchor: .top)
@@ -71,7 +72,7 @@ struct PracticeView: View {
         .background(BeatLabStyle.canvas).foregroundStyle(BeatLabStyle.ink)
         .onChange(of: practice.phase) { phase in
             hopTask?.cancel(); hopTask = nil; hopHeight = 0
-            if phase == .preparing || phase == .idle { jump = RhythmJumpPresentation() }
+            if phase == .preparing || phase == .idle { jump = RhythmJumpPresentation(); reward = RhythmRewardPresentation() }
             resultFocused = phase == .finished
         }
         .safeAreaInset(edge: .bottom, spacing: 0) {
@@ -88,8 +89,9 @@ struct PracticeView: View {
         .toolbar {
             if practice.phase == .idle {
                 ToolbarItem(placement: .navigationBarTrailing) {
-                    Button { showSettings = true } label: { Image(systemName: "gearshape") }
-                        .frame(minWidth: 44, minHeight: 44).accessibilityLabel("練習設定")
+                    Button { showSettings = true } label: { BLToolbarIcon(symbol: "gearshape") }
+                        .buttonStyle(.plain)
+                        .accessibilityLabel("練習設定")
                         .accessibilityIdentifier("practiceSettings")
                 }
             }
@@ -101,10 +103,11 @@ struct PracticeView: View {
         .onChange(of: practice.latestHit) { hit in
             guard let hit, let lesson = practice.selected, !practice.isCalibrating else { return }
             let matched = jump.record(hit, pattern: lesson.pattern, bars: lesson.bars)
+            reward.record(hit, accepted: matched, pattern: lesson.pattern)
             hopTask?.cancel(); hopHeight = 0
             guard !reduceMotion else { return }
             hopTask = Task { @MainActor in
-                withAnimation(.easeOut(duration: 0.12)) { hopHeight = matched ? -44 : -12 }
+                withAnimation(.easeOut(duration: 0.12)) { hopHeight = matched ? (hit.grade == .perfect ? -60 : -44) : -12 }
                 try? await Task.sleep(nanoseconds: 130_000_000)
                 guard !Task.isCancelled else { return }
                 withAnimation(.easeIn(duration: 0.18)) { hopHeight = 0 }
@@ -131,6 +134,21 @@ struct PracticeView: View {
     private var journeyPanel: some View {
         VStack(alignment: .leading, spacing: 24) {
             adventureWelcome
+            if let lesson = practice.recommended {
+                BLCard {
+                    VStack(alignment: .leading, spacing: 14) {
+                        Text(completed == practice.lessons.count ? "再練一次" : "下一個挑戰")
+                            .font(.subheadline.weight(.semibold)).foregroundStyle(Color.accentColor)
+                        Text("第 \(lessonNumber(lesson)) 關 · \(lesson.shortTitle)").font(.title2.bold())
+                        Text(lesson.instruction).foregroundStyle(BeatLabStyle.muted)
+                        Button { openPreparation(lesson) } label: { Label("準備挑戰", systemImage: "play") }
+                            .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice)
+                            .accessibilityIdentifier("prepareRecommended")
+                    }
+                }
+            } else {
+                BLStatusMessage(text: "課程暫時無法載入，可以先使用自由節拍器。", symbol: "music.note")
+            }
             ViewThatFits(in: .horizontal) {
                 HStack {
                     Label("節奏旅程", systemImage: "map.fill").font(.headline).fixedSize()
@@ -166,21 +184,6 @@ struct PracticeView: View {
             }.background(BeatLabStyle.surface, in: RoundedRectangle(cornerRadius: 28))
                 .clipShape(RoundedRectangle(cornerRadius: 28))
             adventureStickers
-            if let lesson = practice.recommended {
-                BLCard {
-                    VStack(alignment: .leading, spacing: 14) {
-                        Text(completed == practice.lessons.count ? "再練一次" : "下一個挑戰")
-                            .font(.subheadline.weight(.semibold)).foregroundStyle(Color.accentColor)
-                        Text("第 \(lessonNumber(lesson)) 關 · \(lesson.shortTitle)").font(.title2.bold())
-                        Text(lesson.instruction).foregroundStyle(BeatLabStyle.muted)
-                        Button { openPreparation(lesson) } label: { Label("準備挑戰", systemImage: "play") }
-                            .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice)
-                            .accessibilityIdentifier("prepareRecommended")
-                    }
-                }
-            } else {
-                BLStatusMessage(text: "課程暫時無法載入，可以先使用自由節拍器。", symbol: "music.note")
-            }
             Button { showLessons = true } label: { Label("查看全部關卡", systemImage: "list.number") }
                 .buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("browseLessons")
         }
@@ -200,19 +203,20 @@ struct PracticeView: View {
     }
     private var adventureWelcome: some View {
         VStack(alignment: .leading, spacing: 8) {
-            Text("BEATLAB").font(.caption.weight(.heavy)).tracking(1.3).foregroundStyle(Color.accentColor)
+            Text("一起跟拍冒險").font(BeatLabStyle.TypeScale.label).foregroundStyle(HomeBrand.heroInk)
             ViewThatFits(in: .horizontal) {
                 HStack(spacing: 8) { welcomeWords; GameCompanion(companion: companion).frame(width: 130, height: 140) }
                 VStack(alignment: .leading, spacing: 8) { welcomeWords; GameCompanion(companion: companion).frame(width: 130, height: 140).frame(maxWidth: .infinity) }
             }
             Button { showCompanions = true } label: { Label("換個夥伴", systemImage: "person.crop.circle.badge.checkmark") }
                 .buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("chooseCompanion")
-        }.padding(20).background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 28))
+        }.padding(20).background(HomeBrand.hero, in: RoundedRectangle(cornerRadius: BeatLabStyle.Radius.card))
+            .foregroundStyle(HomeBrand.heroInk)
     }
     private var welcomeWords: some View {
         VStack(alignment: .leading, spacing: 12) {
-            Text(completed == practice.lessons.count && completed > 0 ? "你是節奏\n探險家！" : "\(companion.title)的\n節奏冒險")
-                .font(.system(.largeTitle, design: .rounded).weight(.black)).accessibilityAddTraits(.isHeader)
+            Text(completed == practice.lessons.count && completed > 0 ? "你是節奏探險家！" : "出發，找大拍！")
+                .font(.system(.title, design: .rounded).weight(.black)).accessibilityAddTraits(.isHeader)
             Text("\(companion.title)準備好了！").font(.subheadline.bold()).accessibilityIdentifier("adventureCompanion")
             Text(completed > 0 ? "下一站，讓更多拍子亮起來！" : "一起把小島的拍子喚醒吧。")
                 .font(.subheadline.weight(.medium)).fixedSize(horizontal: false, vertical: true)
@@ -360,6 +364,7 @@ struct PracticeView: View {
                 BLCard {
                     VStack(alignment: .leading, spacing: 18) {
                         Text("第 \(lessonNumber(lesson)) 關 · 下一個節奏，由你打出來").font(.subheadline.weight(.semibold)).foregroundStyle(Color.accentColor)
+                            .accessibilityIdentifier("preparedLessonNumber")
                         Text(lesson.shortTitle).font(.system(.title, design: .rounded).bold())
                         Text(lesson.instruction).font(.title3).foregroundStyle(BeatLabStyle.muted)
                         BLPill(title: "\(max(lesson.bpm, practice.practiceBPM)) BPM · \(lesson.bars) 小節", symbol: "metronome")
@@ -499,6 +504,7 @@ struct PracticeView: View {
             HStack(alignment: .top) {
                 VStack(alignment: .leading, spacing: 4) {
                     Text("第 \(lessonNumber(lesson)) 關 · 節奏跑酷").font(.headline)
+                        .accessibilityIdentifier("activeLessonNumber")
                     Text("\(companion.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted)
                         .accessibilityIdentifier("activeCompanion")
                 }
@@ -507,13 +513,15 @@ struct PracticeView: View {
             }
             ProgressView(value: fraction).tint(BeatLabStyle.success)
                 .accessibilityLabel("距離終點").accessibilityValue("\(Int(fraction * 100))%")
-            Text(started ? "石頭到腳下，跟拍跳！" : "先聽 \(max(1, 4 - Int(practice.elapsed * Double(lesson.bpm) / 60))) 拍")
-                .font(.system(.headline, design: .rounded)).accessibilityIdentifier("practicePrompt")
+            Text(started ? (recoveryStep != nil ? "站穩，聽下一拍再跳！" : "石頭到腳下，跟拍跳！") : "先聽 \(max(1, 4 - Int(practice.elapsed * Double(lesson.bpm) / 60))) 拍")
+                .font(.system(.headline, design: .rounded)).accessibilityIdentifier("jumpCue")
             runnerStage(lesson).frame(height: stageHeight)
             // R/L/rest stay visible close to the jump control.
             runnerRhythm(lesson)
-            Text("跨過 \(jump.accepted.count) 個障礙 · 休止格先等一下")
-                .font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("jumpMatches")
+            ViewThatFits(in: .horizontal) {
+                HStack { crossingCount; Spacer(); comboLabel }
+                VStack(spacing: 4) { crossingCount; comboLabel }
+            }
             ZStack {
                 RoundedRectangle(cornerRadius: 24).fill(Color(red: 1, green: 0.84, blue: 0.43))
                 HStack(spacing: 16) {
@@ -557,7 +565,6 @@ struct PracticeView: View {
         runnerStage(lesson).frame(height: 178)
     }
     private func runnerStage(_ lesson: Lesson) -> some View {
-        let active = RhythmJumpPresentation.cueStep(elapsed: practice.elapsed, pattern: lesson.pattern, bpm: lesson.bpm, bars: lesson.bars)
         let position = RhythmRunnerPresentation.position(elapsed: practice.elapsed, bpm: lesson.bpm, stepsPerBeat: lesson.pattern.stepsPerBeat)
         let steps = RhythmRunnerPresentation.visibleSteps(position: position, pattern: lesson.pattern, bars: lesson.bars)
         return GeometryReader { geometry in
@@ -566,24 +573,20 @@ struct PracticeView: View {
             let ground = h * 0.78
             let stride = w * 0.25
             let playerX = w * 0.25
+            let characterHeight = min(110, h * 0.52)
+            let displayedHop = max(hopHeight, -(ground - characterHeight - 12))
             ZStack(alignment: .topLeading) {
-                // Flat scenery shares the outlined dinosaur's simple materials.
-                Color(red: 0.88, green: 0.95, blue: 0.93)
-                Circle().fill(Color(red: 1, green: 0.85, blue: 0.46))
-                    .frame(width: 40, height: 40).position(x: w * 0.82, y: h * 0.18)
-                Ellipse().fill(Color.white.opacity(0.8)).frame(width: 90, height: 24).position(x: w * 0.25, y: h * 0.2)
-                Ellipse().fill(Color(red: 0.69, green: 0.84, blue: 0.75))
-                    .frame(width: w, height: h * 0.55).position(x: w * 0.25, y: ground)
-                Ellipse().fill(Color(red: 0.51, green: 0.73, blue: 0.62))
-                    .frame(width: w, height: h * 0.5).position(x: w * 0.9, y: ground + 12)
-                Rectangle().fill(Color(red: 0.24, green: 0.47, blue: 0.36))
-                    .frame(width: w, height: h - ground).offset(y: ground)
+                Image("RunnerIsland").resizable().frame(width: w, height: h)
+                    .accessibilityHidden(true)
+                Ellipse().fill(Color.white.opacity(0.5)).frame(width: 88, height: 16)
+                    .position(x: playerX, y: ground + 6)
                 ForEach(steps, id: \.self) { step in
                     let x = playerX + CGFloat(Double(step) - (reduceMotion ? floor(position) : position)) * stride
                     let cleared = jump.accepted.contains(step)
                     VStack(spacing: 3) {
                         if cleared {
-                            Image(systemName: "sparkles").foregroundStyle(Color(red: 0.42, green: 0.28, blue: 0.02))
+                            Image(systemName: "star.fill").font(.title2)
+                                .foregroundStyle(Color(red: 0.42, green: 0.28, blue: 0.02))
                         } else {
                             Text(lesson.pattern.steps[step % lesson.pattern.steps.count].rawValue)
                                 .font(.caption.bold()).foregroundStyle(Color(red: 0.16, green: 0.28, blue: 0.22))
@@ -596,14 +599,29 @@ struct PracticeView: View {
                 Image(systemName: "flag.checkered").font(.system(size: 38))
                     .foregroundStyle(Color(red: 0.16, green: 0.28, blue: 0.22)).position(x: finishX, y: ground - 38)
                 Ellipse().fill(Color.black.opacity(0.15)).frame(width: 64, height: 12).position(x: playerX, y: ground + 5)
-                GameCompanion(companion: companion, celebrating: practice.latestHit?.grade == .perfect)
-                    .frame(width: 90, height: 96).position(x: playerX, y: ground - 48 + hopHeight)
-                Text(active.map { lesson.pattern.steps[$0 % lesson.pattern.steps.count] == .rest ? "休息，不用跳" : "跟著拍子跳過石頭" } ?? "準備出發")
-                    .font(.caption.bold()).foregroundStyle(Color(red: 0.16, green: 0.28, blue: 0.22))
-                    .padding(10).background(Color.white.opacity(0.9), in: Capsule()).padding(12)
-                    .accessibilityIdentifier("jumpCue")
+                if hopHeight < -20 && practice.latestHit?.grade == .perfect {
+                    Image(systemName: "sparkles").font(.title).foregroundStyle(HomeBrand.heroInk)
+                        .position(x: playerX + 48, y: ground - 72)
+                }
+                GameCompanion(companion: companion, celebrating: hopHeight < -20 && practice.latestHit?.grade == .perfect)
+                    .frame(width: characterHeight * 0.93, height: characterHeight)
+                    .position(x: playerX, y: ground - characterHeight / 2 + displayedHop)
             }.clipShape(RoundedRectangle(cornerRadius: 24))
         }.accessibilityElement(children: .contain)
+    }
+    private var recoveryStep: Int? {
+        guard let lesson = practice.selected else { return nil }
+        let position = RhythmRunnerPresentation.position(elapsed: practice.elapsed, bpm: lesson.bpm, stepsPerBeat: lesson.pattern.stepsPerBeat)
+        return RhythmRewardPresentation.recoveryStep(position: position, bpm: lesson.bpm, pattern: lesson.pattern, bars: lesson.bars, accepted: jump.accepted)
+    }
+    private var crossingCount: some View {
+        Text("跨過 \(jump.accepted.count) 個障礙 · 休止格先等一下")
+            .font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("jumpMatches")
+    }
+    private var comboLabel: some View {
+        Label(recoveryStep != nil ? "這拍沒跨過，再跟上！" : reward.perfectStreak > 1 ? "連續剛剛好 ×\(reward.perfectStreak)" : "跟上下一拍！", systemImage: "star.fill")
+            .font(.caption.bold()).foregroundStyle(BeatLabStyle.accent)
+            .accessibilityIdentifier("runnerCombo")
     }
     private var feedback: String {
         guard let hit = practice.latestHit else { return "點這裡跟拍" }
@@ -688,8 +706,7 @@ struct PracticeView: View {
             }
             if practice.mode == .standard { technicalSummary(summary) }
             if !practice.needsSaveRetry {
-                Button { if let lesson = practice.selected ?? practice.recommended { practice.select(lesson) }; showingJourney = true }
-                    label: { Label("回到關卡", systemImage: "map") }
+                Button { if let lesson = practice.selected ?? practice.recommended { practice.select(lesson) }; showingJourney = true } label: { Label("回到關卡", systemImage: "map") }
                     .buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("returnToJourney")
             }
         }
@@ -829,7 +846,7 @@ private struct GameCompanion: View {
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     var body: some View {
         ZStack(alignment: .topTrailing) {
-            Image(companion == .dinosaur && celebrating && resultScene ? "AdventureDinosaurCelebration" : companion.artwork)
+            Image(companion == .dinosaur ? "HomeDinosaur" : companion.artwork)
                 .resizable().scaledToFit()
             if celebrating && companion == .cat {
                 Image("AdventureCatCelebration").resizable().scaledToFit()
@@ -939,6 +956,35 @@ struct RhythmJumpPresentation {
     func displayStep(cue: Int?) -> Int {
         // Camera/safety catch follows the next cue; unlit tiles earn nothing.
         max(landedStep, (cue ?? 0) - 1)
+    }
+}
+
+/// Cosmetic feedback derived from accepted hits. Does not change grades or progress.
+struct RhythmRewardPresentation {
+    private(set) var perfectStreak = 0
+    // A conservative display deadline covers the existing matching window and
+    // maximum permitted calibration offset; this is never a score decision.
+    static func recoveryStep(position: Double, bpm: Int, pattern: RhythmPattern, bars: Int, accepted: Set<Int>) -> Int? {
+        guard position.isFinite, bpm > 0, pattern.stepsPerBeat > 0,
+              !pattern.steps.isEmpty, bars > 0 else { return nil }
+        let total = pattern.steps.count * bars
+        guard position >= 0, position < Double(total + 5) else { return nil }
+        let deadline = position - (TimingSession.matchingWindow + 0.250) * Double(bpm * pattern.stepsPerBeat) / 60
+        guard deadline > 0 else { return nil }
+        let end = min(total - 1, Int(ceil(deadline)) - 1)
+        guard let step = (0...end).last(where: { pattern.steps[$0 % pattern.steps.count] != .rest }),
+              !accepted.contains(step) else { return nil }
+        return step
+    }
+    private var lastTarget: Int?
+    mutating func record(_ hit: TimingHit, accepted: Bool, pattern: RhythmPattern) {
+        guard accepted, hit.grade == .perfect, let id = hit.targetID,
+              !pattern.steps.isEmpty, id >= 0 else {
+            perfectStreak = 0; lastTarget = nil; return
+        }
+        let previous = (0..<id).last { pattern.steps[$0 % pattern.steps.count] != .rest }
+        perfectStreak = lastTarget == previous ? perfectStreak + 1 : 1
+        lastTarget = id
     }
 }
 

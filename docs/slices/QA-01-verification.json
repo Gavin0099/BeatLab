@@ -1,0 +1,349 @@
+{
+  "slice": "QA-01",
+  "date": "2026-10-05",
+  "status": "IN_PROGRESS; engineering evidence recorded, public acceptance incomplete",
+  "base_commit": "5989c59e3cfdb8d81edf6df4e5a1f8e6df6d2136",
+  "source_sha256": {
+    "Sources/BeatLabCore/ConfigurationRepository.swift": "8c979ee3fca706065a21fd84136a17aad5f2159aebbe7380a23e5fbc0549ac9d",
+    "Sources/BeatLabCore/TapTempo.swift": "fa0a8512f19780993319b11b795a417f142bd93cb19f3e552cb9933d377ad5ee",
+    "Sources/BeatLabCore/TimingPractice.swift": "c771e19d11a0d6ac397ac3c9170bd877bb1a90375f2c2df1afaac5783f11655e",
+    "Sources/BeatLabCore/Subdivision.swift": "250349165142b1fdc6a85f5979cdf50743bea9aad735f8c47822b352f73d930d",
+    "Sources/BeatLabCore/MetronomeConfiguration.swift": "6635f5249f30eb85c11b2e5561a4a3f64f1808ddee2efb662b2fff656953b4a6",
+    "Sources/BeatLabCore/RhythmLesson.swift": "6c72debb6916480d38ab9e698c8d126a9e603ff8b7f963e077373e2148ba4140",
+    "Sources/BeatLabCore/Tempo.swift": "2d68c68a91dd68d46f9eb1d9e70adee4619a8a099dbd5b19869cec7e613b5108",
+    "Sources/BeatLabCore/TimeSignature.swift": "f74cd80421e1f92f8c54e9003957ac38e7bd70a3d7a2aa6ad2e0dc03221a6872",
+    "Sources/BeatLabCore/ProgressRepository.swift": "1fe4bcce97c817853743aa3a6a37c6516e80491008fcf3419273baf4b817b037",
+    "Sources/BeatLabCore/Resources/lessons.json": "66f0ecadc951cf4ff7d9b8e3d871323dada21d5dcb3553428136b84eb6903b4b",
+    "Sources/BeatLabDSP/BeatLabDSP.c": "e788cf4224ccaac37bd98020a9c562a2aaf50afc94012ea1f8f2c081dffcdbf0",
+    "Sources/BeatLabDSP/include/BeatLabDSP.h": "195bf1d86b66acd3fa2238e09d0b64300122be9b5020dc4b8e3a822c9cb7ad56",
+    "BeatLab/Design/BeatLabStyle.swift": "6ebe0901cb95b2bd957e6a223db73a82f1fa298f62cebe38d4b7600dca7db3b6",
+    "BeatLab/App/PracticeStore.swift": "09e632710bf5a79cc8c9876dedded0374a0cc14fb6520a43c5b0c70ef58aeffd",
+    "BeatLab/App/ConfigurationStore.swift": "5e7468614d839a3dcf3e580aed9ba479fe76d63ffb155127073ba9c977958fe4",
+    "BeatLab/App/BeatLabApp.swift": "eade7cf454c8a51ca79ee578c581f62fd2ceb909b15d1364c33db390b9816797",
+    "BeatLab/Resources/PrivacyInfo.xcprivacy": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+    "BeatLab/Resources/Assets.xcassets/Contents.json": "2320eb3e02f9e3419d35676c6fd470ec13d5aa314c0d29700e09ec76d8e2360a",
+    "BeatLab/Resources/Assets.xcassets/AccentSoft.colorset/Contents.json": "4bced10099c22590e0325fb99df0488ef488067297c7444a889dbd4c9c616261",
+    "BeatLab/Resources/Assets.xcassets/SuccessSoft.colorset/Contents.json": "3de56d04ef6bd21985b5b3f4a97a5c4200f2e79a379eb7d0a39740a6a024783a",
+    "BeatLab/Resources/Assets.xcassets/Reward.colorset/Contents.json": "283098579daf80341abbbcc6d2cffae565ed2a29cd12d34beef2869fbc6222c4",
+    "BeatLab/Resources/Assets.xcassets/HomeSurface.colorset/Contents.json": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc",
+    "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png": "2a7b4b8c8c75aa0f1ec98337e94b42b9dd94a39bfe2c87dff38f6388f0d69b51",
+    "BeatLab/Resources/Assets.xcassets/Success.colorset/Contents.json": "5dc9fb60f1c1e3ecaac6be0cfdbb040a8d5e956cb64899ada8dd65726d055355",
+    "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/artwork.png": "e02cb053fb601e70a385e7766cbc034ee1776dcf8c1deebe0e71ecef04263641",
+    "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/artwork.png": "bcc0c9c110974ac95abd310c55017cb3ab59412d6ffa5a5bc0356ce521b585ca",
+    "BeatLab/Resources/Assets.xcassets/Surface.colorset/Contents.json": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc",
+    "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/Contents.json": "f0946acd61b0b4a62f2ed1e7210b1bf09c601233f0ae9e43f19c36621d074e19",
+    "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/artwork.png": "1c392af81eab914d0710820728e76e00e9956f1736439b7eee75d82b961bcdc2",
+    "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json": "6ad2c5c3bbcf972c7f02d217d6afcac3f24a10e30510c7e2d06c582371ed9d22",
+    "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+    "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/Contents.json": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889",
+    "BeatLab/Resources/Assets.xcassets/AccentColor.colorset/Contents.json": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4",
+    "BeatLab/Resources/Assets.xcassets/Separator.colorset/Contents.json": "dc4fa6f6f4b2d511285069a49c09b0cce02f322dd3cb632ff4bd3f193b293418",
+    "BeatLab/Resources/Assets.xcassets/Ink.colorset/Contents.json": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179",
+    "BeatLab/Resources/Assets.xcassets/RewardSoft.colorset/Contents.json": "d7ffe748db6f38bb7f18a7bc3e417eccf47a8d7c8e6684d7ed4b4144dcd3661b",
+    "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png": "9d77b5ba7b6174a0f4a5bec9849ea8fd47e67f407de00e66642a6f0107792f30",
+    "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/artwork.png": "4048570545258386a1cbd54df1af5186bc19726de27ff5a085901e917828cf55",
+    "BeatLab/Resources/Assets.xcassets/MutedInk.colorset/Contents.json": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0",
+    "BeatLab/Resources/Assets.xcassets/HomeInk.colorset/Contents.json": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179",
+    "BeatLab/Resources/Assets.xcassets/HomeMuted.colorset/Contents.json": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0",
+    "BeatLab/Resources/Assets.xcassets/Canvas.colorset/Contents.json": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8",
+    "BeatLab/Resources/Assets.xcassets/HomeForest.colorset/Contents.json": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4",
+    "BeatLab/Resources/Assets.xcassets/HomeCanvas.colorset/Contents.json": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8",
+    "BeatLab/Resources/Assets.xcassets/HomeHero.colorset/Contents.json": "867b02029807b8e1abe270afa80b4529a5bf6cae9fae833b679fe1ba2ff9f835",
+    "BeatLab/Resources/Assets.xcassets/OnAccent.colorset/Contents.json": "e1abe8f9a069fa1f0bcc17d0a41aaf633972ce45d83fcf3a69d5595a1ceecbac",
+    "BeatLab/Audio/MetronomeAudio.swift": "f1f1de738ef78cb69c6a0ede18a9c91d7f3ba7df0faa62b81efc9b62cdfec27b",
+    "BeatLab/Audio/CountVoice.swift": "070715d9819c4af058e6cbc269cbd7f602ee41ff8f25ac908597bd6bf5c58e5b",
+    "BeatLab/Views/BeatVisualizer.swift": "36e9c000282a4925c16e668a262f6891b276c44cd347d9028a2b35c7a26551af",
+    "BeatLab/Views/MetronomeView.swift": "2b30cf9c40214e383e0387dde5dd520a1cee634aca721de68454625ba1f0399d",
+    "BeatLab/Views/PracticeView.swift": "de05066f2b53e982d2603a7e2b3b31148c47a29f827c7d52b1e5982e05a6c375",
+    "BeatLab/Views/HomeView.swift": "4b224413af07e522335c85fbb0889f91be4cdacc43cf8c5ce206d085a193c937",
+    "BeatLab/Views/RootView.swift": "0c07454f54ec798c93ccd469f167dda94c2ca40c08f9669297148df0e9c474d2",
+    "BeatLab/Views/TapPad.swift": "c0b6d439b3f6d15d142f4a6e9ba2c93a80f0e930a3ad3cd2b19e83db6aaadc4f",
+    "BeatLab/Views/ConfigurationSummary.swift": "4780cf39ac7c181b78cf3567b631b0c44c939e41501a84dd756cc87292663801",
+    "BeatLab/Views/RhythmLane.swift": "8c6b3d35729c97cf1ccf72d2ba6dd0591d400ebcb80b4b826d26beed6dc2ab3f",
+    "BeatLabTests/MetronomeAudioTests.swift": "fc483d92084486ba7a6870fec7dee2b8e6e020bbcf57bbf4550af28e43fe051b",
+    "BeatLabTests/ConfigurationStoreTests.swift": "7c65756b98d0963a2e72a17a633a83ba41770f3bd8b2db8d0cb864c8f71ed669",
+    "BeatLabTests/PracticeStoreTests.swift": "1dab6d8e6718e1629992fe906aae455d941f91f3c5d2192d5179eecc5c4b22bc",
+    "BeatLabUITests/PracticeUITests.swift": "0ed06f7d6ad2b38dfded4b5329eb00e9589e7ca5a399ed8b8cefc3ace7daf8cf",
+    "BeatLabUITests/FoundationUITests.swift": "85892564bb94a5d2926ec6aaf44a70a4e2e5959d29684ccd73e91fc249484291",
+    "BeatLabUITests/MetronomeUITests.swift": "3ffe491daac4333ecee55cfcfb7de876bfaa9206792b510d58a9db1d28f2be87",
+    "BeatLabUITests/InterfaceUITests.swift": "cd9d2c01a2a333ccfcca4d7820ad00bb1512dc21b6683b89cd4b84cf7ad60871",
+    "BeatLab.xcodeproj/project.pbxproj": "83118cefe7de63f53ab580521475a085224a3b7db9c8feadeae2bf86a0f31d87",
+    "BeatLab.xcodeproj/xcuserdata/pc49-58.xcuserdatad/xcschemes/xcschememanagement.plist": "df5f9c405e8b7e727f00c6030df86bdb7fb20084ed7c132993b7b2f8014e1683",
+    "BeatLab.xcodeproj/project.xcworkspace/contents.xcworkspacedata": "5c2b91b67a72f0c341d6fa0eda978eee611ff4a1efee3017a5617c46284973b3",
+    "BeatLab.xcodeproj/project.xcworkspace/xcuserdata/pc49-58.xcuserdatad/UserInterfaceState.xcuserstate": "852bda908ba29cca7b0b0cbe1035e837f84eba3f3eed5020b5d5dd3c2542a902",
+    "BeatLab.xcodeproj/xcshareddata/xcschemes/BeatLab.xcscheme": "a7ba5678196b03db86d938625668f2b947abcce307ac4ff0b19e86dcc08d0fd7"
+  },
+  "risk": "L1 presentation; physical audio/input acceptance remains L2",
+  "build": {
+    "debug_simulator": "PASS build-for-testing; latest test source explicitly XXXL",
+    "release_iphoneos": {
+      "kind": "unsigned Release iphoneos compile; not archive/install/upload",
+      "result": "PASS",
+      "log": "TestResults/PRODUCT-ALPHA-01/release-compile.log",
+      "bundle_id": "com.gavin0099.beatlab",
+      "version": "0.1.0",
+      "build": "10",
+      "minimum_os": "16.0",
+      "platforms": [
+        "iPhoneOS"
+      ],
+      "executable_sha256": "6876acbbcdd31b80c17a30d0e9bb665e3dfb1f6d152fecb5c8089e279a92836a",
+      "assets_sha256": "76a62acce45d604679624cb1102ecb213325b270576aab8967d53b820cae041d",
+      "privacy_sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+      "signature": "NOT CLAIMED",
+      "archive": "NOT RUN",
+      "upload": "NOT RUN"
+    },
+    "distributed": "owner-only TestFlight 0.1.0 (10); current sources NOT uploaded"
+  },
+  "checks": {
+    "core": {
+      "result": "PASS",
+      "executed": 50,
+      "failures": 0,
+      "log": "TestResults/PRODUCT-ALPHA-01/core-tests.log",
+      "sha256": "2743286492baf6c72f9c316baa82fe779330c56f644e951c80ca798812b60806"
+    },
+    "capture_analyzer": {
+      "result": "PASS",
+      "executed": 3,
+      "failures": 0,
+      "log": "TestResults/PRODUCT-ALPHA-01/capture-tests.log",
+      "sha256": "447a5e7311202a19cdc623c66078813113c2e01f80b4d3ab5f131e4b55760f01"
+    },
+    "offline_DSP": {
+      "result": "PASS",
+      "runs": 468,
+      "seconds_per_run": 900,
+      "physical_device_gate": "NOT RUN",
+      "method": "actual C renderer, offline samples, independent onset oracle",
+      "report": "TestResults/PRODUCT-ALPHA-01/dsp-tests.json",
+      "sha256": "0c31efb342f1485fb083d5531f2758f470240a0ea06b122008ad761781de66df"
+    },
+    "syntax_project_assets_privacy": {
+      "scope": "S0-S17 syntax and source/project structure only",
+      "result": "PASS",
+      "swift_files_parsed": 37,
+      "swift_test_definitions": 99,
+      "xcode_objects": 93,
+      "lesson_count": 10,
+      "xcode_membership": "PASS",
+      "asset_privacy_parse": "PASS",
+      "excluded_capabilities": "ABSENT",
+      "realtime_render_allocations": "ABSENT IN INSPECTED FUNCTION",
+      "swift_typechecking": "NOT RUN",
+      "swift_tests": "NOT RUN",
+      "iOS_build_UI_tests": "NOT RUN",
+      "device_gates": "NOT RUN"
+    },
+    "solid_color_contrast": {
+      "pairs": 20,
+      "minimum_ratio": 5.17,
+      "result": "PASS for listed pairs only",
+      "report": "TestResults/UI-BRAND-01/contrast.json"
+    }
+  },
+  "native_attempts": {
+    "wide_first": {
+      "result": "Passed",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "4 UI flows, before subsequent runner/compact header refinements",
+      "summary": "TestResults/PRODUCT-ALPHA-01/wide-first-summary.json",
+      "summary_sha256": "9b39095cf16935235ba29dff8dec17fae8a3b9e3752b3cca6a41f12b985ebf9c",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/wide-first.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/wide-first-source-hashes.json",
+      "failures": []
+    },
+    "runner_native": {
+      "result": "Passed",
+      "total": 34,
+      "passed": 34,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "31 App/store/presentation tests plus 3 UI flows; before scene bubble/arc correction",
+      "summary": "TestResults/PRODUCT-ALPHA-01/runner-native-summary.json",
+      "summary_sha256": "3b02674c5d130d9f2b78040246f77d11cf471bcda9e2991a1c59a0f82c02b5d2",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/runner-native.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/runner-native-source-hashes.json",
+      "failures": []
+    },
+    "narrow_dark": {
+      "result": "Passed",
+      "total": 4,
+      "passed": 4,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "4 dark/narrow UI flows before scene bubble/arc correction; runner largest-text fixture did not explicitly request XXXL, not largest-runner evidence",
+      "summary": "TestResults/PRODUCT-ALPHA-01/narrow-dark-summary.json",
+      "summary_sha256": "1f42b4b65ba4202da0680e1dbbf782ddafc9e5c5b401f050790d7a65f6fe9173",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/narrow-dark.xcresult",
+      "source_manifest": "NOT independently frozen for this attempt; prior pre-arc state, not final-game rendering proof",
+      "failures": []
+    },
+    "full_wide": {
+      "result": "Failed",
+      "total": 49,
+      "passed": 47,
+      "failed": 2,
+      "skipped": 0,
+      "scope": "31 App + 18 UI methods. 2 failed UI fixtures retained; runner largest-text did not explicitly request XXXL",
+      "summary": "TestResults/PRODUCT-ALPHA-01/final-wide-summary.json",
+      "summary_sha256": "d3a0d21aa41254101f1926191136cad262456c08c601f80f3a933d63d34ee066",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/final-wide.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/final-source-hashes.json",
+      "failures": [
+        "FoundationUITests/testConfigurationIsSharedAndAllFourFieldsSurviveRelaunch()",
+        "PracticeUITests/testSeededTenLessonsPreparationStartCancelSmoke()"
+      ]
+    },
+    "selection_recheck": {
+      "result": "Passed",
+      "total": 7,
+      "passed": 7,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "6 Foundation methods + exact-ID all-ten selected/preparation/start/cancel UI smoke, including fixes to failed full-wide fixtures",
+      "summary": "TestResults/PRODUCT-ALPHA-01/selection-recheck-summary.json",
+      "summary_sha256": "a0dca5cf1e70ab52a7c8564ea1455dd90d49c6b0fe9fb20d5915585e92d7d1d7",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/selection-recheck.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/selection-recheck-source-hashes.json",
+      "failures": []
+    },
+    "reduced_motion": {
+      "result": "Passed",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Real system Reduce Motion ON via CUA; actual matched UIKit touch/clearance and restart; setting restored OFF",
+      "summary": "TestResults/PRODUCT-ALPHA-01/reduced-motion-current-summary.json",
+      "summary_sha256": "f52201a7a055737b3863705420aacf66bae9faff8d5d218ec9d793f108ae4b5d",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/reduced-motion-current.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/narrow-final-source-hashes.json",
+      "failures": []
+    },
+    "narrow_final": {
+      "result": "Failed",
+      "total": 3,
+      "passed": 2,
+      "failed": 1,
+      "skipped": 0,
+      "scope": "Actual small-screen renderer after bubble/arc correction; 2 regular UI passes, explicit XXXL case exhausted real lesson before reaching stop",
+      "summary": "TestResults/PRODUCT-ALPHA-01/narrow-final-summary.json",
+      "summary_sha256": "6169d6d6286fd94c3bf3832a94896fa8cfc3f51b013cf1cb02dbef1e2d7fa5b1",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/narrow-final.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/narrow-final-source-hashes.json",
+      "failures": [
+        "PracticeUITests/testRunnerLargeTextCanReachSceneRhythmJumpAndStop()"
+      ]
+    },
+    "largest_recheck": {
+      "result": "Failed",
+      "total": 1,
+      "passed": 0,
+      "failed": 1,
+      "skipped": 0,
+      "scope": "Explicit XXXL two-run attempt still failed: artificial 30pt bottom excluded fully visible SE stop control",
+      "summary": "TestResults/PRODUCT-ALPHA-01/largest-recheck-summary.json",
+      "summary_sha256": "3678b8f43362177763d47f1e9399ea6f649ceb79f272354018546a9f4b08cbca",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/largest-recheck.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-recheck-source-hashes.json",
+      "failures": [
+        "PracticeUITests/testRunnerLargeTextCanReachSceneRhythmJumpAndStop()"
+      ]
+    },
+    "largest_viewport": {
+      "result": "Passed",
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "scope": "Explicit XXXL two real runs; actual viewport/full visibility/hittability checked. Stop frame (16,599,343,63.5) lies within375x667, native cancel confirmed",
+      "summary": "TestResults/PRODUCT-ALPHA-01/largest-viewport-summary.json",
+      "summary_sha256": "1d262dd03fe880de9955d8ee613f02b112b16f1027b49048e31b91dcce54b2d4",
+      "bundle": "TestResults/PRODUCT-ALPHA-01/largest-viewport.xcresult",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-viewport-source-hashes.json",
+      "failures": []
+    }
+  },
+  "regression_interpretation": "Combined full attempt and focused fixes; NOT a single final full-suite green run. Application authority unchanged; later production edits relative to full-wide are two accessibility identifiers only. Test source subsequently corrected explicit XXXL and split short-lesson inspection into two real runs.",
+  "ten_lesson_scope": "reviewed schema-v1 isolated DEBUG progress enables existing ten IDs; every selection verified against preparation and active HUD number. No owner data/bypass/earned ten-lesson completion claim. Store graph start/cancel/restart/save fixtures separate from UI smoke.",
+  "defects_and_corrections": [
+    {
+      "kind": "production",
+      "issue": "SwiftUI automatic toolbar caps settings button below 44pt",
+      "correction": "44pt label + plain button style; actual frames and sheet navigation rechecked"
+    },
+    {
+      "kind": "production",
+      "issue": "narrow scene overlay covered dinosaur head",
+      "correction": "prompt above scene; character scales with height and visual arc stays inside scene"
+    },
+    {
+      "kind": "test",
+      "issue": "isHittable-only footer taps did not navigate when covered by persistent controls",
+      "correction": "require fully visible viewport before tap; Foundation rerun"
+    },
+    {
+      "kind": "test",
+      "issue": "course sheet used underlying viewport and short held drags could select rows; weak test checked only underlying navigation",
+      "correction": "sheet viewport/scroll gesture, exact prepared and active lesson IDs; full 10 smoke rerun"
+    },
+    {
+      "kind": "test",
+      "issue": "largest-runner method previously did not request large text; corrected four-region capture outlived short lesson",
+      "correction": "explicit XXXL, independent real input/stop and cue/rhythm runs; no timing or course changes; remove invented 30pt SE bottom exclusion, observed stop frame maxY662.5 within667 and actual cancel confirmed"
+    }
+  ],
+  "authority_boundary": {
+    "base_commit": "5989c59e3cfdb8d81edf6df4e5a1f8e6df6d2136",
+    "authority_paths_checked": 28,
+    "authority_paths_changed": [],
+    "protected_baseline": "UNCHANGED",
+    "framework_gitlink": "160000 commit 15722daadca7f7f28eb00250170b34844caf600b\tai-governance-framework",
+    "framework_nested_head": "15722daadca7f7f28eb00250170b34844caf600b",
+    "framework_update": "NOT REQUESTED; initialized existing pin only",
+    "timing_claim": "NOT CLAIMED",
+    "new_scene_only": "RunnerIsland",
+    "catalog": "10 lessons, unchanged"
+  },
+  "reviewable_screenshots": "docs/design/branding/previews/manifest.json",
+  "pending": {
+    "owner_three_page_style_and_gameplay": "PENDING",
+    "first_time_human_start_within_10s": "NOT RUN",
+    "three_target_age_playtests": "NOT RUN",
+    "physical_onset_audio_visual_input_frame_pacing": "NOT RUN",
+    "minimum_current_OS_real_devices": "NOT RUN",
+    "human_VoiceOver": "NOT RUN",
+    "full_success_last_lesson_save_failure_UI_matrix": "PARTIAL; actual store failure/last-result rules covered by App fixtures; complete UI/physical matrix not claimed",
+    "new_hit_or_landing_sound": "NOT IMPLEMENTED; needs separate L2 audio contract",
+    "public_destination": "UNANSWERED: App Store / TestFlight public / GitHub Release",
+    "phone": "unavailable; no new install"
+  },
+  "delivery": {
+    "recording": "implementation commit/push recorded after source receipt in Git history and TestResults/PRODUCT-ALPHA-01/git-delivery.json",
+    "PR_merge": "NOT RUN",
+    "TestFlight_new_upload": "NOT RUN",
+    "AppStore_review": "NOT RUN",
+    "GitHub_release": "NOT RUN"
+  },
+  "cannot_claim": [
+    "single-final-suite green",
+    "owner accepted new candidate",
+    "child enjoyment/10-second start",
+    "physical timing precision/no timing regression",
+    "G1-G4 acceptance",
+    "full accessibility",
+    "public app distribution/readiness",
+    "governance framework updated/adoption complete"
+  ]
+}

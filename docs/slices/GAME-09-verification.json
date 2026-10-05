@@ -1,0 +1,24 @@
+{
+  "slice": "GAME-09",
+  "date": "2026-10-05",
+  "status": "IN_PROGRESS",
+  "risk": "L1",
+  "based_on": "5989c59e3cfdb8d81edf6df4e5a1f8e6df6d2136",
+  "detail": {
+    "implementation": "original shared island scene, actual accepted clearance/jump, Perfect sparkle/streak, miss recovery, conservative visual deadline; short scene overlay/arc corrected",
+    "evidence": [
+      "full_wide",
+      "reduced_motion",
+      "narrow_final",
+      "largest_viewport"
+    ],
+    "score_audio_input_authority": "UNCHANGED",
+    "new_sound": "NOT IMPLEMENTED",
+    "physical_timing_and_child_fun": "NOT RUN",
+    "owner_gameplay": "PENDING"
+  },
+  "canonical_evidence": "docs/slices/QA-01-verification.json",
+  "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-viewport-source-hashes.json",
+  "protected_clock_matching_score_persistence_catalog_icon": "UNCHANGED",
+  "public_readiness": "NOT CLAIMED"
+}

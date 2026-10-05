@@ -1,6 +1,6 @@
 gate,check,status,device_os_build_route,evidence,owner_acceptance
-BL-001,SwiftPM and Xcode compile/tests,NOT RUN,,,
-BL-001,Navigation and all settings relaunch,NOT RUN,,,
+BL-001,SwiftPM and Xcode compile/tests,AUTOMATED PASS; acceptance pending,Xcode26.6 / iOS26.5 Simulator; unsigned Release iphoneos build10,docs/slices/QA-01-verification.json,PENDING; not G1-G4
+BL-001,Navigation and all settings relaunch,PARTIAL,iOS26.5 Simulator; isolated defaults,QA-01: navigation/four fields/timbre/beat/pulse persistence; full real-device settings NOT RUN,PENDING
 BL-002A,60/120/180 BPM five minute sanity,NOT RUN,,,
 G1,Fixed device audio onset fifteen minute matrix,NOT RUN,,,
 G1,Audio visual sync capture,NOT RUN,,,
@@ -9,11 +9,11 @@ G1,Repeated stop/start background interruption route reset,NOT RUN,,,
 G2,Touch timestamp alignment and independent latency,NOT RUN,,,
 G2,Matching miss extra tie rest and VoiceOver path,NOT RUN,,,
 G2,Three child exploratory playtests,NOT RUN,,,
-G3,Ten lesson walkthrough and retry progression,NOT RUN,,,
-G3,Progress best score best BPM and relaunch recovery,NOT RUN,,,
+G3,Ten lesson walkthrough and retry progression,PARTIAL,iOS26.5 Simulator; reviewed all-ten seeded suite,QA-01: exact-ID preparation/start/cancel 10/10; store save/retry/restart fixtures; earned ten-lesson manual run NOT RUN,PENDING
+G3,Progress best score best BPM and relaunch recovery,AUTOMATED PASS; acceptance pending,iOS26.5 Simulator actual PracticeStore fixtures,QA-01: corrupt/future/unsaved retry/discard/save/restart tests; owner-device acceptance NOT RUN,PENDING
 G4,Gap return and Ladder combinations,NOT RUN,,,
 G4,Voice assets onset intelligibility high tempo and fallback,NOT RUN,,,
 G4,Minimum/current iOS and screen/device matrix,NOT RUN,,,
-G4,VoiceOver Dynamic Type Reduce Motion light/dark,NOT RUN,,,
+G4,VoiceOver Dynamic Type Reduce Motion light/dark,PARTIAL,Simulator375x667 and402x874 iOS26.5,QA-01: native rendering/reachability light/dark/large; real Reduce Motion toggle + matched touch/restart; human VoiceOver NOT RUN,PENDING
 G4,Crash/lifecycle long run and privacy review,NOT RUN,,,
 G4,Provisioning archive and TestFlight delivery,NOT RUN,,,

@@ -1,0 +1,21 @@
+{
+  "slice": "MET-02",
+  "date": "2026-10-05",
+  "status": "IN_PROGRESS",
+  "risk": "L1",
+  "based_on": "5989c59e3cfdb8d81edf6df4e5a1f8e6df6d2136",
+  "detail": {
+    "implementation": "tempo/status foreground; rhythm beside beats; separate fixed emphasis vs live underline; volume always available; sound/cue disclosure, all actions retained",
+    "evidence": [
+      "full_wide",
+      "selection_recheck"
+    ],
+    "all_four_meters_legal_subdivisions": "PASS native focused controls in full_wide",
+    "physical_timing": "NOT RUN",
+    "owner_style": "PENDING"
+  },
+  "canonical_evidence": "docs/slices/QA-01-verification.json",
+  "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-viewport-source-hashes.json",
+  "protected_clock_matching_score_persistence_catalog_icon": "UNCHANGED",
+  "public_readiness": "NOT CLAIMED"
+}

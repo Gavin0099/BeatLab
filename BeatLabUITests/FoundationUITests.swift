@@ -18,7 +18,7 @@ final class FoundationUITests: XCTestCase {
         openMetronome(app)
         XCTAssertTrue(app.navigationBars["節拍器"].waitForExistence(timeout: 5))
         let practice = app.buttons["openPractice"]
-        for _ in 0..<6 where !practice.isHittable { app.swipeUp() }
+        revealFully(practice, in: app)
         practice.tap()
         XCTAssertTrue(app.navigationBars["練習"].waitForExistence(timeout: 5))
         revealPracticeSettings(app)
@@ -30,10 +30,10 @@ final class FoundationUITests: XCTestCase {
         let app = launchFreshApp()
         openMetronome(app)
         let increase = app.buttons["tempoPlusOne"]
-        for _ in 0..<6 where !increase.isHittable { app.swipeUp() }
+        revealFully(increase, in: app)
         increase.tap()
         let settings = app.buttons["rhythmSettings"]
-        for _ in 0..<6 where !settings.isHittable { app.swipeUp() }
+        revealFully(settings, in: app)
         settings.tap()
         app.buttons["signaturePicker"].tap()
         app.buttons["3/4"].tap()
@@ -41,7 +41,7 @@ final class FoundationUITests: XCTestCase {
         app.buttons["八分音符"].tap()
         app.switches["accentToggle"].tap()
         let practice = app.buttons["openPractice"]
-        for _ in 0..<6 where !practice.isHittable { app.swipeUp() }
+        revealFully(practice, in: app)
         practice.tap()
         revealPracticeSettings(app)
         XCTAssertEqual(app.staticTexts["configurationSummary"].label, "81 BPM · 3/4")
@@ -59,9 +59,9 @@ final class FoundationUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["accentSummary"].label, "第一拍重音：關閉")
         openMetronome(app)
         let restoredSettings = app.buttons["rhythmSettings"]
-        for _ in 0..<6 where !restoredSettings.isHittable { app.swipeUp() }
+        revealFully(restoredSettings, in: app)
         restoredSettings.tap()
-        for _ in 0..<6 where !app.switches["accentToggle"].isHittable { app.swipeUp() }
+        revealFully(app.switches["accentToggle"], in: app)
         XCTAssertEqual(app.switches["accentToggle"].value as? String, "0")
     }
     @MainActor
@@ -107,6 +107,71 @@ final class FoundationUITests: XCTestCase {
     }
 
     @MainActor
+    func testSharedBrandSurfacesAndSheets() async {
+        verifyBrandSurfaces(largest: false)
+    }
+
+    @MainActor
+    func testSharedBrandLargestTextSurfacesAndSheets() async {
+        verifyBrandSurfaces(largest: true)
+    }
+
+    @MainActor
+    private func verifyBrandSurfaces(largest: Bool) {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        app.launchEnvironment["BEATLAB_UI_TEST_SUITE"] = "BeatLabUITests.\(UUID().uuidString)"
+        app.launchArguments = ["--reset-test-settings"]
+        if largest { app.launchArguments += ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"] }
+        app.launch()
+        XCTAssertTrue(app.navigationBars["拍拍冒險"].waitForExistence(timeout: 5))
+        let suffix = largest ? "largest" : "regular"
+        saveScreenshot(app, name: "brand-home-\(suffix)")
+
+        openMetronome(app)
+        XCTAssertTrue(app.navigationBars["節拍器"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["tempoValue"].exists)
+        let transport = app.buttons["transportButton"]
+        assertReachableTarget(transport, in: app)
+        XCTAssertTrue(transport.label.contains("開始"))
+        saveScreenshot(app, name: "brand-metronome-\(suffix)")
+
+        let practice = app.buttons["openPractice"]
+        for _ in 0..<14 where !practice.isHittable || practice.frame.maxY > app.tabBars.firstMatch.frame.minY { app.swipeUp() }
+        XCTAssertTrue(practice.isHittable)
+        practice.tap()
+        XCTAssertTrue(app.navigationBars["練習"].waitForExistence(timeout: 5))
+        saveScreenshot(app, name: "brand-practice-\(suffix)")
+        let settings = app.buttons["practiceSettings"]
+        assertReachableTarget(settings, in: app)
+        settings.tap()
+        XCTAssertTrue(app.navigationBars["練習設定"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.segmentedControls["interfaceMode"].exists)
+        saveScreenshot(app, name: "brand-settings-\(suffix)")
+        app.buttons["完成"].tap()
+
+        let companions = app.buttons["chooseCompanion"]
+        for _ in 0..<14 where !companions.isHittable || companions.frame.maxY > app.tabBars.firstMatch.frame.minY { app.swipeUp() }
+        assertReachableTarget(companions, in: app)
+        companions.tap()
+        XCTAssertTrue(app.navigationBars["選擇夥伴"].waitForExistence(timeout: 5))
+        saveScreenshot(app, name: "brand-companions-\(suffix)")
+        app.buttons["完成"].tap()
+        XCTAssertTrue(app.navigationBars["練習"].exists)
+        XCTAssertFalse(app.buttons["stopPractice"].exists)
+    }
+
+    @MainActor
+    private func assertReachableTarget(_ target: XCUIElement, in app: XCUIApplication) {
+        XCTAssertTrue(target.exists)
+        XCTAssertTrue(target.isHittable)
+        XCTAssertGreaterThanOrEqual(target.frame.width, 44)
+        XCTAssertGreaterThanOrEqual(target.frame.height, 44)
+        XCTAssertGreaterThanOrEqual(target.frame.minY, app.frame.minY)
+        XCTAssertLessThanOrEqual(target.frame.maxY, app.frame.maxY)
+    }
+
+    @MainActor
     private func saveScreenshot(_ app: XCUIApplication, name: String) {
         let attachment = XCTAttachment(screenshot: app.screenshot())
         attachment.name = name
@@ -117,16 +182,34 @@ final class FoundationUITests: XCTestCase {
     @MainActor
     private func openMetronome(_ app: XCUIApplication) {
         let button = app.buttons["openMetronome"]
-        for _ in 0..<6 where !button.isHittable { app.swipeUp() }
+        revealFully(button, in: app)
         button.tap()
     }
     @MainActor
+    private func revealFully(_ element: XCUIElement, in app: XCUIApplication) {
+        let sheet = app.navigationBars["練習設定"]
+        let top = sheet.exists ? sheet.frame.maxY : app.navigationBars.firstMatch.frame.maxY
+        let bottom = sheet.exists ? app.frame.maxY - 24 : app.buttons["transportButton"].exists ? app.buttons["transportButton"].frame.minY : app.tabBars.firstMatch.frame.minY
+        for _ in 0..<24 {
+            let frame = element.exists ? element.frame : .zero
+            if element.exists && element.isHittable && frame.minY >= top && frame.maxY <= bottom { return }
+            let middle = (top + bottom) / 2
+            let shift = element.exists ? min(220, max(-220, middle - frame.midY)) : -180
+            let origin = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
+            origin.withOffset(CGVector(dx: 0, dy: middle - shift / 2)).press(forDuration: 0.05,
+                thenDragTo: origin.withOffset(CGVector(dx: 0, dy: middle + shift / 2)),
+                withVelocity: .slow, thenHoldForDuration: 0.15)
+        }
+        XCTFail("Control was not fully visible: \(element.identifier), \(element.frame)")
+    }
+    @MainActor
     private func revealPracticeSettings(_ app: XCUIApplication) {
+        XCTAssertTrue(app.navigationBars["練習"].waitForExistence(timeout: 5))
         app.buttons["practiceSettings"].tap()
         XCTAssertTrue(app.navigationBars["練習設定"].waitForExistence(timeout: 5))
         let settings = app.buttons["目前自由節拍器設定"]
-        for _ in 0..<8 where !settings.isHittable { app.swipeUp() }
+        revealFully(settings, in: app)
         settings.tap()
-        for _ in 0..<3 where !app.staticTexts["configurationSummary"].isHittable { app.swipeUp() }
+        revealFully(app.staticTexts["configurationSummary"], in: app)
     }
 }

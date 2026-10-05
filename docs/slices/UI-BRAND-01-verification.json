@@ -1,0 +1,20 @@
+{
+  "slice": "UI-BRAND-01",
+  "date": "2026-10-05",
+  "status": "IN_PROGRESS",
+  "risk": "L1",
+  "based_on": "5989c59e3cfdb8d81edf6df4e5a1f8e6df6d2136",
+  "detail": {
+    "implementation": "shared semantic warm-white/gold/green tokens, Dynamic Type/type/spacing/radius/button/card/tint; homepage composition and icon preserved",
+    "evidence": [
+      "selection_recheck",
+      "full_wide",
+      "narrow_dark"
+    ],
+    "owner_style": "PENDING"
+  },
+  "canonical_evidence": "docs/slices/QA-01-verification.json",
+  "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-viewport-source-hashes.json",
+  "protected_clock_matching_score_persistence_catalog_icon": "UNCHANGED",
+  "public_readiness": "NOT CLAIMED"
+}

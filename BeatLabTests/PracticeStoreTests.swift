@@ -5,6 +5,41 @@ import BeatLabCore
 
 final class PracticeStoreTests: XCTestCase {
     @MainActor
+    func testAllTenCatalogLessonsStartCancelAndRestoreSeededProgress() async throws {
+        let ids = ["first-beat", "quarter-hands", "eighth", "eighth-hands", "quarter-rest", "eighth-rest", "sixteenth", "sixteenth-hands", "offbeat", "mixed"]
+        let name = "BeatLabTests.TenLessons.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let repository = ProgressRepository(defaults: defaults)
+        // Reviewed v1 fixture unlocks all lessons for smoke; it does not simulate
+        // earning stars or claim real-touch completion of ten lessons.
+        let results = Dictionary(uniqueKeysWithValues: ids.map { ($0, ["stars": 1.0, "bestPerfectRate": 1.0, "bestBPM": 60.0]) })
+        let data = try JSONSerialization.data(withJSONObject: ["results": results, "mode": "beginner"])
+        let fixture = try JSONDecoder().decode(PracticeProgress.self, from: data)
+        try repository.save(fixture)
+        let store = PracticeStore(repository: repository)
+        XCTAssertEqual(store.lessons.map(\.id), ids)
+        let audio = MetronomeAudio()
+        defer { audio.stop() }
+        for (index, lesson) in store.lessons.enumerated() {
+            XCTAssertTrue(store.unlocked(lesson), ids[index])
+            store.select(lesson)
+            XCTAssertEqual(store.selected?.id, ids[index])
+            store.start(lesson, audio: audio)
+            for _ in 0..<60 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+            XCTAssertEqual(store.phase, .playing, "\(ids[index]): \(store.notice ?? "")")
+            XCTAssertTrue(audio.isPlaying)
+            store.cancel(audio: audio)
+            XCTAssertEqual(store.phase, .idle)
+            XCTAssertFalse(audio.isPlaying)
+            XCTAssertNil(store.summary)
+            XCTAssertEqual(repository.load().0, fixture, "Cancel must not award a lesson")
+        }
+        let restored = PracticeStore(repository: repository)
+        XCTAssertEqual(restored.progress, fixture)
+        XCTAssertEqual(restored.lessons.filter { restored.unlocked($0) }.count, 10)
+    }
+    @MainActor
     func testLockedLessonCannotBeSelectedAndModeSurvivesNewStore() async throws {
         let name = "BeatLabTests.PracticeStore.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
@@ -157,6 +192,36 @@ final class RhythmJumpPresentationTests: XCTestCase {
     private func hit(_ id: Int?, _ grade: TimingGrade) -> TimingHit {
         let target = id.map(String.init) ?? "null"
         return try! JSONDecoder().decode(TimingHit.self, from: Data("{\"targetID\":\(target),\"inputTime\":42,\"error\":null,\"grade\":\"\(grade.rawValue)\"}".utf8))
+    }
+    func testPerfectStreakSkipsRestsAndBreaksOnUncrossedTargetOrExtra() {
+        var reward = RhythmRewardPresentation()
+        reward.record(hit(0, .perfect), accepted: true, pattern: pattern)
+        reward.record(hit(1, .perfect), accepted: true, pattern: pattern)
+        XCTAssertEqual(reward.perfectStreak, 2)
+        reward.record(hit(3, .perfect), accepted: true, pattern: pattern)
+        XCTAssertEqual(reward.perfectStreak, 3, "Rest at index 2 is not an action")
+        reward.record(hit(nil, .extra), accepted: false, pattern: pattern)
+        XCTAssertEqual(reward.perfectStreak, 0)
+        reward.record(hit(5, .perfect), accepted: true, pattern: pattern)
+        XCTAssertEqual(reward.perfectStreak, 1, "Uncrossed index 4 breaks the sequence")
+        reward.record(hit(7, .late), accepted: true, pattern: pattern)
+        XCTAssertEqual(reward.perfectStreak, 0)
+        reward.record(hit(7, .perfect), accepted: false, pattern: pattern)
+        XCTAssertEqual(reward.perfectStreak, 0, "Duplicate cannot make a reward")
+    }
+    func testRecoveryWaitsForFullAlignmentBufferAndDoesNotFlagRestOrMatched() {
+        // At 60 BPM quarter notes: target 0 is at position 0. Existing 180 ms
+        // window plus maximum 250 ms alignment means display waits beyond .43.
+        func recovery(_ position: Double, _ accepted: Set<Int> = []) -> Int? {
+            RhythmRewardPresentation.recoveryStep(position: position, bpm: 60, pattern: pattern, bars: 2, accepted: accepted)
+        }
+        XCTAssertNil(recovery(-1)); XCTAssertNil(recovery(0.43))
+        XCTAssertEqual(recovery(0.431), 0)
+        XCTAssertNil(recovery(0.431, [0]))
+        XCTAssertNil(recovery(2.5, [0, 1]), "Rest cannot be a missed obstacle")
+        XCTAssertEqual(recovery(3.5, [0, 1]), 3)
+        XCTAssertNil(recovery(.nan)); XCTAssertNil(recovery(.infinity))
+        XCTAssertNil(recovery(999))
     }
     func testMatchedPressLightsOnlyItsPlatformAndDuplicateDoesNotAdvance() {
         var scene = RhythmJumpPresentation()

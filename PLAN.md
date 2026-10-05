@@ -194,11 +194,29 @@ Owner 確認首頁風格，但拒絕節拍器／練習與首頁的落差。本�
 
 | 順序 | Slice | 範圍 | 風險 | 狀態 |
 |---|---|---|---|---|
-| 1 | UI-BRAND-01 | 共用品牌 tokens、按鍵、狀態、tab／sheet 與角色造型指南 | L1 | PLANNED |
-| 2 | MET-02 | BPM／拍點／播放主次、聲音與提示、全控制回歸 | L1 | PLANNED |
-| 3 | GAME-08 | 旅程、夥伴、關卡準備與 settings／sheet | L1 | PLANNED |
-| 4 | GAME-09 | runner 場景、節奏、跳／停止、結果與保存復原呈現 | L1；時計／評分更動升 L2 | PLANNED |
-| 5 | QA-01 | 三頁／十關／字級／亮暗／小螢幕與 accessibility；真機 gate 缺口 | UI L1／timing L2 | PLANNED |
+| 1 | UI-BRAND-01 | 共用品牌 tokens、按鍵、狀態、tab／sheet 與角色造型指南 | L1 | IN_PROGRESS；foundation QA 當片 |
+| 2 | MET-02 | BPM／拍點／播放主次、聲音與提示、全控制回歸 | L1 | IN_PROGRESS；native QA 與 owner 接受分列 |
+| 3 | GAME-08 | 旅程、夥伴、關卡準備與 settings／sheet | L1 | IN_PROGRESS；native QA 與 owner 接受分列 |
+| 4 | GAME-09 | runner 場景、節奏、跳／停止、結果與保存復原呈現 | L1；時計／評分更動升 L2 | IN_PROGRESS；視覺 feedback，音效／真機仍待 |
+| 5 | QA-01 | 三頁／十關／字級／亮暗／小螢幕與 accessibility；真機 gate 缺口 | UI L1／timing L2 | IN_PROGRESS；foundation／A／B／C 當片與 Final |
 | 6 | TF-03 | 接受新版候選後的本人內部 beta | L1 | PLANNED；等待候選與其交付授權 |
 
 契約均列出 exact allowed/forbidden files、依賴、failure checks 與 rollback。本輪沿用已保存的節奏遊戲 skill，沒有重新廣搜參考／新增 artwork。core／C boundaries／capture 新跑結果、source manifest 和 Git delivery 以 docs/slices/PROGRESS-01-verification.json 為準；歷史 native receipts 保留但不算本輪重跑。Push 既有 codex/bl-001-app-foundation；不包含 PR／merge／新 beta 或 App Store 發行。
+
+### 2026-10-05 — 產品化 alpha 與 embedded QA
+
+Owner 修訂：UI-BRAND-01 只建立 design system 與共用元件，不變成整頁 redesign。執行順序為 foundation → MET-02／QA-01A → GAME-08／QA-01B → GAME-09／QA-01C → QA-01 Final → TF-03 delivery-only。功能完整，產品級 timing validation 尚未完成；背景／前景、中斷、live changes 与實機判分還需完整 gate。
+
+TF-03 前不新增關卡、Skin、角色或模式。成功條件是三頁一致、首次使用者 10 秒內知道開始、孩子第一關理解跟拍、真機節拍与判分無 regression。GAME-09 要有聽拍→預判→操作→即時視覺／聲音回饋；呈現-only combo 不改星星，音訊路徑更動先升 L2。不要用更多內容掩蓋任一未過 gate。
+
+## Public 方向的當前工作（2026-10-05）
+
+Owner 指示「繼續做下去，直到可以推到 public」。目的地（App Store／TestFlight public invitation link／GitHub Release）已提出確認問題，尚待答覆。GitHub repo 已只讀確認 PUBLIC；App 並未因此公開發行。
+
+品牌 tokens 與 tab／sheet 已改為暖白／深綠；節拍器拍號細分移至拍點附近、音量常駐、音色與提示可展開；練習入口與所有恐龍引用沿用 HomeDinosaur。跑酷新增一張原創暖黃／綠小島 scene，accepted hits 驅動跳躍、連續 Perfect 呈現 combo，未跨過障礙給 recovery 提示；沒有新增聲音路徑、score、課程、Skin 或角色。
+
+原生編譯、core 50、App/store/呈現 31 tests、十關實際 graph 啟動／取消／恢復 smoke 通過。完整 wide regression 49 項中 47 通過／2 失敗，失敗的 offscreen tap／錯關 fixture 修正後，6 Foundation＋精確核對十關的 1 smoke 共 7／0 通過。小螢幕一般跨障礙／重開／版面 2／0，明確最大字級的四區塊／停止在兩次真實挑戰 1／0，實際 Reduce Motion toggle 下 matched touch／restart 1／0；原生最大字級失敗保留，根因包含 fixture 沒指定字級與人造 30pt SE 底部禁區。停止鍵實測 maxY662.5 位於 667pt viewport 內，native cancel 通過。不能稱全 suite 單次綠燈、owner 新畫風接受或 G1-G4 通過。
+
+目前 iPhone 為 unavailable，已請 owner 恢復 USB／Wi-Fi 連線；外部 capture、音畫／touch／frame pacing、三位目標年齡試玩與最低 OS 真機仍 NOT RUN。公開交付準備與 Apple 官方流程見 docs/release/public-release-plan.md；沒有新 upload、Beta App Review submit、public link、App Store submit 或 GitHub Release。
+
+當前 UI 工程 checkpoint：詳見六個 slice 的 verification JSON 與 `docs/design/branding/previews/manifest.json`。最新 unsigned Release iphoneos compile 通過；沒有封存／安裝／上傳。聲音回饋仍未實作，下一步需另立 GAME-09A L2 契約補齊既有要求的 input feedback，再驗負載／遮蔽／lifecycle 與真機；不新增玩法／角色／課程。

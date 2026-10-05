@@ -2,6 +2,7 @@ import SwiftUI
 import BeatLabCore
 
 enum BeatLabStyle {
+    static let accent = Color("AccentColor")
     static let canvas = Color("Canvas")
     static let surface = Color("Surface")
     static let ink = Color("Ink")
@@ -14,6 +15,27 @@ enum BeatLabStyle {
     static let reward = Color("Reward")
     static let rewardSoft = Color("RewardSoft")
     static let maxWidth: CGFloat = 680
+    static let minimumTarget: CGFloat = 44
+
+    enum TypeScale {
+        static let title = Font.system(.title2, design: .rounded).bold()
+        static let action = Font.headline.bold()
+        static let secondaryAction = Font.headline
+        static let body = Font.subheadline
+        static let label = Font.subheadline.weight(.semibold)
+    }
+    enum Spacing {
+        static let compact: CGFloat = 8
+        static let regular: CGFloat = 12
+        static let content: CGFloat = 16
+        static let card: CGFloat = 20
+        static let section: CGFloat = 24
+    }
+    enum Radius {
+        static let card: CGFloat = 24
+        static let primary: CGFloat = 18
+        static let control: CGFloat = 16
+    }
 }
 
 struct BLCard<Content: View>: View {
@@ -24,18 +46,27 @@ struct BLCard<Content: View>: View {
     }
     var body: some View {
         content.frame(maxWidth: .infinity, alignment: .leading)
-            .padding(20).background(color, in: RoundedRectangle(cornerRadius: 24))
+            .padding(BeatLabStyle.Spacing.card)
+            .background(color, in: RoundedRectangle(cornerRadius: BeatLabStyle.Radius.card))
     }
 }
 
 struct BLPrimaryButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        BLPrimaryButtonBody(configuration: configuration)
+    }
+}
+
+private struct BLPrimaryButtonBody: View {
+    let configuration: ButtonStyleConfiguration
     @Environment(\.isEnabled) private var enabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    func makeBody(configuration: Configuration) -> some View {
-        configuration.label.font(.headline.bold()).multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity, minHeight: 24).padding(.horizontal, 16).padding(.vertical, 16)
+    var body: some View {
+        configuration.label.font(BeatLabStyle.TypeScale.action).multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, minHeight: 24)
+            .padding(.horizontal, BeatLabStyle.Spacing.content).padding(.vertical, BeatLabStyle.Spacing.content)
             .foregroundStyle(enabled ? BeatLabStyle.onAccent : BeatLabStyle.muted)
-            .background(enabled ? Color.accentColor : BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 18))
+            .background(enabled ? BeatLabStyle.accent : BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: BeatLabStyle.Radius.primary))
             .opacity(configuration.isPressed ? 0.85 : 1)
             .scaleEffect(configuration.isPressed && !reduceMotion ? 0.98 : 1)
     }
@@ -44,10 +75,11 @@ struct BLPrimaryButtonStyle: ButtonStyle {
 struct BLSecondaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var enabled
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label.font(.headline).multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity, minHeight: 22).padding(.horizontal, 12).padding(.vertical, 12)
-            .foregroundStyle(enabled ? Color.accentColor : BeatLabStyle.muted)
-            .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 16))
+        configuration.label.font(BeatLabStyle.TypeScale.secondaryAction).multilineTextAlignment(.center)
+            .frame(maxWidth: .infinity, minHeight: 22)
+            .padding(.horizontal, BeatLabStyle.Spacing.regular).padding(.vertical, BeatLabStyle.Spacing.regular)
+            .foregroundStyle(enabled ? BeatLabStyle.accent : BeatLabStyle.muted)
+            .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: BeatLabStyle.Radius.control))
             .opacity(configuration.isPressed ? 0.8 : 1)
     }
 }
@@ -57,8 +89,8 @@ struct BLSectionHeading: View {
     var subtitle: String? = nil
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(title).font(.title2.bold()).foregroundStyle(BeatLabStyle.ink).accessibilityAddTraits(.isHeader)
-            if let subtitle { Text(subtitle).font(.subheadline).foregroundStyle(BeatLabStyle.muted) }
+            Text(title).font(BeatLabStyle.TypeScale.title).foregroundStyle(BeatLabStyle.ink).accessibilityAddTraits(.isHeader)
+            if let subtitle { Text(subtitle).font(BeatLabStyle.TypeScale.body).foregroundStyle(BeatLabStyle.muted) }
         }.fixedSize(horizontal: false, vertical: true)
     }
 }
@@ -67,8 +99,8 @@ struct BLPill: View {
     let title: String
     var symbol: String = "music.note"
     var body: some View {
-        Label(title, systemImage: symbol).font(.subheadline.weight(.semibold))
-            .foregroundStyle(Color.accentColor).padding(.horizontal, 12).padding(.vertical, 8)
+        Label(title, systemImage: symbol).font(BeatLabStyle.TypeScale.label)
+            .foregroundStyle(BeatLabStyle.accent).padding(.horizontal, BeatLabStyle.Spacing.regular).padding(.vertical, BeatLabStyle.Spacing.compact)
             .background(BeatLabStyle.accentSoft, in: Capsule())
             .accessibilityElement(children: .combine)
     }
@@ -81,9 +113,9 @@ struct BLStatusMessage: View {
         Label {
             Text(text).fixedSize(horizontal: false, vertical: true)
         } icon: { Image(systemName: symbol).accessibilityHidden(true) }
-        .font(.subheadline).foregroundStyle(BeatLabStyle.ink)
-        .padding(16).frame(maxWidth: .infinity, alignment: .leading)
-        .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 16))
+        .font(BeatLabStyle.TypeScale.body).foregroundStyle(BeatLabStyle.ink)
+        .padding(BeatLabStyle.Spacing.content).frame(maxWidth: .infinity, alignment: .leading)
+        .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: BeatLabStyle.Radius.control))
         .accessibilityElement(children: .combine)
     }
 }
@@ -98,25 +130,28 @@ struct BLModePicker: View {
     }
 }
 
-// Homepage palette derived from the owner's approved yellow dinosaur icon.
-// Existing transport/game screens keep their own styles and behavior.
+struct BLToolbarIcon: View {
+    let symbol: String
+    var body: some View {
+        Image(systemName: symbol)
+            .frame(width: BeatLabStyle.minimumTarget, height: BeatLabStyle.minimumTarget)
+            .contentShape(Rectangle())
+    }
+}
+
+// Compatibility names for the approved homepage. Shared roles have one authority.
 enum HomeBrand {
-    static let canvas = Color("HomeCanvas")
-    static let surface = Color("HomeSurface")
+    static let canvas = BeatLabStyle.canvas
+    static let surface = BeatLabStyle.surface
     static let hero = Color("HomeHero")
-    static let ink = Color("HomeInk")
-    static let muted = Color("HomeMuted")
-    static let forest = Color("HomeForest")
+    static let ink = BeatLabStyle.ink
+    static let muted = BeatLabStyle.muted
+    static let forest = BeatLabStyle.accent
     static let heroInk = Color(red: 32 / 255, green: 62 / 255, blue: 49 / 255)
 }
 
 struct HomeAdventureButtonStyle: ButtonStyle {
-    @Environment(\.isEnabled) private var enabled
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label.font(.headline.bold()).multilineTextAlignment(.center)
-            .frame(maxWidth: .infinity, minHeight: 24).padding(.horizontal, 16).padding(.vertical, 16)
-            .foregroundStyle(HomeBrand.canvas)
-            .background(HomeBrand.forest, in: RoundedRectangle(cornerRadius: 18))
-            .opacity(!enabled ? 0.45 : configuration.isPressed ? 0.8 : 1)
+        BLPrimaryButtonBody(configuration: configuration)
     }
 }

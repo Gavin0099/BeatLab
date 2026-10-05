@@ -1,6 +1,6 @@
 # BeatLab 驗收與證據
 
-> **目前基準（2026-10-05）**：TestFlight 0.1.0（10）已提供本人試玩，Release／實際上傳包／Apple 處理／群組可測已驗證。Owner 手機回饋接受首頁風格，節拍器與練習待六個後續 slice。下面各舊 build 與未上傳敘述是歷史狀態；最新交付以 TF-02 evidence 為準。G1-G4、物理 timing、三頁／十關完整 accessibility 與兒童體驗仍未接受。此輪 PROGRESS-01 只分析、checkpoint 與 Git push；沒有重跑整個 native suite。
+> **目前基準（2026-10-05）**：TestFlight 0.1.0（10）已提供本人試玩，Release／實際上傳包／Apple 處理／群組可測已驗證。Owner 手機回饋接受首頁風格，節拍器與練習待六個後續 slice。下面各舊 build 與未上傳敘述是歷史狀態；最新交付以 TF-02 evidence 為準。G1-G4、物理 timing、三頁／十關完整 accessibility 與兒童體驗仍未接受。PROGRESS-01 是歷史 checkpoint；目前產品化 alpha 已實作共同品牌／MET-02／GAME-08／GAME-09 呈現並重跑原生回歸，精確通過／失敗／focused 修正以 QA-01-verification.json 為準。新增命中音效仍未實作，不能稱遊玩回饋與公開 gate 完成。
 > [目前功能與切分](design/FEATURE-AUDIT-20261005.md) · [當前 beta](slices/TF-02-verification.json) · [checkpoint evidence](slices/PROGRESS-01-verification.json)
 
 

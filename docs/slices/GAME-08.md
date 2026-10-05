@@ -1,6 +1,6 @@
 # GAME-08 — 練習入口、關卡與準備畫面
 
-狀態：PLANNED；L1，依賴 UI-BRAND-01 與現有十關／保存規則。目的：入口恐龍、旅程、關卡準備與首頁看起來是同一個冒險；讓孩子立即理解「下一關在哪、要怎麼玩」。
+狀態：IN_PROGRESS；L1，依賴 UI-BRAND-01 與現有十關／保存規則。目的：入口恐龍、旅程、關卡準備與首頁看起來是同一個冒險；讓孩子立即理解「下一關在哪、要怎麼玩」。
 
 Allowed files：PracticeView.swift 中 journeyPanel／adventureWelcome／companionPicker／chapterButtons／journeyNode／adventureStickers／lessonPreview／practiceSettings／lessonBrowser 與 GameCompanion 的呈現；相同路徑為 `BeatLab/Views/PracticeView.swift`；`BeatLabUITests/PracticeUITests.swift` 的入口／準備／sheet cases；AdventureDinosaur／AdventureDinosaurCelebration／AdventureCat／AdventureCatCelebration／AdventureRobot imageset 的 artwork.png 與 Contents.json（需要時以同一已接受的造型指南製作原創替代）；`docs/design/branding/practice-entry.md`、`companion-art-sources.json`；本 evidence／PLAN。
 Forbidden：playing／runner／result／calibration 操作邏輯、PracticeStore／Audio／Sources、課程 JSON／門檻／星星／解鎖／持久化；更改 icon 或已接受首頁；刪除既有貓咪／機器人選項；把選角改成保存 schema。
@@ -9,3 +9,11 @@ Forbidden：playing／runner／result／calibration 操作邏輯、PracticeStore
 
 Failure paths：無課程／未知版本進度、鎖關被誤開、從首頁推薦跳到錯關、夥伴選單被 sheet 遮擋、最大字級卡片過高。Checks：首頁→正確準備頁、三章與 locked 說明、換三夥伴、返回旅程、入門／標準 settings、挑戰 BPM、cancel preparation；light/dark／375×667／最大文字；源碼／catalog／progress hash 保持不變。Owner 對角色與入口的接受獨立記錄。
 Rollback：恢复本 slice View／art 引用與 assets snapshots，不重設課程資料。完成：入口／準備導航驗證與畫風比對通過；遊玩及結果的完整改版留 GAME-09。
+
+Embedded QA-01B：當片十關逐關 smoke、選角色→選關→準備→開始完整 journey，以及保存／恢復回歸。TF-03 前不增關卡／Skin／角色／模式；既有角色的造型一致替換不得增加選項。
+
+Implementation decision：既有恐龍的所有 GameCompanion 呈現共用 HomeDinosaur imageset（只更改引用，原圖與 icon 不改）；不新增 artwork／選項。welcome 用較短動態標題與 hero 色，下一關 CTA 放到旅程頂部，仍只開 preparation；保存／解鎖 authority 不改。
+
+QA fixture extension：允許 `BeatLabTests/PracticeStoreTests.swift` 添加十關真实音訊 graph start／cancel／restart 的 smoke 與既有 schema 恢復 fixture；fixture 不設 test-only production bypass，不代表十關真人 touch 通關或物理 timing。
+
+Native ten-lesson walkthrough：UITest 只使用既有 DEBUG isolated suite `BeatLabUITests.TenLessonSmoke`；QA preseed 已審查 v1 的十個 ID／one-star progress fixture 到該 sandbox Preferences，保留 hash／seed receipt。沒有 production bypass、沒有操作 owner defaults；逐關選擇／準備／實際 audio start／cancel 截圖，只證明 smoke，不稱為真人 earned stars／通關。缺 fixture 顯式 SKIP，不能算 PASS；清理只刪此測試 domain。

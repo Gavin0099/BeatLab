@@ -1,0 +1,81 @@
+{
+  "kind": "actual native candidate screenshots; not store-approved marketing images",
+  "items": [
+    {
+      "file": "home-light.png",
+      "sha256": "190802b54d79b3791d06a7f4ccff285715e9f39221663d18f5ac328f571a0b91",
+      "xcresult": "TestResults/PRODUCT-ALPHA-01/selection-recheck.xcresult",
+      "attachment": "A6535A7F-E609-4E4D-A9DA-3CFAFA0077AD.png",
+      "title": "brand-home-regular_0_EFF0D13D-716A-4FAA-B31B-D7929C08338A.png",
+      "device": "iPhone17Pro Simulator iOS26.5",
+      "mode": "light",
+      "text": "regular",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/selection-recheck-source-hashes.json",
+      "review": "visually inspected; owner acceptance pending",
+      "runner_fixture": null
+    },
+    {
+      "file": "metronome-light.png",
+      "sha256": "0b6e4d6f2dbebce06036c81ea5dde96515f56563a88525a4553be78ddcc032fe",
+      "xcresult": "TestResults/PRODUCT-ALPHA-01/selection-recheck.xcresult",
+      "attachment": "484B8EE8-5FAC-40FA-A59D-A996ED795B15.png",
+      "title": "brand-metronome-regular_0_7D8DD0EB-4C50-43D5-8C49-A60DF2633D73.png",
+      "device": "iPhone17Pro Simulator iOS26.5",
+      "mode": "light",
+      "text": "regular",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/selection-recheck-source-hashes.json",
+      "review": "visually inspected; owner acceptance pending",
+      "runner_fixture": null
+    },
+    {
+      "file": "practice-light.png",
+      "sha256": "82cbd40a54213e717dcc7b7989e5a82b59a550b25d00d7c7698f2f0a3f337c5c",
+      "xcresult": "TestResults/PRODUCT-ALPHA-01/selection-recheck.xcresult",
+      "attachment": "7BACB2C2-54CB-4CEC-8A01-843AF515EB71.png",
+      "title": "brand-practice-regular_0_F27F02C8-B136-4F7B-AC94-773FAB46B4D8.png",
+      "device": "iPhone17Pro Simulator iOS26.5",
+      "mode": "light",
+      "text": "regular",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/selection-recheck-source-hashes.json",
+      "review": "visually inspected; owner acceptance pending",
+      "runner_fixture": null
+    },
+    {
+      "file": "runner-light.png",
+      "sha256": "ef8c8462a55afc3ac252c77d661169e4fe23feb29a6bd3eabcef28cf4952ce3d",
+      "xcresult": "TestResults/PRODUCT-ALPHA-01/selection-recheck.xcresult",
+      "attachment": "7D6ABDD1-C973-4E1C-B51D-849587A18CC9.png",
+      "title": "Lesson 1 count-in smoke_0_053643CB-8E33-4432-8415-BF7F133AE2CA.png",
+      "device": "iPhone17Pro Simulator iOS26.5",
+      "mode": "light",
+      "text": "regular",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/selection-recheck-source-hashes.json",
+      "review": "visually inspected; owner acceptance pending",
+      "runner_fixture": "isolated all-ten progress, not earned stars"
+    },
+    {
+      "file": "runner-narrow-light.png",
+      "sha256": "2b168deea77092833ca1dac0a151212ac3da15be0d45527fdcd6c93aba6f58ab",
+      "attachment": "27DE82D1-B8DD-442C-B725-45916847D9F1.png",
+      "xcresult": "TestResults/PRODUCT-ALPHA-01/narrow-final.xcresult",
+      "title": "Runner complete viewport_0_8ADE6A0A-5BBD-4FCC-B9F6-B7EB9B673803.png",
+      "device": "iPhone SE3 Simulator iOS26.5 375x667",
+      "mode": "light",
+      "text": "regular",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/narrow-final-source-hashes.json",
+      "review": "native frame/hittability checked; owner acceptance pending"
+    },
+    {
+      "file": "runner-narrow-largest-stop.png",
+      "sha256": "1cff8b25643ac5126c42feec48fc2f00b284dd74bea9888d59503799b442d943",
+      "attachment": "2B57601A-7D19-43BA-8BDB-199990A3E02E.png",
+      "xcresult": "TestResults/PRODUCT-ALPHA-01/largest-viewport.xcresult",
+      "title": "Runner large-text stop_0_1FDDB1BD-B195-4270-9457-E83ADA13A2C1.png",
+      "device": "iPhone SE3 Simulator iOS26.5 375x667",
+      "mode": "light",
+      "text": "accessibility XXXL",
+      "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-viewport-source-hashes.json",
+      "review": "native frame/hittability checked; owner acceptance pending"
+    }
+  ]
+}

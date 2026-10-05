@@ -18,7 +18,6 @@ struct BeatVisualizer: View {
             let config = interactive ? store.configuration : beat?.configuration ?? fallbackConfiguration
             VStack(spacing: 12) {
                 if interactive {
-                    pendulum(beat: beat)
                     Text("點拍點切換：重音 → 一般 → 靜音").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
                 }
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: textSize.isAccessibilitySize ? 2 : config.timeSignature.beatsPerBar), spacing: 12) {
@@ -73,12 +72,14 @@ struct BeatVisualizer: View {
             Image(systemName: emphasis == .accent ? "speaker.wave.3.fill" : emphasis == .muted ? "speaker.slash.fill" : "speaker.wave.1.fill")
                 .font(.caption).accessibilityHidden(true)
             if interactive { Text(emphasis.displayName).font(.caption.weight(.semibold)) }
+            Capsule().fill(active ? BeatLabStyle.onAccent : Color.clear).frame(height: 4)
+                .accessibilityHidden(true)
         }
         .foregroundStyle(active ? BeatLabStyle.onAccent : BeatLabStyle.ink)
         .frame(maxWidth: .infinity, minHeight: 80).padding(.vertical, 8)
         .background(active ? Color.accentColor : BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 20))
         .overlay(RoundedRectangle(cornerRadius: 20).strokeBorder(emphasis == .accent && !active ? Color.accentColor : Color.clear, lineWidth: 2))
-        .scaleEffect(active && !reduceMotion ? 1 + 0.04 * (1 - phase) : 1)
+
     }
     private func pendulum(beat: MetronomeAudio.DisplayBeat?) -> some View {
         let angle = beat.map { cos(Double.pi * (Double($0.number % 2) + $0.phase)) * 30 } ?? 0

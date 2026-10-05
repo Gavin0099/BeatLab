@@ -1,0 +1,19 @@
+{
+  "slice": "TF-03",
+  "date": "2026-10-05",
+  "status": "PLANNED; delivery blocked on candidate acceptance and public destination",
+  "risk": "L1",
+  "based_on": "5989c59e3cfdb8d81edf6df4e5a1f8e6df6d2136",
+  "detail": {
+    "implementation": "public branch flow, privacy/support/metadata drafts and anonymous playtest sheet prepared; no new build/upload/public release",
+    "evidence": [],
+    "public_destination": "UNANSWERED",
+    "existing_delivery": "owner-only TestFlight 0.1.0 (10)",
+    "four_acceptance_gates": "PENDING",
+    "next_build": "query remote before picking next number; local candidate remains build10"
+  },
+  "canonical_evidence": "docs/slices/QA-01-verification.json",
+  "source_manifest": "TestResults/PRODUCT-ALPHA-01/largest-viewport-source-hashes.json",
+  "protected_clock_matching_score_persistence_catalog_icon": "UNCHANGED",
+  "public_readiness": "NOT CLAIMED"
+}

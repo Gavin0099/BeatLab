@@ -1,5 +1,7 @@
 # 拍拍冒險：目前功能與下一輪 slice
 
+> 目前候選（2026-10-05）：下文功能盤點保留 build 10 checkpoint 的歷史基準。UI-BRAND-01／MET-02／GAME-08／GAME-09 已進入本地實作與嵌入回歸，尚未重新分發；目前狀態以 PLAN.md 與 QA-01-verification.json 為準。公開目的地與真機／兒童接受仍待確認。
+
 2026-10-05，基準為已分發的 TestFlight 0.1.0（10）。本次核對當前 61 個 production inputs，和 TF-02 封存的 hashes 一致；本輪只分析與保存進度，沒有改 App 畫面或節奏規則。
 
 Owner 回饋：首頁風格已接受；節拍器與練習頁仍不符合。收到的三張手機截圖依序為首頁、已捲到聲音設定區的節拍器、練習旅程入口。截圖沒有版本號，因此 phone 安裝的精確 build 不從圖片推斷；也未提供本次 playing／result 畫面，不能據此判斷所有玩法狀態的排版。
@@ -41,6 +43,8 @@ Owner 回饋：首頁風格已接受；節拍器與練習頁仍不符合。收�
 | 6 | [TF-03](../slices/TF-03.md) | 接受候選後封存、本人群組 TestFlight、實際更新確認 | 新版接受與交付授權；L1 |
 
 以上皆 PLANNED，這輪不宣稱已實作。建議先共用品牌→節拍器→旅程準備→遊玩結果，因為先替每頁各做美術容易再次出現不同畫風。維持一小段能操作的課程循環來檢查樂趣；若 owner 不接受玩法，另開機制 slice，而非在美術 slice 偷加生命／評分／音樂時計。
+
+後續 owner 修訂：UI-BRAND-01 已開始；只建立 design system。QA-01A／B／C 嵌進節拍器、journey、game loop 當片，不等 Final 才驗。功能完整，產品級 timing validation 尚未完成；產品化 alpha 的四個 beta 接受條件為三頁一致、首次使用 10 秒內知道開始、孩子第一關懂跟拍、真機節拍與判分無 regression。之前的功能／歷史 delivery 盤點保留；這句為當時進度；目前四個 UI／遊玩 slice 與 QA-01 均 IN_PROGRESS，TF-03 保持 PLANNED。TF-03 前不新增關卡／Skin／角色／模式。
 
 ## 目前可以信任的進度與缺口
 

@@ -1,0 +1,10 @@
+{
+  "source": "built-in image_gen",
+  "created": "2026-10-05",
+  "reference": "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png",
+  "asset": "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/artwork.png",
+  "prompt": "Use case: stylized-concept. Asset type: original 2D side-scrolling rhythm runner background for BeatLab. Reference image: HomeDinosaur, style reference only; do not include the dinosaur or any character. Create one wide landscape background with a friendly tropical rhythm island, polished soft shaded cartoon forms matching the green mascot's cream belly, dark teal outlines and bright green planes. Warm cream sky, a pale golden sun, distant pale teal islands, a few rounded tropical leaves on far edges; clear layered depth, not a forest painting. Camera straight side view. The playable ground is a perfectly horizontal uninterrupted grass-topped sandstone path whose top is at exactly 78 percent of image height, extending edge to edge; lower 22 percent shows warm soft sandstone strata. Upper central 70 percent must remain quiet and uncluttered to make moving character and obstacles legible. No foreground obstacles, platforms, characters, game HUD, letters, musical notation, text, logos or watermark. Landscape 3:2 composition. Keep the style coherent and simple, gentle sunlight, cream/gold/green/teal palette, no purple, no photorealism. This is a new background; the reference character and existing icon must remain unchanged.",
+  "scope": "one shared scene; no characters or game rules; owner acceptance pending",
+  "sha256": "1c392af81eab914d0710820728e76e00e9956f1736439b7eee75d82b961bcdc2",
+  "reference_sha256": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889"
+}

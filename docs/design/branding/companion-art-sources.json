@@ -1,0 +1,14 @@
+{
+  "dinosaur": {
+    "current_asset": "HomeDinosaur",
+    "source_manifest": "docs/design/branding/home-dinosaur-source.json",
+    "sha256": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889",
+    "previous_assets_retained": [
+      "AdventureDinosaur",
+      "AdventureDinosaurCelebration"
+    ]
+  },
+  "cat_and_robot": "Original imports unchanged; provenance in docs/design/game-character-sources.json",
+  "option_count": 3,
+  "new_options": 0
+}
