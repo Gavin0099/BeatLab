@@ -10,6 +10,11 @@ on:
 permissions:
   contents: read
 
+# Superseded automatic runs may stop; each manual qualification is independent.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event_name }}-${{ github.event_name == 'workflow_dispatch' && github.run_id || github.event.pull_request.number || github.ref }}
+  cancel-in-progress: ${{ github.event_name != 'workflow_dispatch' }}
+
 jobs:
   mvp:
     runs-on: macos-15
