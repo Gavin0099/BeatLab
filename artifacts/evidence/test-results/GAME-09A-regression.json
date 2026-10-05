@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "TestResults/PRODUCT-ALPHA-01/sourcecheck-env-current/bin/python TestResults/GAME-09A/verify-native-receipt.py",
+  "exit_code": 0,
+  "started_at": "2026-10-05T12:40:59Z",
+  "finished_at": "2026-10-05T12:41:00Z",
+  "runner": "Xcode native result inspection with source SHA verification",
+  "linked_commit": "74c85e0c945d8d4ea9ffad28cf6f1b326ebef6aa",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-09A-regression.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
