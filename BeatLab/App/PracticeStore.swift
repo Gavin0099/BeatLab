@@ -215,4 +215,11 @@ final class PracticeStore: ObservableObject {
         catch { notice = "進度尚未保存，請稍後重試。若這份進度需要較新版 App，請先更新。"; return false }
     }
     static func now() -> Double { AVAudioTime.seconds(forHostTime: mach_absolute_time()) }
+
+    /// Read-only display position on the existing audio-host epoch. Display
+    /// callbacks cannot advance matching, finish a lesson or publish state.
+    func presentationElapsed(at hostTime: Double) -> Double {
+        guard phase == .playing, hostTime.isFinite, epoch.isFinite else { return elapsed }
+        return min(max(0, hostTime - epoch), max(0, endTime - epoch))
+    }
 }

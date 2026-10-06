@@ -250,3 +250,14 @@ GAME-10 已落地並原地安裝開啟 owner iPhone：首頁第一關、恐龍�
 Debug iphoneos 71來源檔案／artifact hashes、簽章／team／本人裝置profile覆蓋檢查通過；GavinWu0099的 com.gavin0099.beatlab install與launch PASS，既有學習資料未重設。版本仍0.1.0（10），為直接安裝的新source，TestFlight distributed build10未更新。Status IMPLEMENTED_AND_INSTALLED_LOCAL_CHECKS_PASS_OWNER_PENDING；物理音畫/input timing、audibility/frame pacing、VoiceOver與兒童是否想重玩仍NOT RUN，不能稱public readiness。凍結與安裝收據在ignored TestResults/GAME-10/；canonical evidence見docs/slices/GAME-10-verification.json。只推工程分支；沒有PR/merge/Apple upload/public link/App Store submit。
 
 凍結來源的寬機實際零輸入／重試／保留第二關鎖定與一般viewport停止另跑2／0通過；最後工程證據為SE44／0＋wide2／0的組合，不稱完整UI suite全綠。SE測試後appearance已還原light；Reduce Motion原值OFF，目前ON。CUA還原時Mac實際Locked，已請owner解鎖，這項測試環境還原仍待；不影響已安裝手機。未動其他模擬器／手機的輔助使用設定。
+
+### 2026-10-06 — GAME-11 流暢度改善
+
+Owner 表示 GAME-10 有比較好但仍不夠，要求參考市面 App 流暢度。已核對 Simogo 官方 animation/follow-through 開發紀錄、ADOFAI 官方單鍵路徑說明與 Halfbrick 官方跑酷/影片來源；沒有實際試玩或量測這些商業 App，不能引用其 FPS/latency。程式觀察：scene 目前隨30ms published elapsed更新、背景每8秒回跳、extra會覆蓋matched跳躍，腳底與文字版面也可能跳動。立 GAME-11 L2 exact-file 契約，先做可玩的舊/新比較，再以原audio-host epoch只讀呈現、scene-only animation schedule與動作follow-through修正；原聲音、input、score/save/課程禁止改。Status IN_PROGRESS；真機性能尚待量測。
+
+
+GAME-11 已實作連續場景呈現、共用腳底的快取 sprite、跑姿/落地交叉淡化、有限陰影/塵土/壓縮。只讀既有 audible-host epoch，scene TimelineView請求60Hz；不是測得60FPS。真正inputTime決定跳躍年齡，extra不能截斷、延長或落地後重播accepted動作；保留最長cue高度。原Audio/DSP/Core/TapPad/score/save/目標/結束時間/其他九關不改，26 protected paths與9a7c62d bytes一致。可玩舊/新比較與官方來源永久保存於 docs/design/runner-fluidity/，商業App未實際試玩或benchmark。
+
+驗證：browser22含真實16/16Perfect/0extra、零輸入失敗/重試/停止；core53；wide原生App44+UIKit3共47/0；SE actual touch/restart+一般viewport初次2通過、最大字級最終四輪真實關卡到達scene/rhythm/pad/stop1/0、dark viewport1/0。最大字級前三次失敗保留：無geometry的application root、查詢超過真實20秒預算，以及六像素靜態rhythm列被要求hittable；修正primary-window fixture、每區獨立真實挑戰與靜態可見/按鈕可操作條件，未改App或課程判分。39 Swift files/115 test definitions source結構與85source-copy hashes通過；Xcode root遞迴warm-up卡住，以exact-byte temporary copy建置，沒有改project/package或刪歷史。原生操作錄影與light/dark/最大字級畫面已保存。SE Reduce Motion原值OFF已透過CUA還原並核對，appearance light；GAME-10還原待辦已解除，歷史記錄保留。
+
+同source signed Debug iphoneos候選68production inputs/全artifact hashes、簽章/team/owner profile覆蓋核對通過。原地安裝嘗試FAIL：CoreDevice找不到配對裝置，fresh inventory unavailable；launch NOT RUN。因此手機仍是上一輪候選，新版未裝入。Instruments phone attach timeout/offline、simulator Hitches unsupported保留，物理FPS/frame pacing/音畫/input timing與兒童重玩意願均未接受。Status IMPLEMENTED_LOCAL_CHECKS_PASS_INSTALL_BLOCKED_OWNER_PENDING，不稱VERIFIED/DONE/public ready。詳見 docs/slices/GAME-11-verification.json；只推既有工程分支，不做PR/merge/TestFlight/public分發。手機USB/解鎖就緒後可核對同一凍結候選直接安裝，再做硬體性能與owner試玩。

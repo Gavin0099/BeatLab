@@ -56,16 +56,18 @@ final class PracticeUITests: XCTestCase {
         attachment.name = name; attachment.lifetime = .keepAlways; add(attachment)
     }
     @MainActor
-    private func reveal(_ element: XCUIElement, in app: XCUIApplication) throws {
+    private func reveal(_ element: XCUIElement, in app: XCUIApplication, requiresHit: Bool = true) throws {
+        let window = app.windows.firstMatch
+        XCTAssertGreaterThan(window.frame.width, 300, "A real primary window is required for scrolling")
         let course = app.navigationBars["節奏挑戰"]
         if course.exists {
             let scroll = app.scrollViews.firstMatch
             let top = course.frame.maxY
-            let bottom = app.frame.maxY - 30
+            let bottom = window.frame.maxY - 30
             for _ in 0..<24 {
                 XCTAssertTrue(course.exists, "Course sheet must remain presented while scrolling")
                 let frame = element.exists ? element.frame : .zero
-                if element.exists && element.isHittable && frame.minY >= top && frame.maxY <= bottom { return }
+                if element.exists && (!requiresHit || element.isHittable) && frame.minY >= top && frame.maxY <= bottom { return }
                 // A held drag of only a few points can activate a lesson row.
                 // Use a scroll gesture and verify the sheet and exact selection.
                 if element.exists && frame.midY < (top + bottom) / 2 { scroll.swipeDown(velocity: .slow) }
@@ -79,11 +81,15 @@ final class PracticeUITests: XCTestCase {
         // A presented sheet covers the underlying tab bar; use its own viewport.
         // The SE has no bottom home-indicator inset. Do not invent a 30pt
         // exclusion zone: use the observed tab bar or actual app viewport.
-        let bottom = !inPicker && app.tabBars.firstMatch.exists ? app.tabBars.firstMatch.frame.minY : app.frame.maxY
-        for _ in 0..<24 {
+        let bottom = !inPicker && app.tabBars.firstMatch.exists ? app.tabBars.firstMatch.frame.minY : window.frame.maxY
+        for _ in 0..<8 {
+            guard element.exists else { throw NSError(domain: "PracticeUIVisibility", code: 3, userInfo: [NSLocalizedDescriptionKey: "Control disappeared before scrolling: \(element.identifier)"]) }
             let frame = element.exists ? element.frame : .zero
-            if element.exists && element.isHittable && frame.minY >= top && frame.maxY <= bottom { return }
-            let origin = app.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0))
+            if element.exists && (!requiresHit || element.isHittable) && frame.minY >= top && frame.maxY <= bottom { return }
+            // Use the observed primary window and explicit center pixels.
+            // The application accessibility root may have no geometry.
+            let origin = window.coordinate(withNormalizedOffset: .zero)
+                .withOffset(CGVector(dx: window.frame.width / 2, dy: 0))
             let middle = (top + bottom) / 2
             // Center the observed element with a slow, held drag. A fixed fling
             // can jump over the fully visible range of a tall Dynamic Type row.
@@ -215,7 +221,7 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(pad.waitForExistence(timeout: 5))
         let cue = app.staticTexts["jumpCue"]
         let stop = app.buttons["stopPractice"]
-        let appFrame = app.frame, navigationBottom = app.navigationBars.firstMatch.frame.maxY
+        let appFrame = app.windows.firstMatch.frame, navigationBottom = app.navigationBars.firstMatch.frame.maxY
         let viewport = CGRect(x: 0, y: navigationBottom, width: appFrame.width, height: appFrame.maxY - navigationBottom)
         let cueFrame = cue.frame, padFrame = pad.frame, stopFrame = stop.frame
         for (name, frame) in [("cue", cueFrame), ("pad", padFrame), ("stop", stopFrame)] {
@@ -241,27 +247,27 @@ final class PracticeUITests: XCTestCase {
 
     @MainActor
     func testRunnerLargeTextCanReachSceneRhythmJumpAndStop() async throws {
-        // Capturing all four regions can consume the real 20-second lesson.
-        // Keep its duration unchanged and verify two independent real runs.
-        for inputControls in [true, false] {
+        // Each region gets a fresh real twenty-second run. Accessibility
+        // queries/captures must not consume the lesson before tapping Stop.
+        for region in ["stop", "jump", "scene", "rhythm"] {
             let app = freshApp(largestText: true)
             app.buttons["dailyPractice"].tap()
             try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
-            let pad = app.buttons["practiceTapPad"]
-            XCTAssertTrue(pad.waitForExistence(timeout: 5))
-            if inputControls {
-                try reveal(pad, in: app); capture(app, "Runner large-text jump")
-                let stop = app.buttons["stopPractice"]
-                try reveal(stop, in: app); capture(app, "Runner large-text stop")
-                print("Observed largest-text stop frame \(stop.frame), app viewport \(app.frame)")
-                stop.tap()
-                XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
-            } else {
-                try reveal(app.staticTexts["jumpCue"], in: app); capture(app, "Runner large-text scene")
-                let rhythm = app.descendants(matching: .any).matching(identifier: "rhythmLane").firstMatch
-                try reveal(rhythm, in: app); capture(app, "Runner large-text rhythm")
-                app.terminate()
+            XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout: 5))
+            let control: XCUIElement
+            switch region {
+            case "stop": control = app.buttons["stopPractice"]
+            case "jump": control = app.buttons["practiceTapPad"]
+            case "scene": control = app.otherElements["eggMissionScene"].firstMatch
+            default: control = app.otherElements["rhythmLane"].firstMatch
             }
+            try reveal(control, in: app, requiresHit: region == "stop" || region == "jump")
+            capture(app, "Runner large-text \(region)")
+            if region == "stop" {
+                control.tap()
+                XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
+            }
+            app.terminate()
         }
     }
 

@@ -5,6 +5,43 @@ import BeatLabCore
 
 final class PracticeStoreTests: XCTestCase {
     @MainActor
+    func testDisplayClockIsReadOnlyContinuousAndCannotFinishOrScoreTheLesson() async throws {
+        let name = "BeatLabTests.DisplayClock.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
+        defer { defaults.removePersistentDomain(forName: name) }
+        let store = PracticeStore(repository: ProgressRepository(defaults: defaults)), audio = MetronomeAudio()
+        defer { audio.stop() }
+        XCTAssertEqual(store.presentationElapsed(at: .nan), 0)
+        store.select(store.lessons[0]); store.start(store.lessons[0], audio: audio, eggMission: true)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing)
+        let epoch = try XCTUnwrap(audio.audibleEpoch())
+        let published = store.elapsed
+        // Independent elapsed fixture: one millisecond host separation remains
+        // one millisecond on screen, including between 30ms store updates.
+        let first = store.presentationElapsed(at: epoch + 4.125)
+        let second = store.presentationElapsed(at: epoch + 4.126)
+        XCTAssertEqual(first, 4.125, accuracy: 0.00001)
+        XCTAssertEqual(second - first, 0.001, accuracy: 0.00001)
+        XCTAssertEqual(store.presentationElapsed(at: epoch - 2), 0)
+        for invalid in [Double.nan, .infinity, -.infinity] { XCTAssertEqual(store.presentationElapsed(at: invalid), published) }
+        XCTAssertLessThan(store.presentationElapsed(at: epoch + 1000), 21)
+        XCTAssertEqual(store.elapsed, published)
+        XCTAssertEqual(store.phase, .playing); XCTAssertNil(store.latestHit); XCTAssertNil(store.summary)
+        XCTAssertEqual(store.stars, 0); XCTAssertTrue(store.progress.results.isEmpty)
+        store.tap(at: epoch + 4.125)
+        XCTAssertEqual(store.latestHit?.targetID, 0); XCTAssertEqual(store.latestHit?.grade, .late)
+        store.cancel(audio: audio)
+        XCTAssertEqual(store.presentationElapsed(at: epoch + 1000), store.elapsed)
+        XCTAssertTrue(store.progress.results.isEmpty)
+        store.start(store.lessons[0], audio: audio, eggMission: true)
+        for _ in 0..<40 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        let nextEpoch = try XCTUnwrap(audio.audibleEpoch())
+        XCTAssertGreaterThan(nextEpoch, epoch)
+        XCTAssertEqual(store.presentationElapsed(at: nextEpoch + 0.025), 0.025, accuracy: 0.00001)
+        XCTAssertNil(store.latestHit); store.cancel(audio: audio)
+    }
+    @MainActor
     func testEggMissionUsesOriginalMatchingAndClearsMusicOnCancelCalibrationAndTempoChange() async throws {
         let name = "BeatLabTests.EggMission.\(UUID().uuidString)"
         let defaults = try XCTUnwrap(UserDefaults(suiteName: name))
@@ -249,6 +286,38 @@ final class PracticeStoreTests: XCTestCase {
 }
 
 final class EggMissionPresentationTests: XCTestCase {
+    func testContinuousBackgroundAndFiniteImmediateJumpLandingWithoutReducedMotion() {
+        let before = EggMotion.sample(elapsed: 11.9999, age: nil, grade: nil, reduceMotion: false)
+        let after = EggMotion.sample(elapsed: 12.0001, age: nil, grade: nil, reduceMotion: false)
+        XCTAssertLessThan(abs(after.backgroundX - before.backgroundX), 0.001, "Old 8s wrap must not teleport the background")
+        XCTAssertGreaterThan(EggMotion.sample(elapsed: 5, age: 0.01, grade: .perfect, reduceMotion: false).height, 0)
+        let landing = EggMotion.sample(elapsed: 5, age: 0.56, grade: .perfect, reduceMotion: false)
+        XCTAssertEqual(landing.height, 0); XCTAssertGreaterThan(landing.scaleX, 1); XCTAssertLessThan(landing.scaleY, 1)
+        let done = EggMotion.sample(elapsed: 5, age: 0.65, grade: .perfect, reduceMotion: false)
+        XCTAssertEqual(done.height, 0); XCTAssertEqual(done.scaleX, 1); XCTAssertEqual(done.scaleY, 1)
+        for age in [Double.nan, .infinity, -.infinity, -1, 0, 0.24, 0.48, 0.64, 1e100] {
+            let motion = EggMotion.sample(elapsed: .nan, age: age, grade: .extra, reduceMotion: false)
+            XCTAssertTrue(motion.height.isFinite && motion.scaleX.isFinite && motion.scaleY.isFinite && motion.angle.isFinite)
+            let reduced = EggMotion.sample(elapsed: 5, age: age, grade: .perfect, reduceMotion: true)
+            XCTAssertEqual(reduced.height, 0); XCTAssertEqual(reduced.scaleX, 1); XCTAssertEqual(reduced.scaleY, 1)
+            XCTAssertEqual(reduced.angle, 0); XCTAssertEqual(reduced.landing, 0)
+        }
+    }
+    func testExtraCannotInterruptOrExtendAcceptedJumpAndOldCallbacksCannotReplayIt() throws {
+        func hit(_ target: Int?, _ input: Double, _ grade: String) throws -> TimingHit {
+            let id = target.map(String.init) ?? "null"
+            return try JSONDecoder().decode(TimingHit.self, from: Data("{\"targetID\":\(id),\"inputTime\":\(input),\"error\":null,\"grade\":\"\(grade)\"}".utf8))
+        }
+        let accepted = try hit(0, 42, "perfect"), extra = try hit(nil, 42.2, "extra")
+        XCTAssertEqual(EggMotion.action(accepted: accepted, latest: extra, hostTime: 42.21), accepted)
+        XCTAssertEqual(EggMotion.action(accepted: accepted, latest: extra, hostTime: 42.60), accepted)
+        XCTAssertNil(EggMotion.action(accepted: accepted, latest: extra, hostTime: 42.65), "Old extra cannot replay after landing")
+        let freshExtra = try hit(nil, 42.70, "extra")
+        XCTAssertEqual(EggMotion.action(accepted: accepted, latest: freshExtra, hostTime: 42.71), freshExtra)
+        XCTAssertEqual(EggMotion.action(accepted: accepted, latest: extra, hostTime: 41), extra)
+        XCTAssertEqual(EggMotion.action(accepted: accepted, latest: extra, hostTime: .nan), extra)
+        XCTAssertNil(EggMotion.action(accepted: accepted, latest: nil, hostTime: 100))
+    }
     func testOpenTargetIsNeverReportedMissedAndAcceptedTargetCannotStumble() {
         XCTAssertNil(EggMissionPresentation.missed(elapsed: 4.43, accepted: []))
         XCTAssertEqual(EggMissionPresentation.missed(elapsed: 4.431, accepted: []), 0)
