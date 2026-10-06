@@ -47,3 +47,14 @@
 - Validation boundary: docs/slices/GAME-13-verification.json; artifacts/evidence/test-results/GAME-13-regression.json: exact95source/83protected; App49/Core53/browser20 PASS; final wide2/0 PASS; narrow50/2 FAIL; generic Simulator build PASS, earlier device destination build FAIL; interrupted candidate retained; narrow light/ReduceMotion off restored. Reader validates retained evidence, does not rerun tests or accept failed UI.
 - Next action: Complete narrow XXXL and physical timing/performance acceptance. Preserve narrow CoreAudio RPC abort in unchanged stop path and robot zero-hit failure; final same-source wide actual touch/cancel/retry2/0 passes do not erase those failures. Owner tunnel unavailable; no phone build/install/launch, no TestFlight/public. Canonical writer lacks knowledge-base surface; no03KB write claimed.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:986c31b715c6b70270fda69d120fb86f9e4ac829fd3bdc541ca915c649c8202e -->
+### Canonical memory checkpoint — beatlab-game13-phone-install-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `986c31b715c6b70270fda69d120fb86f9e4ac829fd3bdc541ca915c649c8202e`
+- Commit binding: `bedbcc5` (bound)
+- Record: Owner deferred KidsCharacterKit uniform-art integration until upstream is ready and explicitly requested current GAME-13 phone test. Signed iphoneos Debug0.1.0(10) source6019be7 verified78 production inputs/signature/frozen hashes and installed successfully in place on paired owner phone; existing bundle/team and learner data preserved. Automatic launch failed because device locked.
+- Validation boundary: docs/slices/GAME-13-verification.json phone_delivery_20261006; artifacts/evidence/test-results/GAME-13-phone-install.json: actual signed build PASS, devicectl App installed PASS, automatic launch FAIL_DEVICE_LOCKED; source78 and frozen signature/hash checked after install. Receipt reader does not run functional tests; prior App49/Core53/browser20/wide2 passes are unchanged.
+- Next action: Unlock and open app, or retry launch only after owner readiness reply. Test Practice companion cat/robot first60BPM. Previous narrow XXXL CoreAudio abort/robot zero-hit failures and G1-G4 physical acceptance remain pending. No new App source, TestFlight or public release.
+- PLAN reconciliation: `updated`

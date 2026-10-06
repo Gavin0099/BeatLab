@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "TestResults/PRODUCT-ALPHA-01/sourcecheck-env-current/bin/python TestResults/GAME-13/verify-phone-receipt.py",
+  "exit_code": 0,
+  "started_at": "2026-10-06T05:05:19Z",
+  "finished_at": "2026-10-06T05:05:41Z",
+  "runner": "phone-source-signature-and-actual-receipt-reader",
+  "linked_commit": "bedbcc57f8443e56b4282e1fda684383e6057c05",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-13-phone-install.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
