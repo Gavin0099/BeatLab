@@ -1,0 +1,70 @@
+{
+  "method": "Read actual executed xcresults/logs and compare87 frozen source inputs plus83 protected inputs and70 phone source inputs. Reader does not rerun tests.",
+  "source_file_count": 87,
+  "changed_source_sha256": {
+    "BeatLabTests/PracticeStoreTests.swift": "5d3a5d9387832a3404c0c414e1f64bda7ef3f6f193c1357933c42087ec194fd0",
+    "BeatLab/Views/EggMissionView.swift": "42bdb500fed05967dcfe2aa33a66359c520dd64e15345439a45fc01ae85a716f",
+    "BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/Contents.json": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/artwork.png": "8e13a5aba8719cbbad5118e04f2f10a8bb8e7bc80dcdaa1849c1f3b902457d5d"
+  },
+  "native_results": {
+    "wide-large-serial": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "narrow-large-serial": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "narrow-dark-solid-final": {
+      "result": "Passed",
+      "passedTests": 1,
+      "failedTests": 0,
+      "skippedTests": 0
+    },
+    "wide-solid-final": {
+      "result": "Failed",
+      "passedTests": 49,
+      "failedTests": 1,
+      "skippedTests": 0
+    },
+    "narrow-solid-final": {
+      "result": "Failed",
+      "passedTests": 2,
+      "failedTests": 1,
+      "skippedTests": 0
+    }
+  },
+  "core_passed": 53,
+  "browser_checks": 25,
+  "browser_actual_input_outcome": {
+    "matched": 16,
+    "perfect": 16,
+    "extra": 0
+  },
+  "actual_simulator_callback_observations": {
+    "callback_interval_median_seconds": 0.016668166674207896,
+    "callback_interval_p95_seconds": 0.01737679167126771,
+    "callbacks": 180,
+    "render_work_p95_seconds": 0.0001647916651563719,
+    "samples": 179
+  },
+  "phone_install": "PASS",
+  "phone_launch": "FAIL",
+  "phone_source_commit": "363a8e8c6d65d5fff4f489a30d95516fa34d8f31",
+  "signature_verified": true,
+  "failed_crash_and_ghost_candidates_retained": true,
+  "cannot_claim": [
+    "physical FPS/frame pacing/GPU/input latency",
+    "commercial hands-on performance benchmark",
+    "owner/child appeal acceptance",
+    "full UI suite",
+    "TestFlight updated",
+    "public readiness",
+    "knowledge-base writer completed"
+  ]
+}

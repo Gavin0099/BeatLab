@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "TestResults/PRODUCT-ALPHA-01/sourcecheck-env-current/bin/python TestResults/GAME-12/verify-native-receipt.py",
+  "exit_code": 0,
+  "started_at": "2026-10-06T03:05:59Z",
+  "finished_at": "2026-10-06T03:06:01Z",
+  "runner": "native-xcresult-and-frozen-source-reader",
+  "linked_commit": "363a8e8c6d65d5fff4f489a30d95516fa34d8f31",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-12-regression.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
