@@ -1,6 +1,6 @@
 # GAME-15 — 角色動作連續性與真機流暢度診斷
 
-Status IMPLEMENTED_WIDE57_BROWSER33_PASS_PHONE_READY_CONNECTION_BLOCKED. Owner reports installed GAME-14 actions still not smooth; classifying pose cadence vs scene hitch vs delayed response. Base 55851abf23bbf4973b6e4036f17d3add7b20bab3. GAME-14 Wi-Fi install/launch PASS; source a6e1869 remains installed. KidsCharacterKit integration still deferred.
+Status IMPLEMENTED_WIFI_INSTALLED_OPENED_FLUIDITY_ACCEPTANCE_PENDING. Owner reports installed GAME-14 actions still not smooth; classifying pose cadence vs scene hitch vs delayed response. Base 55851abf23bbf4973b6e4036f17d3add7b20bab3. GAME-14 Wi-Fi install/launch PASS; source a6e1869 remains installed. KidsCharacterKit integration still deferred.
 
 Before-edit scope: L2 read-only performance/animation boundary diagnosis. Initially allowed docs/slices/GAME-15.md / GAME-15-verification.json, PLAN.md, ignored TestResults/GAME-15/** and canonical GAME-15 evidence/memory. No App source or asset edits until an implementation contract defines exact changes, independent failure regression, applicable checks and rollback.
 
@@ -29,3 +29,6 @@ Signed phone Debug build PASS, frozen candidate source e2aeec5 and78production i
 
 
 Canonical daily/review-log/active-task-summary records retain owner rejection and concrete display defect, linked e2aeec5 with durable actual-receipt reader output. Guard current/repo B0=0, historical missing-memory1/provenance2 and root writer/guard path warnings remain. No knowledge-base/full normalization or session-end claim. Native real-input and zero-input/viewport screenshots visually inspected; browser actual no-input miss shows continued run, not a forced success.
+
+
+2026-10-06 owner replied ready for Wi-Fi. Fresh inventory paired localNetwork; reused frozen source e2aeec5 signed candidate without rebuild. Actual install PASS and launch PASS, original bundle/team/data preserved. All78 production inputs and signed artifact hashes rechecked after installation; original blocked receipts/snapshots retained. Owner can compare missed-beat continuity in first lesson. No new physical timing/FPS, drawing-frame-count, fluidity/child, small-screen/XXXL or public acceptance. KidsCharacterKit still deferred.

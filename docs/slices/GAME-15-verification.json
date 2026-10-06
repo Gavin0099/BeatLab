@@ -1,6 +1,6 @@
 {
   "slice": "GAME-15",
-  "status": "IMPLEMENTED_WIDE57_BROWSER33_PASS_PHONE_READY_CONNECTION_BLOCKED",
+  "status": "IMPLEMENTED_WIFI_INSTALLED_OPENED_FLUIDITY_ACCEPTANCE_PENDING",
   "base_commit": "55851abf23bbf4973b6e4036f17d3add7b20bab3",
   "owner_direction": "Actions in installed GAME-14 still not fluid; optional pose/hitch/response classification not answered",
   "scope": "First-lesson companion presentation only; audio/input/matching/score/obstacle schedule/save/assets unchanged",
@@ -295,7 +295,7 @@
       "sha256": "97edbdb18b685c8761b9e2cbee180e12306741b52af0b35821ad7befa95bc132"
     },
     "PhoneFrozen/BUILD.json": {
-      "path": "TestResults/GAME-15/PhoneFrozen/BUILD.json",
+      "path": "TestResults/GAME-15/PhoneFrozen/BUILD-before-wifi.json",
       "sha256": "b282ee4d0acf6566946d3dbded724aa318bd6bbdfdca76d3077acbf17d8f9ffd"
     },
     "PhoneFrozen/source.json": {
@@ -313,7 +313,7 @@
   },
   "implementation_commit": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
   "owner_game14_fluidity_acceptance": "REJECTED; earlier tests/install do not override actual feedback",
-  "phone_currently_installed_source": "a6e18699dc749a8df38ce084b8505f627571bba2",
+  "phone_currently_installed_source": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
   "canonical_memory": {
     "writer": "governance_tools.memory_record via pinned framework",
     "surfaces": [
@@ -332,5 +332,58 @@
       "root_guard_path": "NOT FOUND"
     },
     "knowledge_base": "NOT WRITTEN; writer lacks03 surface"
+  },
+  "phone_wifi_delivery_20261006": {
+    "source_commit": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
+    "source_file_count": 78,
+    "configuration": "Debug",
+    "bundle_id": "com.gavin0099.beatlab",
+    "version": "0.1.0",
+    "build": "10",
+    "team": "P358EB3X9H",
+    "signature_verified": true,
+    "profile_covers_cached_paired_device": true,
+    "install": "PASS",
+    "launch": "PASS",
+    "transport": "localNetwork",
+    "source_checked_after_install": true,
+    "artifact_checked_after_install": true,
+    "learner_data_reset": false,
+    "testflight_updated": false,
+    "physical_performance": "NOT RUN",
+    "kids_character_kit_integration": "DEFERRED_BY_OWNER",
+    "receipt": "artifacts/evidence/test-results/GAME-15-wifi-install.json",
+    "evidence_refs": {
+      "phone-wifi-install.json": {
+        "path": "TestResults/GAME-15/phone-wifi-install.json",
+        "sha256": "183dd9efab2dd4c3707fdcb4f9e2dae101bd07aa47ddc52fea39f1163b80bf9b"
+      },
+      "phone-wifi-install.log": {
+        "path": "TestResults/GAME-15/phone-wifi-install.log",
+        "sha256": "9e91829946482b44cd4cd5cb751ff928e09f25993659c72e14448d64bc50cde0"
+      },
+      "phone-wifi-launch.json": {
+        "path": "TestResults/GAME-15/phone-wifi-launch.json",
+        "sha256": "0a96ee23530ac34263ba93160a0c0f2abeb30ef81f791c2c86339e5d38cb6d86"
+      },
+      "phone-wifi-launch.log": {
+        "path": "TestResults/GAME-15/phone-wifi-launch.log",
+        "sha256": "5975bf92e44d48cee26fa93a6b85a4cbe73b6698a01f1161497f86cee4773848"
+      },
+      "verify-wifi-receipt.py": {
+        "path": "TestResults/GAME-15/verify-wifi-receipt.py",
+        "sha256": "816b297ee09ac193618bb8082616e0e5f71e8aa532f9d194faa782d50d7c0504"
+      },
+      "PhoneFrozen/BUILD.json": {
+        "path": "TestResults/GAME-15/PhoneFrozen/BUILD.json",
+        "sha256": "7802b78415858a7559c2e7a93f599a9afdf8a29d25c2c773ac7c656f28906591"
+      }
+    },
+    "memory_guard": "artifacts/evidence/test-results/GAME-15-wifi-memory-check.txt",
+    "current_and_repo_B0_blockers": 0
+  },
+  "historical_blocked_verification_snapshot": {
+    "path": "TestResults/GAME-15/verification-before-wifi.json",
+    "sha256": "e0ed715356add9ef225e79ee0047d1c79ee91d13dec8ffb1ed23ed632f79040e"
   }
 }

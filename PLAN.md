@@ -313,3 +313,8 @@ GAME-15 final generic native build PASS、wide57/0（App54＋實際UI3）、brow
 
 
 GAME-15 source e2aeec5，signed phone build PASS／frozen78production inputs signature bind；actual wireless install FAIL_DEVICE_NOT_FOUND／launch NOT RUN，已請owner解鎖同Wi-Fi就緒再續裝。手機目前仍GAME-14 a6e1869；新候選不重build、不uninstall/reset。Status IMPLEMENTED_WIDE57_BROWSER33_PASS_PHONE_READY_CONNECTION_BLOCKED。GAME-14「動作仍不流暢」是owner拒絕驗收，不以測試或安裝成功覆蓋；GAME-15修復已重現miss pose snap，不宣稱frame-count限制或physical frame pacing解決。
+
+
+### 2026-10-06 — GAME-15 Wi-Fi 安裝並開啟
+
+Owner回覆就緒後，fresh paired localNetwork inventory、actual devicectl install／launch均PASS。沿用e2aeec5 frozen signed0.1.0(10)／78production inputs，沒有rebuild/uninstall/reset；來源／artifact／signature安裝後再核對。先前unavailable失敗與blocked snapshots保留。Status IMPLEMENTED_WIFI_INSTALLED_OPENED_FLUIDITY_ACCEPTANCE_PENDING；owner可在第一關故意漏拍比較三種角色銜接，未把安裝當physical frame pacing或流暢度驗收。8／6張動作幀數、KidsCharacterKit deferred、prior small-screen/XXXL／G1-G4／child/public gates仍待處理，沒有TestFlight/public更新。

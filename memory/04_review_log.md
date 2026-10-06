@@ -91,3 +91,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-15-regression.json
 - Next action: Owner unlocks phone on same Wi-Fi and replies ready; refresh inventory and install preserved GAME-15 candidate without rebuilding. Then owner compare continuous missed-beat movement. Continue diagnosing reported pose vs scene hitch vs delayed input; frame-count and physical performance acceptance still pending.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:9c3e7a36f65627f20a09f278b8e6be015af881bbd4ef2035855a230edd524525 -->
+### Canonical memory checkpoint — beatlab-game15-wifi-install-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `9c3e7a36f65627f20a09f278b8e6be015af881bbd4ef2035855a230edd524525`
+- Commit binding: `e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f` (bound)
+- Record: Owner replied ready for Wi-Fi. Reused GAME-15 e2aeec5 signed frozen iphoneos0.1.0(10); fresh paired localNetwork inventory and actual install/launch PASS. Verified78 production inputs, signed artifact/source hashes before and after. No rebuild/uninstall/progress reset/App source changes/TestFlight/public. Historical unavailable attempt and pre-Wi-Fi snapshots retained. Owner still needs missed-beat motion comparison; install does not override prior GAME-14 fluidity rejection or accept physical FPS/timing,8-run/6-jump pose limits, narrow/XXXL,G1-G4,child/public. KidsCharacterKit deferred.
+- Validation boundary: artifacts/evidence/test-results/GAME-15-wifi-install.json
+- Next action: Owner test first lesson, deliberately miss cues and compare continuous run/jump recovery. Await fluidity feedback; physical profile/timing, pose-count and prior narrow/XXXL gates remain pending.
+- PLAN reconciliation: `updated`
