@@ -31,3 +31,7 @@ Rollback only allowed files to f43507f and remove new assets/concept; reconcile 
 ## Final checkpoint
 
 Final source-bound App49/Core53/browser20 PASS; final wide actual cat/robot touch/cancel/retry 2/0 PASS. Final narrow run50/2 retains XXXL application crash and robot zero accepted inputs. CoreAudio RPC timeout stack is in unchanged audio stop path; no causal claim or audio repair within this slice. Latest generic Simulator build PASS; prior explicit-device destination build failed. Owned narrow settings restored to light/Reduce Motion off, then shut down only that owned device. No signed phone build/install/launch; fresh owner tunnel unavailable. No TestFlight/public/physical FPS or timing/child appeal acceptance. Exact runs/hashes/failures in GAME-13-verification.json.
+
+## Later owner-authorized phone test delivery — 2026-10-06
+
+Owner deferred KidsCharacterKit integration until upstream assets are ready and explicitly requested phone installation of the current partial-QA candidate. Source6019be7 signed iphoneos Debug0.1.0(10), original bundle/team, verified78 production inputs and frozen artifact hashes before/after installation. Fresh inventory initially disconnected; actual devicectl acquired tunnel and installed successfully in place. Automatic launch FAIL_DEVICE_LOCKED. No uninstall/reset/TF/public, no new App source changes, no physical timing/appeal acceptance; previous native failures remain. See appended phone_delivery_20261006 event in verification JSON.

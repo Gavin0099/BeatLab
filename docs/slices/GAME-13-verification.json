@@ -488,5 +488,58 @@
     "public_release": "NOT RUN",
     "device_install": "NOT RUN",
     "learner_data_reset": false
+  },
+  "phone_delivery_20261006": {
+    "source_commit": "6019be71845d18129695fae7b18429018e5d8345",
+    "source_file_count": 78,
+    "configuration": "Debug",
+    "bundle_id": "com.gavin0099.beatlab",
+    "version": "0.1.0",
+    "build": "10",
+    "signature_verified": true,
+    "profile_covers_cached_paired_device": true,
+    "install": "PASS",
+    "launch": "FAIL_DEVICE_LOCKED",
+    "source_checked_after_install": true,
+    "artifact_checked_after_install": true,
+    "learner_data_reset": false,
+    "testflight_updated": false,
+    "physical_performance": "NOT RUN",
+    "kids_character_kit_integration": "DEFERRED_BY_OWNER",
+    "pending": "Owner unlock/open app and physical playtest; no timing/performance acceptance",
+    "evidence_refs": {
+      "phone-build.log": {
+        "path": "TestResults/GAME-13/phone-build.log",
+        "sha256": "da367afedcd8bd700596024ee115dda56be28aa44a8f7dc7ad0a0bd7a479ae96"
+      },
+      "phone-install.json": {
+        "path": "TestResults/GAME-13/phone-install.json",
+        "sha256": "8e374600b7c5c8d84467f74031bd5c7b7584686a4eb1fc442f51b0b9612e4937"
+      },
+      "phone-install.log": {
+        "path": "TestResults/GAME-13/phone-install.log",
+        "sha256": "421784eccdb0d88c27e0596ef03e982cb995e419a85723ebd750e10d82c4674f"
+      },
+      "phone-launch.json": {
+        "path": "TestResults/GAME-13/phone-launch.json",
+        "sha256": "61da215feb5e063390b6db212bd2af24e802f8be001de9a072327d11e103234e"
+      },
+      "phone-launch.log": {
+        "path": "TestResults/GAME-13/phone-launch.log",
+        "sha256": "211b4f09c1b34d2fba6ac11035cb217ae4d65804168befc26a036b5efff0cbbd"
+      },
+      "PhoneFrozen/BUILD.json": {
+        "path": "TestResults/GAME-13/PhoneFrozen/BUILD.json",
+        "sha256": "1b53f03bceadb50dd5208cadf6c7d458881e43a4a7dbf28d37cac631d3623885"
+      },
+      "PhoneFrozen/source.json": {
+        "path": "TestResults/GAME-13/PhoneFrozen/source.json",
+        "sha256": "2a6b0f495a891400bc34c396450a18110c59ed4b5e66423f6725b44cb30a4a48"
+      },
+      "PhoneFrozen/app-manifest.json": {
+        "path": "TestResults/GAME-13/PhoneFrozen/app-manifest.json",
+        "sha256": "62eb1f9ee1008ac83539ae60d4e0ab2c672a4a452f144508536930d2e8a45277"
+      }
+    }
   }
 }

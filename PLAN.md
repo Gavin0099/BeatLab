@@ -279,3 +279,7 @@ Owner要求兩個夥伴也採用連續跑跳且風格不同。先立 exact-file 
 ### 2026-10-06 — GAME-13 美術與動作實作完成，驗收仍有缺口
 
 貓咪獨立暖桃雲端送魚、機器人獨立蠟筆藍色科技平台送能源；第一關60 BPM共用既有節拍／判分／保存，8幀跑步＋6幀跳躍與快取SpriteKit素材。App49/Core53/browser20及final wide兩個角色真實tap／cancel／restart2/0 PASS；final narrow50/2保留大字application crash與robot零命中。Simulator CoreAudio RPC timeout發生在未改音訊停止路徑，根因尚未確定，不宣稱真機缺陷或只有環境問題。大字旅程／caption修正、fixture24次viewport-first scroll檢查保留所有失敗候選；final generic build PASS，explicit device build因destination unavailable FAIL。95source／83protected bind；Status IMPLEMENTED_BUILD_PASS_FINAL_UI_PARTIAL_OWNER_PENDING。手機新inventory tunnel unavailable，未簽署build／安裝／launch／TestFlight／public；G1-G4與owner／child／physical timing仍未接受。下一步先完成小螢幕大字與真機驗收；不得以兩個wide PASS消除narrow失敗。canonical writer只支援daily／review-log／active-task-summary，不宣稱03 knowledge-base已寫入。詳GAME-13-verification.json。
+
+### 2026-10-06 — GAME-13 Owner 指定現版手機測試
+
+Owner 決定 KidsCharacterKit 完成後再導入統一美術，先安裝目前版本。來源6019be7、signed iphoneos Debug0.1.0(10)、78production inputs及frozen app signature/hash核對後已成功覆蓋安裝原bundle/team，保留進度；devicectl自動launch因device locked FAIL，解鎖後待owner實際試玩。沒有App source變更／重跑足夠的既有測試／TestFlight／public；GAME-13小螢幕大字失敗與G1-G4仍未接受，不把installation PASS當作physical timing/FPS/兒童喜好證據。詳GAME-13-verification.json phone_delivery_20261006，安裝流程依install-garden-on-iphone skill套用BeatLab。

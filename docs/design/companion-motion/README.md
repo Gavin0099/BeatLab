@@ -28,3 +28,5 @@ Owner direction: 貓咪和機器人也做連續跑跳，而且風格要不同。
 ## 驗收範圍
 
 原生 App 49 項、Core 53 項、草稿 20 項檢查通過。素材／動作已實作，但小螢幕的大字操作測試尚未完成驗收：實際執行曾在未修改的音訊停止路徑遇到 Simulator CoreAudio RPC timeout 崩潰，同輪機器人點擊也未命中，原因未確定。失敗、修正與後續重測均保存在 [驗證紀錄](../../slices/GAME-13-verification.json)，不能用建置成功取代這些檢查。沒有更新 TestFlight、安裝手機或取得真機流暢度／兒童喜好驗收。
+
+後續手機交付（2026-10-06）：Owner 明確要求先安裝現版測試，KidsCharacterKit 統一美術等上游完成再導入。來源 `6019be7` 的 signed iphoneos Debug 0.1.0(10) 已在原 bundle/team 上覆蓋安裝，保留資料；自動啟動因手機鎖定失敗，解鎖後可手動開啟。此交付不消除上述 QA 缺口，也未更新 TestFlight。詳 verification JSON 的 `phone_delivery_20261006`。
