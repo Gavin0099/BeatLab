@@ -36,3 +36,14 @@
 - Validation boundary: PASS: artifacts/evidence/test-results/GAME-12-regression.json -> exit_code=0; docs/slices/GAME-12-verification.json; actual xcresults/raw failure/runtime recordings and frozen signature/source receipts in ignored TestResults/GAME-12. App/UI results reported by separate actions, not one green full UI suite.
 - Next action: Owner unlock/open 拍拍冒險 and try dinosaur first-beat60BPM continuous motion; automatic launch blocked by phone lock. Physical frame pacing/audio-input timing, child replay/owner appeal and G1-G4 remain unaccepted. GitHub engineering branch push only; no PR/merge/TestFlight/public.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:c47c1c278dcc1b9c84fada9818e548c4637c464a4545794fb2187b7b16a0223d -->
+### Canonical memory checkpoint — beatlab-game13-companion-motion-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `c47c1c278dcc1b9c84fada9818e548c4637c464a4545794fb2187b7b16a0223d`
+- Commit binding: `8707255` (bound)
+- Record: GAME-13 implemented distinct original warm cloud cat and blue crayon circuit robot atlases, eight run and six jump frames; first lesson60 BPM shares GAME-12 SpriteKit/audio/input/judgment/save. Accessibility journey stack and concise caption fixed observed occlusion; UI fixture checks24 viewport-first scrolls. Source implementation checkpoint only; release gates unaccepted.
+- Validation boundary: docs/slices/GAME-13-verification.json; artifacts/evidence/test-results/GAME-13-regression.json: exact95source/83protected; App49/Core53/browser20 PASS; final wide2/0 PASS; narrow50/2 FAIL; generic Simulator build PASS, earlier device destination build FAIL; interrupted candidate retained; narrow light/ReduceMotion off restored. Reader validates retained evidence, does not rerun tests or accept failed UI.
+- Next action: Complete narrow XXXL and physical timing/performance acceptance. Preserve narrow CoreAudio RPC abort in unchanged stop path and robot zero-hit failure; final same-source wide actual touch/cancel/retry2/0 passes do not erase those failures. Owner tunnel unavailable; no phone build/install/launch, no TestFlight/public. Canonical writer lacks knowledge-base surface; no03KB write claimed.
+- PLAN reconciliation: `updated`
