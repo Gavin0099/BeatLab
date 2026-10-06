@@ -28,3 +28,5 @@
 - GAME-09A native input feedback implemented; physical/public gates pending. <!-- memory_record_projection:active-task-summary:eaa0fe5e67d9791cfb75566fea5631b530854369f4fdc0665f62b4361d1c9579 -->
 
 - GAME-10 egg mission locally implemented and installed; owner gameplay/public gates pending, owned SE Reduce Motion restoration awaits Mac unlock. <!-- memory_record_projection:active-task-summary:3665cdabf7dc6edb9979bcb3cff40db274662a829b60b67b5d965ee92cbe59d5 -->
+
+- GAME-11 implemented local checks pass at9f98c2a, install blocked because phone unavailable; phone remains previous GAME-10, TestFlight unchanged. Source-bound signed candidate ready. Owner GAME-10 better-but-insufficient is partial acceptance only; GAME-11 physical FPS/input timing and fun/public G1-G4 remain unaccepted. Official references and playable old/new comparison in docs/design/runner-fluidity. SE Reduce Motion restoredOFF/light. Implementation and canonical companion separate, push existing product-alpha/ui-checkpoint only. <!-- memory_record_projection:active-task-summary:8b47e7cb1056409c91421a73c43e0f04dca320c5235b18350a107f73fe56c817 -->
