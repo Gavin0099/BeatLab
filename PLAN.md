@@ -283,3 +283,12 @@ Owner要求兩個夥伴也採用連續跑跳且風格不同。先立 exact-file 
 ### 2026-10-06 — GAME-13 Owner 指定現版手機測試
 
 Owner 決定 KidsCharacterKit 完成後再導入統一美術，先安裝目前版本。來源6019be7、signed iphoneos Debug0.1.0(10)、78production inputs及frozen app signature/hash核對後已成功覆蓋安裝原bundle/team，保留進度；devicectl自動launch因device locked FAIL，解鎖後待owner實際試玩。沒有App source變更／重跑足夠的既有測試／TestFlight／public；GAME-13小螢幕大字失敗與G1-G4仍未接受，不把installation PASS當作physical timing/FPS/兒童喜好證據。詳GAME-13-verification.json phone_delivery_20261006，安裝流程依install-garden-on-iphone skill套用BeatLab。
+
+### 2026-10-06 — GAME-14 障礙間隔修正
+
+Owner 澄清問題是石頭看起來不是60BPM、間隔不一樣。來源position本身等距且read-only host epoch，但accepted會立即hide upcoming rock，early hit可能造成未到拍已消失的視覺空缺；尚無physical capture證明實際audio/arrival不均。先立L2 exact-file契約與native failing regression，再做保留石頭至固定到拍後淡出、固定floor marker；不改audio/input/score/tempo/assets。Status IN_PROGRESS；KidsCharacterKit仍deferred，既有narrow XXXL與physical gate仍未接受。
+
+
+### 2026-10-06 — GAME-14 實作 checkpoint
+
+提早命中保留石頭至原定 crossing，之後0.25秒淡出；新增固定 floor marker，不改石頭位置公式或 audio／判分／存檔。Pre-fix native 1 test／2 assertions FAIL；final native build PASS、wide55/0（App52＋實際UI3）、browser30 PASS（真實16Perfect／0Extra）。95source／93protected unchanged bind；小螢幕第一個class filter錯誤已中止不接受，corrected run與phone delivery仍pending。Status IMPLEMENTED_FINAL_WIDE_PASS_NARROW_PHONE_PENDING；KidsCharacterKit deferred、prior XXXL失敗／physical sync／G1-G4不接受。使用canonical writer保留root cause與owner方向，不手改03 knowledge base。

@@ -1,0 +1,218 @@
+{
+  "slice": "GAME-14",
+  "status": "IMPLEMENTED_FINAL_WIDE_PASS_NARROW_PHONE_PENDING",
+  "owner_direction": "Obstacle spacing looks unlike 60 BPM; not an FPS complaint",
+  "base_commit": "27d07d05f95d39d4db535ebf6e4ae24347c3fc8b",
+  "scope": "First lesson 60 BPM presentation only; audio/input/matching/score/persistence/assets unchanged",
+  "finding": "Early accepted hits immediately removed an upcoming rock before scheduled crossing. Reproduced display defect; physical uneven onset/arrival cause not established.",
+  "repair": "Keep accepted cues fully visible through original crossing; fade over 0.25s behind fixed floor marker. Route reward follows crossing. Existing immediate press feedback retained.",
+  "invariant": "Reviewed catalog: four count-in beats; 16 targets at elapsed4...19 seconds, 1s apart. Original read-only host-clock position formula unchanged.",
+  "source_file_count": 95,
+  "protected_source_count": 93,
+  "pre_fix_regression": {
+    "result": "Failed",
+    "passedTests": 0,
+    "failedTests": 1,
+    "skippedTests": 0,
+    "testFailures": [
+      {
+        "failureText": "XCTAssertFalse failed - An early accepted press must not remove a cue before the fixed 4s first beat",
+        "targetName": "BeatLabTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "EggMissionPresentationTests/testEarlyMatchedObstacleStaysVisibleUntilScheduledCrossing()",
+        "testIdentifierURL": "test://com.apple.xcode/BeatLab/BeatLabTests/EggMissionPresentationTests/testEarlyMatchedObstacleStaysVisibleUntilScheduledCrossing",
+        "testName": "testEarlyMatchedObstacleStaysVisibleUntilScheduledCrossing()"
+      }
+    ]
+  },
+  "pre_fix_assertion_failures": 2,
+  "final_wide": {
+    "result": "Passed",
+    "passedTests": 55,
+    "failedTests": 0,
+    "skippedTests": 0,
+    "testFailures": []
+  },
+  "final_app_passed": 52,
+  "final_wide_ui_passed": 3,
+  "native_build": "PASS",
+  "source_syntax_structure": {
+    "scope": "S0-S17 syntax and source/project structure only",
+    "result": "PASS",
+    "swift_files_parsed": 39,
+    "swift_test_definitions": 127,
+    "xcode_objects": 97,
+    "lesson_count": 10,
+    "xcode_membership": "PASS",
+    "asset_privacy_parse": "PASS",
+    "excluded_capabilities": "ABSENT",
+    "realtime_render_allocations": "ABSENT IN INSPECTED FUNCTION",
+    "swift_typechecking": "NOT RUN",
+    "swift_tests": "NOT RUN",
+    "iOS_build_UI_tests": "NOT RUN",
+    "device_gates": "NOT RUN"
+  },
+  "browser_final": {
+    "checks": [
+      "Original props +16-frame animation atlas loaded",
+      "Eight run phases, not repeated two poses",
+      "Jump peak74 and near-zero touchdown speed",
+      "Eight-frame cycle wraps in order without crossfading two heads",
+      "Cached loaded character has actual opaque pixels",
+      "Background is continuous at old 8-second reset",
+      "Immediate positive rise and finite landing follow-through",
+      "Reduced motion has no hop/rotation/stretch",
+      "Actual early match reproduces old pre-beat disappearance",
+      "Accepted cue remains opaque through its fixed beat; fade only behind",
+      "Actual rendered cue centers have equal spacing",
+      "Actual pre-beat accepted cue remains drawn before marker",
+      "Early-test cancel does not write completion",
+      "Real start shows count-in",
+      "No input has a visible recovery",
+      "Zero input fails with real 0/16 result",
+      "Stop is visually hidden on actual failure",
+      "Retry clears prior result",
+      "Sixteen clock-cued inputs reach real success",
+      "Stop is visually hidden on actual success",
+      "Extra does not replace the accepted airborne action",
+      "Duplicate press is extra and does not clear a second rock",
+      "Cancel stops without a result",
+      "No horizontal overflow at 320",
+      "Action reachable at 320",
+      "No horizontal overflow at 375",
+      "Action reachable at 375",
+      "No horizontal overflow at 430",
+      "Action reachable at 430",
+      "No browser runtime errors"
+    ],
+    "outcome": {
+      "matched": 16,
+      "perfect": 16,
+      "extra": 0
+    },
+    "errors": [],
+    "hardwareTiming": "NOT RUN",
+    "ownerAppeal": "PENDING"
+  },
+  "browser_attempts": [
+    {
+      "run": 1,
+      "result": "FAIL_FIXTURE_STALE_RENDER_READ",
+      "repair": "Wait actual RAF after genuine early press; retain failure"
+    },
+    {
+      "run": 2,
+      "result": "PASS_32_CHECKS",
+      "quality_note": "Local copied-formula geometry assertions replaced by actual rendered positions in final 30 checks"
+    }
+  ],
+  "narrow_attempt1": {
+    "status": "INTERRUPTED_WRONG_CLASS_FILTER",
+    "pid": 90187,
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /var/folders/fp/yq_7k60s201b51vt5mtcjj_m0000gn/T/beatlab-game11-build-61khytck/Build/Products/BeatLab_iphonesimulator26.5-arm64.xctestrun -destination platform=iOS Simulator,id=7A5E53D5-112F-41DF-8CEA-9E6DE09F8E85 -destination-timeout 30 -parallel-testing-enabled NO -only-testing:BeatLabUITests/BeatLabUITests/testRunnerCuesAndJumpControlNeverCoverEachOther -resultBundlePath TestResults/GAME-14/final-narrow-dark.xcresult",
+    "acceptance": false,
+    "reason": "Requested class BeatLabUITests does not exist. Actual class is PracticeUITests. No test acceptance claimed."
+  },
+  "narrow_final": "PENDING",
+  "phone": {
+    "signed_build": "NOT RUN",
+    "install": "NOT RUN",
+    "launch": "NOT RUN",
+    "learner_data_reset": false
+  },
+  "kids_character_kit_integration": "DEFERRED_BY_OWNER",
+  "prior_GAME13_narrow_XXXL_failures": "RETAINED_UNACCEPTED",
+  "core_regression": "NOT RERUN; 53 historical GAME-13 tests; Core sources/tests remain byte-identical",
+  "cannot_claim": [
+    "Physical 60 BPM audiovisual synchronization",
+    "physical frame pacing/FPS/input latency",
+    "full UI/accessibility suite",
+    "prior narrow XXXL accepted",
+    "owner/child playtesting",
+    "TestFlight updated",
+    "public readiness",
+    "knowledge-base writer complete"
+  ],
+  "evidence_refs": {
+    "build-copy.json": {
+      "path": "TestResults/GAME-14/build-copy.json",
+      "sha256": "f4f0d834927b9b4f66a3e16f213b4d5923192383f226a90841eb4d340e9928d7"
+    },
+    "protected-source.json": {
+      "path": "TestResults/GAME-14/protected-source.json",
+      "sha256": "a7f0ce584d6b6132d3fc7f42ea15d5b55b752e01bba3880c86b4ef46eaea7d4b"
+    },
+    "pre-fix-build-copy.json": {
+      "path": "TestResults/GAME-14/pre-fix-build-copy.json",
+      "sha256": "8590517796ea6cf2a054b6b159ce7fe071b4c2eac09b638680642b2d7bb4330c"
+    },
+    "pre-fix-build.log": {
+      "path": "TestResults/GAME-14/pre-fix-build.log",
+      "sha256": "fd0b907fe10d5a6c3c6917e4bea666c3613b82f8dcbd961459b60897abdbc633"
+    },
+    "pre-fix.log": {
+      "path": "TestResults/GAME-14/pre-fix.log",
+      "sha256": "184d4988bd48fa4712a2e064ae86b3de95818b53e75a5277c776c6b440ab0f41"
+    },
+    "pre-fix-summary.json": {
+      "path": "TestResults/GAME-14/pre-fix-summary.json",
+      "sha256": "df9ab9a1d0b1cfda9e278cde8fc2f0e23292186bcc6516a3707085dd414cdd4c"
+    },
+    "native-build.log": {
+      "path": "TestResults/GAME-14/native-build.log",
+      "sha256": "ef37073a45f312f6c6fc07a9b55cf951c27bef3219e87f8d8533af1708915bd6"
+    },
+    "final-wide.log": {
+      "path": "TestResults/GAME-14/final-wide.log",
+      "sha256": "1c20674a7f52ea8c8abe41d38dab7b500fba95b5153236ed59b22e7543f5a9ae"
+    },
+    "final-wide-summary.json": {
+      "path": "TestResults/GAME-14/final-wide-summary.json",
+      "sha256": "dc010c4e01d0ffef9b4987c2fca6e2b6b76037af67e9b773d91551e11c7f6a83"
+    },
+    "concept-report.json": {
+      "path": "TestResults/GAME-14/concept-report.json",
+      "sha256": "b03d514d756e4d0ad4fda7b2b5bc6014d56e6cfb9dbb2d843257bb5d76248b5b"
+    },
+    "concept-attempt1-failure.json": {
+      "path": "TestResults/GAME-14/concept-attempt1-failure.json",
+      "sha256": "a292c5fdc07dacd280259877f1780620f4c79519d1cb50298f4e732591e3f026"
+    },
+    "concept-attempt1.log": {
+      "path": "TestResults/GAME-14/concept-attempt1.log",
+      "sha256": "274e882d006dde3d7a179d351f63e85fcbad4c01040ce5728cf38c0389d9807d"
+    },
+    "concept-attempt2-report.json": {
+      "path": "TestResults/GAME-14/concept-attempt2-report.json",
+      "sha256": "9913b1e52709b108d109c3f9a0414cfde794a32c3d89547c125eca2d2aa6b377"
+    },
+    "concept-attempt2.log": {
+      "path": "TestResults/GAME-14/concept-attempt2.log",
+      "sha256": "7908eae5c574f55808f8079e00d2ff6e00e8adfcc25ee7815b75ace4bc904cd8"
+    },
+    "concept-final.log": {
+      "path": "TestResults/GAME-14/concept-final.log",
+      "sha256": "0f61725d664d8ad0591f07745f19d356b4ad7756e2175f49cdc2c8d600e4c0e4"
+    },
+    "early-input-observation.json": {
+      "path": "TestResults/GAME-14/early-input-observation.json",
+      "sha256": "bbc29413e33b27e8675a92f16b4ae2fcd7f460a28807c5976ed3667f4964fd95"
+    },
+    "new-early-render-observation.json": {
+      "path": "TestResults/GAME-14/new-early-render-observation.json",
+      "sha256": "67a72eb133be89358138a6bdca7eef785808b1dfad103d45a33aca4b3892c6a5"
+    },
+    "sourcecheck.json": {
+      "path": "TestResults/GAME-14/sourcecheck.json",
+      "sha256": "738804c237094fa824b7727a88e565de84eb6c5d4625ee2f349a37c4ca28099d"
+    },
+    "parse.log": {
+      "path": "TestResults/GAME-14/parse.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    "narrow-attempt1-interruption.json": {
+      "path": "TestResults/GAME-14/narrow-attempt1-interruption.json",
+      "sha256": "e435ddb08ebbb0966d88e3386c6b49d8b0a70c80686b8c2d69a65dc6b23131b9"
+    }
+  }
+}

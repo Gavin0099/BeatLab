@@ -266,6 +266,22 @@ struct EggAnimationFrame {
     }
 }
 
+/// Outcome affects only a cue that has already reached its scheduled crossing.
+/// A matched early tap must never make an upcoming beat disappear.
+enum EggBeatLane {
+    static func obstacleAlpha(id: Int, elapsed: Double, matched: Bool, reduceMotion: Bool) -> CGFloat {
+        guard matched, elapsed.isFinite, (0..<16).contains(id) else { return 1 }
+        let age = elapsed - Double(4 + id)
+        guard age > 0 else { return 1 }
+        return reduceMotion ? 0 : CGFloat(max(0, 1 - age / 0.25))
+    }
+    static func markerAlpha(elapsed: Double, reduceMotion: Bool) -> CGFloat {
+        guard !reduceMotion, elapsed.isFinite, (4..<20).contains(elapsed) else { return 0.45 }
+        let phase = (elapsed - 4).truncatingRemainder(dividingBy: 1)
+        return 0.45 + 0.55 * CGFloat(max(0, 1 - phase / 0.12))
+    }
+}
+
 struct EggSceneSnapshot {
     var elapsed: Double = 0
     var accepted: Set<Int> = []
@@ -318,6 +334,7 @@ final class EggSpriteScene: SKScene {
     private let player = SKNode()
     private let first = SKSpriteNode()
     private let shadow = SKShapeNode(ellipseOf: CGSize(width: 82, height: 10))
+    private let beatMarker = SKShapeNode(rectOf: CGSize(width: 6, height: 36), cornerRadius: 3)
     private let nest = SKSpriteNode(texture: EggSceneTextures.original[7])
     private var rocks: [SKSpriteNode] = [], rewards: [SKShapeNode] = [], pebbles: [SKShapeNode] = [], dust: [SKShapeNode] = []
     private let glint: SKShapeNode
@@ -341,6 +358,8 @@ final class EggSpriteScene: SKScene {
         island.name = "backdrop"; island.anchorPoint = .zero; island.zPosition = 0; addChild(island)
         floor.zPosition = 1; edge.zPosition = 2; addChild(floor); addChild(edge)
         shadow.fillColor = UIColor(red: 0.08, green: 0.25, blue: 0.18, alpha: 1); shadow.strokeColor = .clear; shadow.zPosition = 4; addChild(shadow)
+        beatMarker.name = "beatMarker"; beatMarker.fillColor = theme.accent; beatMarker.strokeColor = .clear
+        beatMarker.zPosition = 8; addChild(beatMarker)
         player.name = "player"; player.zPosition = 6; addChild(player)
         first.name = "characterPrimary"; first.zPosition = 0
         player.addChild(first)
@@ -407,6 +426,7 @@ final class EggSpriteScene: SKScene {
         }
         for pebble in pebbles { pebble.fillColor = next.accent.withAlphaComponent(0.25) }
         for puff in dust { puff.fillColor = next.pad }
+        beatMarker.fillColor = next.accent
         glint.fillColor = next == .robot ? .cyan : .systemYellow
         resizeNodes()
     }
@@ -450,9 +470,16 @@ final class EggSpriteScene: SKScene {
         for id in 0..<16 {
             let px = x + CGFloat(Double(id) - moving) * stride
             let visible = !stopped && px > -70 && px < w + 70
-            rocks[id].isHidden = !visible || snapshot.accepted.contains(id); rocks[id].position = CGPoint(x: px, y: ground - 5)
-            rewards[id].isHidden = !visible || !snapshot.accepted.contains(id); rewards[id].position = CGPoint(x: px, y: ground + 30)
+            let matched = snapshot.accepted.contains(id)
+            let alpha = EggBeatLane.obstacleAlpha(id: id, elapsed: elapsed, matched: matched, reduceMotion: reduced)
+            rocks[id].alpha = alpha; rocks[id].isHidden = !visible || alpha == 0
+            rocks[id].position = CGPoint(x: px, y: ground - 5)
+            rewards[id].isHidden = !visible || !matched || elapsed < Double(4 + id)
+            rewards[id].position = CGPoint(x: px, y: ground + 75)
         }
+        beatMarker.isHidden = stopped
+        beatMarker.position = CGPoint(x: x, y: ground - 16)
+        beatMarker.alpha = EggBeatLane.markerAlpha(elapsed: elapsed, reduceMotion: reduced)
         let nestX = stopped ? w * 0.76 : x + CGFloat(16 - moving) * stride
         nest.isHidden = nestX >= w + 100; nest.position = CGPoint(x: nestX, y: ground - 7)
         // Scale the whole trajectory to fit; clipping its top makes a flat,

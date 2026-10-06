@@ -289,6 +289,62 @@ final class PracticeStoreTests: XCTestCase {
 
 final class EggMissionPresentationTests: XCTestCase {
     @MainActor
+    func testEarlyMatchedObstacleStaysVisibleUntilScheduledCrossing() throws {
+        let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
+        let rock = try XCTUnwrap(scene.childNode(withName: "rock0"))
+        let reward = try XCTUnwrap(scene.childNode(withName: "reward0"))
+        scene.configure(EggSceneSnapshot(elapsed: 3.9, accepted: [0]))
+        XCTAssertFalse(rock.isHidden, "An early accepted press must not remove a cue before the fixed 4s first beat")
+        XCTAssertEqual(rock.alpha, 1, accuracy: 0.0001)
+        XCTAssertTrue(reward.isHidden, "Route reward must not replace the upcoming rock before crossing")
+    }
+    @MainActor
+    func testSixteenObstacleCentersCrossFixedMarkerAtCatalogBeatsRegardlessOfHitsOrDroppedFrames() throws {
+        let lesson = try XCTUnwrap(try LessonCatalog.bundled().lessons.first { $0.id == "first-beat" })
+        let targets = try lesson.pattern.targets(bpm: 60, bars: 4, epoch: 100)
+        XCTAssertEqual(targets.map(\.time), (104...119).map(Double.init), "Reviewed first lesson: four count-in beats, then sixteen 1s targets")
+        for width: CGFloat in [320, 375, 402] {
+            for accepted: Set<Int> in [[], [0, 2, 5, 15], Set(0..<16)] {
+                let scene = EggSpriteScene(size: CGSize(width: width, height: 400))
+                let state = EggSceneSnapshot(accepted: accepted, presentationElapsed: { $0 - 100 })
+                scene.configure(state)
+                let marker = try XCTUnwrap(scene.childNode(withName: "beatMarker"))
+                for target in targets {
+                    // Render directly after arbitrary skipped display frames:
+                    // position must still read the catalog/audio-host timeline.
+                    scene.render(at: target.time - 0.1)
+                    let rock = try XCTUnwrap(scene.childNode(withName: "rock\(target.id)"))
+                    XCTAssertFalse(rock.isHidden); XCTAssertEqual(rock.alpha, 1, accuracy: 0.0001)
+                    XCTAssertGreaterThan(rock.position.x, marker.position.x)
+                    scene.render(at: target.time)
+                    XCTAssertEqual(rock.position.x, marker.position.x, accuracy: 0.0001)
+                    XCTAssertFalse(rock.isHidden)
+                    XCTAssertEqual(marker.alpha, 1, accuracy: 0.0001)
+                    scene.render(at: target.time + 0.125)
+                    XCTAssertLessThan(rock.position.x, marker.position.x)
+                    XCTAssertEqual(rock.alpha, accepted.contains(target.id) ? 0.5 : 1, accuracy: 0.0001)
+                }
+                scene.configure(EggSceneSnapshot(elapsed: 8.5, accepted: accepted))
+                let fifth = try XCTUnwrap(scene.childNode(withName: "rock5"))
+                let sixth = try XCTUnwrap(scene.childNode(withName: "rock6"))
+                XCTAssertEqual(sixth.position.x - fifth.position.x, width * 0.31, accuracy: 0.0001)
+            }
+        }
+    }
+    func testBeatLaneReducedMotionAndInvalidValuesDoNotRemoveUpcomingCues() {
+        for reduced in [false, true] {
+            for time in [Double.nan, -.infinity, .infinity, -1, 0, 3.9, 4] {
+                XCTAssertEqual(EggBeatLane.obstacleAlpha(id: 0, elapsed: time, matched: true, reduceMotion: reduced), 1)
+            }
+            XCTAssertEqual(EggBeatLane.obstacleAlpha(id: 0, elapsed: 4.125, matched: false, reduceMotion: reduced), 1)
+            XCTAssertEqual(EggBeatLane.obstacleAlpha(id: 0, elapsed: 4.25, matched: true, reduceMotion: reduced), 0)
+        }
+        XCTAssertEqual(EggBeatLane.obstacleAlpha(id: 0, elapsed: 4.125, matched: true, reduceMotion: true), 0)
+        XCTAssertEqual(EggBeatLane.markerAlpha(elapsed: 4, reduceMotion: true), 0.45)
+        XCTAssertEqual(EggBeatLane.markerAlpha(elapsed: .nan, reduceMotion: false), 0.45)
+        XCTAssertEqual(EggBeatLane.markerAlpha(elapsed: 20, reduceMotion: false), 0.45)
+    }
+    @MainActor
     func testCompanionScenesUseDistinctLoadedArtAndMotionWithoutChangingAcceptedState() throws {
         let scenes = [RunnerTheme.cat, .robot].map { theme -> EggSpriteScene in
             let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
@@ -300,7 +356,8 @@ final class EggMissionPresentationTests: XCTestCase {
             let sprite = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
             XCTAssertEqual(player.children.count, 1); XCTAssertEqual(sprite.alpha, 1)
             XCTAssertGreaterThan(sprite.size.height, 70); XCTAssertGreaterThan(try XCTUnwrap(sprite.texture).size().width, 100)
-            XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden)
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden)
+            XCTAssertEqual(try XCTUnwrap(scene.childNode(withName: "rock0")).alpha, 0.36, accuracy: 0.0001)
             XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "reward0")).isHidden)
             XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "rock1")).isHidden)
             XCTAssertGreaterThan(player.position.y, 100)
@@ -388,7 +445,8 @@ final class EggMissionPresentationTests: XCTestCase {
         XCTAssertLessThan(rock.position.x, previous, "Nodes move between store polls on the existing read-only clock")
         state.accepted = [0]; state.acceptedAction = try hit(0, 104, "perfect"); state.latestAction = try hit(nil, 104.2, "extra")
         scene.configure(state); scene.render(at: 104.24)
-        XCTAssertTrue(rock.isHidden); XCTAssertFalse(reward.isHidden); XCTAssertGreaterThan(player.position.y, 60)
+        XCTAssertFalse(rock.isHidden); XCTAssertEqual(rock.alpha, 0.04, accuracy: 0.0001)
+        XCTAssertFalse(reward.isHidden); XCTAssertGreaterThan(player.position.y, 60)
         scene.render(at: 104.70)
         XCTAssertEqual(player.position.y, 51, accuracy: 2.001, "Old extra must not start a second bounce")
         for host in [Double.nan, .infinity, -.infinity, 103, 104.48, 105, 120.18] {
