@@ -3,7 +3,108 @@ import UIKit
 import SpriteKit
 import BeatLabCore
 
+/// Cosmetic mission vocabulary and motion personality; never creates targets.
+enum RunnerTheme: String, CaseIterable {
+    case dinosaur, cat, robot
+    var title: String { self == .cat ? "貓咪" : self == .robot ? "機器人" : "恐龍" }
+    var mission: String { self == .cat ? "把魚送回雲端小屋" : self == .robot ? "把能源送回充電站" : "把恐龍蛋帶回家" }
+    var destination: String { self == .cat ? "前往雲端小屋" : self == .robot ? "前往充電站" : "前往溫暖的巢" }
+    var item: String { self == .cat ? "魚包裹" : self == .robot ? "能源" : "蛋" }
+    var obstacle: String { self == .cat ? "雲丘" : self == .robot ? "電路障礙" : "石頭" }
+    var passed: String { self == .cat ? "魚送到小屋了！" : self == .robot ? "能源送到充電站了！" : "蛋安全回到巢了！" }
+    var retry: String { self == .dinosaur ? "蛋接住了，再試一次！" : "\(item)接住了，再試一次！" }
+    var backdrop: String { self == .cat ? "RunnerCloud" : self == .robot ? "RunnerCircuit" : "RunnerIsland" }
+    var atlas: String { self == .cat ? "CatMotionAtlas" : "RobotMotionAtlas" }
+    var bobAmplitude: CGFloat { self == .cat ? 2.5 : self == .robot ? 1 : 2 }
+    var bobFrequency: Double { self == .cat ? 8 : self == .robot ? 12 : 10 }
+    var lean: CGFloat { self == .cat ? 0.7 : self == .robot ? 0.25 : 1 }
+    var compression: CGFloat { self == .cat ? 1.2 : self == .robot ? 0.4 : 1 }
+    var accent: UIColor { self == .cat ? UIColor(red: 0.76, green: 0.35, blue: 0.22, alpha: 1) : self == .robot ? UIColor(red: 0.10, green: 0.36, blue: 0.66, alpha: 1) : UIColor(red: 0.25, green: 0.56, blue: 0.40, alpha: 1) }
+    var pad: UIColor { self == .cat ? UIColor(red: 1, green: 0.84, blue: 0.68, alpha: 1) : self == .robot ? UIColor(red: 0.60, green: 0.87, blue: 0.98, alpha: 1) : UIColor(red: 1, green: 0.86, blue: 0.44, alpha: 1) }
+}
+
+struct MissionProp: View {
+    let theme: RunnerTheme
+    let destination: Bool
+    var body: some View {
+        if theme == .dinosaur { EggSprite(pose: destination ? .nest : .egg) }
+        else if let image = CompanionAtlas.pack(theme).images[destination ? 19 : 18] {
+            Image(decorative: image, scale: 1).resizable().scaledToFit().accessibilityHidden(true)
+        }
+    }
+}
+
 enum EggPose: Int { case runA, runB, ready, jump, catchEgg, celebrate, egg, nest, rock }
+/// Reviewed alpha-bounds, cached once. Generated PNGs stay unchanged.
+private enum CompanionAtlas {
+    struct Pack {
+        let images: [CGImage?]
+        let textures: [SKTexture]
+        init(name: String, bounds: [CGRect]) {
+            let atlas = UIImage(named: name)?.cgImage
+            images = bounds.map { atlas?.cropping(to: $0) }
+            textures = images.map { image in
+                guard let image else { return SKTexture() }
+                let texture = SKTexture(cgImage: image); texture.filteringMode = .linear; return texture
+            }
+        }
+    }
+    static let cat = Pack(name: "CatMotionAtlas", bounds: [
+        CGRect(x: 17, y: 31, width: 236, height: 226),
+        CGRect(x: 278, y: 31, width: 224, height: 235),
+        CGRect(x: 522, y: 29, width: 233, height: 233),
+        CGRect(x: 776, y: 32, width: 237, height: 235),
+        CGRect(x: 12, y: 296, width: 242, height: 232),
+        CGRect(x: 279, y: 295, width: 227, height: 226),
+        CGRect(x: 523, y: 296, width: 230, height: 226),
+        CGRect(x: 774, y: 294, width: 225, height: 234),
+        CGRect(x: 19, y: 633, width: 233, height: 181),
+        CGRect(x: 275, y: 547, width: 229, height: 229),
+        CGRect(x: 532, y: 541, width: 230, height: 211),
+        CGRect(x: 787, y: 570, width: 226, height: 243),
+        CGRect(x: 16, y: 851, width: 232, height: 226),
+        CGRect(x: 272, y: 851, width: 226, height: 223),
+        CGRect(x: 535, y: 841, width: 215, height: 237),
+        CGRect(x: 773, y: 881, width: 232, height: 196),
+        CGRect(x: 26, y: 1107, width: 230, height: 196),
+        CGRect(x: 256, y: 1087, width: 255, height: 218),
+        CGRect(x: 552, y: 1175, width: 173, height: 106),
+        CGRect(x: 773, y: 1104, width: 235, height: 203),
+        CGRect(x: 22, y: 1387, width: 232, height: 102),
+        CGRect(x: 330, y: 1348, width: 121, height: 137),
+        CGRect(x: 539, y: 1371, width: 208, height: 128),
+        CGRect(x: 804, y: 1396, width: 182, height: 103)
+    ])
+    static let robot = Pack(name: "RobotMotionAtlas", bounds: [
+        CGRect(x: 44, y: 18, width: 175, height: 232),
+        CGRect(x: 291, y: 17, width: 190, height: 235),
+        CGRect(x: 558, y: 18, width: 175, height: 233),
+        CGRect(x: 799, y: 17, width: 189, height: 236),
+        CGRect(x: 49, y: 271, width: 174, height: 236),
+        CGRect(x: 291, y: 270, width: 189, height: 239),
+        CGRect(x: 540, y: 271, width: 192, height: 238),
+        CGRect(x: 799, y: 270, width: 189, height: 238),
+        CGRect(x: 27, y: 565, width: 189, height: 202),
+        CGRect(x: 280, y: 521, width: 217, height: 239),
+        CGRect(x: 562, y: 525, width: 178, height: 204),
+        CGRect(x: 787, y: 521, width: 205, height: 237),
+        CGRect(x: 27, y: 784, width: 202, height: 233),
+        CGRect(x: 287, y: 822, width: 206, height: 195),
+        CGRect(x: 563, y: 775, width: 162, height: 243),
+        CGRect(x: 801, y: 834, width: 200, height: 185),
+        CGRect(x: 30, y: 1063, width: 197, height: 198),
+        CGRect(x: 283, y: 1029, width: 198, height: 232),
+        CGRect(x: 560, y: 1095, width: 163, height: 141),
+        CGRect(x: 786, y: 1122, width: 225, height: 136),
+        CGRect(x: 28, y: 1344, width: 222, height: 144),
+        CGRect(x: 321, y: 1315, width: 136, height: 154),
+        CGRect(x: 529, y: 1346, width: 215, height: 158),
+        CGRect(x: 786, y: 1367, width: 212, height: 96)
+    ])
+    static let backgrounds = Dictionary(uniqueKeysWithValues: RunnerTheme.allCases.map { ($0, SKTexture(imageNamed: $0.backdrop)) })
+    static func pack(_ theme: RunnerTheme) -> Pack { theme == .cat ? cat : robot }
+    static func background(_ theme: RunnerTheme) -> SKTexture? { backgrounds[theme] }
+}
 
 /// Crop and decode existing source regions once, never from the frame callback.
 /// Character frames share source scale and a registered foot baseline.
@@ -101,6 +202,7 @@ struct EggMotion {
 }
 
 struct EggMissionScene: View {
+    var theme: RunnerTheme = .dinosaur
     var elapsed: Double
     var accepted: Set<Int> = []
     var latestGrade: TimingGrade?
@@ -112,25 +214,34 @@ struct EggMissionScene: View {
     var latestAction: TimingHit? = nil
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
+    @Environment(\.dynamicTypeSize) private var textSize
     private let ink = Color(red: 0.08, green: 0.25, blue: 0.18)
+    private var sceneCaption: String {
+        if textSize.isAccessibilitySize {
+            if let passed = finishedPassed { return passed ? "送到了！" : "接住了！" }
+            if preparing { return theme == .cat ? "帶魚出發" : theme == .robot ? "帶能源" : "帶蛋出發" }
+            return theme == .cat ? "往小屋" : theme == .robot ? "往充電站" : "往家裡"
+        }
+        return preparing ? theme.mission : finishedPassed == nil ? theme.destination : finishedPassed == true ? theme.passed : "\(theme.item)安全接住了"
+    }
 
     var body: some View {
         ZStack(alignment: .top) {
             EggSpriteSurface(state: EggSceneSnapshot(elapsed: elapsed, accepted: accepted,
                 latestGrade: latestGrade, hitAge: hitAge, finishedPassed: finishedPassed, preparing: preparing,
                 reduceMotion: reduceMotion, suspended: scenePhase != .active,
-                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction))
+                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction, theme: theme))
                 .accessibilityHidden(true)
             HStack(spacing: 6) {
-                EggSprite(pose: .egg).frame(width: 22, height: 30)
-                Text(preparing ? "把蛋帶回家" : finishedPassed == nil ? "前往溫暖的巢" : "蛋安全接住了")
+                MissionProp(theme: theme, destination: false).frame(width: 22, height: 30)
+                Text(sceneCaption)
                     .font(.system(.subheadline, design: .rounded).bold())
                 Spacer(minLength: 4)
-                EggSprite(pose: .nest).frame(width: 38, height: 30)
+                MissionProp(theme: theme, destination: true).frame(width: 38, height: 30)
             }.padding(10).background(Color(red: 1, green: 0.98, blue: 0.88), in: Capsule())
                 .padding(12).foregroundStyle(ink)
         }.clipShape(RoundedRectangle(cornerRadius: 26))
-            .accessibilityElement(children: .ignore).accessibilityLabel("恐龍送蛋回巢")
+            .accessibilityElement(children: .ignore).accessibilityLabel(theme.mission)
             .accessibilityValue(finishedPassed.map { $0 ? "任務通過" : "需要再試一次" } ?? "已跨過 \(accepted.count) 個障礙")
             .accessibilityIdentifier("eggMissionScene")
     }
@@ -167,6 +278,7 @@ struct EggSceneSnapshot {
     var presentationElapsed: ((Double) -> Double)?
     var acceptedAction: TimingHit?
     var latestAction: TimingHit?
+    var theme: RunnerTheme = .dinosaur
     var animate: Bool { !reduceMotion && !suspended && !preparing && finishedPassed == nil && presentationElapsed != nil }
 }
 
@@ -199,6 +311,7 @@ private enum EggSceneTextures {
 final class EggSpriteScene: SKScene {
     private var graphReady = false
     private var snapshot = EggSceneSnapshot()
+    private(set) var theme: RunnerTheme = .dinosaur
     private let island = SKSpriteNode(texture: SKTexture(imageNamed: "RunnerIsland"))
     private let floor = SKSpriteNode(color: UIColor(red: 0.87, green: 0.69, blue: 0.42, alpha: 1), size: .zero)
     private let edge = SKSpriteNode(color: UIColor(red: 0.65, green: 0.82, blue: 0.45, alpha: 1), size: .zero)
@@ -225,13 +338,13 @@ final class EggSpriteScene: SKScene {
         super.init(size: size)
         scaleMode = .resizeFill
         backgroundColor = UIColor(red: 1, green: 0.95, blue: 0.81, alpha: 1)
-        island.anchorPoint = .zero; island.zPosition = 0; addChild(island)
+        island.name = "backdrop"; island.anchorPoint = .zero; island.zPosition = 0; addChild(island)
         floor.zPosition = 1; edge.zPosition = 2; addChild(floor); addChild(edge)
         shadow.fillColor = UIColor(red: 0.08, green: 0.25, blue: 0.18, alpha: 1); shadow.strokeColor = .clear; shadow.zPosition = 4; addChild(shadow)
         player.name = "player"; player.zPosition = 6; addChild(player)
         first.name = "characterPrimary"; first.zPosition = 0
         player.addChild(first)
-        nest.anchorPoint = CGPoint(x: 0.5, y: 0); nest.zPosition = 3; addChild(nest)
+        nest.name = "destination"; nest.anchorPoint = CGPoint(x: 0.5, y: 0); nest.zPosition = 3; addChild(nest)
         for id in 0..<16 {
             let rock = SKSpriteNode(texture: EggSceneTextures.original[8]); rock.name = "rock\(id)"
             rock.anchorPoint = CGPoint(x: 0.5, y: 0); rock.zPosition = 3; addChild(rock); rocks.append(rock)
@@ -259,16 +372,43 @@ final class EggSpriteScene: SKScene {
         floor.size = CGSize(width: size.width, height: max(0, ground - 6)); floor.position = CGPoint(x: size.width / 2, y: floor.size.height / 2)
         edge.size = CGSize(width: size.width, height: 12); edge.position = CGPoint(x: size.width / 2, y: ground)
         characterSize = min(180, max(118, size.height * 0.42))
-        nest.size = CGSize(width: 70 * 397 / 248, height: 70)
-        for rock in rocks { rock.size = CGSize(width: 54 * 351 / 260, height: 54) }
+        if theme == .dinosaur {
+            nest.size = CGSize(width: 70 * 397 / 248, height: 70)
+            for rock in rocks { rock.size = CGSize(width: 54 * 351 / 260, height: 54) }
+        } else {
+            let pack = CompanionAtlas.pack(theme), destination = pack.textures[19].size(), obstacle = pack.textures[20].size()
+            nest.size = CGSize(width: 70 * destination.width / max(1, destination.height), height: 70)
+            for rock in rocks { rock.size = CGSize(width: 38 * obstacle.width / max(1, obstacle.height), height: 38) }
+        }
     }
     func configure(_ state: EggSceneSnapshot) {
+        if theme != state.theme { applyTheme(state.theme) }
         snapshot = state
         #if DEBUG
         if !state.animate { previousHost = nil }
         #endif
         render(at: PracticeStore.now())
         view?.isPaused = !state.animate
+    }
+    private func applyTheme(_ next: RunnerTheme) {
+        theme = next
+        island.texture = CompanionAtlas.background(next)
+        if next == .dinosaur {
+            nest.texture = EggSceneTextures.original[7]
+            for rock in rocks { rock.texture = EggSceneTextures.original[8] }
+            floor.color = UIColor(red: 0.87, green: 0.69, blue: 0.42, alpha: 1)
+            edge.color = UIColor(red: 0.65, green: 0.82, blue: 0.45, alpha: 1)
+        } else {
+            let pack = CompanionAtlas.pack(next)
+            nest.texture = pack.textures[19]
+            for rock in rocks { rock.texture = pack.textures[20] }
+            floor.color = next == .cat ? UIColor(red: 1, green: 0.96, blue: 0.91, alpha: 1) : UIColor(red: 0.33, green: 0.48, blue: 0.71, alpha: 1)
+            edge.color = next == .cat ? UIColor(red: 1, green: 0.89, blue: 0.83, alpha: 1) : UIColor(red: 0.35, green: 0.79, blue: 0.93, alpha: 1)
+        }
+        for pebble in pebbles { pebble.fillColor = next.accent.withAlphaComponent(0.25) }
+        for puff in dust { puff.fillColor = next.pad }
+        glint.fillColor = next == .robot ? .cyan : .systemYellow
+        resizeNodes()
     }
     func detach() {
         snapshot.presentationElapsed = nil; snapshot.acceptedAction = nil; snapshot.latestAction = nil
@@ -321,9 +461,11 @@ final class EggSpriteScene: SKScene {
         shadow.position = CGPoint(x: x, y: ground - 5); shadow.xScale = 1 - hop / 180; shadow.alpha = 0.18 - hop / 74 * 0.07
         let running = !stopped && !reduced && elapsed >= 4 && hop == 0 && missed == nil
         let gaitWeight = age.map { EggAnimationFrame.ease(($0 - 0.64) / 0.12) } ?? 1
-        let bob = running ? CGFloat(sin(elapsed * .pi * 10)) * 2 * gaitWeight : 0
+        let bob = running ? CGFloat(sin(elapsed * .pi * theme.bobFrequency)) * theme.bobAmplitude * gaitWeight : 0
         player.position = CGPoint(x: x, y: ground - 5 + hop + bob)
-        player.zRotation = -motion.angle; player.xScale = motion.scaleX; player.yScale = motion.scaleY
+        player.zRotation = -motion.angle * Double(theme.lean)
+        player.xScale = 1 + (motion.scaleX - 1) * theme.compression
+        player.yScale = 1 + (motion.scaleY - 1) * theme.compression
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
         else if missed != nil && (age == nil || age! >= 0.64) { setOriginal(first, 4) }
         else {
@@ -337,12 +479,20 @@ final class EggSpriteScene: SKScene {
         glint.position = CGPoint(x: x + 54, y: ground + characterSize + hop - 24)
     }
     private func setOriginal(_ node: SKSpriteNode, _ index: Int) {
+        if theme != .dinosaur { setAnimated(node, index == 5 ? 17 : 16); return }
         let texture = EggSceneTextures.original[index]
         if node.texture !== texture { node.texture = texture }
         let source = EggSpriteAssets.bounds[index].size
         node.anchorPoint = CGPoint(x: 0.5, y: 0); node.size = CGSize(width: source.width * characterSize / 452, height: source.height * characterSize / 452)
     }
     private func setAnimated(_ node: SKSpriteNode, _ index: Int) {
+        if theme != .dinosaur {
+            let texture = CompanionAtlas.pack(theme).textures[index], source = texture.size()
+            if node.texture !== texture { node.texture = texture }
+            node.anchorPoint = CGPoint(x: 0.5, y: 0)
+            node.size = CGSize(width: source.width * characterSize / 240, height: source.height * characterSize / 240)
+            return
+        }
         let texture = EggSceneTextures.animated[index], source = texture.size(), eye = EggSceneTextures.eyes[index]
         if node.texture !== texture { node.texture = texture }
         guard source.width > 0, source.height > 0 else { node.size = .zero; return }
@@ -382,6 +532,7 @@ struct EggMissionView: View {
     let accepted: Set<Int>
     let streak: Int
     let stop: () -> Void
+    var theme: RunnerTheme = .dinosaur
     @State private var acceptedAction: TimingHit?
     private let ink = Color(red: 0.08, green: 0.25, blue: 0.18)
     private var age: Double? { practice.latestHit.map { max(0, PracticeStore.now() - $0.inputTime) } }
@@ -389,13 +540,13 @@ struct EggMissionView: View {
         if practice.elapsed < 4 { return "先聽 \(max(1, 4 - Int(practice.elapsed))) 拍，準備跳" }
         if let age, age < 0.48, let grade = practice.latestHit?.grade {
             switch grade {
-            case .perfect: return "漂亮！蛋亮起來了"
+            case .perfect: return "漂亮！\(theme.item)亮起來了"
             case .early: return "跳過了，下一拍稍等一下"
             case .late: return "跳過了，下一拍早一點"
             case .extra: return "多打一下，再跟上"
             }
         }
-        return EggMissionPresentation.missed(elapsed: practice.elapsed, accepted: accepted) == nil ? "石頭到腳下，跟鼓聲跳！" : "接住了！下一拍再跳"
+        return EggMissionPresentation.missed(elapsed: practice.elapsed, accepted: accepted) == nil ? "\(theme.obstacle)到腳下，跟鼓聲跳！" : "接住了！下一拍再跳"
     }
     var body: some View {
         GeometryReader { geometry in
@@ -413,14 +564,14 @@ struct EggMissionView: View {
             HStack {
                 VStack(alignment: .leading, spacing: 3) {
                     Text("第 1 關 · 節奏跑酷").font(.headline).accessibilityIdentifier("activeLessonNumber")
-                    Text("恐龍陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("activeCompanion")
+                    Text("\(theme.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("activeCompanion")
                 }
                 Spacer()
                 Text("60 BPM").font(.subheadline.monospacedDigit())
             }
             ProgressView(value: min(1, max(0, (practice.elapsed - 4) / 16)))
-                .tint(BeatLabStyle.success).accessibilityLabel("回巢進度")
-            EggMissionScene(elapsed: practice.elapsed, accepted: accepted,
+                .tint(Color(uiColor: theme.accent)).accessibilityLabel("任務進度")
+            EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: accepted,
                             presentationElapsed: { practice.presentationElapsed(at: $0) },
                             acceptedAction: acceptedAction, latestAction: practice.latestHit)
                 .frame(height: sceneHeight)
@@ -440,10 +591,10 @@ struct EggMissionView: View {
             HStack {
                 Text("跨過 \(accepted.count) / 16 個障礙").accessibilityIdentifier("jumpMatches")
                 Spacer(minLength: 4)
-                Text(streak >= 2 ? "連續 \(streak) 拍漂亮！" : "把蛋帶回家")
+                Text(streak >= 2 ? "連續 \(streak) 拍漂亮！" : theme.mission)
             }.font(.caption.bold())
             ZStack {
-                RoundedRectangle(cornerRadius: 24).fill(HomeBrand.hero)
+                RoundedRectangle(cornerRadius: 24).fill(Color(uiColor: theme.pad))
                 Label("跳！", systemImage: "arrow.up").font(.system(.title, design: .rounded).bold())
                     .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
                 TapPad(feedback: "跳，\(cue)") { time, accessible in practice.tap(at: time, accessibility: accessible) }

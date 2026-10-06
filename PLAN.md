@@ -271,3 +271,11 @@ Owner再次表示比較好但仍不夠流暢，要求修改。先立GAME-12 L2 e
 Owner具體回覆「跑步、跳躍像在換圖片」，據此把contract限縮到同恐龍/同蛋連續動作。新透明16幀圖集：8跑步、6跳躍、準備/壓縮落地；持久SpriteKit graph只讀原host/audio epoch，原觸控/判分/音訊/存檔不改。零速度落地與整條小場景弧線縮放；固定眼睛/腳底對齊。Video發現相鄰alpha混合双眼/雙腳，先修成單一opaque角色，再重新build/實際測；中間候選未安裝。初始化super.init提前didChangeSize造成未建圖越界，graphReadyguard修正並由actualSKView/scene/lifecycle regression覆蓋。這是呈現架構決策，不改timing authority。
 
 Final App47/Core53/browser25（16真實clock-cued input16Perfect/0Extra）通過；final-source wide49pass/1fail、narrow2pass/1fail的大字查詢超過原20秒關卡保留，停止build/錄影後同source/fixture串行重測各1pass，final dark1pass。沒有延長課程或更改UI測試。87source/83protected/70phone inputs bind；新候選已安裝同bundle/team0.1.0(10)，沒有uninstall/reset，auto-launch因手機鎖定FAIL。Simulator callback只作觀察，不宣稱真機FPS。Status IMPLEMENTED_INSTALLED_LOCAL_CHECKS_PASS_OWNER_PENDING；G1-G4、physical timing/owner/child replay仍未接受。未更新TestFlight/public。根因與決策使用canonical review-log/daily/active-task-summary；writer不支援knowledge-base surface，不宣稱03知識庫已規範化。詳GAME-12-verification.json。
+
+### 2026-10-06 — GAME-13 貓咪／機器人連續動作
+
+Owner要求兩個夥伴也採用連續跑跳且風格不同。先立 exact-file L2 契約，第一關60 BPM共用GAME-12 renderer／既有真實判分；貓咪柔軟雲端送魚、機器人蠟筆科技平台送能源。新的任務物件只作呈現，不增加關卡／模式／保存規則。先 playable concept 再 native；Status IN_PROGRESS，owner／硬體 timing／public gates 尚未接受。
+
+### 2026-10-06 — GAME-13 美術與動作實作完成，驗收仍有缺口
+
+貓咪獨立暖桃雲端送魚、機器人獨立蠟筆藍色科技平台送能源；第一關60 BPM共用既有節拍／判分／保存，8幀跑步＋6幀跳躍與快取SpriteKit素材。App49/Core53/browser20及final wide兩個角色真實tap／cancel／restart2/0 PASS；final narrow50/2保留大字application crash與robot零命中。Simulator CoreAudio RPC timeout發生在未改音訊停止路徑，根因尚未確定，不宣稱真機缺陷或只有環境問題。大字旅程／caption修正、fixture24次viewport-first scroll檢查保留所有失敗候選；final generic build PASS，explicit device build因destination unavailable FAIL。95source／83protected bind；Status IMPLEMENTED_BUILD_PASS_FINAL_UI_PARTIAL_OWNER_PENDING。手機新inventory tunnel unavailable，未簽署build／安裝／launch／TestFlight／public；G1-G4與owner／child／physical timing仍未接受。下一步先完成小螢幕大字與真機驗收；不得以兩個wide PASS消除narrow失敗。canonical writer只支援daily／review-log／active-task-summary，不宣稱03 knowledge-base已寫入。詳GAME-13-verification.json。

@@ -1,0 +1,37 @@
+{
+  "mode": "builtin imagegen",
+  "prompts": [
+    [
+      "CatMotionAtlas",
+      "Use case: illustration-story. Asset: original mobile game sprite atlas, genuinely transparent background. Create exactly 4 columns x 6 rows, 24 equal cells, clean padding, no lines, no text, no labels, no shadows outside character. Consistent scale, floor registration and right-facing three-quarter camera. Row-major frames 0-7: eight successive distinct run gait poses for one smooth cycle, alternating legs and arms with continuous follow-through. Frames 8-13: six successive jump poses (push off, rise, tuck, extend, descend, touch down); draw poses at same floor position, engine moves whole character. 14 ready, 15 landing compression, 16 stumble/safe catch (no harm), 17 happy arrival, 18 delivery item only, 19 destination only, 20 obstacle only, 21 small sparkle, 22 landing puff, 23 decorative tiny platform. Never duplicate whole-frame standing pose for gait frames; preserve body/face identity throughout. Each character fills 80% of its cell, all body parts fully inside. Input image: identity/style reference only. Same adorable orange-and-cream tabby cat with brown eyes, pink nose and striped tail as reference, warm soft children's illustration. Active biped cat carrying a small blue fish parcel in front paws in frames 0-17. Lithe playful run, tail follows, springy tucked-paw jump; subtle forward lean, same head proportions. Frame18 blue fish parcel;19 small cozy cloud cottage with peach roof;20 low peach cloud-bump obstacle. White soft clouds and peach accents, no dinosaur or robot.",
+      [
+        "/Users/pc49-58/Desktop/BeatLab/BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png"
+      ],
+      true
+    ],
+    [
+      "RobotMotionAtlas",
+      "Use case: illustration-story. Asset: original mobile game sprite atlas, genuinely transparent background. Create exactly 4 columns x 6 rows, 24 equal cells, clean padding, no lines, no text, no labels, no shadows outside character. Consistent scale, floor registration and right-facing three-quarter camera. Row-major frames 0-7: eight successive distinct run gait poses for one smooth cycle, alternating legs and arms with continuous follow-through. Frames 8-13: six successive jump poses (push off, rise, tuck, extend, descend, touch down); draw poses at same floor position, engine moves whole character. 14 ready, 15 landing compression, 16 stumble/safe catch (no harm), 17 happy arrival, 18 delivery item only, 19 destination only, 20 obstacle only, 21 small sparkle, 22 landing puff, 23 decorative tiny platform. Never duplicate whole-frame standing pose for gait frames; preserve body/face identity throughout. Each character fills 80% of its cell, all body parts fully inside. Input image: identity/style reference only. Preserve the cheerful silver rectangular robot with two red antenna tips, black button eyes, red cheeks, blue mittens/boots and colored control panel from reference. Preserve hand-drawn crayon grain, dark outline and expressive face, not a glossy new robot. Carry a compact cyan energy capsule in frames0-17. Distinct mechanical alternating leg gait, articulated elbows, compact spring-loaded hop, firm planted landing. Frame18 cyan energy capsule;19 compact blue charging dock;20 low blue circuit barrier. Cool sky blue/indigo and cyan, no cat/dinosaur.",
+      [
+        "/Users/pc49-58/Desktop/BeatLab/BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png"
+      ],
+      true
+    ],
+    [
+      "RunnerCloud",
+      "Use case: illustration-story. Original mobile rhythm game background, landscape 3:2 composition. Dreamy warm pastel cloud world matching soft orange tabby mascot reference (reference for style only, DO NOT draw character). Cream sky, peach dawn glow, distant floating cloud islands, soft powder blue depth, subtle cozy cottages far away. Foreground continuous fluffy white cloud road across full lower14% of image, calm unobstructed lower-middle playing area for animated character and approaching small obstacles. Top quarter has restrained detail for compact HUD. Rounded soft shaded illustration, clean readable broad shapes, warm inviting children game, no text/UI/characters/obstacles/collectibles/border. Distinct from tropical dinosaur island.",
+      [
+        "/Users/pc49-58/Desktop/BeatLab/BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png"
+      ],
+      false
+    ],
+    [
+      "RunnerCircuit",
+      "Use case: illustration-story. Original mobile rhythm game background, landscape3:2 composition. Cheerful hand-drawn crayon sci-fi workshop above a soft blue sky, match robot reference material (reference for style only, DO NOT draw robot). Light icy blue sky, cobalt and teal futuristic rounded towers in distance, subtle cyan glowing circuits, colored-pencil grain and confident dark edges. Foreground continuous blue technology deck across full lower14% with simple segmented floor/circuit details. Unobstructed lower-middle play space for sprites, top quarter restrained for HUD. Readable broad shapes and atmospheric layers, inviting children game, blue/cyan/indigo with small warm yellow lights, no dark oppressive neon, no text/UI/characters/obstacles/collectibles/border. Not a tropical island nor cloud-cottage world.",
+      [
+        "/Users/pc49-58/Desktop/BeatLab/BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png"
+      ],
+      false
+    ]
+  ]
+}

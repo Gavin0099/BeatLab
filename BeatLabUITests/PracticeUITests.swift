@@ -2,6 +2,92 @@ import XCTest
 
 final class PracticeUITests: XCTestCase {
     @MainActor
+    private func openFirstCompanionLesson(in app: XCUIApplication) throws {
+        let lesson = app.buttons["journeyLesson.first-beat"]
+        // Observe the visible, hittable frame, then prove the actual touch and
+        // exact transition without a launch route or score substitution.
+        try reveal(lesson, in: app)
+        XCTAssertTrue(lesson.isEnabled)
+        lesson.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.5)).tap()
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout: 5))
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 1 關 ·"))
+    }
+    @MainActor
+    private func openCompanion(_ key: String, in app: XCUIApplication) throws {
+        app.tabBars.buttons["練習"].tap()
+        try reveal(app.buttons["chooseCompanion"], in: app); app.buttons["chooseCompanion"].tap()
+        XCTAssertTrue(app.navigationBars["選擇夥伴"].waitForExistence(timeout: 5))
+        try reveal(app.buttons["companion.\(key)"], in: app); app.buttons["companion.\(key)"].tap()
+        try openFirstCompanionLesson(in: app)
+    }
+    @MainActor
+    private func companionTouchRetry(_ key: String, title: String, mission: String) throws {
+        let app = freshApp(); try openCompanion(key, in: app)
+        XCTAssertTrue(app.staticTexts[mission].exists); capture(app, "\(key) themed preparation")
+        try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
+        XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["activeCompanion"].label, "\(title)陪你跟拍")
+        let scene = app.otherElements["eggMissionScene"], pad = app.buttons["practiceTapPad"], stop = app.buttons["stopPractice"]
+        XCTAssertTrue(scene.exists); XCTAssertLessThan(scene.frame.maxY, pad.frame.minY)
+        XCTAssertTrue(pad.isHittable && stop.isHittable)
+        Thread.sleep(forTimeInterval: 4.2)
+        for _ in 0..<10 {
+            pad.tap()
+            if app.staticTexts["jumpMatches"].label != "跨過 0 / 16 個障礙" { break }
+            Thread.sleep(forTimeInterval: 0.12)
+        }
+        XCTAssertNotEqual(app.staticTexts["jumpMatches"].label, "跨過 0 / 16 個障礙", "Actual UIKit touch must produce a real accepted hit")
+        capture(app, "\(key) actual live runner"); stop.tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
+        try openFirstCompanionLesson(in: app)
+        try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
+        XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label, "跨過 0 / 16 個障礙")
+        app.buttons["stopPractice"].tap()
+    }
+    @MainActor
+    func testCatCloudActualTouchCancelAndRestart() throws {
+        try companionTouchRetry("cat", title: "貓咪", mission: "把魚送回雲端小屋")
+    }
+    @MainActor
+    func testRobotCircuitActualTouchCancelAndRestart() throws {
+        try companionTouchRetry("robot", title: "機器人", mission: "把能源送回充電站")
+    }
+    @MainActor
+    func testBothCompanionsNoInputReallyFailsAndRetryKeepsProgressLocked() throws {
+        for key in ["cat", "robot"] {
+            let app = freshApp(); try openCompanion(key, in: app)
+            try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
+            XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout: 30))
+            XCTAssertEqual(app.staticTexts["practiceSummary"].label, key == "cat" ? "魚包裹接住了，再試一次！" : "能源接住了，再試一次！")
+            XCTAssertEqual(app.otherElements["practiceStars"].label, "這次得到 0 顆星")
+            XCTAssertFalse(app.buttons["nextLesson"].exists); capture(app, "\(key) actual failure")
+            try reveal(app.buttons["retryLesson"], in: app); app.buttons["retryLesson"].tap()
+            XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label, "跨過 0 / 16 個障礙")
+            app.buttons["stopPractice"].tap()
+            XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
+            XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
+        }
+    }
+    @MainActor
+    func testBothCompanionLargestTextControlsCanBeReached() throws {
+        for key in ["cat", "robot"] {
+            let app = freshApp(largestText: true); try openCompanion(key, in: app)
+            capture(app, "\(key) accessibility preparation")
+            try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
+            XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout: 5))
+            try reveal(app.buttons["stopPractice"], in: app); capture(app, "\(key) accessibility stop")
+            app.buttons["stopPractice"].tap()
+            try openFirstCompanionLesson(in: app)
+            try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
+            try reveal(app.buttons["practiceTapPad"], in: app); XCTAssertTrue(app.buttons["practiceTapPad"].isHittable)
+            capture(app, "\(key) accessibility pad")
+            app.terminate()
+        }
+    }
+    @MainActor
     func testSeededTenLessonsPreparationStartCancelSmoke() async throws {
         continueAfterFailure = false
         let app = XCUIApplication()
@@ -67,7 +153,7 @@ final class PracticeUITests: XCTestCase {
             for _ in 0..<24 {
                 XCTAssertTrue(course.exists, "Course sheet must remain presented while scrolling")
                 let frame = element.exists ? element.frame : .zero
-                if element.exists && (!requiresHit || element.isHittable) && frame.minY >= top && frame.maxY <= bottom { return }
+                if element.exists && frame.minY >= top && frame.maxY <= bottom && (!requiresHit || element.isHittable) { return }
                 // A held drag of only a few points can activate a lesson row.
                 // Use a scroll gesture and verify the sheet and exact selection.
                 if element.exists && frame.midY < (top + bottom) / 2 { scroll.swipeDown(velocity: .slow) }
@@ -82,10 +168,16 @@ final class PracticeUITests: XCTestCase {
         // The SE has no bottom home-indicator inset. Do not invent a 30pt
         // exclusion zone: use the observed tab bar or actual app viewport.
         let bottom = !inPicker && app.tabBars.firstMatch.exists ? app.tabBars.firstMatch.frame.minY : window.frame.maxY
-        for _ in 0..<8 {
+        // At XXXL, selecting a companion leaves the first lesson more than
+        // eight capped drags away. Recheck after reaching it instead of failing
+        // immediately after the last gesture made the frame fully visible.
+        for _ in 0..<24 {
             guard element.exists else { throw NSError(domain: "PracticeUIVisibility", code: 3, userInfo: [NSLocalizedDescriptionKey: "Control disappeared before scrolling: \(element.identifier)"]) }
             let frame = element.exists ? element.frame : .zero
-            if element.exists && (!requiresHit || element.isHittable) && frame.minY >= top && frame.maxY <= bottom { return }
+            // Offscreen UIKit accessibility pads can throw when asked for an
+            // activation point. Observe the viewport before querying the hit
+            // point; retain both conditions once the control is on screen.
+            if element.exists && frame.minY >= top && frame.maxY <= bottom && (!requiresHit || element.isHittable) { return }
             // Use the observed primary window and explicit center pixels.
             // The application accessibility root may have no geometry.
             let origin = window.coordinate(withNormalizedOffset: .zero)
@@ -98,6 +190,8 @@ final class PracticeUITests: XCTestCase {
                 thenDragTo: origin.withOffset(CGVector(dx: 0, dy: middle + shift / 2)),
                 withVelocity: .slow, thenHoldForDuration: 0.15)
         }
+        capture(app, "Visibility failure \(element.identifier)")
+        print("GAME13_VISIBILITY_FAILURE \(element.debugDescription)")
         throw NSError(domain: "PracticeUIVisibility", code: 1, userInfo: [NSLocalizedDescriptionKey:
             "Control not visible: \(element.identifier), frame \(element.exists ? element.frame : .zero), viewport \(top)...\(bottom)"])
     }

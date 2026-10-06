@@ -288,6 +288,69 @@ final class PracticeStoreTests: XCTestCase {
 }
 
 final class EggMissionPresentationTests: XCTestCase {
+    @MainActor
+    func testCompanionScenesUseDistinctLoadedArtAndMotionWithoutChangingAcceptedState() throws {
+        let scenes = [RunnerTheme.cat, .robot].map { theme -> EggSpriteScene in
+            let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
+            scene.configure(EggSceneSnapshot(elapsed: 4.16, accepted: [0], latestGrade: .perfect, hitAge: 0.16, theme: theme))
+            return scene
+        }
+        let textures = try scenes.map { scene -> SKTexture in
+            let player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let sprite = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            XCTAssertEqual(player.children.count, 1); XCTAssertEqual(sprite.alpha, 1)
+            XCTAssertGreaterThan(sprite.size.height, 70); XCTAssertGreaterThan(try XCTUnwrap(sprite.texture).size().width, 100)
+            XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden)
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "reward0")).isHidden)
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "rock1")).isHidden)
+            XCTAssertGreaterThan(player.position.y, 100)
+            return try XCTUnwrap(sprite.texture)
+        }
+        XCTAssertFalse(textures[0] === textures[1], "Cat and robot must have independent art, not a tint of one sprite")
+        let cat = try XCTUnwrap(scenes[0].childNode(withName: "player")), robot = try XCTUnwrap(scenes[1].childNode(withName: "player"))
+        XCTAssertGreaterThan(abs(cat.zRotation), abs(robot.zRotation), "Cat leans softly; robot stays upright")
+        for scene in scenes {
+            let count = scene.children.count, player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let character = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            var state = EggSceneSnapshot(elapsed: 4, theme: scene.theme)
+            scene.configure(state); let run = try XCTUnwrap(character.texture)
+            state.elapsed = 4.0625; scene.configure(state)
+            XCTAssertFalse(run === character.texture, "Successive run frames must be distinct loaded textures")
+            state.elapsed = 4.5; scene.configure(state)
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden, "Miss cannot advance a target")
+            state.latestGrade = .extra; state.hitAge = 0.16; scene.configure(state)
+            XCTAssertLessThan(player.position.y, 70, "Extra only makes the original small bounce")
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden)
+            state.reduceMotion = true; scene.configure(state)
+            XCTAssertEqual(player.position.y, 51, accuracy: 0.01); XCTAssertEqual(player.zRotation, 0)
+            XCTAssertEqual(player.xScale, 1); XCTAssertEqual(player.yScale, 1)
+            state = EggSceneSnapshot(preparing: true, theme: scene.theme); scene.configure(state)
+            XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden)
+            scene.size = CGSize(width: 320, height: 240); scene.render(at: .nan)
+            XCTAssertEqual(scene.children.count, count); XCTAssertTrue(player.position.y.isFinite)
+            XCTAssertTrue(scene.childNode(withName: "player") === player)
+            scene.configure(EggSceneSnapshot(preparing: true, theme: .dinosaur))
+            XCTAssertEqual(scene.theme, .dinosaur); XCTAssertEqual(scene.children.count, count)
+        }
+    }
+    @MainActor
+    func testBothCompanionSKViewsReallyUpdateAndPauseInReducedMotion() async throws {
+        for theme in [RunnerTheme.cat, .robot] {
+            let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 400, height: 800)), controller = UIViewController()
+            let view = SKView(frame: CGRect(x: 0, y: 0, width: 400, height: 400)), scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
+            window.rootViewController = controller; controller.view.addSubview(view); window.makeKeyAndVisible()
+            defer { scene.detach(); view.presentScene(nil); window.isHidden = true }
+            view.isUserInteractionEnabled = false; view.presentScene(scene)
+            let epoch = PracticeStore.now()
+            scene.configure(EggSceneSnapshot(presentationElapsed: { 4 + $0 - epoch }, theme: theme))
+            try await Task.sleep(nanoseconds: 800_000_000)
+            XCTAssertGreaterThan(scene.callbackCount, 2)
+            scene.configure(EggSceneSnapshot(reduceMotion: true, presentationElapsed: { 4 + $0 - epoch }, theme: theme))
+            let count = scene.callbackCount; try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertEqual(scene.callbackCount, count); XCTAssertTrue(view.isPaused)
+            scene.detach(); view.presentScene(nil); XCTAssertNil(view.scene)
+        }
+    }
     func testEightDistinctRunFramesLoopContinuouslyAndJumpHasSoftTouchdown() {
         let fixtures: [(Double, Int)] = [(4, 0), (4.0625, 1), (4.125, 2), (4.1875, 3), (4.25, 4), (4.3125, 5), (4.375, 6), (4.4375, 7)]
         for (time, frame) in fixtures { XCTAssertEqual(EggAnimationFrame.sample(elapsed: time, age: nil, reduceMotion: false), frame) }
