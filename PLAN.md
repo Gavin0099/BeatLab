@@ -310,3 +310,6 @@ Owner 已玩Wi-Fi安裝GAME-14，回報動作仍不流暢。分類問題的optio
 
 
 GAME-15 final generic native build PASS、wide57/0（App54＋實際UI3）、browser33／真實16Perfect0Extra。95source／93protected bind；漏拍角色continuity修正成立，但8／6張動作幀數未增加、physical profile timeout未取得實際FPS，不宣稱整體流暢度已達標。Status IMPLEMENTED_NATIVE_BUILD_PASS_WIDE57_PASS_PHONE_PENDING；待綁定source commit、簽署新候選並依owner Wi-Fi偏好更新手機。
+
+
+GAME-15 source e2aeec5，signed phone build PASS／frozen78production inputs signature bind；actual wireless install FAIL_DEVICE_NOT_FOUND／launch NOT RUN，已請owner解鎖同Wi-Fi就緒再續裝。手機目前仍GAME-14 a6e1869；新候選不重build、不uninstall/reset。Status IMPLEMENTED_WIDE57_BROWSER33_PASS_PHONE_READY_CONNECTION_BLOCKED。GAME-14「動作仍不流暢」是owner拒絕驗收，不以測試或安裝成功覆蓋；GAME-15修復已重現miss pose snap，不宣稱frame-count限制或physical frame pacing解決。

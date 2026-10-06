@@ -40,3 +40,5 @@
 - GAME-14 a6e1869: early-hit cue gap fixed; wide55/0 and browser30 pass; narrow incomplete, signed phone ready but install device unavailable, owner USB pending; KidsCharacterKit deferred, physical/public gates unaccepted. <!-- memory_record_projection:active-task-summary:fdda6f6f8ca39d91eea74b7746585c0c072f24c7951fedd5a719976454cf592a -->
 
 - GAME-14 a6e1869 installed and opened via Wi-Fi, frozen78 source/signature verified; wide55/0/browser30 remain prior evidence, narrow/physical/child acceptance pending, KidsCharacterKit deferred. <!-- memory_record_projection:active-task-summary:ca1331ca8423d34dc96f199022d8c964a3226a62f3c85cd205b6334b0e390491 -->
+
+- GAME-15 e2aeec5 fixes reproduced miss pose snap for three companions; native57/browser33 pass. Signed78-input phone ready but Wi-Fi install unavailable, phone stillGAME14; owner readiness and fluidity/physical/narrow acceptance pending, KidsCharacterKit deferred. <!-- memory_record_projection:active-task-summary:a707f011f0eef1b67c6438d9e21b133c0ca67e7ec439fd499ff2a369f20f3e08 -->

@@ -1,6 +1,6 @@
 {
   "slice": "GAME-15",
-  "status": "IMPLEMENTED_NATIVE_BUILD_PASS_WIDE57_PASS_PHONE_PENDING",
+  "status": "IMPLEMENTED_WIDE57_BROWSER33_PASS_PHONE_READY_CONNECTION_BLOCKED",
   "base_commit": "55851abf23bbf4973b6e4036f17d3add7b20bab3",
   "owner_direction": "Actions in installed GAME-14 still not fluid; optional pose/hitch/response classification not answered",
   "scope": "First-lesson companion presentation only; audio/input/matching/score/obstacle schedule/save/assets unchanged",
@@ -190,9 +190,23 @@
   "prior_simulator_callback_measurements": "GAME-14 unchanged-source observations exclude GPU/compositor and are not physical FPS evidence",
   "known_animation_limit": "Run8 unique poses at16 pose switches/s; jump6 poses over0.48s; unchanged, no full fluidity acceptance",
   "phone": {
-    "build": "NOT RUN",
-    "install": "NOT RUN",
-    "launch": "NOT RUN"
+    "source_commit": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
+    "source_file_count": 78,
+    "configuration": "Debug",
+    "bundle_id": "com.gavin0099.beatlab",
+    "version": "0.1.0",
+    "build": "10",
+    "team": "P358EB3X9H",
+    "signature_verified": true,
+    "profile_covers_cached_paired_device": true,
+    "install": "FAIL_DEVICE_NOT_FOUND",
+    "launch": "NOT RUN",
+    "install_blocker": "Wireless device unavailable; owner Wi-Fi readiness requested",
+    "source_checked_after_install_attempt": true,
+    "artifact_checked_after_install_attempt": true,
+    "learner_data_reset": false,
+    "testflight_updated": false,
+    "physical_performance": "NOT RUN"
   },
   "kids_character_kit": "DEFERRED_BY_OWNER",
   "previous_narrow_XXXL_failures": "RETAINED_UNACCEPTED",
@@ -263,6 +277,60 @@
     "profile-exit.txt": {
       "path": "TestResults/GAME-15/profile-exit.txt",
       "sha256": "1a252402972f6057fa53cc172b52b9ffca698e18311facd0f3b06ecaaef79e17"
+    },
+    "phone-build.log": {
+      "path": "TestResults/GAME-15/phone-build.log",
+      "sha256": "2c23a48a5de81c72b2eedd5a57a66a2241c2b90d2e3468fc769f5d3bd947cea8"
+    },
+    "phone-freeze.log": {
+      "path": "TestResults/GAME-15/phone-freeze.log",
+      "sha256": "d776be3ef8601487e1b93de2f89f7a7ed47177b071fd81a8e1116759390fe64f"
+    },
+    "phone-install.json": {
+      "path": "TestResults/GAME-15/phone-install.json",
+      "sha256": "5ff71392568add6109ea5881855ab63acf199da23840d3fec55406e4e87b30f6"
+    },
+    "phone-install.log": {
+      "path": "TestResults/GAME-15/phone-install.log",
+      "sha256": "97edbdb18b685c8761b9e2cbee180e12306741b52af0b35821ad7befa95bc132"
+    },
+    "PhoneFrozen/BUILD.json": {
+      "path": "TestResults/GAME-15/PhoneFrozen/BUILD.json",
+      "sha256": "b282ee4d0acf6566946d3dbded724aa318bd6bbdfdca76d3077acbf17d8f9ffd"
+    },
+    "PhoneFrozen/source.json": {
+      "path": "TestResults/GAME-15/PhoneFrozen/source.json",
+      "sha256": "5275787c51f671bd9b0342b6d568ddbbd58cab6077e13e1cdc2a53e088371911"
+    },
+    "PhoneFrozen/app-manifest.json": {
+      "path": "TestResults/GAME-15/PhoneFrozen/app-manifest.json",
+      "sha256": "e57000bdb55e6bcb82198abbdf5f4035c55cde57fd49ec5de88117be6029113b"
+    },
+    "verify-receipt.py": {
+      "path": "TestResults/GAME-15/verify-receipt.py",
+      "sha256": "bf89fa5a48d7182e7e56cf65ca703498cb59e0a438f784d4a90bf2c972116de1"
     }
+  },
+  "implementation_commit": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
+  "owner_game14_fluidity_acceptance": "REJECTED; earlier tests/install do not override actual feedback",
+  "phone_currently_installed_source": "a6e18699dc749a8df38ce084b8505f627571bba2",
+  "canonical_memory": {
+    "writer": "governance_tools.memory_record via pinned framework",
+    "surfaces": [
+      "daily",
+      "review-log",
+      "active-task-summary"
+    ],
+    "receipt": "artifacts/evidence/test-results/GAME-15-regression.json",
+    "guard": "artifacts/evidence/test-results/GAME-15-memory-check.txt",
+    "current_diff_B0": 0,
+    "repo_state_B0": 0,
+    "historical_warnings": {
+      "missing_canonical_memory": 1,
+      "test_evidence_provenance_not_found": 2,
+      "root_writer_path": "NOT FOUND",
+      "root_guard_path": "NOT FOUND"
+    },
+    "knowledge_base": "NOT WRITTEN; writer lacks03 surface"
   }
 }

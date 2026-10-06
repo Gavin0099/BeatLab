@@ -1,6 +1,6 @@
 # GAME-15 — 角色動作連續性與真機流暢度診斷
 
-Status IMPLEMENTED_NATIVE_BUILD_PASS_WIDE57_PASS_PHONE_PENDING. Owner reports installed GAME-14 actions still not smooth; classifying pose cadence vs scene hitch vs delayed response. Base 55851abf23bbf4973b6e4036f17d3add7b20bab3. GAME-14 Wi-Fi install/launch PASS; source a6e1869 remains installed. KidsCharacterKit integration still deferred.
+Status IMPLEMENTED_WIDE57_BROWSER33_PASS_PHONE_READY_CONNECTION_BLOCKED. Owner reports installed GAME-14 actions still not smooth; classifying pose cadence vs scene hitch vs delayed response. Base 55851abf23bbf4973b6e4036f17d3add7b20bab3. GAME-14 Wi-Fi install/launch PASS; source a6e1869 remains installed. KidsCharacterKit integration still deferred.
 
 Before-edit scope: L2 read-only performance/animation boundary diagnosis. Initially allowed docs/slices/GAME-15.md / GAME-15-verification.json, PLAN.md, ignored TestResults/GAME-15/** and canonical GAME-15 evidence/memory. No App source or asset edits until an implementation contract defines exact changes, independent failure regression, applicable checks and rollback.
 
@@ -23,3 +23,9 @@ Physical Animation Hitches attempt failed with device-boot timeout over wireless
 
 
 Final generic native build PASS; actual wide57/0 (App54 +3 real UI workflows for zero-input failure/locks, matched touch/retry/cancel and viewport). Source95/protected93 verified; browser33/0 with real16Perfect/0Extra and actual zero-input recovery renderer observation. No Core rerun; source/tests byte-identical. New phone delivery pending at implementation checkpoint. Physical profiling failure retained; artwork pose-count limitation and prior small-screen/XXXL QA remain unaccepted.
+
+
+Signed phone Debug build PASS, frozen candidate source e2aeec5 and78production inputs/profile/signature verified. Owner's Wi-Fi connection became unavailable at actual install attempt; FAIL_DEVICE_NOT_FOUND, launch NOT RUN. Asked once for unlocked same-Wi-Fi readiness, preserve candidate for direct retry without rebuild. Owner currently has GAME-14 source a6e1869; new GAME-15 has not been installed. Original owner rejection of GAME-14 fluidity remains a design result; tests do not override it. Public/physical/XXXL acceptance unchanged.
+
+
+Canonical daily/review-log/active-task-summary records retain owner rejection and concrete display defect, linked e2aeec5 with durable actual-receipt reader output. Guard current/repo B0=0, historical missing-memory1/provenance2 and root writer/guard path warnings remain. No knowledge-base/full normalization or session-end claim. Native real-input and zero-input/viewport screenshots visually inspected; browser actual no-input miss shows continued run, not a forced success.

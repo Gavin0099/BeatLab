@@ -80,3 +80,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-14-wifi-install.json
 - Next action: Owner play first 60 BPM lesson and compare each stone center crossing fixed floor marker with click; physical synchronization not yet accepted. Preserve pending narrow/accessibility QA and deferred KidsCharacterKit.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:a707f011f0eef1b67c6438d9e21b133c0ca67e7ec439fd499ff2a369f20f3e08 -->
+### Canonical memory checkpoint — beatlab-game15-miss-motion-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `a707f011f0eef1b67c6438d9e21b133c0ca67e7ec439fd499ff2a369f20f3e08`
+- Commit binding: `e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f` (bound)
+- Record: Owner rejected GAME-14 movement fluidity after successful Wi-Fi install. Optional pose/hitch/response classification not answered; prioritize reproduced presentation snap. GAME-15 pre-fix actual native1 test13 assertion failures: dinosaur/cat/robot miss substituted static/original atlas, changed body registration/size and stopped gait. Keep run/jump phase and registration during misses; existing text and cosmetic tint pulse, immediate action clears tint, Reduce Motion static highlight. Source e2aeec5 final native57/0 (App54 + actual UI3), browser33 real16Perfect0Extra and actual zero-input static-vs-animated observation. Source95/protected93/audio/input/score/save/assets unchanged. First browser early comparison crossed4s; repaired checkbox timing/actual RAF and retained failure. Physical Animation Hitches Wi-Fi boot timeout, no gameplay captured. Original8 run/6 jump poses unchanged; no full fluidity acceptance. Signed phone build PASS/frozen78 source and signature verified; actual install FAIL_DEVICE_NOT_FOUND after wireless disconnect, launch NOT RUN; owner Wi-Fi readiness requested. Phone still GAME-14 a6e1869; preserve new candidate, no rebuild/reset. KidsCharacterKit deferred, narrow/XXXL/G1-G4/physical/child/public gates remain unaccepted. Canonical writer has no knowledge-base surface; no manual03 update/full normalization claim.
+- Validation boundary: artifacts/evidence/test-results/GAME-15-regression.json
+- Next action: Owner unlocks phone on same Wi-Fi and replies ready; refresh inventory and install preserved GAME-15 candidate without rebuilding. Then owner compare continuous missed-beat movement. Continue diagnosing reported pose vs scene hitch vs delayed input; frame-count and physical performance acceptance still pending.
+- PLAN reconciliation: `updated`
