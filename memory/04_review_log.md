@@ -113,3 +113,14 @@
 - Validation boundary: artifacts/evidence/test-results/TF-04-packaging.json
 - Next action: After owner signs into the existing Apple developer account, upload this exact candidate internal-only, inspect actual uploaded IPA, wait for Apple processing and assign existing 本人試玩 group. No public/physical fluidity acceptance claim.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:c1272c37d2bd4ab6565ccbf7800724124e94e1c574bf73401a5b5096cfb36f2b -->
+### Canonical memory checkpoint — tf04-testflight-available-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `c1272c37d2bd4ab6565ccbf7800724124e94e1c574bf73401a5b5096cfb36f2b`
+- Commit binding: `804ec8660ce268ec4882adcea3e958d3fb225f4e` (bound)
+- Record: After owner sign-in, Xcode completed existing internal-only upload of unchanged GAME-15 candidate 0.1.0(11). Exact uploaded IPA signature/profile/icon/privacy and archive assets validated against 95 frozen source inputs. Apple processed build a3d8f2aa-aec6-49e7-9d8c-26c0c3caedbc; zh-Hant notes saved; existing one-tester 本人試玩 assigned; 正在測試 observed. Two local evidence-reader setup/capture failures retained before final receipt PASS; no upload duplication or production behavior edits.
+- Validation boundary: artifacts/evidence/test-results/TF-04-delivery-verified.json
+- Next action: Owner updates 拍拍冒險 in TestFlight to 0.1.0(11), then reports dinosaur/cat/robot run-jump continuity and 60 BPM obstacle synchronization. Physical FPS/timing, child enjoyment and public gates remain pending.
+- PLAN reconciliation: `updated`

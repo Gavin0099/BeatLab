@@ -322,3 +322,7 @@ Owner回覆就緒後，fresh paired localNetwork inventory、actual devicectl in
 ### 2026-10-06 — TF-04 本人 TestFlight 動作候選
 
 Owner 明確授權先上 TestFlight，交付 GAME-15 e2aeec5 的既有個人試玩候選。Fresh ASC latest 0.1.0（10），本次 App build number 11；95 native／78 phone inputs 已核對，僅變更 project build metadata。契約 docs/slices/TF-04.md；Status SIGNED_DISTRIBUTION_READY_XCODE_SIGN_IN_REQUIRED。Release archive／distribution signature／internal-only／95來源 hashes／icon privacy檢查 PASS；只有 build metadata 10→11，沿用此前57 native與33 browser，未重跑。Xcode目前Apple Accounts沒有帳號且拒絕上傳存取，已開啟登入並請owner登入；upload／Apple processing／本人group assignment／測試說明保存／手機TestFlight更新 NOT RUN。build metadata commit8831537，封存與IPA保留，登入後繼續同一候選，不重複任何未知結果上傳。TF-03 公開／產品驗收 gate、實機 FPS/timing 與兒童体验仍 pending。
+
+### 2026-10-06 — TF-04 TestFlight 本人試玩可下載
+
+Owner 已登入；Xcode原有發佈流程完成，Organizer 14:48 上傳0.1.0（11）。未重複上傳或重新編譯。实际GUI IPA已匯出／驗證internal-only、distribution签署與get-task-allow=false、原icon/privacy、archive Assets.car相同、95來源hashes。Apple處理完成build a3d8f2aa-aec6-49e7-9d8c-26c0c3caedbc，已加入既有本人試玩一位内部tester，繁體測試說明已儲存，版本列表「正在測試」。Status TESTFLIGHT_OWNER_TRIAL_AVAILABLE；本人手機TestFlight更新及動作驗收 pending，G1-G4／實機 timing/FPS／兒童体验／public readiness不因此接受。此前登入阻擋與packaging receipt保留為歷史。契約／canonical evidence docs/slices/TF-04.md、TF-04-verification.json；ignored logs/IPA/screenshots TestResults/TF-04。

@@ -46,3 +46,5 @@
 - GAME-15 e2aeec5 installed and opened via Wi-Fi; source/signature78-input frozen candidate verified, no rebuild/reset. Owner motion acceptance and physical/narrow/pose-count gates pending, KidsCharacterKit deferred. <!-- memory_record_projection:active-task-summary:9c3e7a36f65627f20a09f278b8e6be015af881bbd4ef2035855a230edd524525 -->
 
 - TF-04 signed 0.1.0(11) ready; Xcode account sign-in required. Upload, Apple processing, owner group availability, notes saving and phone TestFlight update NOT completed; old build10 remains available. <!-- memory_record_projection:active-task-summary:eb53cb224acaae7eb0d31c5848402ff8acf8f8b02ca6e3915e8184912185078a -->
+
+- TF-04 owner TestFlight 0.1.0(11) available in 本人試玩; actual uploaded IPA and Apple/group/notes verified. Owner phone TestFlight update and physical fluidity/timing/child/public acceptance pending; GAME-15 source unchanged. <!-- memory_record_projection:active-task-summary:c1272c37d2bd4ab6565ccbf7800724124e94e1c574bf73401a5b5096cfb36f2b -->

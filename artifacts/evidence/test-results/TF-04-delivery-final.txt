@@ -1,0 +1,4 @@
+Traceback (most recent call last):
+  File "/Users/pc49-58/Desktop/BeatLab/TestResults/TF-04/verify-delivery.py", line 18, in <module>
+    assert 'BeatLab 0.1.0 (11) uploaded' in (p/'upload-success.txt').read_text()
+AssertionError

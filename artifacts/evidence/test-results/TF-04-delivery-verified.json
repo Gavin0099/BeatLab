@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/TF-04/verify-delivery.py",
+  "exit_code": 0,
+  "started_at": "2026-10-06T07:12:10Z",
+  "finished_at": "2026-10-06T07:12:10Z",
+  "runner": "tf04_actual_uploaded_package_and_availability_reader",
+  "linked_commit": "804ec8660ce268ec4882adcea3e958d3fb225f4e",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/TF-04-delivery-verified.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

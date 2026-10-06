@@ -1,7 +1,7 @@
 {
   "date": "2026-10-06",
   "slice": "TF-04",
-  "status": "SIGNED_DISTRIBUTION_READY_XCODE_SIGN_IN_REQUIRED",
+  "status": "TESTFLIGHT_OWNER_TRIAL_AVAILABLE",
   "candidate_source_commit": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
   "build_metadata_commit": "883153726a2b01f3a964c1bcbaca695fca40f631",
   "bundle_id": "com.gavin0099.beatlab",
@@ -13,13 +13,13 @@
   "production_delta": [
     "App CURRENT_PROJECT_VERSION 10 to 11"
   ],
-  "upload": "BLOCKED_XCODE_ACCOUNT_REQUIRED",
-  "processing": "NOT RUN",
+  "upload": "PASS; Xcode GUI App upload complete 0.1.0(11)",
+  "processing": "PASS; Apple completed processing build11",
   "owner_group": "本人試玩",
   "external_testing": false,
   "new_testers_invited": false,
   "app_store_submission": false,
-  "device_testflight_update": "NOT RUN",
+  "device_testflight_update": "NOT RUN; owner update pending",
   "prior_native_evidence": {
     "pass": 57,
     "fail": 0,
@@ -38,15 +38,53 @@
   "assets_match_archive": true,
   "archive_path": "TestResults/TF-04/BeatLab.xcarchive",
   "manual_distribution_ipa": "TestResults/TF-04/export-manual/BeatLab.ipa",
-  "owner_tester_assignment": "NOT RUN",
-  "what_to_test_saved": "NOT RUN; text prepared locally",
-  "exact_uploaded_package": "NOT AVAILABLE; upload did not proceed",
-  "xcode_account_observation": "No Apple accounts listed; distribution requires App Store Connect access",
+  "owner_tester_assignment": "PASS; 本人試玩 existing one internal tester; 正在測試",
+  "what_to_test_saved": "PASS; zh-Hant 已儲存 observed",
+  "exact_uploaded_package": "PASS",
+  "xcode_account_observation": "Owner reported signed in; upload complete observed; initial sign-in blocker retained",
   "receipts": {
     "packaging": "artifacts/evidence/test-results/TF-04-packaging.json",
     "archive": "TestResults/TF-04/archive-isolated.log",
     "local_export": "TestResults/TF-04/export-manual.log",
-    "sign_in_blocker": "TestResults/TF-04/xcode-sign-in-required.png"
+    "sign_in_blocker": "TestResults/TF-04/xcode-sign-in-required.png",
+    "upload": "TestResults/TF-04/upload-success.txt",
+    "organizer": "TestResults/TF-04/organizer-upload-full.txt",
+    "availability": "TestResults/TF-04/testflight-ready.txt",
+    "notes_group": "TestResults/TF-04/notes-and-group.txt",
+    "delivery": "artifacts/evidence/test-results/TF-04-delivery-verified.json",
+    "delivery_reader_initial_failure": "artifacts/evidence/test-results/TF-04-delivery.json; writer invocation failed because reader was not created (local path variable error), not an upload or package failure",
+    "delivery_reader_second_failure": "artifacts/evidence/test-results/TF-04-delivery-final.json; assertion found upload-success text captured only an unchanged AX diff; full Organizer proof captured and reader corrected. Actual upload/package remained valid."
   },
-  "initial_archive_attempt": "INT/TERM stopped owned process after package resolution stalled; log retained as archive.log; no upload attempted"
+  "initial_archive_attempt": "INT/TERM stopped owned process after package resolution stalled; log retained as archive.log; no upload attempted",
+  "uploaded_export_path": "TestResults/TF-04/BeatLab 2026-10-06 15-07-33",
+  "uploaded_ipa": "TestResults/TF-04/BeatLab 2026-10-06 15-07-33/BeatLab.ipa",
+  "uploaded_ipa_sha256": "b6c77596cb3ab26fa5e5a6234992db0f020b111643ac4c6d216b793bd6fc75b6",
+  "uploaded_export_options": {
+    "destination": "upload",
+    "generateAppStoreInformation": false,
+    "manageAppVersionAndBuildNumber": true,
+    "method": "app-store-connect",
+    "signingStyle": "automatic",
+    "stripSwiftSymbols": true,
+    "teamID": "P358EB3X9H",
+    "testFlightInternalTestingOnly": true,
+    "uploadSymbols": true
+  },
+  "uploaded_assets_match_archive": true,
+  "upload_time_local": "2026-10-06 14:48 Asia/Taipei; Organizer",
+  "app_store_connect": {
+    "app_id": "6819149808",
+    "build_id": "a3d8f2aa-aec6-49e7-9d8c-26c0c3caedbc",
+    "group_id": "f22292e2-82b7-4d27-a534-820bb2cef5d1",
+    "group_name": "本人試玩",
+    "group_testers": 1,
+    "build_status": "TESTING",
+    "version": "0.1.0",
+    "build": "11",
+    "url": "https://appstoreconnect.apple.com/teams/7d6e8665-b844-4e3c-bbba-86ed0cf73e1b/apps/6819149808/testflight/ios",
+    "new_testers_invited": false,
+    "external_testing": false
+  },
+  "availability_proof": "TestResults/TF-04/testflight-ready.png",
+  "notes_and_group_proof": "TestResults/TF-04/notes-and-group.png"
 }
