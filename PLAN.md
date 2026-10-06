@@ -302,3 +302,11 @@ Owner 澄清問題是石頭看起來不是60BPM、間隔不一樣。來源positi
 ### 2026-10-06 — GAME-14 Wi-Fi 安裝成功
 
 Owner 明確要求透過 Wi-Fi，fresh inventory localNetwork paired device、devicectl 實際 install／launch 均 PASS。沿用 a6e1869 frozen signed0.1.0(10)／78production inputs，未重建；來源／artifact／signature安裝後再次核對，保留bundle/team/learner progress。之前 unavailable失敗receipt與blocked snapshot保留。Status IMPLEMENTED_WIFI_INSTALLED_OPENED_NARROW_INCOMPLETE_OWNER_PENDING；physical60 BPM stone/click同步由owner測試，narrow／prior XXXL／G1-G4不因此接受。KidsCharacterKit仍deferred，沒有TestFlight/public更新。
+
+
+### 2026-10-06 — GAME-15 動作连续性
+
+Owner 已玩Wi-Fi安裝GAME-14，回報動作仍不流暢。分類問題的optional問答未回覆，先處理可重現漏拍換圖：native pre-fix1 test／13 assertion FAIL，跑步中途切舊atlas或companion static frame16，geometry／bob／run phase突變。Contract限定EggMissionView／PracticeStoreTests呈現，不動audio/input/判分/石頭時程/assets；漏拍持續既有run cycle、短暫cosmetic tint＋既有文字，Reduce Motion static highlight，action立即清tint。Browser33 checks、真實16Perfect／0Extra通過；第一個繼承的early visibility比較因checkbox跨過4秒失敗已保留，改同步控制＋actual RAF後重測。真機Animation Hitches無線device boot timeout，未錄到gameplay，不宣稱physical frame pacing。Status IMPLEMENTING_VALIDATION_PENDING；8跑步／6跳躍素材數未改、不宣稱全部動畫已變平滑；KidsCharacterKit deferred／prior small-screen與physical gates不接受。
+
+
+GAME-15 final generic native build PASS、wide57/0（App54＋實際UI3）、browser33／真實16Perfect0Extra。95source／93protected bind；漏拍角色continuity修正成立，但8／6張動作幀數未增加、physical profile timeout未取得實際FPS，不宣稱整體流暢度已達標。Status IMPLEMENTED_NATIVE_BUILD_PASS_WIDE57_PASS_PHONE_PENDING；待綁定source commit、簽署新候選並依owner Wi-Fi偏好更新手機。

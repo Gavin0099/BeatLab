@@ -1,0 +1,268 @@
+{
+  "slice": "GAME-15",
+  "status": "IMPLEMENTED_NATIVE_BUILD_PASS_WIDE57_PASS_PHONE_PENDING",
+  "base_commit": "55851abf23bbf4973b6e4036f17d3add7b20bab3",
+  "owner_direction": "Actions in installed GAME-14 still not fluid; optional pose/hitch/response classification not answered",
+  "scope": "First-lesson companion presentation only; audio/input/matching/score/obstacle schedule/save/assets unchanged",
+  "finding": "Actual old native regression1 test13 assertions FAIL: miss replaced/froze run texture, body size/anchor and bob jumped for dinosaur/cat/robot",
+  "repair": "Keep run/jump cycle and body registration during misses; existing text and continuous short tint pulse. New action clears tint; Reduce Motion static highlight. No added frames/skins.",
+  "source_inputs": 95,
+  "protected_inputs": 93,
+  "pre_fix": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+          "deviceName": "BeatLab MET-01",
+          "modelName": "iPhone 17 Pro",
+          "osBuildNumber": "23F77",
+          "osVersion": "26.5",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 1,
+        "passedTests": 0,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "BeatLab · Built with macOS 26.6.2",
+    "expectedFailures": 0,
+    "failedTests": 1,
+    "finishTime": 1791266960.687,
+    "passedTests": 0,
+    "result": "Failed",
+    "skippedTests": 0,
+    "startTime": 1791266903.457,
+    "statistics": [],
+    "testFailures": [
+      {
+        "failureText": "XCTAssertTrue failed - A miss must not switch a running character to a static/other-atlas pose",
+        "targetName": "BeatLabTests",
+        "testIdentifier": 1,
+        "testIdentifierString": "EggMissionPresentationTests/testMissRecoveryKeepsRunCycleBodyRegistrationAndUpcomingCue()",
+        "testIdentifierURL": "test://com.apple.xcode/BeatLab/BeatLabTests/EggMissionPresentationTests/testMissRecoveryKeepsRunCycleBodyRegistrationAndUpcomingCue",
+        "testName": "testMissRecoveryKeepsRunCycleBodyRegistrationAndUpcomingCue()"
+      }
+    ],
+    "title": "Test - BeatLab",
+    "topInsights": [
+      {
+        "category": "Common Failures",
+        "impact": "100% of failures",
+        "text": "3 runs of 1 test failed with XCTAssertTrue failed - A miss must not switch a running character to a static/other-atlas pose"
+      },
+      {
+        "category": "Common Failures",
+        "impact": "100% of failures",
+        "text": "3 runs of 1 test failed with XCTAssertFalse failed - Run poses must keep advancing during the recovery window"
+      }
+    ],
+    "totalTestCount": 1
+  },
+  "pre_fix_assertion_failures": 13,
+  "final_wide": {
+    "devicesAndConfigurations": [
+      {
+        "device": {
+          "architecture": "arm64",
+          "deviceId": "50E92C18-D216-46B4-AB4A-9182DB9B62E6",
+          "deviceName": "BeatLab MET-01",
+          "modelName": "iPhone 17 Pro",
+          "osBuildNumber": "23F77",
+          "osVersion": "26.5",
+          "platform": "iOS Simulator"
+        },
+        "expectedFailures": 0,
+        "failedTests": 0,
+        "passedTests": 57,
+        "skippedTests": 0,
+        "testPlanConfiguration": {
+          "configurationId": "1",
+          "configurationName": "Test Scheme Action"
+        }
+      }
+    ],
+    "environmentDescription": "BeatLab · Built with macOS 26.6.2",
+    "expectedFailures": 0,
+    "failedTests": 0,
+    "finishTime": 1791267307.551,
+    "passedTests": 57,
+    "result": "Passed",
+    "skippedTests": 0,
+    "startTime": 1791267074.097,
+    "statistics": [],
+    "testFailures": [],
+    "title": "Test - BeatLab",
+    "topInsights": [
+      {
+        "category": "Longest Test Runs",
+        "impact": "55% of duration",
+        "text": "3 longest test runs with outlier durations exceeding 4.54s (three standard deviations)"
+      }
+    ],
+    "totalTestCount": 57
+  },
+  "final_app_passed": 54,
+  "final_ui_passed": 3,
+  "browser": {
+    "checks": [
+      "Original props +16-frame animation atlas loaded",
+      "Eight run phases, not repeated two poses",
+      "Jump peak74 and near-zero touchdown speed",
+      "Eight-frame cycle wraps in order without crossfading two heads",
+      "Cached loaded character has actual opaque pixels",
+      "Background is continuous at old 8-second reset",
+      "Immediate positive rise and finite landing follow-through",
+      "Reduced motion has no hop/rotation/stretch",
+      "Actual early match reproduces old pre-beat disappearance",
+      "Accepted cue remains opaque through its fixed beat; fade only behind",
+      "Actual rendered cue centers have equal spacing",
+      "Actual pre-beat accepted cue remains drawn before marker",
+      "Early-test cancel does not write completion",
+      "Real start shows count-in",
+      "No input has a visible recovery",
+      "Real zero-input miss reproduces original static character swap",
+      "Actual same-miss rendering retains animated run cycle",
+      "Actual recovery keeps changing run poses",
+      "Zero input fails with real 0/16 result",
+      "Stop is visually hidden on actual failure",
+      "Retry clears prior result",
+      "Sixteen clock-cued inputs reach real success",
+      "Stop is visually hidden on actual success",
+      "Extra does not replace the accepted airborne action",
+      "Duplicate press is extra and does not clear a second rock",
+      "Cancel stops without a result",
+      "No horizontal overflow at 320",
+      "Action reachable at 320",
+      "No horizontal overflow at 375",
+      "Action reachable at 375",
+      "No horizontal overflow at 430",
+      "Action reachable at 430",
+      "No browser runtime errors"
+    ],
+    "outcome": {
+      "matched": 16,
+      "perfect": 16,
+      "extra": 0
+    },
+    "errors": [],
+    "hardwareTiming": "NOT RUN",
+    "ownerAppeal": "PENDING"
+  },
+  "actual_browser_recovery": {
+    "oldRecovery": {
+      "t": 4.548666666666667,
+      "missRecent": true,
+      "usedAnimation": false,
+      "frame": 0,
+      "bob": 0
+    },
+    "recovery": {
+      "t": 4.580666666666667,
+      "missRecent": true,
+      "usedAnimation": true,
+      "frame": 1,
+      "bob": -1.1414271353688572
+    },
+    "advanced": {
+      "t": 4.644666666666667,
+      "missRecent": true,
+      "usedAnimation": true,
+      "frame": 2,
+      "bob": 1.9719920741410073
+    }
+  },
+  "browser_attempt1": "FAIL_EARLY_CUE_COMPARISON_CROSSED_BEAT_BOUNDARY; retained. Repaired control timing with synchronous checkbox plus actual RAF, no input/time/score injection.",
+  "native_build": "PASS",
+  "physical_profile": {
+    "template": "Animation Hitches",
+    "transport_preference": "Wi-Fi",
+    "result": "FAIL_DEVICE_BOOT_TIMEOUT",
+    "exit_code": 13,
+    "gameplay_captured": false,
+    "physical_FPS_hitches": "NOT RUN"
+  },
+  "prior_simulator_callback_measurements": "GAME-14 unchanged-source observations exclude GPU/compositor and are not physical FPS evidence",
+  "known_animation_limit": "Run8 unique poses at16 pose switches/s; jump6 poses over0.48s; unchanged, no full fluidity acceptance",
+  "phone": {
+    "build": "NOT RUN",
+    "install": "NOT RUN",
+    "launch": "NOT RUN"
+  },
+  "kids_character_kit": "DEFERRED_BY_OWNER",
+  "previous_narrow_XXXL_failures": "RETAINED_UNACCEPTED",
+  "narrow_and_accessibility": "NOT RERUN; prior failures remain unaccepted",
+  "physical_timing_and_child_acceptance": "PENDING",
+  "testflight_public": "NOT RUN",
+  "evidence_refs": {
+    "pre-fix-build-copy.json": {
+      "path": "TestResults/GAME-15/pre-fix-build-copy.json",
+      "sha256": "41eaf2d3e94b354f31709f2b534a13296d519bd8a27f1dbfa5e78c6ef2e5fb66"
+    },
+    "pre-fix-build.log": {
+      "path": "TestResults/GAME-15/pre-fix-build.log",
+      "sha256": "d036a3c9f1c5e403fb021f68034411b1a3ac3b589439c3206a7a325e5c2c576d"
+    },
+    "pre-fix.log": {
+      "path": "TestResults/GAME-15/pre-fix.log",
+      "sha256": "f611396d0bacc7d3f63411f66d393059acae1c10e7c6b9a31245489402391a44"
+    },
+    "pre-fix-summary.json": {
+      "path": "TestResults/GAME-15/pre-fix-summary.json",
+      "sha256": "f748c3ac1f429baf9a6605126c2a5c5de04b5cd1cb324c4757ebbc44833047f2"
+    },
+    "build-copy.json": {
+      "path": "TestResults/GAME-15/build-copy.json",
+      "sha256": "a219ac21a59dc3185679a5e70e9a8d3bc23b7ab4a52605a8b22a5cd9be82d5fd"
+    },
+    "protected-source.json": {
+      "path": "TestResults/GAME-15/protected-source.json",
+      "sha256": "581403922950bf54866a798ad4642104da3d703176342930c3532889ffbcdc32"
+    },
+    "native-build.log": {
+      "path": "TestResults/GAME-15/native-build.log",
+      "sha256": "61998b1a056693724f7816d5b0a5625939ff52333723e4f9b09c236bb045909b"
+    },
+    "final-wide.log": {
+      "path": "TestResults/GAME-15/final-wide.log",
+      "sha256": "4c67f8616d824cd091c482a74dfa6c486da0ac0d06e3df5c323268f4b72acac4"
+    },
+    "final-wide-summary.json": {
+      "path": "TestResults/GAME-15/final-wide-summary.json",
+      "sha256": "b796379326f6265fb23bdf249a02f87826630546d18703cc44650333b8c6b7d5"
+    },
+    "concept-report.json": {
+      "path": "TestResults/GAME-15/concept-report.json",
+      "sha256": "bacc63032158b3289772e21c9c6c6569c2151dca7462de2fddc7b1e6bc370ece"
+    },
+    "concept-attempt2.log": {
+      "path": "TestResults/GAME-15/concept-attempt2.log",
+      "sha256": "689613a5cfe7ab3e014a40a3a05b210b0585065f11211526d3e8dfd817139461"
+    },
+    "recovery-observation.json": {
+      "path": "TestResults/GAME-15/recovery-observation.json",
+      "sha256": "352ec21d99808774305eaa3cfe5464006608df9f7ef6816ffb01ea626f332ad4"
+    },
+    "attempt1-concept-failure.json": {
+      "path": "TestResults/GAME-15/attempt1-concept-failure.json",
+      "sha256": "bcd0a73d3d520f612de548bed6938987650023ec04de06ec823607917e41a13b"
+    },
+    "attempt1-concept.log": {
+      "path": "TestResults/GAME-15/attempt1-concept.log",
+      "sha256": "cdf8176bfed1885373dfe5ba6ec195a7a47083d1aee537f12f955c50e5236acb"
+    },
+    "phone-animation-hitches.log": {
+      "path": "TestResults/GAME-15/phone-animation-hitches.log",
+      "sha256": "4f0276af51937e9294141cc2f74be3885321faae9b70abf02d7509db4865792f"
+    },
+    "profile-exit.txt": {
+      "path": "TestResults/GAME-15/profile-exit.txt",
+      "sha256": "1a252402972f6057fa53cc172b52b9ffca698e18311facd0f3b06ecaaef79e17"
+    }
+  }
+}

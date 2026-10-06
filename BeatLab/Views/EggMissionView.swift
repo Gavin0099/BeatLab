@@ -156,6 +156,13 @@ enum EggMissionPresentation {
         guard !reduceMotion, let age = hitAge, (0..<0.48).contains(age), let grade else { return 0 }
         return CGFloat(sin(.pi * age / 0.48)) * (grade == .extra ? 12 : 74)
     }
+    static func recoveryBlend(elapsed: Double, accepted: Set<Int>, actionAge: Double?, reduceMotion: Bool) -> CGFloat {
+        if let age = actionAge, age.isFinite, (0..<0.64).contains(age) { return 0 }
+        guard let id = missed(elapsed: elapsed, accepted: accepted) else { return 0 }
+        if reduceMotion { return 0.12 }
+        let age = elapsed - Double(4 + id) - (TimingSession.matchingWindow + 0.250)
+        return CGFloat(max(0, sin(.pi * age / 0.48))) * 0.18
+    }
     static func missed(elapsed: Double, accepted: Set<Int>) -> Int? {
         guard elapsed.isFinite else { return nil }
         // Existing matcher .180 + maximum alignment .250; never flag an open target.
@@ -459,7 +466,7 @@ final class EggSpriteScene: SKScene {
         let motion = EggMotion.sample(elapsed: elapsed, age: stopped ? nil : age, grade: grade, reduceMotion: reduced)
         let w = size.width, h = size.height, ground = h * 0.14, x = w * 0.27, stride = w * 0.31
         let position = max(-4, elapsed - 4), moving = reduced ? position.rounded(.down) : position
-        let missed = EggMissionPresentation.missed(elapsed: elapsed, accepted: snapshot.accepted)
+        let recovery = stopped ? 0 : EggMissionPresentation.recoveryBlend(elapsed: elapsed, accepted: snapshot.accepted, actionAge: age, reduceMotion: reduced)
         island.position.x = motion.backgroundX
         let offset = stopped || reduced ? 0 : CGFloat(max(0, position)) * stride
         for (i, pebble) in pebbles.enumerated() {
@@ -486,15 +493,15 @@ final class EggSpriteScene: SKScene {
         // abruptly changing flight on shorter screens.
         let hop = motion.height * min(1, h * 0.25 / (grade == .extra ? 12 : 74))
         shadow.position = CGPoint(x: x, y: ground - 5); shadow.xScale = 1 - hop / 180; shadow.alpha = 0.18 - hop / 74 * 0.07
-        let running = !stopped && !reduced && elapsed >= 4 && hop == 0 && missed == nil
+        let running = !stopped && !reduced && elapsed >= 4 && hop == 0
         let gaitWeight = age.map { EggAnimationFrame.ease(($0 - 0.64) / 0.12) } ?? 1
         let bob = running ? CGFloat(sin(elapsed * .pi * theme.bobFrequency)) * theme.bobAmplitude * gaitWeight : 0
         player.position = CGPoint(x: x, y: ground - 5 + hop + bob)
         player.zRotation = -motion.angle * Double(theme.lean)
         player.xScale = 1 + (motion.scaleX - 1) * theme.compression
         player.yScale = 1 + (motion.scaleY - 1) * theme.compression
+        first.color = .white; first.colorBlendFactor = recovery
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
-        else if missed != nil && (age == nil || age! >= 0.64) { setOriginal(first, 4) }
         else {
             setAnimated(first, EggAnimationFrame.sample(elapsed: snapshot.preparing ? 0 : elapsed, age: age, reduceMotion: reduced))
         }

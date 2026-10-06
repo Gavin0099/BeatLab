@@ -288,6 +288,40 @@ final class PracticeStoreTests: XCTestCase {
 }
 
 final class EggMissionPresentationTests: XCTestCase {
+    func testRecoveryHighlightIsFiniteClearsForActionAndDoesNotRunDuringReduceMotion() {
+        XCTAssertEqual(EggMissionPresentation.recoveryBlend(elapsed: 4.67, accepted: [], actionAge: nil, reduceMotion: false), 0.18, accuracy: 0.0001)
+        XCTAssertEqual(EggMissionPresentation.recoveryBlend(elapsed: 4.67, accepted: [], actionAge: nil, reduceMotion: true), 0.12)
+        XCTAssertEqual(EggMissionPresentation.recoveryBlend(elapsed: 4.67, accepted: [0], actionAge: nil, reduceMotion: false), 0)
+        XCTAssertEqual(EggMissionPresentation.recoveryBlend(elapsed: 4.67, accepted: [], actionAge: 0.01, reduceMotion: false), 0)
+        for elapsed in [Double.nan, .infinity, -.infinity, -1, 0, 4, 4.99, 20] {
+            XCTAssertEqual(EggMissionPresentation.recoveryBlend(elapsed: elapsed, accepted: [], actionAge: nil, reduceMotion: false), 0)
+        }
+    }
+    @MainActor
+    func testMissRecoveryKeepsRunCycleBodyRegistrationAndUpcomingCue() throws {
+        for theme in RunnerTheme.allCases {
+            let normal = EggSpriteScene(size: CGSize(width: 400, height: 400))
+            let missed = EggSpriteScene(size: CGSize(width: 400, height: 400))
+            normal.configure(EggSceneSnapshot(elapsed: 4.47, accepted: [0], theme: theme))
+            missed.configure(EggSceneSnapshot(elapsed: 4.47, theme: theme))
+            let normalPlayer = try XCTUnwrap(normal.childNode(withName: "player"))
+            let missedPlayer = try XCTUnwrap(missed.childNode(withName: "player"))
+            let reference = try XCTUnwrap(normalPlayer.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            let character = try XCTUnwrap(missedPlayer.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            let before = try XCTUnwrap(character.texture)
+            XCTAssertTrue(character.texture === reference.texture, "A miss must not switch a running character to a static/other-atlas pose")
+            XCTAssertEqual(character.size, reference.size); XCTAssertEqual(character.anchorPoint, reference.anchorPoint)
+            XCTAssertEqual(missedPlayer.position.y, normalPlayer.position.y, accuracy: 0.0001, "Miss text must not abruptly suppress the gait")
+            XCTAssertGreaterThan(character.colorBlendFactor, 0)
+            XCTAssertEqual(reference.colorBlendFactor, 0)
+            XCTAssertFalse(try XCTUnwrap(missed.childNode(withName: "rock1")).isHidden)
+            XCTAssertEqual(try XCTUnwrap(missed.childNode(withName: "rock1")).position.x,
+                           try XCTUnwrap(normal.childNode(withName: "rock1")).position.x, accuracy: 0.0001)
+            missed.configure(EggSceneSnapshot(elapsed: 4.57, theme: theme))
+            XCTAssertFalse(character.texture === before, "Run poses must keep advancing during the recovery window")
+            XCTAssertEqual(missedPlayer.children.count, 1, "No double character from crossfades")
+        }
+    }
     @MainActor
     func testEarlyMatchedObstacleStaysVisibleUntilScheduledCrossing() throws {
         let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
