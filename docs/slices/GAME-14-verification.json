@@ -1,6 +1,6 @@
 {
   "slice": "GAME-14",
-  "status": "IMPLEMENTED_FINAL_WIDE_PASS_NARROW_PHONE_PENDING",
+  "status": "IMPLEMENTED_BUILD_PASS_WIDE_CHECKS_PASS_NARROW_INCOMPLETE_PHONE_BLOCKED",
   "owner_direction": "Obstacle spacing looks unlike 60 BPM; not an FPS complaint",
   "base_commit": "27d07d05f95d39d4db535ebf6e4ae24347c3fc8b",
   "scope": "First lesson 60 BPM presentation only; audio/input/matching/score/persistence/assets unchanged",
@@ -113,12 +113,31 @@
     "acceptance": false,
     "reason": "Requested class BeatLabUITests does not exist. Actual class is PracticeUITests. No test acceptance claimed."
   },
-  "narrow_final": "PENDING",
+  "narrow_final": {
+    "status": "INTERRUPTED_NO_TEST_RESULT",
+    "command": "/Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild test-without-building -xctestrun /var/folders/fp/yq_7k60s201b51vt5mtcjj_m0000gn/T/beatlab-game11-build-61khytck/Build/Products/BeatLab_iphonesimulator26.5-arm64.xctestrun -destination platform=iOS Simulator,id=7A5E53D5-112F-41DF-8CEA-9E6DE09F8E85 -destination-timeout 30 -parallel-testing-enabled NO -only-testing:BeatLabUITests/PracticeUITests/testRunnerCuesAndJumpControlNeverCoverEachOther -resultBundlePath TestResults/GAME-14/narrow-dark-final.xcresult",
+    "reason": "No test execution output after several minutes; no valid test result, acceptance not claimed. Stop only owned xcodebuild; shared Simulator services untouched.",
+    "at": "2026-10-06T05:51:28.136545+00:00"
+  },
   "phone": {
-    "signed_build": "NOT RUN",
-    "install": "NOT RUN",
+    "source_commit": "a6e18699dc749a8df38ce084b8505f627571bba2",
+    "source_file_count": 78,
+    "configuration": "Debug",
+    "bundle_id": "com.gavin0099.beatlab",
+    "version": "0.1.0",
+    "build": "10",
+    "team": "P358EB3X9H",
+    "signature_verified": true,
+    "profile_covers_cached_paired_device": true,
+    "install": "FAIL_DEVICE_NOT_FOUND",
     "launch": "NOT RUN",
-    "learner_data_reset": false
+    "install_blocker": "CoreDevice unable to locate paired device; owner unlock/USB requested",
+    "source_checked_after_install_attempt": true,
+    "artifact_checked_after_install_attempt": true,
+    "learner_data_reset": false,
+    "testflight_updated": false,
+    "physical_performance": "NOT RUN",
+    "kids_character_kit_integration": "DEFERRED_BY_OWNER"
   },
   "kids_character_kit_integration": "DEFERRED_BY_OWNER",
   "prior_GAME13_narrow_XXXL_failures": "RETAINED_UNACCEPTED",
@@ -131,7 +150,9 @@
     "owner/child playtesting",
     "TestFlight updated",
     "public readiness",
-    "knowledge-base writer complete"
+    "knowledge-base writer complete",
+    "Updated candidate installed on phone",
+    "App opened"
   ],
   "evidence_refs": {
     "build-copy.json": {
@@ -213,6 +234,98 @@
     "narrow-attempt1-interruption.json": {
       "path": "TestResults/GAME-14/narrow-attempt1-interruption.json",
       "sha256": "e435ddb08ebbb0966d88e3386c6b49d8b0a70c80686b8c2d69a65dc6b23131b9"
+    },
+    "narrow-final-interruption.json": {
+      "path": "TestResults/GAME-14/narrow-final-interruption.json",
+      "sha256": "1faf9b2aad974d82fd4235c23349a727789c32c3f2532e3d7d82a35f74d49bc0"
+    },
+    "narrow-dark-final.log": {
+      "path": "TestResults/GAME-14/narrow-dark-final.log",
+      "sha256": "4c37a0494c245d261dd49565c6358296c80d871b23c9799a90836f2a5e062951"
+    },
+    "final-narrow-dark.log": {
+      "path": "TestResults/GAME-14/final-narrow-dark.log",
+      "sha256": "66d73d35a7ae64eadf321ecfc132a1fc3217b3a89d4f6314d9986251009a8299"
+    },
+    "simulator-environment.json": {
+      "path": "TestResults/GAME-14/simulator-environment.json",
+      "sha256": "c63bcbaa3505563d3f8ee997ea25f1796c010353de7c36127f5c070a1c9656ed"
+    },
+    "verify-native-receipt.py": {
+      "path": "TestResults/GAME-14/verify-native-receipt.py",
+      "sha256": "90ecc7e18e6567986c3becf4f000f94bb34527c36e2481160d19708e2b03c0fd"
+    },
+    "phone-build.log": {
+      "path": "TestResults/GAME-14/phone-build.log",
+      "sha256": "3acb617b9714ff86a843cc1a566d76c30d633d33ed7b97d4e0cd06f2c30b2c9d"
+    },
+    "phone-freeze.log": {
+      "path": "TestResults/GAME-14/phone-freeze.log",
+      "sha256": "d776be3ef8601487e1b93de2f89f7a7ed47177b071fd81a8e1116759390fe64f"
+    },
+    "phone-install.json": {
+      "path": "TestResults/GAME-14/phone-install.json",
+      "sha256": "af38f513e2dea328b3a555fea35f1297b565d320ad831519b08fa4a80d9fa57a"
+    },
+    "phone-install.log": {
+      "path": "TestResults/GAME-14/phone-install.log",
+      "sha256": "97edbdb18b685c8761b9e2cbee180e12306741b52af0b35821ad7befa95bc132"
+    },
+    "PhoneFrozen/BUILD.json": {
+      "path": "TestResults/GAME-14/PhoneFrozen/BUILD.json",
+      "sha256": "e9cb6f454c7c7c6ef11a1374208384bee20d372f118111d08fe44bbf7f4ee45a"
+    },
+    "PhoneFrozen/source.json": {
+      "path": "TestResults/GAME-14/PhoneFrozen/source.json",
+      "sha256": "153e9712e82e97d2197a8edb8fbd5d623ca494bb914be9a8e06ca81693c5609b"
+    },
+    "PhoneFrozen/app-manifest.json": {
+      "path": "TestResults/GAME-14/PhoneFrozen/app-manifest.json",
+      "sha256": "2e621c36ca98052b13a1fb9432c2195f5a2ba4bec48588301cbd3d4615624eda"
+    },
+    "freeze-phone.py": {
+      "path": "TestResults/GAME-14/freeze-phone.py",
+      "sha256": "935563e4c6b41e70fbd138143a37fece613aa9eddbbd36ef8ad0aaf2c94bb9b5"
     }
+  },
+  "implementation_commit": "a6e18699dc749a8df38ce084b8505f627571bba2",
+  "simulator_environment": {
+    "appearance_restore": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "shutdown_restore": {
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "device": "7A5E53D5-112F-41DF-8CEA-9E6DE09F8E85",
+    "reduce_motion": "UNCHANGED",
+    "shared_services_reset": false
+  },
+  "native_screenshots": [
+    "docs/design/beat-spacing/wide-no-input-result.png",
+    "docs/design/beat-spacing/wide-real-input.png",
+    "docs/design/beat-spacing/wide-viewport.png"
+  ],
+  "canonical_memory": {
+    "writer": "governance_tools.memory_record via pinned framework PYTHONPATH",
+    "surfaces": [
+      "daily",
+      "review-log",
+      "active-task-summary"
+    ],
+    "receipt": "artifacts/evidence/test-results/GAME-14-regression.json",
+    "guard": "artifacts/evidence/test-results/GAME-14-memory-check.txt",
+    "current_diff_b0_blocker_count": 0,
+    "repo_state_b0_blocker_count": 0,
+    "background_warnings": {
+      "missing_canonical_memory": 1,
+      "test_evidence_provenance_not_found": 2,
+      "root_canonical_writer_path": "NOT FOUND",
+      "root_authority_guard_path": "NOT FOUND"
+    },
+    "claim_boundary": "Actual canonical writer executed; historical normalization and 03 knowledge-base update not claimed."
   }
 }

@@ -1,6 +1,6 @@
 # GAME-14 — 均勻可讀的 60 BPM 障礙提示
 
-Status IMPLEMENTED_FINAL_WIDE_PASS_NARROW_PHONE_PENDING. Owner 2026-10-06 clarified the issue is uneven-looking obstacle intervals, not character FPS. Base27d07d0, current installed source6019be7. KidsCharacterKit integration remains deferred.
+Status IMPLEMENTED_BUILD_PASS_WIDE_CHECKS_PASS_NARROW_INCOMPLETE_PHONE_BLOCKED. Owner 2026-10-06 clarified the issue is uneven-looking obstacle intervals, not character FPS. Base27d07d0, current installed source6019be7. KidsCharacterKit integration remains deferred.
 
 ## Before-edit contract
 
@@ -23,3 +23,12 @@ Build exact bytes, record source/artifact/signature and phone install/launch out
 Before-fix native regression FAIL: one test, two assertions (early rock disappearance and reward before crossing). Exact-byte final generic Simulator build PASS; wide native 55/0 (52 App tests + 3 real UI workflows). New catalog fixtures cover 16 scheduled crossings, accepted/not accepted, skipped callbacks, 320/375/402 widths and static Reduce Motion. Browser final 30 checks PASS with genuine early input and actual rendered positions; real 16-target completion is 16 Perfect/0 Extra. Initial browser stale-RAF fixture failure retained; copied-formula geometry checks replaced in final run.
 
 95 source inputs bind final build; 93 protected inputs remain unchanged. First narrow attempt used nonexistent class filter and was explicitly interrupted without acceptance; corrected narrow run and phone delivery pending at implementation checkpoint. Physical audiovisual cadence not measured. Prior GAME-13 narrow XXXL failures remain unaccepted. Canonical evidence reader validates receipts; it does not rerun tests. Source check only parses structure; native build/test evidence is separate.
+
+
+Corrected narrow dark run produced no test execution output after several minutes and was interrupted explicitly; no narrow pass claimed. Only the owned xcodebuild was stopped. Owned narrow appearance restored to light and initially-off device shut down successfully; shared Simulator services and unrelated Garden devices untouched. No new small-screen screenshot claimed. Phone build follows implementation commit a6e1869; final delivery receipts will bind that source.
+
+
+Signed iphoneos Debug 0.1.0(10) build PASS; frozen candidate binds a6e1869 and 78 production inputs, valid original team/bundle/profile/signature. Installation attempted once from fresh paired-device inventory; CoreDevice failed to locate owner phone. Launch NOT RUN. Unlock/USB request pending; reuse this candidate after connection, do not rebuild or uninstall/reset. Installation and physical synchronization remain unaccepted. Engineering branch checkpoint does not update TestFlight/public.
+
+
+Canonical writer executed for daily/review-log/active-task-summary, bound a6e1869 and durable GAME-14-regression receipt. Memory guard current/repo B0 blockers0; historical missing memory1/provenance2 and root writer-path warnings remain. Framework writer used via pinned PYTHONPATH; do not claim knowledge-base update or full normalization. This is milestone/defect memory, not session-end closeout.

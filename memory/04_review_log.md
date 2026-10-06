@@ -58,3 +58,14 @@
 - Validation boundary: docs/slices/GAME-13-verification.json phone_delivery_20261006; artifacts/evidence/test-results/GAME-13-phone-install.json: actual signed build PASS, devicectl App installed PASS, automatic launch FAIL_DEVICE_LOCKED; source78 and frozen signature/hash checked after install. Receipt reader does not run functional tests; prior App49/Core53/browser20/wide2 passes are unchanged.
 - Next action: Unlock and open app, or retry launch only after owner readiness reply. Test Practice companion cat/robot first60BPM. Previous narrow XXXL CoreAudio abort/robot zero-hit failures and G1-G4 physical acceptance remain pending. No new App source, TestFlight or public release.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:fdda6f6f8ca39d91eea74b7746585c0c072f24c7951fedd5a719976454cf592a -->
+### Canonical memory checkpoint — beatlab-game14-beat-spacing-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `fdda6f6f8ca39d91eea74b7746585c0c072f24c7951fedd5a719976454cf592a`
+- Commit binding: `a6e18699dc749a8df38ce084b8505f627571bba2` (bound)
+- Record: GAME-14 owner clarified uneven-looking obstacle cadence, not FPS. Reproduced early accepted rock disappearing before fixed scheduled crossing; preserved failing native regression. Keep accepted cue until crossing and fade behind fixed floor marker; original host-clock positions/audio/input/matching/score/save/art unchanged. Native final wide 55/0 (App52 and actual UI3), browser30 real16Perfect/0Extra; exact95source/93protected bind. Narrow wrong-class attempt interrupted; corrected narrow run stalled without test result and interrupted, only owned process stopped, light/shutdown restored. Signed phone build PASS and frozen78production inputs bound a6e1869; actual install FAIL_DEVICE_NOT_FOUND, launch NOT RUN, owner unlock/USB requested. No physical cadence cause established. KidsCharacterKit deferred; prior XXXL failures and G1-G4 remain unaccepted. Canonical writer lacks knowledge-base surface; no 03 update or full normalization claim.
+- Validation boundary: artifacts/evidence/test-results/GAME-14-regression.json
+- Next action: After owner connects unlocked iPhone, refresh inventory and reuse GAME-14 PhoneFrozen signed candidate for installation; then physically compare 60 BPM stone centers crossing fixed marker with click. Narrow/accessibility/physical/child acceptance remains pending; no TestFlight/public claim.
+- PLAN reconciliation: `updated`

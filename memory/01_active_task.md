@@ -36,3 +36,5 @@
 - GAME-13 IMPLEMENTED_BUILD_PASS_FINAL_UI_PARTIAL_OWNER_PENDING: distinct cloud cat/circuit robot first60BPM; App49/Core53/browser20/wide2 pass; narrow50/2 failed (CoreAudio abort, robot0hit), XXXL/physical/owner gates pending; phone offline, no install/TF/public; source checkpoint8707255. <!-- memory_record_projection:active-task-summary:c47c1c278dcc1b9c84fada9818e548c4637c464a4545794fb2187b7b16a0223d -->
 
 - GAME-13 installed in place from6019be7, Debug0.1.0(10), data preserved; automatic launch blocked by phone lock. KidsCharacterKit integration deferred by owner. Narrow UI/physical/owner gates pending; no TF/public. Installation milestone bedbcc5. <!-- memory_record_projection:active-task-summary:986c31b715c6b70270fda69d120fb86f9e4ac829fd3bdc541ca915c649c8202e -->
+
+- GAME-14 a6e1869: early-hit cue gap fixed; wide55/0 and browser30 pass; narrow incomplete, signed phone ready but install device unavailable, owner USB pending; KidsCharacterKit deferred, physical/public gates unaccepted. <!-- memory_record_projection:active-task-summary:fdda6f6f8ca39d91eea74b7746585c0c072f24c7951fedd5a719976454cf592a -->
