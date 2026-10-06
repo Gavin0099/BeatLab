@@ -1,0 +1,324 @@
+{
+  "tool": "builtin imagegen",
+  "source_image_sha256": "8e13a5aba8719cbbad5118e04f2f10a8bb8e7bc80dcdaa1849c1f3b902457d5d",
+  "asset": "BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/artwork.png",
+  "prompt": "docs/design/runner-motion/art-prompt-used.txt",
+  "reference_assets": [
+    "EggMissionAtlas",
+    "HomeDinosaur"
+  ],
+  "size": [
+    1254,
+    1254
+  ],
+  "genuine_alpha": true,
+  "frame_count": 16,
+  "frames": [
+    {
+      "index": 0,
+      "cell": [
+        0,
+        0,
+        314,
+        314
+      ],
+      "alpha_bbox": [
+        26,
+        14,
+        300,
+        307
+      ],
+      "eye_centroid": [
+        207.29268292682926,
+        94.0
+      ]
+    },
+    {
+      "index": 1,
+      "cell": [
+        314,
+        0,
+        313,
+        314
+      ],
+      "alpha_bbox": [
+        30,
+        21,
+        291,
+        307
+      ],
+      "eye_centroid": [
+        201.0952380952381,
+        91.54761904761905
+      ]
+    },
+    {
+      "index": 2,
+      "cell": [
+        627,
+        0,
+        313,
+        314
+      ],
+      "alpha_bbox": [
+        28,
+        18,
+        292,
+        307
+      ],
+      "eye_centroid": [
+        201.22222222222223,
+        87.66666666666667
+      ]
+    },
+    {
+      "index": 3,
+      "cell": [
+        940,
+        0,
+        314,
+        314
+      ],
+      "alpha_bbox": [
+        40,
+        21,
+        292,
+        302
+      ],
+      "eye_centroid": [
+        205.1875,
+        92.8125
+      ]
+    },
+    {
+      "index": 4,
+      "cell": [
+        0,
+        314,
+        314,
+        313
+      ],
+      "alpha_bbox": [
+        31,
+        12,
+        296,
+        309
+      ],
+      "eye_centroid": [
+        205.85,
+        101.85
+      ]
+    },
+    {
+      "index": 5,
+      "cell": [
+        314,
+        314,
+        313,
+        313
+      ],
+      "alpha_bbox": [
+        28,
+        13,
+        292,
+        307
+      ],
+      "eye_centroid": [
+        203.0327868852459,
+        102.0327868852459
+      ]
+    },
+    {
+      "index": 6,
+      "cell": [
+        627,
+        314,
+        313,
+        313
+      ],
+      "alpha_bbox": [
+        30,
+        14,
+        293,
+        302
+      ],
+      "eye_centroid": [
+        203.42857142857142,
+        100.60714285714286
+      ]
+    },
+    {
+      "index": 7,
+      "cell": [
+        940,
+        314,
+        314,
+        313
+      ],
+      "alpha_bbox": [
+        35,
+        12,
+        293,
+        307
+      ],
+      "eye_centroid": [
+        206.73134328358208,
+        102.5223880597015
+      ]
+    },
+    {
+      "index": 8,
+      "cell": [
+        0,
+        627,
+        314,
+        313
+      ],
+      "alpha_bbox": [
+        31,
+        18,
+        293,
+        304
+      ],
+      "eye_centroid": [
+        204.38095238095238,
+        90.47619047619048
+      ]
+    },
+    {
+      "index": 9,
+      "cell": [
+        314,
+        627,
+        313,
+        313
+      ],
+      "alpha_bbox": [
+        39,
+        16,
+        290,
+        283
+      ],
+      "eye_centroid": [
+        200.85106382978722,
+        87.63829787234043
+      ]
+    },
+    {
+      "index": 10,
+      "cell": [
+        627,
+        627,
+        313,
+        313
+      ],
+      "alpha_bbox": [
+        59,
+        17,
+        289,
+        277
+      ],
+      "eye_centroid": [
+        201.58333333333334,
+        90.0625
+      ]
+    },
+    {
+      "index": 11,
+      "cell": [
+        940,
+        627,
+        314,
+        313
+      ],
+      "alpha_bbox": [
+        28,
+        17,
+        287,
+        300
+      ],
+      "eye_centroid": [
+        197.06976744186048,
+        90.02325581395348
+      ]
+    },
+    {
+      "index": 12,
+      "cell": [
+        0,
+        940,
+        314,
+        314
+      ],
+      "alpha_bbox": [
+        44,
+        11,
+        295,
+        289
+      ],
+      "eye_centroid": [
+        207.9090909090909,
+        102.05454545454545
+      ]
+    },
+    {
+      "index": 13,
+      "cell": [
+        314,
+        940,
+        313,
+        314
+      ],
+      "alpha_bbox": [
+        42,
+        6,
+        294,
+        288
+      ],
+      "eye_centroid": [
+        204.30555555555554,
+        93.90277777777777
+      ]
+    },
+    {
+      "index": 14,
+      "cell": [
+        627,
+        940,
+        313,
+        314
+      ],
+      "alpha_bbox": [
+        35,
+        10,
+        294,
+        291
+      ],
+      "eye_centroid": [
+        205.015625,
+        97.0
+      ]
+    },
+    {
+      "index": 15,
+      "cell": [
+        940,
+        940,
+        314,
+        314
+      ],
+      "alpha_bbox": [
+        34,
+        34,
+        293,
+        287
+      ],
+      "eye_centroid": [
+        204.9268292682927,
+        107.90243902439025
+      ]
+    }
+  ],
+  "mode": "new same-character animation atlas, references preserved",
+  "production_spec": "docs/design/runner-motion/art-prompt.txt"
+}

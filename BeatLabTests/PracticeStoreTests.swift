@@ -1,5 +1,7 @@
 import Foundation
 import XCTest
+import SpriteKit
+import UIKit
 import BeatLabCore
 @testable import BeatLab
 
@@ -286,6 +288,83 @@ final class PracticeStoreTests: XCTestCase {
 }
 
 final class EggMissionPresentationTests: XCTestCase {
+    func testEightDistinctRunFramesLoopContinuouslyAndJumpHasSoftTouchdown() {
+        let fixtures: [(Double, Int)] = [(4, 0), (4.0625, 1), (4.125, 2), (4.1875, 3), (4.25, 4), (4.3125, 5), (4.375, 6), (4.4375, 7)]
+        for (time, frame) in fixtures { XCTAssertEqual(EggAnimationFrame.sample(elapsed: time, age: nil, reduceMotion: false), frame) }
+        XCTAssertEqual(EggAnimationFrame.sample(elapsed: 4.4999, age: nil, reduceMotion: false), 7)
+        XCTAssertEqual(EggAnimationFrame.sample(elapsed: 4.5001, age: nil, reduceMotion: false), 0)
+        // Reviewed contract: normalized ballistic peak at one third of 0.48s,
+        // with zero vertical velocity on touchdown. Not physical latency.
+        XCTAssertEqual(EggMotion.sample(elapsed: 5, age: 0.16, grade: .perfect, reduceMotion: false).height, 74, accuracy: 0.001)
+        XCTAssertEqual(EggMotion.sample(elapsed: 5, age: 0.16, grade: .extra, reduceMotion: false).height, 12, accuracy: 0.001)
+        XCTAssertLessThan(EggMotion.sample(elapsed: 5, age: 0.479, grade: .perfect, reduceMotion: false).height, 0.003)
+        XCTAssertEqual(EggMotion.sample(elapsed: 5, age: 0.48, grade: .perfect, reduceMotion: false).height, 0)
+        for time in [Double.nan, .infinity, -1, 0, 4, 20, Double.greatestFiniteMagnitude] {
+            XCTAssertEqual(EggAnimationFrame.sample(elapsed: time, age: 0.16, reduceMotion: true), 14)
+        }
+        XCTAssertEqual(EggAnimationFrame.sample(elapsed: Double.greatestFiniteMagnitude, age: nil, reduceMotion: false), 14)
+    }
+    @MainActor
+    func testPersistentSceneNodesFollowRealAcceptedSnapshotWithoutExtraReplayOrStaleRetry() throws {
+        let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
+        let player = try XCTUnwrap(scene.childNode(withName: "player"))
+        XCTAssertEqual(player.children.count, 1, "One opaque character layer: crossfading illustrated heads creates ghost eyes")
+        let character = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+        let rock = try XCTUnwrap(scene.childNode(withName: "rock0"))
+        let reward = try XCTUnwrap(scene.childNode(withName: "reward0"))
+        let count = scene.children.count
+        func hit(_ target: Int?, _ input: Double, _ grade: String) throws -> TimingHit {
+            let id = target.map(String.init) ?? "null"
+            return try JSONDecoder().decode(TimingHit.self, from: Data("{\"targetID\":\(id),\"inputTime\":\(input),\"error\":null,\"grade\":\"\(grade)\"}".utf8))
+        }
+        var calls = 0
+        var state = EggSceneSnapshot(presentationElapsed: { host in calls += 1; return host - 100 })
+        scene.configure(state); scene.render(at: 104)
+        XCTAssertFalse(rock.isHidden); XCTAssertTrue(reward.isHidden)
+        let previous = rock.position.x; scene.render(at: 104.01)
+        XCTAssertLessThan(rock.position.x, previous, "Nodes move between store polls on the existing read-only clock")
+        state.accepted = [0]; state.acceptedAction = try hit(0, 104, "perfect"); state.latestAction = try hit(nil, 104.2, "extra")
+        scene.configure(state); scene.render(at: 104.24)
+        XCTAssertTrue(rock.isHidden); XCTAssertFalse(reward.isHidden); XCTAssertGreaterThan(player.position.y, 60)
+        scene.render(at: 104.70)
+        XCTAssertEqual(player.position.y, 51, accuracy: 2.001, "Old extra must not start a second bounce")
+        for host in [Double.nan, .infinity, -.infinity, 103, 104.48, 105, 120.18] {
+            scene.render(at: host); XCTAssertTrue(player.position.x.isFinite && player.position.y.isFinite)
+            XCTAssertEqual(character.alpha, 1)
+            XCTAssertEqual(scene.children.count, count); XCTAssertTrue(scene.childNode(withName: "player") === player)
+        }
+        scene.size = CGSize(width: 320, height: 240)
+        XCTAssertEqual(scene.children.count, count, "Resize reuses the graph")
+        scene.render(at: 104.08)
+        XCTAssertEqual(player.position.y, 75.475, accuracy: 0.01, "Short scene scales the whole arc, not a clipped flat top")
+        scene.render(at: 104.16)
+        XCTAssertEqual(player.position.y, 88.6, accuracy: 0.01)
+        scene.configure(EggSceneSnapshot(preparing: true)); scene.render(at: 104.24)
+        XCTAssertTrue(rock.isHidden); XCTAssertTrue(reward.isHidden)
+        let beforeDetach = calls; scene.detach(); scene.update(999)
+        XCTAssertEqual(calls, beforeDetach); XCTAssertFalse(player.hasActions()); XCTAssertNil(player.physicsBody)
+    }
+    @MainActor
+    func testActualSKViewCallbacksReuseGraphAndPauseDetachWithoutTimingAuthority() async throws {
+        let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 400, height: 800)), controller = UIViewController()
+        let view = SKView(frame: CGRect(x: 0, y: 0, width: 400, height: 400)), scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
+        window.rootViewController = controller; controller.view.addSubview(view); window.makeKeyAndVisible()
+        defer { scene.detach(); view.presentScene(nil); window.isHidden = true }
+        view.isUserInteractionEnabled = false; view.ignoresSiblingOrder = true; view.preferredFramesPerSecond = 60; view.presentScene(scene)
+        let epoch = PracticeStore.now(), count = scene.children.count
+        scene.configure(EggSceneSnapshot(presentationElapsed: { 4 + $0 - epoch }))
+        try await Task.sleep(nanoseconds: 3_000_000_000)
+        XCTAssertGreaterThan(scene.callbackCount, 2, "Actual SKView must deliver update callbacks")
+        XCTAssertEqual(scene.children.count, count)
+        let observations = scene.diagnostics()
+        print("GAME12_RENDER_DIAGNOSTICS " + String(data: try JSONSerialization.data(withJSONObject: observations, options: [.sortedKeys]), encoding: .utf8)!)
+        // Callback intervals/render-method work are simulator observations,
+        // not presented FPS, GPU time, input latency or a phone benchmark.
+        scene.configure(EggSceneSnapshot(reduceMotion: true, presentationElapsed: { 4 + $0 - epoch }))
+        let paused = scene.callbackCount; try await Task.sleep(nanoseconds: 150_000_000)
+        XCTAssertEqual(scene.callbackCount, paused); XCTAssertTrue(view.isPaused)
+        scene.detach(); view.presentScene(nil); XCTAssertNil(view.scene)
+    }
     func testContinuousBackgroundAndFiniteImmediateJumpLandingWithoutReducedMotion() {
         let before = EggMotion.sample(elapsed: 11.9999, age: nil, grade: nil, reduceMotion: false)
         let after = EggMotion.sample(elapsed: 12.0001, age: nil, grade: nil, reduceMotion: false)

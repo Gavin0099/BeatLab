@@ -1,0 +1,89 @@
+<!doctype html><html lang="zh-Hant"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><title>拍拍冒險 · 送蛋回巢試玩</title>
+<style>
+:root{color-scheme:light;--ink:#163d30;--yellow:#ffdb70;--cream:#fff8df}*{box-sizing:border-box}body{margin:0;background:#15392d;color:var(--cream);font:18px system-ui,sans-serif}main{max-width:520px;margin:auto;padding:18px 16px 24px}header{display:flex;justify-content:space-between;align-items:center;font-weight:750}small{font-size:14px;color:#b7d4c3}h1{font-size:30px;line-height:1.1;margin:10px 0}p{line-height:1.5;margin:10px 0}.scene{position:relative;height:min(55vh,420px);min-height:260px;background:#f9edcc;border-radius:28px;overflow:hidden;margin:16px 0}canvas{width:100%;height:100%;display:block}.badge{position:absolute;top:16px;left:16px;padding:9px 14px;border-radius:16px;background:#fff9e7;color:var(--ink);font-weight:800}.cue{text-align:center;min-height:54px;font-weight:750}.meter{height:8px;background:#39614c;border-radius:8px;overflow:hidden}.meter i{display:block;width:100%;transform:scaleX(0);transform-origin:left;height:100%;background:#9adeb3}button{font:inherit;border:0;min-height:48px;border-radius:20px;cursor:pointer;font-weight:800}#action{width:100%;min-height:88px;background:var(--yellow);color:var(--ink);font-size:28px;touch-action:manipulation;box-shadow:0 6px 0 #c9a143}#action:active{transform:translateY(3px);box-shadow:0 3px 0 #c9a143}#stop[hidden]{display:none}#stop{background:transparent;color:var(--cream);display:block;margin:12px auto}#stats{display:flex;justify-content:space-between;font-size:14px;margin:12px 0}#result{background:#fff8df;color:var(--ink);border-radius:20px;padding:18px;margin-bottom:16px}#result[hidden]{display:none}#result h2{margin:0 0 8px;font-size:25px}.muted{font-size:14px;color:#b7d4c3}footer{font-size:12px;color:#b7d4c3;margin-top:20px}button:focus-visible{outline:4px solid white;outline-offset:4px}@media(prefers-reduced-motion:reduce){#action:active{transform:none}}@media(max-height:700px){.scene{height:300px;min-height:220px}h1{font-size:25px}main{padding-top:10px}}
+</style>
+<main><header><span>拍拍冒險</span><small>第一關 · 60 BPM</small></header><h1>把恐龍蛋帶回家</h1><p><label><input id="smooth" type="checkbox" checked> 連續動作幀（關閉可比較上一版）</label></p><p id="intro">先聽 4 拍。石頭來到腳下，跟鼓聲按一下「跳」！</p><div class="meter" aria-label="回巢進度"><i id="progress"></i></div><div class="scene"><canvas id="world" aria-label="恐龍帶著蛋，跟著拍子跨過石頭前往巢穴"></canvas><span class="badge" id="badge">目的地：溫暖的巢</span></div><div id="result" hidden></div><div class="cue" id="cue">16 個拍點，陪恐龍一路回家</div><div id="stats"><span id="hits">跨過 0 / 16</span><span id="combo">蛋準備好了</span></div><button id="action">出發！</button><button id="stop" hidden>停止這次冒險</button><p class="muted">用右手跟拍。慢一點也沒關係，下個拍子再接上。</p><footer>可玩的設計試稿；瀏覽器音訊與判定獨立，不保存 App 進度。原生版沿用 BeatLab 的音訊時鐘及判分。</footer></main>
+<script>
+const $=id=>document.getElementById(id),canvas=$('world'),ctx=canvas.getContext('2d');
+const text=(id,value)=>{if($(id).textContent!==value)$(id).textContent=value};
+let viewRect=canvas.getBoundingClientRect();new ResizeObserver(()=>{viewRect=canvas.getBoundingClientRect()}).observe(canvas);
+const atlas=new Image();atlas.src='../../../BeatLab/Resources/Assets.xcassets/EggMissionAtlas.imageset/artwork.png';
+const backdrop=new Image();backdrop.src='../../../BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/artwork.png';
+const animationAtlas=new Image();animationAtlas.src='../../../BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/artwork.png';
+const reduced=matchMedia('(prefers-reduced-motion:reduce)').matches;
+let audio,origin=0,active=false,ended=false,hits=new Map(),extra=0,last=null,lastMatched=null,streak=0,sounds=[],cancelled=false;
+function sprite(index,x,y,size){if(!atlas.complete||!atlas.naturalWidth)return;const xs=[0,440,880,1254],ys=[0,478,933,1254],c=index%3,r=Math.floor(index/3),sw=xs[c+1]-xs[c],sh=ys[r+1]-ys[r],dw=size*sw/sh;ctx.drawImage(atlas,xs[c],ys[r],sw,sh,x-dw/2,y-size,dw,size)}
+function elapsed(){return active?audio.currentTime-origin:ended?20:0}
+function tone(t,f,d,g,kind='sine'){let o=audio.createOscillator(),v=audio.createGain();o.type=kind;o.frequency.setValueAtTime(f,t);v.gain.setValueAtTime(g,t);v.gain.exponentialRampToValueAtTime(.0001,t+d);o.connect(v).connect(audio.destination);o.start(t);o.stop(t+d);sounds.push(o)}
+function groove(){for(let b=0;b<20;b++){const t=origin+b;tone(t,b%4===0?1200:900,.045,.055);if(b>=4){if(b%2===0)tone(t,110,.19,.09);else tone(t,190,.09,.06,'triangle');tone(t+.5,4700,.018,.016,'square')}}}
+async function start(){audio??=new AudioContext();await audio.resume();origin=audio.currentTime+.15;active=true;ended=false;cancelled=false;hits=new Map();extra=0;last=null;lastMatched=null;streak=0;$('result').hidden=true;$('action').textContent='跳！';$('stop').hidden=false;$('intro').textContent='守護恐龍蛋，跟著鼓声前進。';groove()}
+function tap(){if(!active)return start();const now=elapsed();if(now<3.82||now>20.18)return;const id=Math.min(15,Math.max(0,Math.round(now-4))),error=now-(4+id);if(Math.abs(error)<=.18&&!hits.has(id)){const perfect=Math.abs(error)<=.05;hits.set(id,{perfect,error});streak=perfect?streak+1:0;last={time:now,id,kind:perfect?'perfect':'matched'};lastMatched=last;tone(audio.currentTime,perfect?1320:660,.035,.04);$('cue').textContent=perfect?'漂亮！蛋亮起來了':error<0?'跳過了，下一拍稍等一下':'跳過了，下一拍早一點';}else{extra++;streak=0;last={time:now,kind:'extra'};tone(audio.currentTime,220,.03,.03);$('cue').textContent='先站穩，聽下一拍再跳'}update()}
+function finish(){active=false;ended=true;const perfect=[...hits.values()].filter(x=>x.perfect).length,passed=hits.size/16>=.85&&perfect/16>=.55&&extra/16<=.1;$('result').hidden=false;$('result').innerHTML=`<h2>${passed?'蛋安全回到巢了！':'恐龍接住蛋了，再試一次'}</h2><p>跨過 ${hits.size} / 16 · 漂亮 ${perfect} 拍 · 多打 ${extra} 下</p><p>${passed?'你的節奏讓這趟冒險成功了。':'跟著鼓聲跳，慢慢來也可以。'}</p>`;$('action').textContent='再走一趟';$('stop').hidden=true;$('cue').textContent=passed?'任務完成！':'跟著拍子，再把蛋帶回家';update()}
+function stop(){for(const o of sounds){try{o.stop()}catch{}}sounds=[];active=false;ended=false;cancelled=true;$('action').textContent='重新出發';$('stop').hidden=true;$('cue').textContent='這次已停止，不計成績';$('result').hidden=true;update()}
+function update(){const t=elapsed();text('hits',`跨過 ${hits.size} / 16`);text('combo',streak>=2?`連續 ${streak} 拍漂亮！`:extra?`多打 ${extra} 下`:'蛋在你手上');$('progress').style.transform=`scaleX(${Math.min(1,Math.max(0,(t-4)/16))})`}
+// Rendering-only motion. No output can change hits, grade, audio schedule or finish.
+const bounds=[[21,17,393,452],[450,32,387,440],[883,90,358,365],[26,482,401,398],[464,525,390,383],[894,491,345,417],[113,954,212,258],[435,968,397,248],[877,950,351,260]];
+const spriteCache=[];
+function cachedSprite(index,x,foot,size,sx=1,sy=1,angle=0){
+ if(!atlas.complete||!atlas.naturalWidth)return;
+ if(!spriteCache[index]){const [bx,by,bw,bh]=bounds[index],c=document.createElement('canvas');c.width=bw;c.height=bh;c.getContext('2d').drawImage(atlas,bx,by,bw,bh,0,0,bw,bh);spriteCache[index]=c}
+ const c=spriteCache[index],scale=index<6?size/452:size/c.height;ctx.save();ctx.translate(x,foot);ctx.rotate(angle);ctx.scale(sx,sy);ctx.drawImage(c,-c.width*scale/2,-c.height*scale,c.width*scale,c.height*scale);ctx.restore()
+}
+const animationFrames=[{"index": 0, "cell": [0, 0, 314, 314], "alpha_bbox": [26, 14, 300, 307], "eye_centroid": [207.29268292682926, 94.0]}, {"index": 1, "cell": [314, 0, 313, 314], "alpha_bbox": [30, 21, 291, 307], "eye_centroid": [201.0952380952381, 91.54761904761905]}, {"index": 2, "cell": [627, 0, 313, 314], "alpha_bbox": [28, 18, 292, 307], "eye_centroid": [201.22222222222223, 87.66666666666667]}, {"index": 3, "cell": [940, 0, 314, 314], "alpha_bbox": [40, 21, 292, 302], "eye_centroid": [205.1875, 92.8125]}, {"index": 4, "cell": [0, 314, 314, 313], "alpha_bbox": [31, 12, 296, 309], "eye_centroid": [205.85, 101.85]}, {"index": 5, "cell": [314, 314, 313, 313], "alpha_bbox": [28, 13, 292, 307], "eye_centroid": [203.0327868852459, 102.0327868852459]}, {"index": 6, "cell": [627, 314, 313, 313], "alpha_bbox": [30, 14, 293, 302], "eye_centroid": [203.42857142857142, 100.60714285714286]}, {"index": 7, "cell": [940, 314, 314, 313], "alpha_bbox": [35, 12, 293, 307], "eye_centroid": [206.73134328358208, 102.5223880597015]}, {"index": 8, "cell": [0, 627, 314, 313], "alpha_bbox": [31, 18, 293, 304], "eye_centroid": [204.38095238095238, 90.47619047619048]}, {"index": 9, "cell": [314, 627, 313, 313], "alpha_bbox": [39, 16, 290, 283], "eye_centroid": [200.85106382978722, 87.63829787234043]}, {"index": 10, "cell": [627, 627, 313, 313], "alpha_bbox": [59, 17, 289, 277], "eye_centroid": [201.58333333333334, 90.0625]}, {"index": 11, "cell": [940, 627, 314, 313], "alpha_bbox": [28, 17, 287, 300], "eye_centroid": [197.06976744186048, 90.02325581395348]}, {"index": 12, "cell": [0, 940, 314, 314], "alpha_bbox": [44, 11, 295, 289], "eye_centroid": [207.9090909090909, 102.05454545454545]}, {"index": 13, "cell": [314, 940, 313, 314], "alpha_bbox": [42, 6, 294, 288], "eye_centroid": [204.30555555555554, 93.90277777777777]}, {"index": 14, "cell": [627, 940, 313, 314], "alpha_bbox": [35, 10, 294, 291], "eye_centroid": [205.015625, 97.0]}, {"index": 15, "cell": [940, 940, 314, 314], "alpha_bbox": [34, 34, 293, 287], "eye_centroid": [204.9268292682927, 107.90243902439025]}];
+const animatedCache=[];let backdropCache,backdropSize='';
+function eased(x){x=Math.max(0,Math.min(1,x));return x*x*(3-2*x)}
+function animationFrame(t,age,rm){
+ if(rm||!Number.isFinite(t)||t<4||t>20.18)return 14;
+ const run=Math.floor(((t-4)*16)%8);
+ if(age!==null&&Number.isFinite(age)&&age>=0&&age<.48)return 8+Math.min(5,Math.floor(age/.48*6));
+ if(age!==null&&Number.isFinite(age)&&age>=.48&&age<.64)return age<.56?13:15;
+ return run;
+}
+function animatedSprite(index,x,foot,size,sx,sy,angle){
+ if(!animationAtlas.complete||!animationAtlas.naturalWidth)return;
+ const f=animationFrames[index];if(!animatedCache[index]){const [bx,by,bw,bh]=f.cell,c=document.createElement('canvas');c.width=bw;c.height=bh;c.getContext('2d').drawImage(animationAtlas,bx,by,bw,bh,0,0,bw,bh);animatedCache[index]=c}
+ const c=animatedCache[index],scale=size/295,eye=f.eye_centroid;
+ ctx.save();ctx.translate(x,foot);ctx.rotate(angle);ctx.scale(sx,sy);ctx.drawImage(c,-(eye[0]-40)*scale,-(index>=12?f.alpha_bbox[3]+1:eye[1]+212)*scale,c.width*scale,c.height*scale);ctx.restore();
+}
+function background(drift,w,h){
+ const key=w+':'+h;if(backdrop.complete&&backdrop.naturalWidth&&key!==backdropSize){backdropCache=document.createElement('canvas');backdropCache.width=Math.ceil(w+24);backdropCache.height=Math.ceil(h);backdropCache.getContext('2d').drawImage(backdrop,0,0,w+24,h);backdropSize=key}
+ if(backdropCache)ctx.drawImage(backdropCache,drift,0);else{ctx.fillStyle='#fff2cf';ctx.fillRect(0,0,w,h)}
+}
+function motion(t,age,kind,rm){
+ const activeHop=age!==null&&age>=0&&age<.48,landing=age!==null&&age>=.48&&age<.64;
+ const p=activeHop?age/.48:0,l=landing?Math.pow(Math.sin(Math.PI*(age-.48)/.16),$('smooth').checked?2:1):0;
+ const curve=$('smooth').checked?6.75*p*(1-p)*(1-p):Math.sin(Math.PI*p);
+ const height=rm?0:activeHop?curve*(kind==='extra'?12:74):0;
+ return {height,sx:rm?1:1+.1*l,sy:rm?1:1-.12*l,angle:rm?0:-.12*($('smooth').checked?curve:Math.sin(Math.PI*p)),dust:rm?0:l,drift:rm?-12:-Math.min(16,Math.max(0,t-4))*1.5};
+}
+function draw(){const r=viewRect,d=devicePixelRatio,w=r.width,h=r.height;
+ if(canvas.width!==Math.round(w*d)||canvas.height!==Math.round(h*d)){canvas.width=Math.round(w*d);canvas.height=Math.round(h*d)}
+ ctx.setTransform(d,0,0,d,0,0);ctx.clearRect(0,0,w,h);
+ const modern=$('smooth').checked,smooth=true,t=elapsed(),p=t-4,ground=h*.83,px=w*.26,stride=w*.32;
+ let chosen=smooth&&lastMatched&&t-lastMatched.time<.64?lastMatched:last;
+ if(smooth&&lastMatched&&t-lastMatched.time>=.64&&last?.kind==='extra'&&last.time<lastMatched.time+.64)chosen=null;
+ const age=chosen?t-chosen.time:null, m=motion(t,age,chosen?.kind,reduced),drift=smooth?m.drift:-Math.max(0,p)%8*3;
+ background(drift,w,h);
+ ctx.fillStyle='#a8d985';ctx.fillRect(0,ground,w,12);ctx.fillStyle='#d9ad69';ctx.fillRect(0,ground+12,w,h-ground);
+ if(smooth){for(let i=-2;i<8;i++){const x=((i*90-Math.max(0,p)*stride)%(w+180)+(w+180))%(w+180)-90;ctx.fillStyle='#c69457';ctx.beginPath();ctx.ellipse(x,ground+32+(i%3)*7,8,3,0,0,Math.PI*2);ctx.fill();}}
+ for(let i=0;i<16;i++){const x=px+(i-(reduced?Math.floor(p):p))*stride;if(x< -80||x>w+80)continue;
+ if(hits.has(i)){ctx.fillStyle='#ffd550';ctx.font='26px system-ui';ctx.fillText('✦',x-10,ground-14)}else{if(smooth)cachedSprite(8,x,ground+5,54);else sprite(8,x,ground+5,74)}}
+ const missID=Math.floor(t-4-.43),missRecent=active&&missID>=0&&missID<16&&!hits.has(missID)&&t-(4+missID+.43)<.48;
+ let pose=active&&t>=4&&!reduced?(Math.floor(t*5)%2):2,hop=0;
+ if(age!==null&&age>=0&&age<.48){pose=chosen.kind==='extra'?2:3;hop=m.height}else if(missRecent)pose=4;
+ if(ended)pose=hits.size/16>=.85&&[...hits.values()].filter(x=>x.perfect).length/16>=.55&&extra/16<=.1?5:4;
+ ctx.fillStyle=`rgba(22,61,48,${.18-(hop/74)*.07})`;ctx.beginPath();ctx.ellipse(px,ground+4,38*(1-hop/180),5,0,0,Math.PI*2);ctx.fill();
+ const bob=smooth&&!reduced&&active&&t>=4&&hop===0&&!missRecent?Math.sin(t*Math.PI*10)*2:0;
+ if(modern&&!ended&&(!missRecent||(age!==null&&age<.64))){const frame=animationFrame(t,age,reduced),foot=ground+5-hop-bob,size=Math.min(145,w*.37);animatedSprite(frame,px,foot,size,m.sx,m.sy,m.angle)}
+ else if(modern){cachedSprite(pose,px,ground+5-hop-bob,Math.min(145,w*.37),m.sx,m.sy,m.angle)}
+ else if(smooth){
+ const foot=ground+5-hop-bob,size=Math.min(145,w*.37);
+ if(!reduced&&active&&age!==null&&age>=.48&&age<.64){const blend=(age-.48)/.16;ctx.globalAlpha=1-blend;cachedSprite(chosen.kind==='extra'?2:3,px,foot,size,m.sx,m.sy,m.angle);ctx.globalAlpha=blend;cachedSprite(pose,px,foot,size,m.sx,m.sy,m.angle);ctx.globalAlpha=1}
+ else if(!reduced&&(pose===0||pose===1)){const fraction=(t*5)%1,blend=Math.min(1,Math.max(0,(fraction-.75)/.25));ctx.globalAlpha=1-blend;cachedSprite(pose,px,foot,size,m.sx,m.sy,m.angle);ctx.globalAlpha=blend;cachedSprite(pose===0?1:0,px,foot,size,m.sx,m.sy,m.angle);ctx.globalAlpha=1}
+ else cachedSprite(pose,px,foot,size,m.sx,m.sy,m.angle);
+ }else sprite(pose,px,ground+9-hop,Math.min(145,w*.37));
+ if(smooth&&m.dust>0){ctx.fillStyle=`rgba(242,213,157,${m.dust*.7})`;for(let i=0;i<3;i++){ctx.beginPath();ctx.ellipse(px-25-i*15,ground-i*3,7+m.dust*5,4,0,0,Math.PI*2);ctx.fill()}}
+ const nestX=!active||ended?w*.72:px+(16-(reduced?Math.floor(p):p))*stride;if(smooth)cachedSprite(7,Math.min(w*1.4,nestX),ground+12,65);else sprite(7,Math.min(w*1.4,nestX),ground+12,124);
+ if(active&&t<4){text('cue',`先聽 ${Math.max(1,4-Math.floor(Math.max(0,t)))} 拍，準備跳`);text('badge','聽鼓聲，準備出發')}else if(active){text('badge','把蛋帶回巢');if(missRecent&&(age===null||age>.64))text('cue','接住了！下一拍再跳');}else text('badge',ended?'巢就在這裡':'目的地：溫暖的巢');if(active&&t>=20.18)finish();update();requestAnimationFrame(draw)}
+$('action').addEventListener('pointerdown',e=>{e.preventDefault();tap()});$('action').addEventListener('keydown',e=>{if(e.key===' '||e.key==='Enter'){e.preventDefault();tap()}});$('stop').onclick=stop;document.addEventListener('visibilitychange',()=>{if(document.hidden&&active)stop()});requestAnimationFrame(draw);
+</script></html>

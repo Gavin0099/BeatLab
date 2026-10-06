@@ -1,5 +1,6 @@
 import SwiftUI
 import UIKit
+import SpriteKit
 import BeatLabCore
 
 enum EggPose: Int { case runA, runB, ready, jump, catchEgg, celebrate, egg, nest, rock }
@@ -77,12 +78,13 @@ struct EggMotion {
         let time = elapsed.isFinite ? min(20.18, max(0, elapsed)) : 0
         let validAge = age.flatMap { $0.isFinite && $0 >= 0 ? $0 : nil }
         let airborne = validAge.map { $0 < 0.48 && grade != nil } ?? false
-        let landing = validAge.map { (0.48..<0.64).contains($0) && grade != nil ? sin(.pi * ($0 - 0.48) / 0.16) : 0 } ?? 0
+        let landing = validAge.map { (0.48..<0.64).contains($0) && grade != nil ? pow(sin(.pi * ($0 - 0.48) / 0.16), 2) : 0 } ?? 0
         let p = airborne ? validAge! / 0.48 : 0
-        return EggMotion(height: reduceMotion ? 0 : CGFloat(sin(.pi * p)) * (grade == .extra ? 12 : 74),
+        let curve = 6.75 * p * pow(1 - p, 2)
+        return EggMotion(height: reduceMotion ? 0 : CGFloat(curve) * (grade == .extra ? 12 : 74),
                          scaleX: reduceMotion ? 1 : 1 + CGFloat(landing) * 0.10,
                          scaleY: reduceMotion ? 1 : 1 - CGFloat(landing) * 0.12,
-                         angle: reduceMotion ? 0 : -0.12 * sin(.pi * p),
+                         angle: reduceMotion ? 0 : -0.12 * curve,
                          landing: reduceMotion ? 0 : CGFloat(landing),
                          backgroundX: reduceMotion ? -12 : -CGFloat(min(16, max(0, time - 4))) * 1.5)
     }
@@ -109,21 +111,16 @@ struct EggMissionScene: View {
     var acceptedAction: TimingHit? = nil
     var latestAction: TimingHit? = nil
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @Environment(\.scenePhase) private var scenePhase
     private let ink = Color(red: 0.08, green: 0.25, blue: 0.18)
 
     var body: some View {
         ZStack(alignment: .top) {
-            // A display schedule only: all sound/targets/grades remain elsewhere.
-            TimelineView(.animation(minimumInterval: 1.0 / 60,
-                                    paused: reduceMotion || preparing || finishedPassed != nil || presentationElapsed == nil)) { _ in
-                let hostTime = PracticeStore.now()
-                let action = EggMotion.action(accepted: acceptedAction, latest: latestAction, hostTime: hostTime)
-                let displayTime = presentationElapsed?(hostTime) ?? elapsed
-                let displayAge = action.map { max(0, hostTime - $0.inputTime) } ?? hitAge
-                EggSceneCanvas(elapsed: displayTime, accepted: accepted,
-                               grade: action?.grade ?? latestGrade, hitAge: displayAge,
-                               finishedPassed: finishedPassed, preparing: preparing, reduceMotion: reduceMotion)
-            }
+            EggSpriteSurface(state: EggSceneSnapshot(elapsed: elapsed, accepted: accepted,
+                latestGrade: latestGrade, hitAge: hitAge, finishedPassed: finishedPassed, preparing: preparing,
+                reduceMotion: reduceMotion, suspended: scenePhase != .active,
+                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction))
+                .accessibilityHidden(true)
             HStack(spacing: 6) {
                 EggSprite(pose: .egg).frame(width: 22, height: 30)
                 Text(preparing ? "把蛋帶回家" : finishedPassed == nil ? "前往溫暖的巢" : "蛋安全接住了")
@@ -139,93 +136,242 @@ struct EggMissionScene: View {
     }
 }
 
-private struct EggSceneCanvas: View {
-    let elapsed: Double
-    let accepted: Set<Int>
-    let grade: TimingGrade?
-    let hitAge: Double?
-    let finishedPassed: Bool?
-    let preparing: Bool
-    let reduceMotion: Bool
-
-    var body: some View {
-        Canvas { context, size in
-            let w = size.width, h = size.height
-            let ground = h * 0.86, playerX = w * 0.27, stride = w * 0.31
-            let position = max(-4, elapsed - 4)
-            let moving = reduceMotion ? floor(position) : position
-            let recovering = EggMissionPresentation.missed(elapsed: elapsed, accepted: accepted) != nil
-            let pose = finishedPassed.map { $0 ? EggPose.celebrate : .catchEgg }
-                ?? (preparing ? .ready : EggMissionPresentation.pose(elapsed: elapsed, hitAge: hitAge, grade: grade, recovering: recovering, reduceMotion: reduceMotion))
-            let motion = EggMotion.sample(elapsed: elapsed, age: preparing || finishedPassed != nil ? nil : hitAge,
-                                          grade: grade, reduceMotion: reduceMotion)
-            let hop = min(motion.height, h * 0.25)
-            let characterSize = min(180, max(118, h * 0.42))
-            context.draw(Image("RunnerIsland"), in: CGRect(x: motion.backgroundX, y: 0, width: w + 24, height: h))
-            context.fill(Path(CGRect(x: 0, y: ground - 6, width: w, height: 12)), with: .color(Color(red: 0.65, green: 0.82, blue: 0.45)))
-            context.fill(Path(CGRect(x: 0, y: ground + 6, width: w, height: h - ground)), with: .color(Color(red: 0.87, green: 0.69, blue: 0.42)))
-            // Wrapped details disappear beyond the edge; no visible loop reset.
-            let offset = preparing || finishedPassed != nil || reduceMotion ? 0 : CGFloat(max(0, position)) * stride
-            for i in -2..<8 {
-                let period = w + 180
-                let raw = CGFloat(i) * 90 - offset
-                let x = (raw.truncatingRemainder(dividingBy: period) + period).truncatingRemainder(dividingBy: period) - 90
-                let rect = CGRect(x: x, y: ground + 24 + CGFloat(abs(i) % 3) * 7, width: 14, height: 5)
-                context.fill(Path(ellipseIn: rect), with: .color(Color(red: 0.78, green: 0.58, blue: 0.34)))
-            }
-            if !preparing && finishedPassed == nil {
-                for id in 0..<16 {
-                    let x = playerX + CGFloat(Double(id) - moving) * stride
-                    guard x > -70 && x < w + 70 else { continue }
-                    if accepted.contains(id) {
-                        context.draw(Text("✦").font(.title).foregroundColor(Color(red: 0.95, green: 0.64, blue: 0.07)), at: CGPoint(x: x, y: ground - 30))
-                    } else { draw(.rock, in: &context, x: x, foot: ground + 5, size: 54) }
-                }
-            }
-            let nestX = preparing || finishedPassed != nil ? w * 0.76 : playerX + CGFloat(16 - moving) * stride
-            if nestX < w + 100 { draw(.nest, in: &context, x: nestX, foot: ground + 7, size: 70) }
-            let shadowWidth = 82 * (1 - hop / 180)
-            context.fill(Path(ellipseIn: CGRect(x: playerX - shadowWidth / 2, y: ground, width: shadowWidth, height: 10)),
-                         with: .color(Color(red: 0.08, green: 0.25, blue: 0.18).opacity(0.18 - Double(hop / 74) * 0.07)))
-            let bob: CGFloat = !reduceMotion && !preparing && finishedPassed == nil && elapsed >= 4 && hop == 0 && !recovering
-                ? CGFloat(sin(elapsed * .pi * 10)) * 2 : 0
-            var player = context
-            player.translateBy(x: playerX, y: ground + 5 - hop - bob)
-            player.rotate(by: .radians(motion.angle))
-            player.scaleBy(x: motion.scaleX, y: motion.scaleY)
-            if !reduceMotion, !preparing, finishedPassed == nil, let age = hitAge,
-               (0.48..<0.64).contains(age), grade != nil {
-                let blend = (age - 0.48) / 0.16
-                var previous = player; previous.opacity = 1 - blend
-                draw(grade == .extra ? .ready : .jump, in: &previous, x: 0, foot: 0, size: characterSize)
-                player.opacity = blend
-                draw(pose, in: &player, x: 0, foot: 0, size: characterSize)
-            } else if !reduceMotion, pose == .runA || pose == .runB {
-                let fraction = (elapsed * 5).truncatingRemainder(dividingBy: 1)
-                let blend = min(1, max(0, (fraction - 0.75) / 0.25))
-                var current = player; current.opacity = 1 - blend
-                draw(pose, in: &current, x: 0, foot: 0, size: characterSize)
-                player.opacity = blend
-                draw(pose == .runA ? .runB : .runA, in: &player, x: 0, foot: 0, size: characterSize)
-            } else { draw(pose, in: &player, x: 0, foot: 0, size: characterSize) }
-            if motion.landing > 0 {
-                for i in 0..<3 {
-                    let rect = CGRect(x: playerX - 30 - CGFloat(i) * 15, y: ground - CGFloat(i) * 3,
-                                      width: 12 + motion.landing * 8, height: 7)
-                    context.fill(Path(ellipseIn: rect), with: .color(Color(red: 0.95, green: 0.83, blue: 0.60).opacity(Double(motion.landing) * 0.7)))
-                }
-            }
-            if grade == .perfect, let age = hitAge, (0..<0.48).contains(age), !preparing, finishedPassed == nil {
-                context.draw(Text("✦").font(.largeTitle).foregroundColor(Color(red: 0.97, green: 0.67, blue: 0.07)),
-                             at: CGPoint(x: playerX + 54, y: ground - characterSize - hop + 24))
-            }
-        }.clipped().accessibilityHidden(true)
+struct EggAnimationFrame {
+    static func ease(_ value: Double) -> CGFloat {
+        let t = value.isFinite ? min(1, max(0, value)) : 0
+        return CGFloat(t * t * (3 - 2 * t))
     }
-    private func draw(_ pose: EggPose, in context: inout GraphicsContext, x: CGFloat, foot: CGFloat, size: CGFloat) {
-        let source = EggSpriteAssets.bounds[pose.rawValue].size
-        let scale = pose.rawValue < 6 ? size / 452 : size / source.height
-        context.draw(EggSpriteAssets.images[pose.rawValue], in: CGRect(x: x - source.width * scale / 2, y: foot - source.height * scale,
-                                                                     width: source.width * scale, height: source.height * scale))
+    static func sample(elapsed: Double, age: Double?, reduceMotion: Bool) -> Int {
+        guard !reduceMotion, elapsed.isFinite, (4...20.18).contains(elapsed) else { return 14 }
+        let phase = (max(0, elapsed - 4) * 16).truncatingRemainder(dividingBy: 8)
+        let run = Int(phase)
+        if let age, age.isFinite, (0..<0.48).contains(age) {
+            return 8 + min(5, Int(age / 0.48 * 6))
+        }
+        if let age, age.isFinite, (0.48..<0.64).contains(age) {
+            return age < 0.56 ? 13 : 15
+        }
+        return run
+    }
+}
+
+struct EggSceneSnapshot {
+    var elapsed: Double = 0
+    var accepted: Set<Int> = []
+    var latestGrade: TimingGrade?
+    var hitAge: Double?
+    var finishedPassed: Bool?
+    var preparing = false
+    var reduceMotion = false
+    var suspended = false
+    var presentationElapsed: ((Double) -> Double)?
+    var acceptedAction: TimingHit?
+    var latestAction: TimingHit?
+    var animate: Bool { !reduceMotion && !suspended && !preparing && finishedPassed == nil && presentationElapsed != nil }
+}
+
+private enum EggSceneTextures {
+    static let original: [SKTexture] = {
+        let atlas = UIImage(named: "EggMissionAtlas")?.cgImage
+        return EggSpriteAssets.bounds.map { bounds in
+            guard let image = atlas?.cropping(to: bounds) else { return SKTexture() }
+            let texture = SKTexture(cgImage: image); texture.filteringMode = .linear; return texture
+        }
+    }()
+    static let animated: [SKTexture] = {
+        guard let atlas = UIImage(named: "EggMotionAtlas")?.cgImage else { return (0..<16).map { _ in SKTexture() } }
+        return (0..<16).map { i in
+            let x0 = (Double(i % 4) * Double(atlas.width) / 4).rounded(.toNearestOrEven)
+            let y0 = (Double(i / 4) * Double(atlas.height) / 4).rounded(.toNearestOrEven)
+            let x1 = (Double(i % 4 + 1) * Double(atlas.width) / 4).rounded(.toNearestOrEven)
+            let y1 = (Double(i / 4 + 1) * Double(atlas.height) / 4).rounded(.toNearestOrEven)
+            guard let image = atlas.cropping(to: CGRect(x: x0, y: y0, width: x1 - x0, height: y1 - y0)) else { return SKTexture() }
+            let texture = SKTexture(cgImage: image); texture.filteringMode = .linear; return texture
+        }
+    }()
+    // Reviewed eye registration from the unchanged generated PNG. Only runtime
+    // anchors change; textures retain original alpha and pixels.
+    static let floors: [CGFloat] = [306.000000, 303.547619, 299.666667, 304.812500, 313.850000, 314.032787, 312.607143, 314.522388, 302.476190, 299.638298, 302.062500, 302.023256, 290.000000, 289.000000, 292.000000, 288.000000]
+    static let eyes: [CGPoint] = [.init(x: 207.292683, y: 94.000000), .init(x: 201.095238, y: 91.547619), .init(x: 201.222222, y: 87.666667), .init(x: 205.187500, y: 92.812500), .init(x: 205.850000, y: 101.850000), .init(x: 203.032787, y: 102.032787), .init(x: 203.428571, y: 100.607143), .init(x: 206.731343, y: 102.522388), .init(x: 204.380952, y: 90.476190), .init(x: 200.851064, y: 87.638298), .init(x: 201.583333, y: 90.062500), .init(x: 197.069767, y: 90.023256), .init(x: 207.909091, y: 102.054545), .init(x: 204.305556, y: 93.902778), .init(x: 205.015625, y: 97.000000), .init(x: 204.926829, y: 107.902439)]
+}
+
+/// Persistent scene graph. Input, sound, targets, grades and saves live elsewhere.
+final class EggSpriteScene: SKScene {
+    private var graphReady = false
+    private var snapshot = EggSceneSnapshot()
+    private let island = SKSpriteNode(texture: SKTexture(imageNamed: "RunnerIsland"))
+    private let floor = SKSpriteNode(color: UIColor(red: 0.87, green: 0.69, blue: 0.42, alpha: 1), size: .zero)
+    private let edge = SKSpriteNode(color: UIColor(red: 0.65, green: 0.82, blue: 0.45, alpha: 1), size: .zero)
+    private let player = SKNode()
+    private let first = SKSpriteNode()
+    private let shadow = SKShapeNode(ellipseOf: CGSize(width: 82, height: 10))
+    private let nest = SKSpriteNode(texture: EggSceneTextures.original[7])
+    private var rocks: [SKSpriteNode] = [], rewards: [SKShapeNode] = [], pebbles: [SKShapeNode] = [], dust: [SKShapeNode] = []
+    private let glint: SKShapeNode
+    private var characterSize: CGFloat = 118
+    #if DEBUG
+    private(set) var callbackCount = 0
+    private var previousHost: Double?
+    private var intervals = Array(repeating: 0.0, count: 256)
+    private var work = Array(repeating: 0.0, count: 256)
+    private var recorded = 0
+    #endif
+
+    override init(size: CGSize) {
+        let path = CGMutablePath()
+        let points = [CGPoint(x: 0, y: 14), .init(x: 3, y: 3), .init(x: 14, y: 0), .init(x: 3, y: -3),
+                      .init(x: 0, y: -14), .init(x: -3, y: -3), .init(x: -14, y: 0), .init(x: -3, y: 3)]
+        path.addLines(between: points); path.closeSubpath(); glint = SKShapeNode(path: path)
+        super.init(size: size)
+        scaleMode = .resizeFill
+        backgroundColor = UIColor(red: 1, green: 0.95, blue: 0.81, alpha: 1)
+        island.anchorPoint = .zero; island.zPosition = 0; addChild(island)
+        floor.zPosition = 1; edge.zPosition = 2; addChild(floor); addChild(edge)
+        shadow.fillColor = UIColor(red: 0.08, green: 0.25, blue: 0.18, alpha: 1); shadow.strokeColor = .clear; shadow.zPosition = 4; addChild(shadow)
+        player.name = "player"; player.zPosition = 6; addChild(player)
+        first.name = "characterPrimary"; first.zPosition = 0
+        player.addChild(first)
+        nest.anchorPoint = CGPoint(x: 0.5, y: 0); nest.zPosition = 3; addChild(nest)
+        for id in 0..<16 {
+            let rock = SKSpriteNode(texture: EggSceneTextures.original[8]); rock.name = "rock\(id)"
+            rock.anchorPoint = CGPoint(x: 0.5, y: 0); rock.zPosition = 3; addChild(rock); rocks.append(rock)
+            let reward = SKShapeNode(path: path); reward.name = "reward\(id)"; reward.fillColor = .systemYellow; reward.strokeColor = .clear
+            reward.zPosition = 3; addChild(reward); rewards.append(reward)
+        }
+        for _ in 0..<10 {
+            let pebble = SKShapeNode(ellipseOf: CGSize(width: 14, height: 5)); pebble.fillColor = UIColor(red: 0.78, green: 0.58, blue: 0.34, alpha: 1)
+            pebble.strokeColor = .clear; pebble.zPosition = 2; addChild(pebble); pebbles.append(pebble)
+        }
+        for _ in 0..<3 {
+            let puff = SKShapeNode(ellipseOf: CGSize(width: 12, height: 7)); puff.fillColor = UIColor(red: 0.95, green: 0.83, blue: 0.60, alpha: 1)
+            puff.strokeColor = .clear; puff.zPosition = 5; addChild(puff); dust.append(puff)
+        }
+        glint.fillColor = .systemYellow; glint.strokeColor = .clear; glint.zPosition = 7; addChild(glint)
+        graphReady = true
+        resizeNodes()
+    }
+    required init?(coder: NSCoder) { nil }
+    override func didChangeSize(_ oldSize: CGSize) { resizeNodes(); render(at: PracticeStore.now()) }
+    private func resizeNodes() {
+        guard size.width > 0, size.height > 0, size.width.isFinite, size.height.isFinite else { return }
+        let ground = size.height * 0.14
+        island.size = CGSize(width: size.width + 24, height: size.height)
+        floor.size = CGSize(width: size.width, height: max(0, ground - 6)); floor.position = CGPoint(x: size.width / 2, y: floor.size.height / 2)
+        edge.size = CGSize(width: size.width, height: 12); edge.position = CGPoint(x: size.width / 2, y: ground)
+        characterSize = min(180, max(118, size.height * 0.42))
+        nest.size = CGSize(width: 70 * 397 / 248, height: 70)
+        for rock in rocks { rock.size = CGSize(width: 54 * 351 / 260, height: 54) }
+    }
+    func configure(_ state: EggSceneSnapshot) {
+        snapshot = state
+        #if DEBUG
+        if !state.animate { previousHost = nil }
+        #endif
+        render(at: PracticeStore.now())
+        view?.isPaused = !state.animate
+    }
+    func detach() {
+        snapshot.presentationElapsed = nil; snapshot.acceptedAction = nil; snapshot.latestAction = nil
+        view?.isPaused = true
+        #if DEBUG
+        previousHost = nil
+        #endif
+    }
+    override func update(_ currentTime: TimeInterval) {
+        guard snapshot.animate else { return }
+        // Framework currentTime is not transported into matching/audio clocks.
+        let host = PracticeStore.now(); render(at: host)
+        #if DEBUG
+        let index = recorded % intervals.count
+        if let previousHost { intervals[index] = max(0, host - previousHost); work[index] = max(0, PracticeStore.now() - host); recorded += 1 }
+        previousHost = host; callbackCount += 1
+        #endif
+    }
+    func render(at host: Double) {
+        // SKScene can call didChangeSize from super.init before children exist.
+        guard graphReady, size.width > 0, size.height > 0, size.width.isFinite, size.height.isFinite else { return }
+        let raw = snapshot.presentationElapsed?(host) ?? snapshot.elapsed
+        let elapsed = raw.isFinite ? min(20.18, max(0, raw)) : 0
+        let action = EggMotion.action(accepted: snapshot.acceptedAction, latest: snapshot.latestAction, hostTime: host)
+        let age = snapshot.presentationElapsed == nil ? snapshot.hitAge : action.map { max(0, host - $0.inputTime) }
+        let grade = snapshot.presentationElapsed == nil ? snapshot.latestGrade : action?.grade
+        let reduced = snapshot.reduceMotion, stopped = snapshot.preparing || snapshot.finishedPassed != nil
+        let motion = EggMotion.sample(elapsed: elapsed, age: stopped ? nil : age, grade: grade, reduceMotion: reduced)
+        let w = size.width, h = size.height, ground = h * 0.14, x = w * 0.27, stride = w * 0.31
+        let position = max(-4, elapsed - 4), moving = reduced ? position.rounded(.down) : position
+        let missed = EggMissionPresentation.missed(elapsed: elapsed, accepted: snapshot.accepted)
+        island.position.x = motion.backgroundX
+        let offset = stopped || reduced ? 0 : CGFloat(max(0, position)) * stride
+        for (i, pebble) in pebbles.enumerated() {
+            let period = w + 180, raw = CGFloat(i - 2) * 90 - offset
+            pebble.position = CGPoint(x: (raw.truncatingRemainder(dividingBy: period) + period).truncatingRemainder(dividingBy: period) - 83,
+                                      y: ground - 26 - CGFloat(i % 3) * 7)
+        }
+        for id in 0..<16 {
+            let px = x + CGFloat(Double(id) - moving) * stride
+            let visible = !stopped && px > -70 && px < w + 70
+            rocks[id].isHidden = !visible || snapshot.accepted.contains(id); rocks[id].position = CGPoint(x: px, y: ground - 5)
+            rewards[id].isHidden = !visible || !snapshot.accepted.contains(id); rewards[id].position = CGPoint(x: px, y: ground + 30)
+        }
+        let nestX = stopped ? w * 0.76 : x + CGFloat(16 - moving) * stride
+        nest.isHidden = nestX >= w + 100; nest.position = CGPoint(x: nestX, y: ground - 7)
+        // Scale the whole trajectory to fit; clipping its top makes a flat,
+        // abruptly changing flight on shorter screens.
+        let hop = motion.height * min(1, h * 0.25 / (grade == .extra ? 12 : 74))
+        shadow.position = CGPoint(x: x, y: ground - 5); shadow.xScale = 1 - hop / 180; shadow.alpha = 0.18 - hop / 74 * 0.07
+        let running = !stopped && !reduced && elapsed >= 4 && hop == 0 && missed == nil
+        let gaitWeight = age.map { EggAnimationFrame.ease(($0 - 0.64) / 0.12) } ?? 1
+        let bob = running ? CGFloat(sin(elapsed * .pi * 10)) * 2 * gaitWeight : 0
+        player.position = CGPoint(x: x, y: ground - 5 + hop + bob)
+        player.zRotation = -motion.angle; player.xScale = motion.scaleX; player.yScale = motion.scaleY
+        if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
+        else if missed != nil && (age == nil || age! >= 0.64) { setOriginal(first, 4) }
+        else {
+            setAnimated(first, EggAnimationFrame.sample(elapsed: snapshot.preparing ? 0 : elapsed, age: age, reduceMotion: reduced))
+        }
+        for (i, puff) in dust.enumerated() {
+            puff.alpha = motion.landing * 0.7; puff.xScale = 1 + motion.landing * 2 / 3
+            puff.position = CGPoint(x: x - 24 - CGFloat(i) * 15, y: ground + CGFloat(i) * 3)
+        }
+        glint.isHidden = grade != .perfect || age == nil || !(0..<0.48).contains(age!) || stopped
+        glint.position = CGPoint(x: x + 54, y: ground + characterSize + hop - 24)
+    }
+    private func setOriginal(_ node: SKSpriteNode, _ index: Int) {
+        let texture = EggSceneTextures.original[index]
+        if node.texture !== texture { node.texture = texture }
+        let source = EggSpriteAssets.bounds[index].size
+        node.anchorPoint = CGPoint(x: 0.5, y: 0); node.size = CGSize(width: source.width * characterSize / 452, height: source.height * characterSize / 452)
+    }
+    private func setAnimated(_ node: SKSpriteNode, _ index: Int) {
+        let texture = EggSceneTextures.animated[index], source = texture.size(), eye = EggSceneTextures.eyes[index]
+        if node.texture !== texture { node.texture = texture }
+        guard source.width > 0, source.height > 0 else { node.size = .zero; return }
+        node.anchorPoint = CGPoint(x: (eye.x - 40) / source.width, y: 1 - EggSceneTextures.floors[index] / source.height)
+        node.size = CGSize(width: source.width * characterSize / 295, height: source.height * characterSize / 295)
+    }
+    #if DEBUG
+    func diagnostics() -> [String: Double] {
+        let count = min(recorded, intervals.count)
+        let values = Array(intervals.prefix(count)).sorted(), costs = Array(work.prefix(count)).sorted()
+        guard count > 0 else { return ["callbacks": Double(callbackCount)] }
+        return ["callbacks": Double(callbackCount), "samples": Double(count), "callback_interval_median_seconds": values[count / 2],
+                "callback_interval_p95_seconds": values[min(count - 1, Int(Double(count) * 0.95))], "render_work_p95_seconds": costs[min(count - 1, Int(Double(count) * 0.95))]]
+    }
+    #endif
+}
+
+private struct EggSpriteSurface: UIViewRepresentable {
+    let state: EggSceneSnapshot
+    func makeUIView(context: Context) -> SKView {
+        let view = SKView(frame: .zero)
+        view.isUserInteractionEnabled = false; view.accessibilityElementsHidden = true
+        view.allowsTransparency = false; view.ignoresSiblingOrder = true; view.preferredFramesPerSecond = 60
+        let scene = EggSpriteScene(size: CGSize(width: 1, height: 1)); view.presentScene(scene); scene.configure(state)
+        return view
+    }
+    func updateUIView(_ view: SKView, context: Context) { (view.scene as? EggSpriteScene)?.configure(state) }
+    static func dismantleUIView(_ view: SKView, coordinator: ()) {
+        (view.scene as? EggSpriteScene)?.detach(); view.presentScene(nil)
     }
 }
 

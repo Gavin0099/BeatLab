@@ -261,3 +261,13 @@ GAME-11 已實作連續場景呈現、共用腳底的快取 sprite、跑姿/落�
 驗證：browser22含真實16/16Perfect/0extra、零輸入失敗/重試/停止；core53；wide原生App44+UIKit3共47/0；SE actual touch/restart+一般viewport初次2通過、最大字級最終四輪真實關卡到達scene/rhythm/pad/stop1/0、dark viewport1/0。最大字級前三次失敗保留：無geometry的application root、查詢超過真實20秒預算，以及六像素靜態rhythm列被要求hittable；修正primary-window fixture、每區獨立真實挑戰與靜態可見/按鈕可操作條件，未改App或課程判分。39 Swift files/115 test definitions source結構與85source-copy hashes通過；Xcode root遞迴warm-up卡住，以exact-byte temporary copy建置，沒有改project/package或刪歷史。原生操作錄影與light/dark/最大字級畫面已保存。SE Reduce Motion原值OFF已透過CUA還原並核對，appearance light；GAME-10還原待辦已解除，歷史記錄保留。
 
 同source signed Debug iphoneos候選68production inputs/全artifact hashes、簽章/team/owner profile覆蓋核對通過。原地安裝嘗試FAIL：CoreDevice找不到配對裝置，fresh inventory unavailable；launch NOT RUN。因此手機仍是上一輪候選，新版未裝入。Instruments phone attach timeout/offline、simulator Hitches unsupported保留，物理FPS/frame pacing/音畫/input timing與兒童重玩意願均未接受。Status IMPLEMENTED_LOCAL_CHECKS_PASS_INSTALL_BLOCKED_OWNER_PENDING，不稱VERIFIED/DONE/public ready。詳見 docs/slices/GAME-11-verification.json；只推既有工程分支，不做PR/merge/TestFlight/public分發。手機USB/解鎖就緒後可核對同一凍結候選直接安裝，再做硬體性能與owner試玩。
+
+### 2026-10-06 — GAME-12 持續繪製與動作曲線
+
+Owner再次表示比較好但仍不夠流暢，要求修改。先立GAME-12 L2 exact-file契約，不新增玩法/美術/課程。來源可證明跑步兩姿勢大部分時間held且僅最後50ms交叉淡化、sin跳躍到地面時速度突然歸零；實際掉幀原因尚未測得。改用單一持久SpriteKit node graph作場景呈現，原UIKit/input/audio-host epoch與判分不改，修正持續步態與零速度落地。先可玩比较再native，測實際SKView callback但不得當手機FPS。GAME-11手機安裝仍未成功，不能把owner回饋當成已試玩那份手機候選。Status IN_PROGRESS，硬體與owner gate未接受。
+
+### 2026-10-06 — GAME-12 動作修正安裝候選
+
+Owner具體回覆「跑步、跳躍像在換圖片」，據此把contract限縮到同恐龍/同蛋連續動作。新透明16幀圖集：8跑步、6跳躍、準備/壓縮落地；持久SpriteKit graph只讀原host/audio epoch，原觸控/判分/音訊/存檔不改。零速度落地與整條小場景弧線縮放；固定眼睛/腳底對齊。Video發現相鄰alpha混合双眼/雙腳，先修成單一opaque角色，再重新build/實際測；中間候選未安裝。初始化super.init提前didChangeSize造成未建圖越界，graphReadyguard修正並由actualSKView/scene/lifecycle regression覆蓋。這是呈現架構決策，不改timing authority。
+
+Final App47/Core53/browser25（16真實clock-cued input16Perfect/0Extra）通過；final-source wide49pass/1fail、narrow2pass/1fail的大字查詢超過原20秒關卡保留，停止build/錄影後同source/fixture串行重測各1pass，final dark1pass。沒有延長課程或更改UI測試。87source/83protected/70phone inputs bind；新候選已安裝同bundle/team0.1.0(10)，沒有uninstall/reset，auto-launch因手機鎖定FAIL。Simulator callback只作觀察，不宣稱真機FPS。Status IMPLEMENTED_INSTALLED_LOCAL_CHECKS_PASS_OWNER_PENDING；G1-G4、physical timing/owner/child replay仍未接受。未更新TestFlight/public。根因與決策使用canonical review-log/daily/active-task-summary；writer不支援knowledge-base surface，不宣稱03知識庫已規範化。詳GAME-12-verification.json。
