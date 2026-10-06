@@ -318,3 +318,7 @@ GAME-15 source e2aeec5，signed phone build PASS／frozen78production inputs sig
 ### 2026-10-06 — GAME-15 Wi-Fi 安裝並開啟
 
 Owner回覆就緒後，fresh paired localNetwork inventory、actual devicectl install／launch均PASS。沿用e2aeec5 frozen signed0.1.0(10)／78production inputs，沒有rebuild/uninstall/reset；來源／artifact／signature安裝後再核對。先前unavailable失敗與blocked snapshots保留。Status IMPLEMENTED_WIFI_INSTALLED_OPENED_FLUIDITY_ACCEPTANCE_PENDING；owner可在第一關故意漏拍比較三種角色銜接，未把安裝當physical frame pacing或流暢度驗收。8／6張動作幀數、KidsCharacterKit deferred、prior small-screen/XXXL／G1-G4／child/public gates仍待處理，沒有TestFlight/public更新。
+
+### 2026-10-06 — TF-04 本人 TestFlight 動作候選
+
+Owner 明確授權先上 TestFlight，交付 GAME-15 e2aeec5 的既有個人試玩候選。Fresh ASC latest 0.1.0（10），本次 App build number 11；95 native／78 phone inputs 已核對，僅變更 project build metadata。契約 docs/slices/TF-04.md；Status SIGNED_DISTRIBUTION_READY_XCODE_SIGN_IN_REQUIRED。Release archive／distribution signature／internal-only／95來源 hashes／icon privacy檢查 PASS；只有 build metadata 10→11，沿用此前57 native與33 browser，未重跑。Xcode目前Apple Accounts沒有帳號且拒絕上傳存取，已開啟登入並請owner登入；upload／Apple processing／本人group assignment／測試說明保存／手機TestFlight更新 NOT RUN。build metadata commit8831537，封存與IPA保留，登入後繼續同一候選，不重複任何未知結果上傳。TF-03 公開／產品驗收 gate、實機 FPS/timing 與兒童体验仍 pending。

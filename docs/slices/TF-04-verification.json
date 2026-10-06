@@ -1,0 +1,52 @@
+{
+  "date": "2026-10-06",
+  "slice": "TF-04",
+  "status": "SIGNED_DISTRIBUTION_READY_XCODE_SIGN_IN_REQUIRED",
+  "candidate_source_commit": "e2aeec5b7393ac442ceaf1cfa69fdaeafc7d562f",
+  "build_metadata_commit": "883153726a2b01f3a964c1bcbaca695fca40f631",
+  "bundle_id": "com.gavin0099.beatlab",
+  "team": "P358EB3X9H",
+  "version": "0.1.0",
+  "build": "11",
+  "source_manifest": "TestResults/TF-04/source-hashes.json",
+  "source_file_count": 95,
+  "production_delta": [
+    "App CURRENT_PROJECT_VERSION 10 to 11"
+  ],
+  "upload": "BLOCKED_XCODE_ACCOUNT_REQUIRED",
+  "processing": "NOT RUN",
+  "owner_group": "本人試玩",
+  "external_testing": false,
+  "new_testers_invited": false,
+  "app_store_submission": false,
+  "device_testflight_update": "NOT RUN",
+  "prior_native_evidence": {
+    "pass": 57,
+    "fail": 0,
+    "rerun": false
+  },
+  "not_claimed": [
+    "Physical FPS/timing validation",
+    "Child enjoyment",
+    "G1-G4 acceptance",
+    "Public release readiness"
+  ],
+  "archive": "PASS",
+  "distribution_export": "PASS; local artifact, not uploaded",
+  "internal_only": true,
+  "manual_ipa_sha256": "b438a590ec29249c3691724590525a6a423ed50f4fdb0f85613235e5a1126955",
+  "assets_match_archive": true,
+  "archive_path": "TestResults/TF-04/BeatLab.xcarchive",
+  "manual_distribution_ipa": "TestResults/TF-04/export-manual/BeatLab.ipa",
+  "owner_tester_assignment": "NOT RUN",
+  "what_to_test_saved": "NOT RUN; text prepared locally",
+  "exact_uploaded_package": "NOT AVAILABLE; upload did not proceed",
+  "xcode_account_observation": "No Apple accounts listed; distribution requires App Store Connect access",
+  "receipts": {
+    "packaging": "artifacts/evidence/test-results/TF-04-packaging.json",
+    "archive": "TestResults/TF-04/archive-isolated.log",
+    "local_export": "TestResults/TF-04/export-manual.log",
+    "sign_in_blocker": "TestResults/TF-04/xcode-sign-in-required.png"
+  },
+  "initial_archive_attempt": "INT/TERM stopped owned process after package resolution stalled; log retained as archive.log; no upload attempted"
+}

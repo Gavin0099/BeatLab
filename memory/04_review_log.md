@@ -102,3 +102,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-15-wifi-install.json
 - Next action: Owner test first lesson, deliberately miss cues and compare continuous run/jump recovery. Await fluidity feedback; physical profile/timing, pose-count and prior narrow/XXXL gates remain pending.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:eb53cb224acaae7eb0d31c5848402ff8acf8f8b02ca6e3915e8184912185078a -->
+### Canonical memory checkpoint — tf04-packaging-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `eb53cb224acaae7eb0d31c5848402ff8acf8f8b02ca6e3915e8184912185078a`
+- Commit binding: `883153726a2b01f3a964c1bcbaca695fca40f631` (bound)
+- Record: TF-04 owner-requested TestFlight candidate 0.1.0(11) prepared from GAME-15 e2aeec5 with only App build metadata changed. Release archive and signed internal-only distribution export passed with exact 95-source hashes, icon/privacy/team validation. Xcode Apple Accounts lists no account and upload is blocked before delivery; sign-in question pending.
+- Validation boundary: artifacts/evidence/test-results/TF-04-packaging.json
+- Next action: After owner signs into the existing Apple developer account, upload this exact candidate internal-only, inspect actual uploaded IPA, wait for Apple processing and assign existing 本人試玩 group. No public/physical fluidity acceptance claim.
+- PLAN reconciliation: `updated`

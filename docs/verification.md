@@ -1,3 +1,5 @@
+> **2026-10-06 本人候選更新**：TF-04 的 0.1.0（11）已完成 Release 封存與 internal-only 發佈包檢查，GAME-15 e2aeec5 來源一致（僅 build metadata 改變）。Xcode 尚未登入，所以上傳未進行；目前可下載的 TestFlight 仍是（10）。詳細狀態見 [TF-04 evidence](slices/TF-04-verification.json)。實機 timing/FPS、兒童體驗與公開 gate 仍未驗收。
+
 # BeatLab 驗收與證據
 
 > **目前基準（2026-10-05）**：TestFlight 0.1.0（10）已提供本人試玩，Release／實際上傳包／Apple 處理／群組可測已驗證。Owner 手機回饋接受首頁風格，節拍器與練習待六個後續 slice。下面各舊 build 與未上傳敘述是歷史狀態；最新交付以 TF-02 evidence 為準。G1-G4、物理 timing、三頁／十關完整 accessibility 與兒童體驗仍未接受。PROGRESS-01 是歷史 checkpoint；目前產品化 alpha 已實作共同品牌／MET-02／GAME-08／GAME-09 呈現並重跑原生回歸，精確通過／失敗／focused 修正以 QA-01-verification.json 為準。新增命中音效仍未實作，不能稱遊玩回饋與公開 gate 完成。

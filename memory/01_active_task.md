@@ -44,3 +44,5 @@
 - GAME-15 e2aeec5 fixes reproduced miss pose snap for three companions; native57/browser33 pass. Signed78-input phone ready but Wi-Fi install unavailable, phone stillGAME14; owner readiness and fluidity/physical/narrow acceptance pending, KidsCharacterKit deferred. <!-- memory_record_projection:active-task-summary:a707f011f0eef1b67c6438d9e21b133c0ca67e7ec439fd499ff2a369f20f3e08 -->
 
 - GAME-15 e2aeec5 installed and opened via Wi-Fi; source/signature78-input frozen candidate verified, no rebuild/reset. Owner motion acceptance and physical/narrow/pose-count gates pending, KidsCharacterKit deferred. <!-- memory_record_projection:active-task-summary:9c3e7a36f65627f20a09f278b8e6be015af881bbd4ef2035855a230edd524525 -->
+
+- TF-04 signed 0.1.0(11) ready; Xcode account sign-in required. Upload, Apple processing, owner group availability, notes saving and phone TestFlight update NOT completed; old build10 remains available. <!-- memory_record_projection:active-task-summary:eb53cb224acaae7eb0d31c5848402ff8acf8f8b02ca6e3915e8184912185078a -->
