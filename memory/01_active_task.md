@@ -38,3 +38,5 @@
 - GAME-13 installed in place from6019be7, Debug0.1.0(10), data preserved; automatic launch blocked by phone lock. KidsCharacterKit integration deferred by owner. Narrow UI/physical/owner gates pending; no TF/public. Installation milestone bedbcc5. <!-- memory_record_projection:active-task-summary:986c31b715c6b70270fda69d120fb86f9e4ac829fd3bdc541ca915c649c8202e -->
 
 - GAME-14 a6e1869: early-hit cue gap fixed; wide55/0 and browser30 pass; narrow incomplete, signed phone ready but install device unavailable, owner USB pending; KidsCharacterKit deferred, physical/public gates unaccepted. <!-- memory_record_projection:active-task-summary:fdda6f6f8ca39d91eea74b7746585c0c072f24c7951fedd5a719976454cf592a -->
+
+- GAME-14 a6e1869 installed and opened via Wi-Fi, frozen78 source/signature verified; wide55/0/browser30 remain prior evidence, narrow/physical/child acceptance pending, KidsCharacterKit deferred. <!-- memory_record_projection:active-task-summary:ca1331ca8423d34dc96f199022d8c964a3226a62f3c85cd205b6334b0e390491 -->

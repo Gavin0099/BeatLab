@@ -1,6 +1,6 @@
 {
   "slice": "GAME-14",
-  "status": "IMPLEMENTED_BUILD_PASS_WIDE_CHECKS_PASS_NARROW_INCOMPLETE_PHONE_BLOCKED",
+  "status": "IMPLEMENTED_WIFI_INSTALLED_OPENED_NARROW_INCOMPLETE_OWNER_PENDING",
   "owner_direction": "Obstacle spacing looks unlike 60 BPM; not an FPS complaint",
   "base_commit": "27d07d05f95d39d4db535ebf6e4ae24347c3fc8b",
   "scope": "First lesson 60 BPM presentation only; audio/input/matching/score/persistence/assets unchanged",
@@ -150,9 +150,7 @@
     "owner/child playtesting",
     "TestFlight updated",
     "public readiness",
-    "knowledge-base writer complete",
-    "Updated candidate installed on phone",
-    "App opened"
+    "knowledge-base writer complete"
   ],
   "evidence_refs": {
     "build-copy.json": {
@@ -272,7 +270,7 @@
       "sha256": "97edbdb18b685c8761b9e2cbee180e12306741b52af0b35821ad7befa95bc132"
     },
     "PhoneFrozen/BUILD.json": {
-      "path": "TestResults/GAME-14/PhoneFrozen/BUILD.json",
+      "path": "TestResults/GAME-14/PhoneFrozen/BUILD-before-wifi.json",
       "sha256": "e9cb6f454c7c7c6ef11a1374208384bee20d372f118111d08fe44bbf7f4ee45a"
     },
     "PhoneFrozen/source.json": {
@@ -327,5 +325,56 @@
       "root_authority_guard_path": "NOT FOUND"
     },
     "claim_boundary": "Actual canonical writer executed; historical normalization and 03 knowledge-base update not claimed."
+  },
+  "phone_wifi_delivery_20261006": {
+    "source_commit": "a6e18699dc749a8df38ce084b8505f627571bba2",
+    "source_file_count": 78,
+    "configuration": "Debug",
+    "bundle_id": "com.gavin0099.beatlab",
+    "version": "0.1.0",
+    "build": "10",
+    "team": "P358EB3X9H",
+    "signature_verified": true,
+    "profile_covers_cached_paired_device": true,
+    "install": "PASS",
+    "launch": "PASS",
+    "transport": "localNetwork",
+    "source_checked_after_install": true,
+    "artifact_checked_after_install": true,
+    "learner_data_reset": false,
+    "testflight_updated": false,
+    "physical_performance": "NOT RUN",
+    "kids_character_kit_integration": "DEFERRED_BY_OWNER",
+    "receipt": "artifacts/evidence/test-results/GAME-14-wifi-install.json",
+    "evidence_refs": {
+      "phone-wifi-install.json": {
+        "path": "TestResults/GAME-14/phone-wifi-install.json",
+        "sha256": "4541c868b9f2eb40dfd7f3fa085eba16030f42059645460fa5f40e3467debc5b"
+      },
+      "phone-wifi-install.log": {
+        "path": "TestResults/GAME-14/phone-wifi-install.log",
+        "sha256": "37b17a34e9f1865bd95de715f50803a56381264ffc715ebb58c45a1e4cba626a"
+      },
+      "phone-wifi-launch.json": {
+        "path": "TestResults/GAME-14/phone-wifi-launch.json",
+        "sha256": "5161ea56fd044925b3d1fc35aa05de95489d6861cab84637af4efa82354f7d76"
+      },
+      "phone-wifi-launch.log": {
+        "path": "TestResults/GAME-14/phone-wifi-launch.log",
+        "sha256": "85c26cebd86b449110fe352b6d4e10fec3af6730ffab42f4d4499937bde1673f"
+      },
+      "verify-wifi-receipt.py": {
+        "path": "TestResults/GAME-14/verify-wifi-receipt.py",
+        "sha256": "3498c514abd2057b79a9d79e15a079008b91a3f3a0834833b681a3d8cb0dd98d"
+      },
+      "PhoneFrozen/BUILD.json": {
+        "path": "TestResults/GAME-14/PhoneFrozen/BUILD.json",
+        "sha256": "58d65211b06df1fedd0a8671261c55d071d175dd220823dbf1e87627f77cb54b"
+      }
+    }
+  },
+  "historical_blocked_verification_snapshot": {
+    "path": "TestResults/GAME-14/verification-before-wifi.json",
+    "sha256": "2258394afb1bfceef3655ccde30b39b66b88c0f2783fe33b73bfff5929d1b8be"
   }
 }

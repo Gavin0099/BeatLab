@@ -1,6 +1,6 @@
 # GAME-14 — 均勻可讀的 60 BPM 障礙提示
 
-Status IMPLEMENTED_BUILD_PASS_WIDE_CHECKS_PASS_NARROW_INCOMPLETE_PHONE_BLOCKED. Owner 2026-10-06 clarified the issue is uneven-looking obstacle intervals, not character FPS. Base27d07d0, current installed source6019be7. KidsCharacterKit integration remains deferred.
+Status IMPLEMENTED_WIFI_INSTALLED_OPENED_NARROW_INCOMPLETE_OWNER_PENDING. Owner 2026-10-06 clarified the issue is uneven-looking obstacle intervals, not character FPS. Base27d07d0, current installed source6019be7. KidsCharacterKit integration remains deferred.
 
 ## Before-edit contract
 
@@ -32,3 +32,6 @@ Signed iphoneos Debug 0.1.0(10) build PASS; frozen candidate binds a6e1869 and 7
 
 
 Canonical writer executed for daily/review-log/active-task-summary, bound a6e1869 and durable GAME-14-regression receipt. Memory guard current/repo B0 blockers0; historical missing memory1/provenance2 and root writer-path warnings remain. Framework writer used via pinned PYTHONPATH; do not claim knowledge-base update or full normalization. This is milestone/defect memory, not session-end closeout.
+
+
+2026-10-06 owner explicitly requested Wi-Fi installation. Reused original a6e1869 frozen signed candidate (78 unchanged production inputs), no rebuild. Fresh inventory selected one paired GavinWu0099 phone with localNetwork transport; actual installation and launch both PASS. Source/artifact hashes/signature rechecked after installation. Original failed install and blocked receipt remain historical evidence, with pre-Wi-Fi snapshots. Bundle/team/progress preserved; no uninstall/reset, TestFlight or public upload. Physical cadence/child acceptance/narrow and prior XXXL remain pending.

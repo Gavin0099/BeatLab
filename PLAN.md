@@ -297,3 +297,8 @@ Owner 澄清問題是石頭看起來不是60BPM、間隔不一樣。來源positi
 ### 2026-10-06 — GAME-14 交付狀態
 
 實作a6e1869，wide55/0與browser30通過。Corrected narrow dark UI run沒有有效測試結果，數分鐘無test execution後中止，small-screen PASS不宣稱；只停止owned xcodebuild，narrow light／initially-off shutdown恢復成功，沒有重置shared service／Garden。Signed iphoneos build PASS／78production frozen inputs；新inventory paired owner但install FAIL_DEVICE_NOT_FOUND，launch NOT RUN，已請owner解鎖／USB連線，待回覆使用同候選續安裝不重build。Status IMPLEMENTED_BUILD_PASS_WIDE_CHECKS_PASS_NARROW_INCOMPLETE_PHONE_BLOCKED。根因只證明early accepted cue消失的display defect，不證明physical audio interval原因；prior XXXL、G1-G4、physical／child acceptance仍pending。KidsCharacterKit deferred，沒有TestFlight/public更新。
+
+
+### 2026-10-06 — GAME-14 Wi-Fi 安裝成功
+
+Owner 明確要求透過 Wi-Fi，fresh inventory localNetwork paired device、devicectl 實際 install／launch 均 PASS。沿用 a6e1869 frozen signed0.1.0(10)／78production inputs，未重建；來源／artifact／signature安裝後再次核對，保留bundle/team/learner progress。之前 unavailable失敗receipt與blocked snapshot保留。Status IMPLEMENTED_WIFI_INSTALLED_OPENED_NARROW_INCOMPLETE_OWNER_PENDING；physical60 BPM stone/click同步由owner測試，narrow／prior XXXL／G1-G4不因此接受。KidsCharacterKit仍deferred，沒有TestFlight/public更新。

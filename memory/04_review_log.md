@@ -69,3 +69,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-14-regression.json
 - Next action: After owner connects unlocked iPhone, refresh inventory and reuse GAME-14 PhoneFrozen signed candidate for installation; then physically compare 60 BPM stone centers crossing fixed marker with click. Narrow/accessibility/physical/child acceptance remains pending; no TestFlight/public claim.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:ca1331ca8423d34dc96f199022d8c964a3226a62f3c85cd205b6334b0e390491 -->
+### Canonical memory checkpoint — beatlab-game14-wifi-install-20261006
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `ca1331ca8423d34dc96f199022d8c964a3226a62f3c85cd205b6334b0e390491`
+- Commit binding: `a6e18699dc749a8df38ce084b8505f627571bba2` (bound)
+- Record: Owner explicitly requested Wi-Fi installation. Reused existing GAME-14 a6e1869 signed frozen iphoneos candidate 0.1.0(10), all78 production inputs/artifact hashes/signature verified before and after. Fresh inventory identified one paired owner phone via localNetwork. Actual devicectl install PASS and launch PASS; no rebuild, uninstall, progress reset, TestFlight/public or source changes. Historical unavailable failure retained with pre-Wi-Fi snapshots. KidsCharacterKit deferred; physical stone/click timing and child acceptance, narrow incomplete/prior XXXL failures, G1-G4 remain unaccepted.
+- Validation boundary: artifacts/evidence/test-results/GAME-14-wifi-install.json
+- Next action: Owner play first 60 BPM lesson and compare each stone center crossing fixed floor marker with click; physical synchronization not yet accepted. Preserve pending narrow/accessibility QA and deferred KidsCharacterKit.
+- PLAN reconciliation: `updated`

@@ -1,0 +1,23 @@
+{
+  "method": "Read actual Wi-Fi inventory/install/launch receipts and verify frozen source/artifact hashes and signature. No rebuild, reinstall by reader or functional test.",
+  "source_commit": "a6e18699dc749a8df38ce084b8505f627571bba2",
+  "source_inputs": 78,
+  "signature_verified": true,
+  "transport": "localNetwork",
+  "install": "PASS",
+  "launch": "PASS",
+  "source_checked_after_install": true,
+  "artifact_checked_after_install": true,
+  "learner_data_reset": false,
+  "testflight_updated": false,
+  "physical_timing": "NOT RUN",
+  "kids_character_kit_integration": "DEFERRED_BY_OWNER",
+  "previous_narrow_XXXL_failures": "RETAINED_UNACCEPTED",
+  "cannot_claim": [
+    "physical audiovisual synchronization",
+    "physical FPS/input latency",
+    "child acceptance",
+    "TestFlight updated",
+    "public readiness"
+  ]
+}
