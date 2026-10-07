@@ -1,0 +1,1 @@
+PASS: retained actual browser60/16Perfect0Extra report and previews bound;95 native inputs unchanged; owner/device acceptance PENDING/NOT RUN

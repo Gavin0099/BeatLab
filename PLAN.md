@@ -326,3 +326,22 @@ Owner 明確授權先上 TestFlight，交付 GAME-15 e2aeec5 的既有個人試�
 ### 2026-10-06 — TF-04 TestFlight 本人試玩可下載
 
 Owner 已登入；Xcode原有發佈流程完成，Organizer 14:48 上傳0.1.0（11）。未重複上傳或重新編譯。实际GUI IPA已匯出／驗證internal-only、distribution签署與get-task-allow=false、原icon/privacy、archive Assets.car相同、95來源hashes。Apple處理完成build a3d8f2aa-aec6-49e7-9d8c-26c0c3caedbc，已加入既有本人試玩一位内部tester，繁體測試說明已儲存，版本列表「正在測試」。Status TESTFLIGHT_OWNER_TRIAL_AVAILABLE；本人手機TestFlight更新及動作驗收 pending，G1-G4／實機 timing/FPS／兒童体验／public readiness不因此接受。此前登入阻擋與packaging receipt保留為歷史。契約／canonical evidence docs/slices/TF-04.md、TF-04-verification.json；ignored logs/IPA/screenshots TestResults/TF-04。
+
+### 2026-10-07 — Rhythm Swing 參考切分
+
+Owner 指示先切slice；本輪L0規劃文件，實作皆PLANNED。對照程式確認任務入口限定first-beat／60 BPM，現有4拍數拍＋16目標約20秒，三角色／目的地／SpriteKit與8跑6跳幀已存在。Rhythm Swing官方學習／練習／遊戲結構及示範靜態畫面已核對，沒有實機試玩或引用其FPS。下一輪先驗同一第一關的目標／預判／操作後果／真實成敗，不增生命、貨幣、模式、關卡或KidsCharacterKit。完整範圍與reference保存在 [Rhythm Swing六片總覽](docs/design/RHYTHM-SWING-SLICES-20261007.md)。
+
+| Slice | 目標 | Risk／依賴 | 狀態 |
+|---|---|---|---|
+| GAME-16 | 可操作的第一關短概念，先看owner是否理解且願意再玩 | L1 isolated browser；既有第一關規格 | CONCEPT_BROWSER60_PASS_OWNER_PENDING |
+| GAME-17 | 原生短拍點／障礙路線共用真正target與只讀結果 | L2 audio/input/UI clock邊界；GAME-16接受＋QA-02A | PLANNED |
+| GAME-18 | matched起跳／落地、extra／miss銜接與可見後果 | L1，若clock更動升L2；GAME-17＋QA-02B | PLANNED |
+| GAME-19 | 引導→數拍→挑戰→結果→重試，三角色整合 | L1；GAME-18＋QA-02C | PLANNED |
+| QA-02 | A/B/C嵌入前片，Final原生／真機／兒童與公開缺口 | L2；不等最後才QA，不把工程PASS當owner接受 | PLANNED |
+| TF-05 | owner接受候選後的本人TestFlight交付 | L1 delivery-only；適用QA gate＋該新候選交付授權 | PLANNED |
+
+Exact-file contracts：docs/slices/GAME-16.md、GAME-17.md、GAME-18.md、GAME-19.md、QA-02.md、TF-05.md。每片包含allowed／forbidden、依賴、失敗路徑、驗證與rollback；本輪不實作App或上傳。GAME-17–19先只改第一關60 BPM，其餘九關／非60仍用原練習且要smoke；新score／保存／教學影片／三錯結束需另切與授權。TF-04 build11仍為既有交付，G1-G4／physical／child／public gates及KidsCharacterKit延期不變。
+
+### 2026-10-07 — GAME-16 可操作第一關
+
+Owner「好，往下走」後完成隔離browser短試玩：4拍數拍＋16真實目標、四格樂句／固定黃色腳印、matched才跳與送蛋進度、實際early/late/extra/miss、零輸入失敗、取消／重試。Final60 checks PASS，實際16Perfect/0Extra；12組ready＋12組live尺寸／深色／放大字、Reduce Motion／鍵盤／素材失敗守護。初版結算重複巢穴修正並保留截圖；READY圖未可見時不給開始、引導移出場景避免遮住角色。95原生inputs hash未變；不重跑native tests、不聲稱physicalFPS或child appeal。Status IMPLEMENTED_CONCEPT_BROWSER60_PASS_OWNER_PENDING。入口docs/design/rhythm-swing-concept/play.html與本機7820；owner理解／再玩接受後才進GAME-17，GAME-17–19/QA-02/TF-05仍PLANNED。TestFlight build11不變、KidsCharacterKit仍延期、public gate未接受。詳docs/slices/GAME-16-verification.json。

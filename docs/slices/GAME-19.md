@@ -1,0 +1,12 @@
+# GAME-19 — 引導、結果、重試與三角色整合
+
+Status PLANNED，2026-10-07。依賴GAME-18及QA-02B。Risk L1：journey／copy／三角色呈現；保存或score規則更動不在本片，需另立L2契約。
+
+目的／契約：沿用現有第一關入口，準備頁用一句任務＋短拍點圖说明「聽拍再跳」，接既有4拍count-in；遊玩中場景與下一拍為主，詳細錯誤放結果。結果以真實stars／summary决定送達／再試，說明早／晚／漏拍／多打；原save retry／discard可見。成功／失敗都可重試，取消不計成績。恐龍送蛋、貓咪送魚、機器人送能源共用同一loop，角色性格／場景可不同但時間、判定、任務結果一致。
+
+Allowed exact files：`BeatLab/Views/PracticeView.swift`、`BeatLab/Views/EggMissionView.swift`、GAME-17建立後的 `BeatLab/Views/RunnerPresentation.swift`、`BeatLab/Design/BeatLabStyle.swift`（既有tokens／尺寸）、`BeatLabUITests/PracticeUITests.swift`、`BeatLabUITests/InterfaceUITests.swift`、`BeatLabTests/PracticeStoreTests.swift`（既有result/save可見行為fixture）；本slice／`docs/slices/GAME-19-verification.json`、PLAN、canonical evidence／memory、ignored `TestResults/GAME-19/**`。
+Forbidden：PracticeStore／Core／DSP／音訊／lesson及progress schema、星星／解鎖改動、Home／Metronome redesign、增加learn影片／獨立練習或挑戰模式、角色／skin／資源、signing/buildmetadata。不要把3次錯誤結束直接移植。
+
+Checks／QA-02C：三角色各ready／playing／miss／extra／success／failure／retry／cancel；真正失敗不可顯示成功送達，視覺旅程完成不等於通關。真实保存／重開／保存失敗retry/discard，第二關鎖定與另外九關練習入口smoke。小屏（至少SE尺寸）、wide、XXXL、light/dark、Reduce Motion、VoiceOver：scene／短lane／pad／stop同時可及、safe-area不遮蓋，需滾動時整體內容一起滾；不可把大字縮小當通過。
+Failure：字卡、cue或浮動tab遮場景／停止、不同角色碰撞／高低線索不一致、未保存誤顯解鎖均需修本片或停止在資料缺口，不碰保存authority。
+Rollback：回復本片journey／文案／layout，保留GAME-17/18資料和動作；原進度、角色偏好、關卡schema不变。

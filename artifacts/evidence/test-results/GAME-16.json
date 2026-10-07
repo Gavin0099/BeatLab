@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"import json,hashlib; from pathlib import Path; r=json.loads(Path('TestResults/GAME-16/report.json').read_text()); v=json.loads(Path('docs/slices/GAME-16-verification.json').read_text()); b=json.loads(Path('TestResults/RHYTHM-SWING-PLAN-01/protected-source.json').read_text()); assert r['passed']==60 and len(r['checks'])==60 and not r['errors'] and r==v['browser']; assert r['success']==dict(matched=16,perfect=16,extra=0,missed=0,passed=True); assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest()==h for p,h in b.items()); assert all(hashlib.sha256(Path(p).read_bytes()).hexdigest()==h for p,h in v['code_and_preview_hashes'].items()); print('PASS: retained actual browser60/16Perfect0Extra report and previews bound;95 native inputs unchanged; owner/device acceptance PENDING/NOT RUN')\"",
+  "exit_code": 0,
+  "started_at": "2026-10-07T15:04:13Z",
+  "finished_at": "2026-10-07T15:04:13Z",
+  "runner": "GAME-16-retained-browser-report-source-integrity",
+  "linked_commit": "f23f32e9899ebc6867e7845458f4975b7ff18406",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-16.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
