@@ -363,3 +363,9 @@ Owner 貼已安裝新版截圖（78B8245D-AC3B-4D0D-A35C-891358CA0C09），指�
 Owner接受角色逐拍跨落腳點/場景主體/漏拍跌落接回提案，明確授權實作後直接安裝。建立GAME-20 L2 exact-file contract：first-beat60、三角色、pure matched-driven world步數與延後camera、real expiry跌落、既有美術runtime crop、compact phrase；不改audio/input/score/save/asset/version。Status IN_PROGRESS；持續保留GAME17 rejected gameplay、cat restart/narrowXXXL和physical/child/public pending。Wi-Fi本人preview授權明確，不重詢。
 
 GAME-20 原生觀察修正（2026-10-08）：c1f9152 first signed candidate未安裝。App61/0成立；初次UI cat start FAIL，wide其它流程/小屏當時未完整執行，停止only owned xcodebuild保留logs。Actual owned screenshot確認跨島已渲染，但cue在scroll下方且背景stretch；在相同allowed範圍修scene高度/aspect-fill、避免相同texture/text每幀重設，新增背景比例assert。UI未開始/未結果原因尚未確認，不以Mac負載或App61 PASS代替UI gate。新fixed候選必須重新build/freeze與viewport/touch驗證；原95/78source與未安裝舊簽署包保留。
+
+### 2026-10-08 — GAME-20 手機 preview 交付（QA partial）
+
+Source 0e83ed34efa4a0e5576eee6ff52fb0c011042e94：第一關改成實際matched橫跨分開平台、落地後camera跟進、miss可見跌落回原島、extra不前進；compact樂句/固定跳躍與停止。準備/結果三theme沿用美術，修過高scene與background stretch。95source綁定、78production signed包、91protected paths對GAME17 unchanged；同bundle/team Debug0.1.0(11) Wi-Fi install PASS，launch BLOCKED_DEVICE_LOCKED（手機鎖定，已問unlock，只重試launch）。不清學習進度。
+
+驗證：pre-layout App61/0、cat初start FAIL；fixed App5中1case/3assertions背景比例floating-round FAIL，已以1e-6獨立比例界限修test；finalApp PASS 61/0。Fixed真實no-input/16miss/0星/retry歸零/next locked流程PASS；actualtouch/wideviewport、小屏darkXXXL仍INCOMPLETE，only-owned測試停在preparing，不推定原因；robot/full10/physical timingFPS/child fun/public NOT RUN或pending。Owned narrow restoredlight/shutdown；wide保留原Booted。完整可查docs/slices/GAME-20-verification.json，不能宣稱QA全綠或上架完成，TestFlight未更新。

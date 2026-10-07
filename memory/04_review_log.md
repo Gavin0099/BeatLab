@@ -157,3 +157,25 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-17.json
 - Next action: Owner到練習第一關60BPM試四拍提示與跳躍；貓咪再次start及小螢幕最大字級缺口需修復補驗後再接受fullslice/QA/public。Physical timing/FPS/child fun及G1-G4 pending，8run6jump未增，KidsCharacterKit deferred。
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:b8b8fdc6969ba2714ef91a1afba4a894ddac831f31a9faf525210395b7f6b2c7 -->
+### Canonical memory checkpoint — game17-owner-rejection-20261007
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `b8b8fdc6969ba2714ef91a1afba4a894ddac831f31a9faf525210395b7f6b2c7`
+- Commit binding: `d13697b9156314679db32cf834de601e49ea4307` (bound)
+- Record: Owner已看安裝新版截圖，拒絕GAME17最小preview遊戲呈現：仍不像Rhythm Swing。新版四拍提示存在，但沿用固定角色/橫向石頭/大pad，沒有達成逐拍行進與可見失誤後果。重核官方Play及Practice文字；本次診斷未改App、未重裝，安裝和工程PASS不覆蓋owner拒絕。
+- Validation boundary: NOT RUN: owner screenshot design rejection and official Play/Practice text review; no new native changes or automated checks, prior partial evidence retained in docs/slices/GAME-17-verification.json
+- Next action: 下一個候選先定角色逐拍跨平台與miss安全回復、場景主體構圖及exact-file/clock/grade邊界；不沿用現版加HUD當作遊戲達標。cat重啟/narrowXXXL/physical/child/public仍pending，KidsCharacterKit deferred；不假定新增生命/音樂/素材已授權。
+- PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:ad5551c5e6d49220bddee595e4f6dbe1677100d14051a405a9ad0c6ad422f64c -->
+### Canonical memory checkpoint — game20-phone-preview-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `ad5551c5e6d49220bddee595e4f6dbe1677100d14051a405a9ad0c6ad422f64c`
+- Commit binding: `0e83ed34efa4a0e5576eee6ff52fb0c011042e94` (bound)
+- Record: Owner rejected GAME17 as unlike Rhythm Swing, then authorized real cross-island implementation and phone install. GAME20 matched inputs move three themed companions between separated islands, delayed camera follows landing, expired misses fall then return, extra never advances; first-beat60 only, audio/matcher/score/save/assets unchanged. Fixed native observed scene height/background stretch. Source commits c1f9152 and 0e83ed3; final App61/0 PASS including five platform regressions; fixed real no-input/16miss/0star/retry0/nextlocked UI PASS. Initial cat start FAIL and fixed actual-touch/wide viewport/narrow darkXXXL UI incomplete remain; initial float-size assertion 1case/3fail corrected independently to1e-6 and final61 passed. Frozen78production,95source,91protected unchanged; Debug0.1.0(11) same bundle/team Wi-Fi install PASS; launch blocked by Locked, unlock requested once. Existing learner data preserved; TestFlight unchanged, no public acceptance claim.
+- Validation boundary: artifacts/evidence/test-results/GAME-20.json
+- Next action: Owner unlock then retry launch only; play first60BPM cross-island loop. Full touch/viewport/narrow/companion/physical timingFPS/child appeal gates remain unaccepted; no new features or upload without applicable evidence.
+- PLAN reconciliation: `updated`

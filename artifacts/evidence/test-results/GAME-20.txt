@@ -1,0 +1,1 @@
+{"source": "0e83ed34efa4a0e5576eee6ff52fb0c011042e94", "integrity": "PASS", "native_App": "61 PASS / 0 FAIL", "fixed_no_input_UI": "PASS", "pre_layout_cat_UI": "FAIL", "fixed_touch_viewport_narrow_UI": "INCOMPLETE", "install": "PASS", "launch": "BLOCKED_DEVICE_LOCKED", "full_QA_physical_child_release": "NOT CLAIMED"}

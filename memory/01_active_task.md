@@ -54,3 +54,7 @@
 - GAME-16概念完成browser60PASS/16Perfect0Extra、95native unchanged；Mac試玩入口已開啟，owner gameplay acceptance待回覆再進GAME-17；TestFlight build11與physical/child/public gates不變。 <!-- memory_record_projection:active-task-summary:05bffa50ee8ddb81020365adf2c9caaa80a253ba1cf2aebba3bbf57185a015a3 -->
 
 - GAME17/18/19最小preview d13697b signed Debug0.1.0(11)已Wi-Fi安装/開啟；App56+dinoUI3+robot PASS，cat重啟/narrowXXXL FAIL，完整QA/physical/child/public未接受，TestFlight不變。 <!-- memory_record_projection:active-task-summary:bd6c93f06a583b00c54115526fb5008cd473715499f2e7b03e60df6471ea3eb6 -->
+
+- Owner拒絕GAME17 phone preview遊戲方向；新版已安裝但核心仍舊跑酷。需重定逐拍跨平台/可見後果；cat/narrow/physical/child/public未接受。 <!-- memory_record_projection:active-task-summary:b8b8fdc6969ba2714ef91a1afba4a894ddac831f31a9faf525210395b7f6b2c7 -->
+
+- GAME20 source0e83ed3 installed over Wi-Fi; launch blocked by locked phone. App61/0 and real no-input UI PASS; cat/touch/viewport/narrow/physical/child QA partial; GAME17 rejected; TestFlight unchanged. <!-- memory_record_projection:active-task-summary:ad5551c5e6d49220bddee595e4f6dbe1677100d14051a405a9ad0c6ad422f64c -->
