@@ -208,6 +208,61 @@ struct EggMotion {
     }
 }
 
+/// Read-only adapter over an existing TimingSession. It never creates or judges notes.
+struct RunnerRoute {
+    let targets: [TimingTarget]
+    let relativeTimes: [Double]
+    let hits: [TimingHit]
+    let alignment: Double
+    let duration: Double
+    let beatDuration: Double
+    let accepted: Set<Int>
+    let latestAccepted: TimingHit?
+    let grades: [Int: TimingGrade]
+    init?(targets: [TimingTarget], hits: [TimingHit], epoch: Double, endTime: Double, alignment: Double) {
+        guard epoch.isFinite, endTime.isFinite, alignment.isFinite, abs(alignment) <= 0.25,
+              targets.count >= 2, Set(targets.map(\.id)).count == targets.count,
+              targets.allSatisfy({ $0.time.isFinite && $0.time >= epoch && $0.stroke != .rest }),
+              zip(targets, targets.dropFirst()).allSatisfy({ $0.time < $1.time }),
+              let last = targets.last, endTime >= last.time else { return nil }
+        self.targets = targets; self.hits = hits; self.alignment = alignment
+        accepted = Set(hits.compactMap(\.targetID))
+        latestAccepted = hits.last { $0.targetID != nil }
+        grades = Dictionary(hits.compactMap { hit in hit.targetID.map { ($0, hit.grade) } }, uniquingKeysWith: { first, _ in first })
+        relativeTimes = targets.map { $0.time - epoch }
+        beatDuration = targets[1].time - targets[0].time
+        duration = endTime - epoch
+    }
+    func currentIndex(at elapsed: Double) -> Int? {
+        guard elapsed.isFinite else { return nil }
+        return relativeTimes.lastIndex { $0 <= elapsed }
+    }
+    func missed(at elapsed: Double) -> Int? {
+        guard elapsed.isFinite else { return nil }
+        return targets.indices.last { index in
+            let age = elapsed - relativeTimes[index] - alignment - TimingSession.matchingWindow
+            return age > 1e-10 && age < 0.48 && !accepted.contains(targets[index].id)
+        }.map { targets[$0].id }
+    }
+    func recovery(at elapsed: Double, actionAge: Double?, reduced: Bool) -> CGFloat {
+        if let actionAge, (0..<0.64).contains(actionAge) { return 0 }
+        guard let id = missed(at: elapsed), let index = targets.firstIndex(where: { $0.id == id }) else { return 0 }
+        if reduced { return 0.12 }
+        let age = elapsed - relativeTimes[index] - alignment - TimingSession.matchingWindow
+        return CGFloat(max(0, sin(.pi * age / 0.48))) * 0.18
+    }
+    func rockPosition(index: Int, elapsed: Double, marker: CGFloat, stride: CGFloat, reduced: Bool) -> CGFloat? {
+        guard relativeTimes.indices.contains(index), elapsed.isFinite else { return nil }
+        let travel = (relativeTimes[index] - elapsed) / beatDuration
+        return marker + CGFloat(reduced ? ceil(travel) : travel) * stride
+    }
+    func obstacleAlpha(index: Int, elapsed: Double, reduced: Bool) -> CGFloat {
+        guard relativeTimes.indices.contains(index), elapsed.isFinite,
+              accepted.contains(targets[index].id), elapsed > relativeTimes[index] else { return 1 }
+        return reduced ? 0 : CGFloat(max(0, 1 - (elapsed - relativeTimes[index]) / 0.25))
+    }
+}
+
 struct EggMissionScene: View {
     var theme: RunnerTheme = .dinosaur
     var elapsed: Double
@@ -219,6 +274,7 @@ struct EggMissionScene: View {
     var presentationElapsed: ((Double) -> Double)? = nil
     var acceptedAction: TimingHit? = nil
     var latestAction: TimingHit? = nil
+    var route: RunnerRoute? = nil
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dynamicTypeSize) private var textSize
@@ -237,7 +293,7 @@ struct EggMissionScene: View {
             EggSpriteSurface(state: EggSceneSnapshot(elapsed: elapsed, accepted: accepted,
                 latestGrade: latestGrade, hitAge: hitAge, finishedPassed: finishedPassed, preparing: preparing,
                 reduceMotion: reduceMotion, suspended: scenePhase != .active,
-                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction, theme: theme))
+                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction, theme: theme, route: route))
                 .accessibilityHidden(true)
             HStack(spacing: 6) {
                 MissionProp(theme: theme, destination: false).frame(width: 22, height: 30)
@@ -260,7 +316,7 @@ struct EggAnimationFrame {
         return CGFloat(t * t * (3 - 2 * t))
     }
     static func sample(elapsed: Double, age: Double?, reduceMotion: Bool) -> Int {
-        guard !reduceMotion, elapsed.isFinite, (4...20.18).contains(elapsed) else { return 14 }
+        guard !reduceMotion, elapsed.isFinite, elapsed >= 0, elapsed <= 20.18 else { return 14 }
         let phase = (max(0, elapsed - 4) * 16).truncatingRemainder(dividingBy: 8)
         let run = Int(phase)
         if let age, age.isFinite, (0..<0.48).contains(age) {
@@ -269,7 +325,7 @@ struct EggAnimationFrame {
         if let age, age.isFinite, (0.48..<0.64).contains(age) {
             return age < 0.56 ? 13 : 15
         }
-        return run
+        return elapsed >= 4 ? run : 14
     }
 }
 
@@ -302,6 +358,7 @@ struct EggSceneSnapshot {
     var acceptedAction: TimingHit?
     var latestAction: TimingHit?
     var theme: RunnerTheme = .dinosaur
+    var route: RunnerRoute? = nil
     var animate: Bool { !reduceMotion && !suspended && !preparing && finishedPassed == nil && presentationElapsed != nil }
 }
 
@@ -341,7 +398,7 @@ final class EggSpriteScene: SKScene {
     private let player = SKNode()
     private let first = SKSpriteNode()
     private let shadow = SKShapeNode(ellipseOf: CGSize(width: 82, height: 10))
-    private let beatMarker = SKShapeNode(rectOf: CGSize(width: 6, height: 36), cornerRadius: 3)
+    private let beatMarker = SKShapeNode(ellipseOf: CGSize(width: 48, height: 12))
     private let nest = SKSpriteNode(texture: EggSceneTextures.original[7])
     private var rocks: [SKSpriteNode] = [], rewards: [SKShapeNode] = [], pebbles: [SKShapeNode] = [], dust: [SKShapeNode] = []
     private let glint: SKShapeNode
@@ -365,7 +422,7 @@ final class EggSpriteScene: SKScene {
         island.name = "backdrop"; island.anchorPoint = .zero; island.zPosition = 0; addChild(island)
         floor.zPosition = 1; edge.zPosition = 2; addChild(floor); addChild(edge)
         shadow.fillColor = UIColor(red: 0.08, green: 0.25, blue: 0.18, alpha: 1); shadow.strokeColor = .clear; shadow.zPosition = 4; addChild(shadow)
-        beatMarker.name = "beatMarker"; beatMarker.fillColor = theme.accent; beatMarker.strokeColor = .clear
+        beatMarker.name = "beatMarker"; beatMarker.fillColor = .systemYellow; beatMarker.strokeColor = .clear
         beatMarker.zPosition = 8; addChild(beatMarker)
         player.name = "player"; player.zPosition = 6; addChild(player)
         first.name = "characterPrimary"; first.zPosition = 0
@@ -433,7 +490,7 @@ final class EggSpriteScene: SKScene {
         }
         for pebble in pebbles { pebble.fillColor = next.accent.withAlphaComponent(0.25) }
         for puff in dust { puff.fillColor = next.pad }
-        beatMarker.fillColor = next.accent
+        beatMarker.fillColor = .systemYellow
         glint.fillColor = next == .robot ? .cyan : .systemYellow
         resizeNodes()
     }
@@ -466,7 +523,7 @@ final class EggSpriteScene: SKScene {
         let motion = EggMotion.sample(elapsed: elapsed, age: stopped ? nil : age, grade: grade, reduceMotion: reduced)
         let w = size.width, h = size.height, ground = h * 0.14, x = w * 0.27, stride = w * 0.31
         let position = max(-4, elapsed - 4), moving = reduced ? position.rounded(.down) : position
-        let recovery = stopped ? 0 : EggMissionPresentation.recoveryBlend(elapsed: elapsed, accepted: snapshot.accepted, actionAge: age, reduceMotion: reduced)
+        let recovery = stopped ? 0 : snapshot.route?.recovery(at: elapsed, actionAge: age, reduced: reduced) ?? 0
         island.position.x = motion.backgroundX
         let offset = stopped || reduced ? 0 : CGFloat(max(0, position)) * stride
         for (i, pebble) in pebbles.enumerated() {
@@ -474,20 +531,23 @@ final class EggSpriteScene: SKScene {
             pebble.position = CGPoint(x: (raw.truncatingRemainder(dividingBy: period) + period).truncatingRemainder(dividingBy: period) - 83,
                                       y: ground - 26 - CGFloat(i % 3) * 7)
         }
-        for id in 0..<16 {
-            let px = x + CGFloat(Double(id) - moving) * stride
-            let visible = !stopped && px > -70 && px < w + 70
-            let matched = snapshot.accepted.contains(id)
-            let alpha = EggBeatLane.obstacleAlpha(id: id, elapsed: elapsed, matched: matched, reduceMotion: reduced)
-            rocks[id].alpha = alpha; rocks[id].isHidden = !visible || alpha == 0
-            rocks[id].position = CGPoint(x: px, y: ground - 5)
-            rewards[id].isHidden = !visible || !matched || elapsed < Double(4 + id)
-            rewards[id].position = CGPoint(x: px, y: ground + 75)
+        for index in rocks.indices {
+            let route = snapshot.route
+            let px = route?.rockPosition(index: index, elapsed: elapsed, marker: x, stride: stride, reduced: reduced) ?? -100
+            let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
+            let visible = !stopped && target != nil && px > -70 && px < w + 70
+            let matched = target.map { route?.accepted.contains($0.id) == true } ?? false
+            let alpha = route?.obstacleAlpha(index: index, elapsed: elapsed, reduced: reduced) ?? 1
+            rocks[index].alpha = alpha; rocks[index].isHidden = !visible || alpha == 0
+            rocks[index].position = CGPoint(x: px, y: ground - 5)
+            rewards[index].isHidden = !visible || !matched || elapsed < (route?.relativeTimes[index] ?? .infinity)
+            rewards[index].position = CGPoint(x: px, y: ground + 75)
         }
-        beatMarker.isHidden = stopped
-        beatMarker.position = CGPoint(x: x, y: ground - 16)
+        beatMarker.isHidden = stopped || snapshot.route == nil
+        beatMarker.position = CGPoint(x: x, y: ground - 6)
         beatMarker.alpha = EggBeatLane.markerAlpha(elapsed: elapsed, reduceMotion: reduced)
-        let nestX = stopped ? w * 0.76 : x + CGFloat(16 - moving) * stride
+        let routeEnd = snapshot.route?.relativeTimes.last.map { $0 + (snapshot.route?.beatDuration ?? 1) } ?? .infinity
+        let nestX = stopped ? w * 0.76 : snapshot.route == nil ? w + 200 : x + CGFloat((routeEnd - elapsed) / (snapshot.route?.beatDuration ?? 1)) * stride
         nest.isHidden = nestX >= w + 100; nest.position = CGPoint(x: nestX, y: ground - 7)
         // Scale the whole trajectory to fit; clipping its top makes a flat,
         // abruptly changing flight on shorter screens.
@@ -567,11 +627,12 @@ struct EggMissionView: View {
     let streak: Int
     let stop: () -> Void
     var theme: RunnerTheme = .dinosaur
-    @State private var acceptedAction: TimingHit?
+    private var route: RunnerRoute? { practice.runnerRoute }
     private let ink = Color(red: 0.08, green: 0.25, blue: 0.18)
     private var age: Double? { practice.latestHit.map { max(0, PracticeStore.now() - $0.inputTime) } }
     private var cue: String {
-        if practice.elapsed < 4 { return "先聽 \(max(1, 4 - Int(practice.elapsed))) 拍，準備跳" }
+        guard let route else { return "準備拍點，馬上開始…" }
+        if practice.elapsed < route.relativeTimes[0], practice.latestHit == nil { return "先聽 \(max(1, Int(ceil((route.relativeTimes[0] - practice.elapsed) / route.beatDuration)))) 拍，準備跳" }
         if let age, age < 0.48, let grade = practice.latestHit?.grade {
             switch grade {
             case .perfect: return "漂亮！\(theme.item)亮起來了"
@@ -580,17 +641,15 @@ struct EggMissionView: View {
             case .extra: return "多打一下，再跟上"
             }
         }
-        return EggMissionPresentation.missed(elapsed: practice.elapsed, accepted: accepted) == nil ? "\(theme.obstacle)到腳下，跟鼓聲跳！" : "接住了！下一拍再跳"
+        return route.missed(at: practice.elapsed) == nil ? "\(theme.obstacle)到腳下，跟鼓聲跳！" : "接住了！下一拍再跳"
     }
     var body: some View {
         GeometryReader { geometry in
             ViewThatFits(in: .vertical) {
-                content(sceneHeight: max(160, geometry.size.height - 330))
-                ScrollView { content(sceneHeight: 280) }
+                content(sceneHeight: max(160, geometry.size.height - 360))
+                ScrollView { content(sceneHeight: textSize.isAccessibilitySize ? 240 : 260) }
             }.padding(.horizontal, 16).padding(.vertical, 8)
                 .frame(maxWidth: BeatLabStyle.maxWidth).frame(maxWidth: .infinity)
-        }.onChange(of: practice.latestHit) { hit in
-            if let hit, hit.targetID != nil { acceptedAction = hit }
         }
     }
     private func content(sceneHeight: CGFloat) -> some View {
@@ -603,27 +662,20 @@ struct EggMissionView: View {
                 Spacer()
                 Text("60 BPM").font(.subheadline.monospacedDigit())
             }
-            ProgressView(value: min(1, max(0, (practice.elapsed - 4) / 16)))
-                .tint(Color(uiColor: theme.accent)).accessibilityLabel("任務進度")
-            EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: accepted,
+            phraseRoute
+            ProgressView(value: Double(route?.accepted.count ?? 0), total: Double(max(1, route?.targets.count ?? 0)))
+                .tint(Color(uiColor: theme.accent)).accessibilityLabel("已跨過的拍點")
+            EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
                             presentationElapsed: { practice.presentationElapsed(at: $0) },
-                            acceptedAction: acceptedAction, latestAction: practice.latestHit)
+                            acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route)
                 .frame(height: sceneHeight)
             ZStack {
                 Text("跳過了，下一拍稍等一下").hidden().accessibilityHidden(true)
                 Text(cue).accessibilityIdentifier("jumpCue")
             }.font(.system(.headline, design: .rounded)).multilineTextAlignment(.center)
                 .fixedSize(horizontal: false, vertical: true)
-            HStack(spacing: 6) {
-                ForEach(0..<4, id: \.self) { beat in
-                    Capsule().fill(Int(max(0, practice.elapsed)) % 4 == beat ? BeatLabStyle.success : BeatLabStyle.line)
-                        .frame(height: 6)
-                }
-            }.accessibilityElement(children: .ignore).accessibilityLabel("四拍跟鼓聲")
-                .accessibilityValue("第 \(Int(max(0, practice.elapsed)) % 4 + 1) 拍，右手")
-                .accessibilityIdentifier("rhythmLane")
             HStack {
-                Text("跨過 \(accepted.count) / 16 個障礙").accessibilityIdentifier("jumpMatches")
+                Text("跨過 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 個障礙").accessibilityIdentifier("jumpMatches")
                 Spacer(minLength: 4)
                 Text(streak >= 2 ? "連續 \(streak) 拍漂亮！" : theme.mission)
             }.font(.caption.bold())
@@ -637,4 +689,36 @@ struct EggMissionView: View {
                 .accessibilityIdentifier("stopPractice")
         }.fixedSize(horizontal: false, vertical: true)
     }
+    private var phraseRoute: some View {
+        let current = route?.currentIndex(at: practice.elapsed)
+        let bar = (current ?? 0) / 4
+        return VStack(alignment: .leading, spacing: 8) {
+            HStack {
+                Text(current == nil ? "先聽 4 拍" : "跟鼓聲，一拍跳一次")
+                Spacer(minLength: 4)
+                Text("\(bar + 1) / \(((route?.targets.count ?? 16) + 3) / 4) 小節")
+            }.font(.caption.bold()).fixedSize(horizontal: false, vertical: true)
+            HStack(spacing: 6) {
+                ForEach(0..<4, id: \.self) { slot in
+                    let index = bar * 4 + slot
+                    let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
+                    let grade = target.flatMap { route?.grades[$0.id] }
+                    let expired = target.map { _ in practice.elapsed > (route?.relativeTimes[index] ?? .infinity) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
+                    let active = current == index
+                    VStack(spacing: 3) {
+                        Text("\(slot + 1)").font(.system(.title3, design: .rounded).bold())
+                        Text(grade != nil ? "已跳" : expired ? "接住" : "右手").font(.caption.bold())
+                    }.frame(maxWidth: .infinity).padding(.vertical, 8)
+                        .foregroundStyle(grade != nil ? Color.white : BeatLabStyle.ink)
+                        .background(grade != nil ? Color(uiColor: theme.accent) : expired ? BeatLabStyle.rewardSoft : BeatLabStyle.surface, in: RoundedRectangle(cornerRadius: 14))
+                        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(active ? Color(uiColor: theme.accent) : Color.clear, lineWidth: 2))
+                        .accessibilityHidden(true)
+                }
+            }
+        }.padding(10).background(BeatLabStyle.canvas, in: RoundedRectangle(cornerRadius: 20))
+            .accessibilityElement(children: .ignore).accessibilityLabel("這一小節的四個拍點")
+            .accessibilityValue(current.map { "第 \($0 % 4 + 1) 拍，右手；跨過 \(route?.accepted.count ?? 0) 拍" } ?? "先聽四拍，再跟鼓聲跳")
+            .accessibilityIdentifier("rhythmLane")
+    }
+
 }

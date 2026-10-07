@@ -5,7 +5,60 @@ import UIKit
 import BeatLabCore
 @testable import BeatLab
 
+private func routeFixture(hits: [TimingHit], alignment: Double = 0) throws -> RunnerRoute {
+    // Reviewed first-beat spec: 4 count-in,16 quarter notes at60BPM,epoch100.
+    try XCTUnwrap(RunnerRoute(targets: (0..<16).map { TimingTarget(id: $0, time: 104 + Double($0), stroke: .right) },
+                             hits: hits, epoch: 100, endTime: 120.18, alignment: alignment))
+}
+private func routeFixture(accepted: Set<Int> = [], alignment: Double = 0) throws -> RunnerRoute {
+    var session = try TimingSession(targets: (0..<16).map { TimingTarget(id: $0, time: 104 + Double($0), stroke: .right) })
+    for id in accepted.sorted() { session.tap(at: 104 + Double(id)) }
+    return try routeFixture(hits: session.hits, alignment: alignment)
+}
+
 final class PracticeStoreTests: XCTestCase {
+    func testRealRouteReadOnlyGeometryExpiryAndInvalidInputs() throws {
+        let route = try routeFixture()
+        XCTAssertEqual(route.relativeTimes.first, 4); XCTAssertEqual(route.relativeTimes.last, 19)
+        XCTAssertEqual(route.duration, 20.18, accuracy: 1e-10)
+        XCTAssertNil(route.currentIndex(at: 3.999)); XCTAssertEqual(route.currentIndex(at: 4), 0)
+        XCTAssertEqual(route.currentIndex(at: 8), 4); XCTAssertEqual(route.currentIndex(at: 19), 15)
+        XCTAssertNil(route.currentIndex(at: .nan)); XCTAssertNil(route.missed(at: .infinity))
+        XCTAssertNil(route.missed(at: 4.18)); XCTAssertEqual(route.missed(at: 4.181), 0)
+        XCTAssertNil(route.missed(at: 4.66)); XCTAssertEqual(route.missed(at: 5.181), 1)
+        let aligned = try routeFixture(alignment: 0.2)
+        XCTAssertNil(aligned.missed(at: 4.38)); XCTAssertEqual(aligned.missed(at: 4.381), 0)
+        let negative = try routeFixture(alignment: -0.2)
+        XCTAssertNil(negative.missed(at: 3.98)); XCTAssertEqual(negative.missed(at: 3.981), 0)
+        XCTAssertEqual(route.rockPosition(index: 0, elapsed: 4, marker: 100, stride: 120, reduced: false), 100)
+        XCTAssertEqual(route.rockPosition(index: 1, elapsed: 4, marker: 100, stride: 120, reduced: false), 220)
+        XCTAssertEqual(route.rockPosition(index: 2, elapsed: 4, marker: 100, stride: 120, reduced: false), 340)
+        XCTAssertNil(route.rockPosition(index: 16, elapsed: 4, marker: 100, stride: 120, reduced: false))
+        XCTAssertNil(route.rockPosition(index: 0, elapsed: .nan, marker: 100, stride: 120, reduced: false))
+        for invalid in [Double.nan, .infinity, -.infinity] {
+            XCTAssertNil(RunnerRoute(targets: route.targets, hits: [], epoch: invalid, endTime: 120.18, alignment: 0))
+        }
+        XCTAssertNil(RunnerRoute(targets: [], hits: [], epoch: 100, endTime: 120.18, alignment: 0))
+        XCTAssertNil(RunnerRoute(targets: route.targets, hits: [], epoch: 100, endTime: 120.18, alignment: 0.251))
+        XCTAssertNil(RunnerRoute(targets: Array(route.targets.reversed()), hits: [], epoch: 100, endTime: 120.18, alignment: 0))
+        XCTAssertNil(RunnerRoute(targets: route.targets, hits: [], epoch: 100, endTime: 118, alignment: 0))
+    }
+    func testRouteUsesActualMatcherForEarlyDuplicateLateAndNoMissOrPrebeatRemoval() throws {
+        let fixture = try routeFixture()
+        var session = try TimingSession(targets: fixture.targets)
+        session.tap(at: 103.86); session.tap(at: 103.87); session.tap(at: 105.12)
+        let route = try XCTUnwrap(RunnerRoute(targets: session.targets, hits: session.hits, epoch: 100, endTime: 120.18, alignment: 0))
+        XCTAssertEqual(route.accepted, [0,1]); XCTAssertEqual(route.grades[0], .early); XCTAssertEqual(route.grades[1], .late)
+        XCTAssertEqual(route.hits.last?.targetID, 1); XCTAssertEqual(route.hits.filter { $0.grade == .extra }.count, 1)
+        XCTAssertNil(route.missed(at: 4.3)); XCTAssertNil(route.missed(at: 5.3)); XCTAssertEqual(route.missed(at: 6.3), 2)
+        XCTAssertEqual(route.obstacleAlpha(index: 0, elapsed: 3.9, reduced: false), 1)
+        XCTAssertEqual(route.obstacleAlpha(index: 0, elapsed: 4, reduced: false), 1)
+        XCTAssertEqual(route.obstacleAlpha(index: 0, elapsed: 4.125, reduced: false), 0.5, accuracy: 1e-9)
+        XCTAssertEqual(route.obstacleAlpha(index: 2, elapsed: 6.3, reduced: false), 1)
+        XCTAssertEqual(EggAnimationFrame.sample(elapsed: 3.9, age: 0.04, reduceMotion: false), 8)
+        XCTAssertEqual(EggAnimationFrame.sample(elapsed: 3.9, age: 0.04, reduceMotion: true), 14)
+    }
+
     @MainActor
     func testDisplayClockIsReadOnlyContinuousAndCannotFinishOrScoreTheLesson() async throws {
         let name = "BeatLabTests.DisplayClock.\(UUID().uuidString)"
@@ -31,9 +84,15 @@ final class PracticeStoreTests: XCTestCase {
         XCTAssertEqual(store.elapsed, published)
         XCTAssertEqual(store.phase, .playing); XCTAssertNil(store.latestHit); XCTAssertNil(store.summary)
         XCTAssertEqual(store.stars, 0); XCTAssertTrue(store.progress.results.isEmpty)
+        let route = try XCTUnwrap(store.runnerRoute)
+        XCTAssertEqual(route.targets.count, 16); XCTAssertEqual(route.relativeTimes.first!, 4, accuracy: 0.00001)
+        XCTAssertEqual(route.relativeTimes.last!, 19, accuracy: 0.00001)
+        XCTAssertTrue(route.accepted.isEmpty); XCTAssertEqual(route.duration, 20.18, accuracy: 0.00001)
         store.tap(at: epoch + 4.125)
         XCTAssertEqual(store.latestHit?.targetID, 0); XCTAssertEqual(store.latestHit?.grade, .late)
+        XCTAssertEqual(store.runnerRoute?.accepted, [0]); XCTAssertEqual(store.runnerRoute?.grades[0], .late)
         store.cancel(audio: audio)
+        XCTAssertNil(store.runnerRoute)
         XCTAssertEqual(store.presentationElapsed(at: epoch + 1000), store.elapsed)
         XCTAssertTrue(store.progress.results.isEmpty)
         store.start(store.lessons[0], audio: audio, eggMission: true)
@@ -302,8 +361,8 @@ final class EggMissionPresentationTests: XCTestCase {
         for theme in RunnerTheme.allCases {
             let normal = EggSpriteScene(size: CGSize(width: 400, height: 400))
             let missed = EggSpriteScene(size: CGSize(width: 400, height: 400))
-            normal.configure(EggSceneSnapshot(elapsed: 4.47, accepted: [0], theme: theme))
-            missed.configure(EggSceneSnapshot(elapsed: 4.47, theme: theme))
+            normal.configure(EggSceneSnapshot(elapsed: 4.47, accepted: [0], theme: theme, route: try routeFixture(accepted: [0])))
+            missed.configure(EggSceneSnapshot(elapsed: 4.47, theme: theme, route: try routeFixture()))
             let normalPlayer = try XCTUnwrap(normal.childNode(withName: "player"))
             let missedPlayer = try XCTUnwrap(missed.childNode(withName: "player"))
             let reference = try XCTUnwrap(normalPlayer.childNode(withName: "characterPrimary") as? SKSpriteNode)
@@ -317,7 +376,7 @@ final class EggMissionPresentationTests: XCTestCase {
             XCTAssertFalse(try XCTUnwrap(missed.childNode(withName: "rock1")).isHidden)
             XCTAssertEqual(try XCTUnwrap(missed.childNode(withName: "rock1")).position.x,
                            try XCTUnwrap(normal.childNode(withName: "rock1")).position.x, accuracy: 0.0001)
-            missed.configure(EggSceneSnapshot(elapsed: 4.57, theme: theme))
+            missed.configure(EggSceneSnapshot(elapsed: 4.57, theme: theme, route: try routeFixture()))
             XCTAssertFalse(character.texture === before, "Run poses must keep advancing during the recovery window")
             XCTAssertEqual(missedPlayer.children.count, 1, "No double character from crossfades")
         }
@@ -327,7 +386,7 @@ final class EggMissionPresentationTests: XCTestCase {
         let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
         let rock = try XCTUnwrap(scene.childNode(withName: "rock0"))
         let reward = try XCTUnwrap(scene.childNode(withName: "reward0"))
-        scene.configure(EggSceneSnapshot(elapsed: 3.9, accepted: [0]))
+        scene.configure(EggSceneSnapshot(elapsed: 3.9, accepted: [0], route: try routeFixture(accepted: [0])))
         XCTAssertFalse(rock.isHidden, "An early accepted press must not remove a cue before the fixed 4s first beat")
         XCTAssertEqual(rock.alpha, 1, accuracy: 0.0001)
         XCTAssertTrue(reward.isHidden, "Route reward must not replace the upcoming rock before crossing")
@@ -340,7 +399,7 @@ final class EggMissionPresentationTests: XCTestCase {
         for width: CGFloat in [320, 375, 402] {
             for accepted: Set<Int> in [[], [0, 2, 5, 15], Set(0..<16)] {
                 let scene = EggSpriteScene(size: CGSize(width: width, height: 400))
-                let state = EggSceneSnapshot(accepted: accepted, presentationElapsed: { $0 - 100 })
+                let state = EggSceneSnapshot(accepted: accepted, presentationElapsed: { $0 - 100 }, route: try routeFixture(accepted: accepted))
                 scene.configure(state)
                 let marker = try XCTUnwrap(scene.childNode(withName: "beatMarker"))
                 for target in targets {
@@ -358,7 +417,7 @@ final class EggMissionPresentationTests: XCTestCase {
                     XCTAssertLessThan(rock.position.x, marker.position.x)
                     XCTAssertEqual(rock.alpha, accepted.contains(target.id) ? 0.5 : 1, accuracy: 0.0001)
                 }
-                scene.configure(EggSceneSnapshot(elapsed: 8.5, accepted: accepted))
+                scene.configure(EggSceneSnapshot(elapsed: 8.5, accepted: accepted, route: try routeFixture(accepted: accepted)))
                 let fifth = try XCTUnwrap(scene.childNode(withName: "rock5"))
                 let sixth = try XCTUnwrap(scene.childNode(withName: "rock6"))
                 XCTAssertEqual(sixth.position.x - fifth.position.x, width * 0.31, accuracy: 0.0001)
@@ -380,9 +439,9 @@ final class EggMissionPresentationTests: XCTestCase {
     }
     @MainActor
     func testCompanionScenesUseDistinctLoadedArtAndMotionWithoutChangingAcceptedState() throws {
-        let scenes = [RunnerTheme.cat, .robot].map { theme -> EggSpriteScene in
+        let scenes = try [RunnerTheme.cat, .robot].map { theme -> EggSpriteScene in
             let scene = EggSpriteScene(size: CGSize(width: 400, height: 400))
-            scene.configure(EggSceneSnapshot(elapsed: 4.16, accepted: [0], latestGrade: .perfect, hitAge: 0.16, theme: theme))
+            scene.configure(EggSceneSnapshot(elapsed: 4.16, accepted: [0], latestGrade: .perfect, hitAge: 0.16, theme: theme, route: try routeFixture(accepted: [0])))
             return scene
         }
         let textures = try scenes.map { scene -> SKTexture in
@@ -403,7 +462,7 @@ final class EggMissionPresentationTests: XCTestCase {
         for scene in scenes {
             let count = scene.children.count, player = try XCTUnwrap(scene.childNode(withName: "player"))
             let character = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
-            var state = EggSceneSnapshot(elapsed: 4, theme: scene.theme)
+            var state = EggSceneSnapshot(elapsed: 4, theme: scene.theme, route: try routeFixture())
             scene.configure(state); let run = try XCTUnwrap(character.texture)
             state.elapsed = 4.0625; scene.configure(state)
             XCTAssertFalse(run === character.texture, "Successive run frames must be distinct loaded textures")
@@ -472,12 +531,12 @@ final class EggMissionPresentationTests: XCTestCase {
             return try JSONDecoder().decode(TimingHit.self, from: Data("{\"targetID\":\(id),\"inputTime\":\(input),\"error\":null,\"grade\":\"\(grade)\"}".utf8))
         }
         var calls = 0
-        var state = EggSceneSnapshot(presentationElapsed: { host in calls += 1; return host - 100 })
+        var state = EggSceneSnapshot(presentationElapsed: { host in calls += 1; return host - 100 }, route: try routeFixture())
         scene.configure(state); scene.render(at: 104)
         XCTAssertFalse(rock.isHidden); XCTAssertTrue(reward.isHidden)
         let previous = rock.position.x; scene.render(at: 104.01)
         XCTAssertLessThan(rock.position.x, previous, "Nodes move between store polls on the existing read-only clock")
-        state.accepted = [0]; state.acceptedAction = try hit(0, 104, "perfect"); state.latestAction = try hit(nil, 104.2, "extra")
+        state.accepted = [0]; state.acceptedAction = try hit(0, 104, "perfect"); state.latestAction = try hit(nil, 104.2, "extra"); state.route = try routeFixture(hits: [state.acceptedAction!, state.latestAction!])
         scene.configure(state); scene.render(at: 104.24)
         XCTAssertFalse(rock.isHidden); XCTAssertEqual(rock.alpha, 0.04, accuracy: 0.0001)
         XCTAssertFalse(reward.isHidden); XCTAssertGreaterThan(player.position.y, 60)

@@ -345,3 +345,7 @@ Exact-file contracts：docs/slices/GAME-16.md、GAME-17.md、GAME-18.md、GAME-1
 ### 2026-10-07 — GAME-16 可操作第一關
 
 Owner「好，往下走」後完成隔離browser短試玩：4拍數拍＋16真實目標、四格樂句／固定黃色腳印、matched才跳與送蛋進度、實際early/late/extra/miss、零輸入失敗、取消／重試。Final60 checks PASS，實際16Perfect/0Extra；12組ready＋12組live尺寸／深色／放大字、Reduce Motion／鍵盤／素材失敗守護。初版結算重複巢穴修正並保留截圖；READY圖未可見時不給開始、引導移出場景避免遮住角色。95原生inputs hash未變；不重跑native tests、不聲稱physicalFPS或child appeal。Status IMPLEMENTED_CONCEPT_BROWSER60_PASS_OWNER_PENDING。入口docs/design/rhythm-swing-concept/play.html與本機7820；owner理解／再玩接受後才進GAME-17，GAME-17–19/QA-02/TF-05仍PLANNED。TestFlight build11不變、KidsCharacterKit仍延期、public gate未接受。詳docs/slices/GAME-16-verification.json。
+
+### 2026-10-07 — Owner 改用 iPhone 驗概念
+
+「直接安裝到iphone比較快」授權GAME-17/18/19最小phone preview先做再安裝，browser owner gate對此候選延期，不是玩法接受。三slice新增exact-file與failure/check/rollback範圍；只讀real target/accepted/expiry、四拍路線、有效early起跳與準備文字，保留現三角色素材／native音訊／input／grade／save。Status PHONE_PREVIEW_IN_PROGRESS；Wi-Fi個人安裝，無TestFlight／public。

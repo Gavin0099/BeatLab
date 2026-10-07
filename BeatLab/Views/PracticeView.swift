@@ -426,7 +426,7 @@ struct PracticeView: View {
                 .accessibilityIdentifier("preparedLessonNumber")
             Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
             EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true).frame(height: 260)
-            Text("先聽 4 拍。\(missionTheme.obstacle)到腳下，跟鼓聲按一下「跳！」。")
+            Text("先聽 4 拍。\(missionTheme.obstacle)到黃色腳印，跟鼓聲按一下「跳！」。")
                 .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
             Text("用右手跟拍 · 60 BPM · 約 20 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
             Text("漏拍時\(missionTheme.title)會接住\(missionTheme.item)，下一拍再接上；多打只會原地小跳。")

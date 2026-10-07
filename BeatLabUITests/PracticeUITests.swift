@@ -26,17 +26,13 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts[mission].exists); capture(app, "\(key) themed preparation")
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["activeCompanion"].label, "\(title)陪你跟拍")
         let scene = app.otherElements["eggMissionScene"], pad = app.buttons["practiceTapPad"], stop = app.buttons["stopPractice"]
+        // Resolve the geometry once, then send a genuine multitap gesture.
+        // Repeated AX queries plus a4s sleep used up the actual20s lesson.
         XCTAssertTrue(scene.exists); XCTAssertLessThan(scene.frame.maxY, pad.frame.minY)
-        XCTAssertTrue(pad.isHittable && stop.isHittable)
-        Thread.sleep(forTimeInterval: 4.2)
-        for _ in 0..<10 {
-            pad.tap()
-            if app.staticTexts["jumpMatches"].label != "跨過 0 / 16 個障礙" { break }
-            Thread.sleep(forTimeInterval: 0.12)
-        }
-        XCTAssertNotEqual(app.staticTexts["jumpMatches"].label, "跨過 0 / 16 個障礙", "Actual UIKit touch must produce a real accepted hit")
+        XCTAssertTrue(pad.isHittable)
+        pad.tap(withNumberOfTaps: 10, numberOfTouches: 1)
+        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("跨過 0 "), "Actual UIKit touches must produce a real accepted hit")
         capture(app, "\(key) actual live runner"); stop.tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")

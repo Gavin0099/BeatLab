@@ -216,6 +216,13 @@ final class PracticeStore: ObservableObject {
     }
     static func now() -> Double { AVAudioTime.seconds(forHostTime: mach_absolute_time()) }
 
+    /// Snapshot of the actual native session; presentation cannot publish scores.
+    var runnerRoute: RunnerRoute? {
+        guard isEggMission, let session, phase == .playing || phase == .finished else { return nil }
+        return RunnerRoute(targets: session.targets, hits: session.hits, epoch: epoch,
+                           endTime: endTime, alignment: session.calibrationOffset)
+    }
+
     /// Read-only display position on the existing audio-host epoch. Display
     /// callbacks cannot advance matching, finish a lesson or publish state.
     func presentationElapsed(at hostTime: Double) -> Double {
