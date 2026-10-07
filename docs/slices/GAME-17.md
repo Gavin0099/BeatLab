@@ -1,6 +1,6 @@
 # GAME-17 — 原生節奏路線與事件對齊
 
-Status PHONE_PREVIEW_IN_PROGRESS，2026-10-07。依賴GAME-16 owner concept gate；baseline GAME-15／TF-04。Risk L2：audio／input／UI clock邊界，即使新增欄位只讀仍按L2驗。
+Status PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING，2026-10-07。依賴GAME-16 owner concept gate；baseline GAME-15／TF-04。Risk L2：audio／input／UI clock邊界，即使新增欄位只讀仍按L2驗。
 
 目的／契約：上方短拍點預覽與下方障礙引用同一份實際session targets、原audio-host epoch與真實matched／expired結果。將presentation中的4／16／1秒猜測收斂成只讀資料。第一輪入口仍限first-beat60 BPM；保留4拍count-in、原endTime／matching窗口／calibration semantics。target到固定跨越點的時間由target timestamp決定；提早matched不讓未到點石頭消失；分離目前拍點、音符設定、accepted狀態。
 
@@ -18,3 +18,7 @@ Owner明確指示「直接安裝到iphone比較快」：允許跳過browser owne
 本候選exact edit set：BeatLab/App/PracticeStore.swift只增read-only accessor；BeatLab/Views/EggMissionView.swift內嵌adapter（不增檔membership）；BeatLab/Views/PracticeView.swift準備文案；BeatLabTests/PracticeStoreTests.swift；BeatLabUITests/PracticeUITests.swift僅補live cue斷言；本三slice／GAME-17-verification.json／PLAN／canonical evidence與memory；ignored TestResults/GAME-17/**。禁止音訊/Core/input timestamp/matching/score/save/assets/version/signing變更。用既有same bundle/team development簽署，fresh paired Wi-Fi install/launch，無uninstall/reset/upload。
 
 Checks：原真實matching＋new read-only adapter獨立fixture（失效資料、校正expiry、early／late／duplicate／miss、cancel／restart）、實際App regression／小屏和大字flow／zero-input failure及touch、build與signed frozen hash/device綁定。實機同步／流暢度與child gate由owner接續；不得將安裝當accepted。Rollback只回復此exact edit set，保留失敗與learner data。
+
+## 個人手機 preview 交付（2026-10-07）
+
+Source d13697b；signed Debug0.1.0(11) Wi-Fi install／launch PASS，保留資料，TestFlight不變。只完成上述minimum preview，完整slice gate未接受。App unit56／dinosaur UI3 PASS；initial companion2 FAIL後縮短harness，final robot PASS、cat再次開始counter缺失FAIL；narrow dark最大字級1 FAIL（查停止時已到結果），empty retry0 tests不接受。Cat失敗hierarchy仍是準備頁且保留停止notice，根因未確定；不宣稱只是harness。Physical timing／流暢度／child／public與full10關回歸pending。詳GAME-17-verification.json；narrow已restore light／shutdown，沒有重置其他simulator。

@@ -52,3 +52,5 @@
 - Rhythm Swing six-slice plan written; GAME-16/17/18/19 QA-02 TF-05 all PLANNED. Existing TestFlight11 unchanged. Native/physical/child/public gates pending; this task is planning only. <!-- memory_record_projection:active-task-summary:68d8e6fd700df186e750a075f6c6f08b484cde6c19e53446ee2a214fa05ad922 -->
 
 - GAME-16概念完成browser60PASS/16Perfect0Extra、95native unchanged；Mac試玩入口已開啟，owner gameplay acceptance待回覆再進GAME-17；TestFlight build11與physical/child/public gates不變。 <!-- memory_record_projection:active-task-summary:05bffa50ee8ddb81020365adf2c9caaa80a253ba1cf2aebba3bbf57185a015a3 -->
+
+- GAME17/18/19最小preview d13697b signed Debug0.1.0(11)已Wi-Fi安装/開啟；App56+dinoUI3+robot PASS，cat重啟/narrowXXXL FAIL，完整QA/physical/child/public未接受，TestFlight不變。 <!-- memory_record_projection:active-task-summary:bd6c93f06a583b00c54115526fb5008cd473715499f2e7b03e60df6471ea3eb6 -->

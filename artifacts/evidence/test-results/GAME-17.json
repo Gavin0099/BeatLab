@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"import json,hashlib,subprocess\nfrom pathlib import Path\nr=Path.cwd();t=r/'TestResults/GAME-17';v=json.loads((r/'docs/slices/GAME-17-verification.json').read_text());b=json.loads((t/'build-copy.json').read_text())\nfor f,h in v['source_sha256'].items():\n assert hashlib.sha256((r/f).read_bytes()).hexdigest()==h\n assert hashlib.sha256((Path(b['root'])/f).read_bytes()).hexdigest()==h\nfor f,h in v['evidence_refs'].items(): assert hashlib.sha256((r/f).read_bytes()).hexdigest()==h\napp=json.loads((t/'PhoneFrozen/app-manifest.json').read_text())\nfor f,h in app.items(): assert hashlib.sha256((t/'PhoneFrozen/BeatLab.app'/f).read_bytes()).hexdigest()==h\nsubprocess.run(['codesign','--verify','--deep','--strict',str(t/'PhoneFrozen/BeatLab.app')],check=True)\nfor n,counts in [('native-wide',(59,2)),('companion-ui-final',(1,1)),('narrow-dark-large',(0,1))]:\n s=json.loads((t/(n+'-summary.json')).read_text());assert (s['passedTests'],s['failedTests'])==counts\nfor n in ['phone-install','phone-launch']: assert json.loads((t/(n+'.json')).read_text())['info']['outcome']=='success'\nprint(json.dumps({'report_integrity':'PASS','source_commit':v['source_commit'],'status':v['status'],'build':v['build'],'phone':v['phone'],'test_results':v['test_results'],'test_interpretation':v['test_interpretation'],'not_claimed':v['not_claimed']},ensure_ascii=False))\n\"",
+  "exit_code": 0,
+  "started_at": "2026-10-07T15:42:58Z",
+  "finished_at": "2026-10-07T15:42:58Z",
+  "runner": "phone-install-and-partial-native-evidence-integrity",
+  "linked_commit": "d13697b9156314679db32cf834de601e49ea4307",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-17.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

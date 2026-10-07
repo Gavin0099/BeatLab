@@ -334,9 +334,9 @@ Owner 指示先切slice；本輪L0規劃文件，實作皆PLANNED。對照程式
 | Slice | 目標 | Risk／依賴 | 狀態 |
 |---|---|---|---|
 | GAME-16 | 可操作的第一關短概念，先看owner是否理解且願意再玩 | L1 isolated browser；既有第一關規格 | CONCEPT_BROWSER60_PASS_OWNER_PENDING |
-| GAME-17 | 原生短拍點／障礙路線共用真正target與只讀結果 | L2 audio/input/UI clock邊界；GAME-16接受＋QA-02A | PLANNED |
-| GAME-18 | matched起跳／落地、extra／miss銜接與可見後果 | L1，若clock更動升L2；GAME-17＋QA-02B | PLANNED |
-| GAME-19 | 引導→數拍→挑戰→結果→重試，三角色整合 | L1；GAME-18＋QA-02C | PLANNED |
+| GAME-17 | 原生短拍點／障礙路線共用真正target與只讀結果 | L2 audio/input/UI clock邊界；GAME-16接受＋QA-02A | PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING |
+| GAME-18 | matched起跳／落地、extra／miss銜接與可見後果 | L1，若clock更動升L2；GAME-17＋QA-02B | PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING |
+| GAME-19 | 引導→數拍→挑戰→結果→重試，三角色整合 | L1；GAME-18＋QA-02C | PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING |
 | QA-02 | A/B/C嵌入前片，Final原生／真機／兒童與公開缺口 | L2；不等最後才QA，不把工程PASS當owner接受 | PLANNED |
 | TF-05 | owner接受候選後的本人TestFlight交付 | L1 delivery-only；適用QA gate＋該新候選交付授權 | PLANNED |
 
@@ -349,3 +349,7 @@ Owner「好，往下走」後完成隔離browser短試玩：4拍數拍＋16真�
 ### 2026-10-07 — Owner 改用 iPhone 驗概念
 
 「直接安裝到iphone比較快」授權GAME-17/18/19最小phone preview先做再安裝，browser owner gate對此候選延期，不是玩法接受。三slice新增exact-file與failure/check/rollback範圍；只讀real target/accepted/expiry、四拍路線、有效early起跳與準備文字，保留現三角色素材／native音訊／input／grade／save。Status PHONE_PREVIEW_IN_PROGRESS；Wi-Fi個人安裝，無TestFlight／public。
+
+### 2026-10-07 — 原生第一關 Wi-Fi preview 已安裝
+
+Source d13697b9156314679db32cf834de601e49ea4307；只讀actual targets/hits/epoch/expiry接四拍route與石頭、matched進度、有效early起跳及準備文字，Core/audio/input/score/save/assets/project版本均未變。95source／78production frozen bind、90protected unchanged；build-for-testing與signed Debug0.1.0(11) PASS，actual paired localNetwork install／launch PASS，不uninstall/reset，TestFlight build11仍舊候選。Initial fixture scope compileFAIL修復後App unit56 PASS、dinosaur UI3 PASS；initial companion2 FAIL（操作超過20s）保留，final robot整段PASS、cat實際命中與取消成立但再次start counter缺失FAIL，hierarchy仍是準備頁且停止notice保留，根因未確定；narrow dark XXXL1 FAIL（停止查詢已進結果），其後empty0-test不接受。三片minimum preview已交付供owner第一關60BPM試玩，fullslice／QA-02／physical timing/FPS／child/public未接受，不能稱all-green。Owned narrow restorelight＋shutdown；其他simulator不動。KidsCharacterKit仍deferred；無TestFlight/public上傳。詳docs/slices/GAME-17-verification.json。

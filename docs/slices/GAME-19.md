@@ -1,6 +1,6 @@
 # GAME-19 — 引導、結果、重試與三角色整合
 
-Status PHONE_PREVIEW_IN_PROGRESS，2026-10-07。依賴GAME-18及QA-02B。Risk L1：journey／copy／三角色呈現；保存或score規則更動不在本片，需另立L2契約。
+Status PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING，2026-10-07。依賴GAME-18及QA-02B。Risk L1：journey／copy／三角色呈現；保存或score規則更動不在本片，需另立L2契約。
 
 目的／契約：沿用現有第一關入口，準備頁用一句任務＋短拍點圖说明「聽拍再跳」，接既有4拍count-in；遊玩中場景與下一拍為主，詳細錯誤放結果。結果以真實stars／summary决定送達／再試，說明早／晚／漏拍／多打；原save retry／discard可見。成功／失敗都可重試，取消不計成績。恐龍送蛋、貓咪送魚、機器人送能源共用同一loop，角色性格／場景可不同但時間、判定、任務結果一致。
 
@@ -18,3 +18,7 @@ Owner明確指示「直接安裝到iphone比較快」：允許跳過browser owne
 本候選exact edit set：BeatLab/App/PracticeStore.swift只增read-only accessor；BeatLab/Views/EggMissionView.swift內嵌adapter（不增檔membership）；BeatLab/Views/PracticeView.swift準備文案；BeatLabTests/PracticeStoreTests.swift；BeatLabUITests/PracticeUITests.swift僅補live cue斷言；本三slice／GAME-17-verification.json／PLAN／canonical evidence與memory；ignored TestResults/GAME-17/**。禁止音訊/Core/input timestamp/matching/score/save/assets/version/signing變更。用既有same bundle/team development簽署，fresh paired Wi-Fi install/launch，無uninstall/reset/upload。
 
 Checks：原真實matching＋new read-only adapter獨立fixture（失效資料、校正expiry、early／late／duplicate／miss、cancel／restart）、實際App regression／小屏和大字flow／zero-input failure及touch、build與signed frozen hash/device綁定。實機同步／流暢度與child gate由owner接續；不得將安裝當accepted。Rollback只回復此exact edit set，保留失敗與learner data。
+
+## 個人手機 preview 交付（2026-10-07）
+
+Source d13697b；signed Debug0.1.0(11) Wi-Fi install／launch PASS，保留資料，TestFlight不變。只完成上述minimum preview，完整slice gate未接受。App unit56／dinosaur UI3 PASS；initial companion2 FAIL後縮短harness，final robot PASS、cat再次開始counter缺失FAIL；narrow dark最大字級1 FAIL（查停止時已到結果），empty retry0 tests不接受。Cat失敗hierarchy仍是準備頁且保留停止notice，根因未確定；不宣稱只是harness。Physical timing／流暢度／child／public與full10關回歸pending。詳GAME-17-verification.json；narrow已restore light／shutdown，沒有重置其他simulator。

@@ -1,6 +1,6 @@
 # GAME-18 — 跑跳、落地與失誤的遊戲回饋
 
-Status PHONE_PREVIEW_IN_PROGRESS，2026-10-07。依賴GAME-17及QA-02A。Risk L1：只讀事件呈現；若改presentation host epoch、輸入或音訊边界即升L2重立契約。
+Status PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING，2026-10-07。依賴GAME-17及QA-02A。Risk L1：只讀事件呈現；若改presentation host epoch、輸入或音訊边界即升L2重立契約。
 
 目的／契約：敲擊matched即開始動作、到拍點看到跨越、落地接回跑步；Perfect有短物品亮光／落地效果，early／late保留真實grade。extra有即時輕反應但不覆蓋正在發生的有效跳躍、不清障礙；miss有可辨識的輕絆／接回動作且仍是miss，下一拍可接上。持續場景不重建、不突然切回靜止圖；配樂／hit聲沿用，這片不新增音訊。
 
@@ -18,3 +18,7 @@ Owner明確指示「直接安裝到iphone比較快」：允許跳過browser owne
 本候選exact edit set：BeatLab/App/PracticeStore.swift只增read-only accessor；BeatLab/Views/EggMissionView.swift內嵌adapter（不增檔membership）；BeatLab/Views/PracticeView.swift準備文案；BeatLabTests/PracticeStoreTests.swift；BeatLabUITests/PracticeUITests.swift僅補live cue斷言；本三slice／GAME-17-verification.json／PLAN／canonical evidence與memory；ignored TestResults/GAME-17/**。禁止音訊/Core/input timestamp/matching/score/save/assets/version/signing變更。用既有same bundle/team development簽署，fresh paired Wi-Fi install/launch，無uninstall/reset/upload。
 
 Checks：原真實matching＋new read-only adapter獨立fixture（失效資料、校正expiry、early／late／duplicate／miss、cancel／restart）、實際App regression／小屏和大字flow／zero-input failure及touch、build與signed frozen hash/device綁定。實機同步／流暢度與child gate由owner接續；不得將安裝當accepted。Rollback只回復此exact edit set，保留失敗與learner data。
+
+## 個人手機 preview 交付（2026-10-07）
+
+Source d13697b；signed Debug0.1.0(11) Wi-Fi install／launch PASS，保留資料，TestFlight不變。只完成上述minimum preview，完整slice gate未接受。App unit56／dinosaur UI3 PASS；initial companion2 FAIL後縮短harness，final robot PASS、cat再次開始counter缺失FAIL；narrow dark最大字級1 FAIL（查停止時已到結果），empty retry0 tests不接受。Cat失敗hierarchy仍是準備頁且保留停止notice，根因未確定；不宣稱只是harness。Physical timing／流暢度／child／public與full10關回歸pending。詳GAME-17-verification.json；narrow已restore light／shutdown，沒有重置其他simulator。
