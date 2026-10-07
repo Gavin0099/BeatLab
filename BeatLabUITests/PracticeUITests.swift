@@ -32,14 +32,14 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(scene.exists); XCTAssertLessThan(scene.frame.maxY, pad.frame.minY)
         XCTAssertTrue(pad.isHittable)
         pad.tap(withNumberOfTaps: 10, numberOfTouches: 1)
-        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("跨過 0 "), "Actual UIKit touches must produce a real accepted hit")
+        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "), "Actual UIKit touches must produce a real accepted hit")
         capture(app, "\(key) actual live runner"); stop.tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
         try openFirstCompanionLesson(in: app)
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["jumpMatches"].label, "跨過 0 / 16 個障礙")
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label, "抵達 0 / 16 座小島")
         app.buttons["stopPractice"].tap()
     }
     @MainActor
@@ -61,7 +61,7 @@ final class PracticeUITests: XCTestCase {
             XCTAssertFalse(app.buttons["nextLesson"].exists); capture(app, "\(key) actual failure")
             try reveal(app.buttons["retryLesson"], in: app); app.buttons["retryLesson"].tap()
             XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
-            XCTAssertEqual(app.staticTexts["jumpMatches"].label, "跨過 0 / 16 個障礙")
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label, "抵達 0 / 16 座小島")
             app.buttons["stopPractice"].tap()
             XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
             XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
@@ -159,7 +159,7 @@ final class PracticeUITests: XCTestCase {
         }
         let picker = app.navigationBars["選擇夥伴"]
         let inPicker = picker.exists
-        let top = inPicker ? picker.frame.maxY : app.navigationBars.firstMatch.frame.maxY
+        let top = inPicker ? picker.frame.maxY : app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.frame.maxY
         // A presented sheet covers the underlying tab bar; use its own viewport.
         // The SE has no bottom home-indicator inset. Do not invent a 30pt
         // exclusion zone: use the observed tab bar or actual app viewport.
@@ -290,7 +290,7 @@ final class PracticeUITests: XCTestCase {
         capture(app, "Native actual no-input result")
         try reveal(app.buttons["retryLesson"], in: app); app.buttons["retryLesson"].tap()
         let counter = app.staticTexts["jumpMatches"]
-        XCTAssertTrue(counter.waitForExistence(timeout: 5)); XCTAssertEqual(counter.label, "跨過 0 / 16 個障礙")
+        XCTAssertTrue(counter.waitForExistence(timeout: 5)); XCTAssertEqual(counter.label, "抵達 0 / 16 座小島")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         // Reopen the preparation; failed/retried/cancelled runs keep next locked.
@@ -311,7 +311,8 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(pad.waitForExistence(timeout: 5))
         let cue = app.staticTexts["jumpCue"]
         let stop = app.buttons["stopPractice"]
-        let appFrame = app.windows.firstMatch.frame, navigationBottom = app.navigationBars.firstMatch.frame.maxY
+        let appFrame = app.windows.firstMatch.frame
+        let navigationBottom = app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.frame.maxY
         let viewport = CGRect(x: 0, y: navigationBottom, width: appFrame.width, height: appFrame.maxY - navigationBottom)
         let cueFrame = cue.frame, padFrame = pad.frame, stopFrame = stop.frame
         for (name, frame) in [("cue", cueFrame), ("pad", padFrame), ("stop", stopFrame)] {
@@ -337,25 +338,27 @@ final class PracticeUITests: XCTestCase {
 
     @MainActor
     func testRunnerLargeTextCanReachSceneRhythmJumpAndStop() async throws {
-        // Each region gets a fresh real twenty-second run. Accessibility
-        // queries/captures must not consume the lesson before tapping Stop.
+        // Independent actual runs: fixed footer must be reachable immediately.
+        // Avoid generic preparation scroll queries consuming the live20s course.
         for region in ["stop", "jump", "scene", "rhythm"] {
             let app = freshApp(largestText: true)
             app.buttons["dailyPractice"].tap()
             try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
-            XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout: 5))
-            let control: XCUIElement
-            switch region {
-            case "stop": control = app.buttons["stopPractice"]
-            case "jump": control = app.buttons["practiceTapPad"]
-            case "scene": control = app.otherElements["eggMissionScene"].firstMatch
-            default: control = app.otherElements["rhythmLane"].firstMatch
-            }
-            try reveal(control, in: app, requiresHit: region == "stop" || region == "jump")
-            capture(app, "Runner large-text \(region)")
             if region == "stop" {
-                control.tap()
+                let stop = app.buttons["stopPractice"]
+                XCTAssertTrue(stop.waitForExistence(timeout: 5)); stop.tap()
                 XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
+            } else if region == "jump" {
+                let pad = app.buttons["practiceTapPad"]
+                XCTAssertTrue(pad.waitForExistence(timeout: 5)); XCTAssertTrue(pad.isHittable)
+                pad.tap(); capture(app, "Cross-island large-text jump footer")
+            } else {
+                let control = app.otherElements[region == "scene" ? "eggMissionScene" : "rhythmLane"].firstMatch
+                XCTAssertTrue(control.waitForExistence(timeout: 5))
+                let scroll = app.scrollViews.firstMatch
+                for _ in 0..<2 where !scroll.frame.contains(control.frame) { scroll.swipeUp(velocity: .slow) }
+                XCTAssertTrue(scroll.frame.contains(control.frame), "Entire region must be scrollable above fixed controls")
+                capture(app, "Cross-island large-text \(region)")
             }
             app.terminate()
         }
@@ -372,11 +375,11 @@ final class PracticeUITests: XCTestCase {
         // Real UI touches, no injected TimingHit or fake clock. This proves
         // visual clearance can follow actual matching, not timing precision.
         for _ in 0..<10 {
-            if counter.exists && !counter.label.hasPrefix("跨過 0 ") { break }
+            if counter.exists && !counter.label.hasPrefix("抵達 0 ") { break }
             pad.tap()
         }
         XCTAssertTrue(counter.exists)
-        XCTAssertFalse(counter.label.hasPrefix("跨過 0 "), "Actual matched touches must clear an obstacle")
+        XCTAssertFalse(counter.label.hasPrefix("抵達 0 "), "Actual matched touches must clear an obstacle")
         capture(app, "Runner actual matched touch clearance")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
@@ -384,7 +387,7 @@ final class PracticeUITests: XCTestCase {
         try reveal(first, in: app); first.tap()
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(counter.waitForExistence(timeout: 5))
-        XCTAssertEqual(counter.label, "跨過 0 / 16 個障礙")
+        XCTAssertEqual(counter.label, "抵達 0 / 16 座小島")
         app.buttons["stopPractice"].tap()
     }
 

@@ -353,3 +353,11 @@ Owner「好，往下走」後完成隔離browser短試玩：4拍數拍＋16真�
 ### 2026-10-07 — 原生第一關 Wi-Fi preview 已安裝
 
 Source d13697b9156314679db32cf834de601e49ea4307；只讀actual targets/hits/epoch/expiry接四拍route與石頭、matched進度、有效early起跳及準備文字，Core/audio/input/score/save/assets/project版本均未變。95source／78production frozen bind、90protected unchanged；build-for-testing與signed Debug0.1.0(11) PASS，actual paired localNetwork install／launch PASS，不uninstall/reset，TestFlight build11仍舊候選。Initial fixture scope compileFAIL修復後App unit56 PASS、dinosaur UI3 PASS；initial companion2 FAIL（操作超過20s）保留，final robot整段PASS、cat實際命中與取消成立但再次start counter缺失FAIL，hierarchy仍是準備頁且停止notice保留，根因未確定；narrow dark XXXL1 FAIL（停止查詢已進結果），其後empty0-test不接受。三片minimum preview已交付供owner第一關60BPM試玩，fullslice／QA-02／physical timing/FPS／child/public未接受，不能稱all-green。Owned narrow restorelight＋shutdown；其他simulator不動。KidsCharacterKit仍deferred；無TestFlight/public上傳。詳docs/slices/GAME-17-verification.json。
+
+### 2026-10-07 — Owner 拒絕原生 phone preview 的遊戲方向
+
+Owner 貼已安裝新版截圖（78B8245D-AC3B-4D0D-A35C-891358CA0C09），指出仍不像指定 Rhythm Swing。畫面四格與matched counter確認是GAME17最小preview；install/build/test通過不等於玩法接受。Owner接受狀態 REJECTED_CURRENT_GAME_PRESENTATION；四拍資料與時間對齊可保留，但沿用固定角色＋橫向石頭＋大pad的跑酷構圖沒有達成參考的逐拍行進／可見跌落後果。此次為診斷，重核官方Play/Practice說明，未操作商業App或量測FPS，沒有修改原生或重裝。下一個核心互動候選應先定角色逐拍移往下一平台、miss可見安全回復、場景主要區域的exact-file與grade/clock邊界；不將新增生命／3錯結束／音樂或新素材視為已授權。既有cat重啟／narrowXXXL、physical/child/public gates不變；完整GAME17–19未接受。
+
+### 2026-10-07 — GAME-20 跨島互動實作開始
+
+Owner接受角色逐拍跨落腳點/場景主體/漏拍跌落接回提案，明確授權實作後直接安裝。建立GAME-20 L2 exact-file contract：first-beat60、三角色、pure matched-driven world步數與延後camera、real expiry跌落、既有美術runtime crop、compact phrase；不改audio/input/score/save/asset/version。Status IN_PROGRESS；持續保留GAME17 rejected gameplay、cat restart/narrowXXXL和physical/child/public pending。Wi-Fi本人preview授權明確，不重詢。

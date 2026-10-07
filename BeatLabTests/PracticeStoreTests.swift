@@ -746,3 +746,98 @@ final class RhythmRunnerPresentationTests: XCTestCase {
         XCTAssertEqual(RhythmRunnerPresentation.position(elapsed: .nan, bpm: 60, stepsPerBeat: 1), -4)
     }
 }
+
+final class PlatformJourneyTests: XCTestCase {
+    func testRealEarlyLateDuplicateAndExtraOnlyAdvanceMatchedSteps() throws {
+        let fixture = try routeFixture()
+        var session = try TimingSession(targets: fixture.targets)
+        session.tap(at: 103.90); session.tap(at: 103.91); session.tap(at: 105.12)
+        XCTAssertEqual(session.hits.map(\.grade), [.early, .extra, .late])
+        let route = try routeFixture(hits: session.hits)
+        XCTAssertEqual(route.journeyHits.count, 2)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 3.89, reduced: false).step, 0)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 4.14, reduced: false).step, 0.5, accuracy: 1e-8, "Reviewed 0.48s flight: halfway at0.24s")
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 4.38, reduced: false).step, 1, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.36, reduced: false).step, 1.5, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.60, reduced: false).step, 2, accuracy: 1e-8)
+        let duplicate = try routeFixture(hits: session.hits + [session.hits[0]])
+        XCTAssertEqual(duplicate.journeyHits.count, 2)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: duplicate, elapsed: 20, reduced: false).step, 2)
+    }
+    func testMissExpiresThenFallsAndReturnsWithoutForwardTravel() throws {
+        let empty = try routeFixture()
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 4.18, reduced: false).fall, 0)
+        let bottom = PlatformJourneyFrame.sample(route: empty, elapsed: 4.42, reduced: false)
+        XCTAssertEqual(bottom.step, 0); XCTAssertEqual(bottom.camera, 0)
+        XCTAssertEqual(bottom.fall, 1, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 4.661, reduced: false).fall, 0)
+        let aligned = try routeFixture(alignment: 0.20)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: aligned, elapsed: 4.38, reduced: false).fall, 0)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: aligned, elapsed: 4.62, reduced: false).fall, 1, accuracy: 1e-8)
+        let resumed = try routeFixture(accepted: [1])
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 5.24, reduced: false).step, 0.5, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 5.24, reduced: false).fall, 0)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 20, reduced: false).step, 0)
+    }
+    func testCameraWaitsForLandingAndAbsoluteFrameSkipsReachSameEndpoint() throws {
+        let route = try routeFixture(accepted: [0,1])
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.48, reduced: false).camera, 0, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.64, reduced: false).camera, 0.35, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.80, reduced: false).camera, 0.70, accuracy: 1e-8)
+        let all = try routeFixture(accepted: Set(0..<16))
+        let skipped = PlatformJourneyFrame.sample(route: all, elapsed: 20, reduced: false)
+        XCTAssertEqual(skipped.step, 16); XCTAssertEqual(skipped.camera, 14.7, accuracy: 1e-8)
+        for elapsed in stride(from: 0.0, through: 20, by: 0.017) {
+            let value = PlatformJourneyFrame.sample(route: all, elapsed: elapsed, reduced: false)
+            XCTAssertTrue(value.step.isFinite && value.camera.isFinite)
+        }
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: all, elapsed: 20, reduced: false).step, skipped.step)
+        XCTAssertLessThan(abs(PlatformJourneyFrame.sample(route: route, elapsed: 5.6401, reduced: false).camera - PlatformJourneyFrame.sample(route: route, elapsed: 5.6399, reduced: false).camera), 0.001)
+    }
+    func testReducedMotionAndMissingOrInvalidClockHaveNoFlightFallOrFabricatedTravel() throws {
+        let route = try routeFixture(accepted: [0,1])
+        let reduced = PlatformJourneyFrame.sample(route: route, elapsed: 5.12, reduced: true)
+        XCTAssertEqual(reduced.step, 2); XCTAssertEqual(reduced.camera, 0.7, accuracy: 1e-8); XCTAssertEqual(reduced.fall, 0)
+        for time in [Double.nan, .infinity, -.infinity, -1] {
+            let value = PlatformJourneyFrame.sample(route: route, elapsed: time, reduced: false)
+            XCTAssertEqual(value.step, 0); XCTAssertEqual(value.camera, 0); XCTAssertEqual(value.fall, 0)
+        }
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: nil, elapsed: 20, reduced: false).step, 0)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: try routeFixture(), elapsed: 4.42, reduced: true).fall, 0)
+    }
+    @MainActor
+    func testActualThreeThemeSceneMovesAcrossSeparatedPlatformsThenSafelyResets() throws {
+        for theme in RunnerTheme.allCases {
+            let scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            let player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let platform = try XCTUnwrap(scene.childNode(withName: "platform0") as? SKSpriteNode)
+            let next = try XCTUnwrap(scene.childNode(withName: "platform1") as? SKSpriteNode)
+            let count = scene.children.count
+            scene.configure(EggSceneSnapshot(elapsed: 3.9, theme: theme, route: try routeFixture(), platformJourney: true))
+            XCTAssertEqual(player.position.x, 80, accuracy: 1e-8)
+            XCTAssertEqual(next.position.x - platform.position.x, 108, accuracy: 1e-8)
+            XCTAssertLessThan(platform.size.width, next.position.x - platform.position.x, "Visible gap is a playable space, not continuous ground")
+            XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "rock0")).isHidden)
+            let route = try routeFixture(accepted: [0])
+            scene.configure(EggSceneSnapshot(elapsed: 4.24, theme: theme, route: route, platformJourney: true))
+            XCTAssertEqual(player.position.x, 134, accuracy: 1e-8)
+            XCTAssertGreaterThan(player.position.y, 220)
+            scene.configure(EggSceneSnapshot(elapsed: 4.48, theme: theme, route: route, platformJourney: true))
+            XCTAssertEqual(player.position.x, 188, accuracy: 1e-8)
+            XCTAssertEqual(player.position.y, 155, accuracy: 1e-8)
+            scene.configure(EggSceneSnapshot(elapsed: 4.42, theme: theme, route: try routeFixture(), platformJourney: true))
+            XCTAssertLessThan(player.position.y, 100)
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "safetyCatch")).isHidden)
+            scene.configure(EggSceneSnapshot(elapsed: 4.661, theme: theme, route: try routeFixture(), platformJourney: true))
+            XCTAssertEqual(player.position.x, 80, accuracy: 1e-8); XCTAssertEqual(player.position.y, 155, accuracy: 1e-8)
+            scene.configure(EggSceneSnapshot(elapsed: 0, preparing: true, theme: theme, platformJourney: true))
+            XCTAssertEqual(player.position.x, 80, accuracy: 1e-8)
+            XCTAssertEqual(scene.children.count, count); XCTAssertNil(player.physicsBody); XCTAssertFalse(player.hasActions())
+            scene.configure(EggSceneSnapshot(elapsed: 20, finishedPassed: true, theme: theme, route: route, platformJourney: true))
+            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "destination")).isHidden)
+            XCTAssertEqual(player.position.x, try XCTUnwrap(scene.childNode(withName: "destination")).position.x, accuracy: 1e-8)
+            scene.configure(EggSceneSnapshot(elapsed: 20, finishedPassed: false, theme: theme, route: try routeFixture(), platformJourney: true))
+            XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "destination")).isHidden, "Only actual passed flag can show arriving at the end")
+        }
+    }
+}

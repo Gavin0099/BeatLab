@@ -91,6 +91,7 @@ struct PracticeView: View {
             }
         }
         .navigationTitle("練習").navigationBarTitleDisplayMode(.inline)
+        .toolbar(practice.phase == .playing && practice.isEggMission ? .hidden : .visible, for: .navigationBar)
         .sheet(isPresented: $showLessons) { lessonBrowser }
         .sheet(isPresented: $showSettings) { practiceSettings }
         .sheet(isPresented: $showCompanions) { companionPicker }
@@ -425,11 +426,11 @@ struct PracticeView: View {
             Text("第 1 關 · 找到大拍").font(.subheadline.bold()).foregroundStyle(BeatLabStyle.muted)
                 .accessibilityIdentifier("preparedLessonNumber")
             Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
-            EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true).frame(height: 260)
-            Text("先聽 4 拍。\(missionTheme.obstacle)到黃色腳印，跟鼓聲按一下「跳！」。")
+            EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true, platformJourney: true).frame(height: 260)
+            Text("先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
                 .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
             Text("用右手跟拍 · 60 BPM · 約 20 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
-            Text("漏拍時\(missionTheme.title)會接住\(missionTheme.item)，下一拍再接上；多打只會原地小跳。")
+            Text("漏拍會跌下去，再接回原來的小島。準備好，下一拍再跳；多打不會前進。")
                 .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
             if practice.mode == .standard {
                 Stepper("挑戰速度：\(practice.practiceBPM) BPM", value: Binding(
@@ -704,7 +705,7 @@ struct PracticeView: View {
                             .background(BeatLabStyle.accentSoft, in: Circle()).accessibilityHidden(true)
                     } else {
                         if practice.isEggMission {
-                            EggMissionScene(theme: missionTheme, elapsed: 20, finishedPassed: practice.stars > 0)
+                            EggMissionScene(theme: missionTheme, elapsed: 20, accepted: practice.runnerRoute?.accepted ?? [], finishedPassed: practice.stars > 0, route: practice.runnerRoute, platformJourney: true)
                                 .frame(height: textSize.isAccessibilitySize ? 280 : 220)
                         } else {
                             AdventureFinish(companion: companion, celebrating: practice.stars > 0).frame(height: 170)

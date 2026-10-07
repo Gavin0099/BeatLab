@@ -210,6 +210,8 @@ struct EggMotion {
 
 /// Read-only adapter over an existing TimingSession. It never creates or judges notes.
 struct RunnerRoute {
+    let epoch: Double
+    let journeyHits: [TimingHit]
     let targets: [TimingTarget]
     let relativeTimes: [Double]
     let hits: [TimingHit]
@@ -225,7 +227,14 @@ struct RunnerRoute {
               targets.allSatisfy({ $0.time.isFinite && $0.time >= epoch && $0.stroke != .rest }),
               zip(targets, targets.dropFirst()).allSatisfy({ $0.time < $1.time }),
               let last = targets.last, endTime >= last.time else { return nil }
-        self.targets = targets; self.hits = hits; self.alignment = alignment
+        self.targets = targets; self.hits = hits; self.alignment = alignment; self.epoch = epoch
+        let ids = Set(targets.map(\.id))
+        var seen = Set<Int>()
+        journeyHits = hits.filter { hit in
+            guard let id = hit.targetID, ids.contains(id), hit.grade != .extra,
+                  hit.inputTime.isFinite, hit.inputTime >= epoch else { return false }
+            return seen.insert(id).inserted
+        }.sorted { $0.inputTime < $1.inputTime }
         accepted = Set(hits.compactMap(\.targetID))
         latestAccepted = hits.last { $0.targetID != nil }
         grades = Dictionary(hits.compactMap { hit in hit.targetID.map { ($0, hit.grade) } }, uniquingKeysWith: { first, _ in first })
@@ -263,6 +272,36 @@ struct RunnerRoute {
     }
 }
 
+/// Pure world motion from real accepted inputs. Never a collision or grade source.
+struct PlatformJourneyFrame {
+    let step: Double
+    let camera: Double
+    let jumpAge: Double?
+    let fall: Double
+    static func sample(route: RunnerRoute?, elapsed: Double, reduced: Bool) -> Self {
+        guard let route, elapsed.isFinite, elapsed >= 0 else {
+            return Self(step: 0, camera: 0, jumpAge: nil, fall: 0)
+        }
+        var step = 0.0, camera = 0.0
+        var age: Double?
+        for (index, hit) in route.journeyHits.enumerated() {
+            let a = elapsed - (hit.inputTime - route.epoch)
+            guard a >= 0 else { continue }
+            step += reduced ? 1 : Double(EggAnimationFrame.ease(a / 0.48))
+            let delta = max(0, Double(index + 1) - 1.3) - max(0, Double(index) - 1.3)
+            camera += delta * (reduced ? 1 : Double(EggAnimationFrame.ease((a - 0.48) / 0.32)))
+            age = a
+        }
+        var fall = 0.0
+        if !reduced, age.map({ $0 >= 0.64 }) ?? true,
+           let id = route.missed(at: elapsed), let index = route.targets.firstIndex(where: { $0.id == id }) {
+            let a = elapsed - route.relativeTimes[index] - route.alignment - TimingSession.matchingWindow
+            fall = sin(.pi * min(1, max(0, a / 0.48)))
+        }
+        return Self(step: step, camera: camera, jumpAge: age, fall: max(0, fall))
+    }
+}
+
 struct EggMissionScene: View {
     var theme: RunnerTheme = .dinosaur
     var elapsed: Double
@@ -275,6 +314,7 @@ struct EggMissionScene: View {
     var acceptedAction: TimingHit? = nil
     var latestAction: TimingHit? = nil
     var route: RunnerRoute? = nil
+    var platformJourney = false
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var scenePhase
     @Environment(\.dynamicTypeSize) private var textSize
@@ -293,8 +333,9 @@ struct EggMissionScene: View {
             EggSpriteSurface(state: EggSceneSnapshot(elapsed: elapsed, accepted: accepted,
                 latestGrade: latestGrade, hitAge: hitAge, finishedPassed: finishedPassed, preparing: preparing,
                 reduceMotion: reduceMotion, suspended: scenePhase != .active,
-                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction, theme: theme, route: route))
+                presentationElapsed: presentationElapsed, acceptedAction: acceptedAction, latestAction: latestAction, theme: theme, route: route, platformJourney: platformJourney))
                 .accessibilityHidden(true)
+            if !platformJourney || preparing || finishedPassed != nil {
             HStack(spacing: 6) {
                 MissionProp(theme: theme, destination: false).frame(width: 22, height: 30)
                 Text(sceneCaption)
@@ -303,9 +344,10 @@ struct EggMissionScene: View {
                 MissionProp(theme: theme, destination: true).frame(width: 38, height: 30)
             }.padding(10).background(Color(red: 1, green: 0.98, blue: 0.88), in: Capsule())
                 .padding(12).foregroundStyle(ink)
+            }
         }.clipShape(RoundedRectangle(cornerRadius: 26))
             .accessibilityElement(children: .ignore).accessibilityLabel(theme.mission)
-            .accessibilityValue(finishedPassed.map { $0 ? "任務通過" : "需要再試一次" } ?? "已跨過 \(accepted.count) 個障礙")
+            .accessibilityValue(finishedPassed.map { $0 ? "任務通過" : "需要再試一次" } ?? (platformJourney ? "抵達 \(accepted.count) 座小島" : "已跨過 \(accepted.count) 個障礙"))
             .accessibilityIdentifier("eggMissionScene")
     }
 }
@@ -359,10 +401,18 @@ struct EggSceneSnapshot {
     var latestAction: TimingHit?
     var theme: RunnerTheme = .dinosaur
     var route: RunnerRoute? = nil
+    var platformJourney = false
     var animate: Bool { !reduceMotion && !suspended && !preparing && finishedPassed == nil && presentationElapsed != nil }
 }
 
 private enum EggSceneTextures {
+    static let journeyBackdrops: [RunnerTheme: SKTexture] = Dictionary(uniqueKeysWithValues: RunnerTheme.allCases.map { theme in
+        guard let image = UIImage(named: theme.backdrop)?.cgImage,
+              let sky = image.cropping(to: CGRect(x: 0, y: 0, width: CGFloat(image.width), height: CGFloat(image.height) * 0.74)) else {
+            return (theme, SKTexture(imageNamed: theme.backdrop))
+        }
+        return (theme, SKTexture(cgImage: sky))
+    })
     static let original: [SKTexture] = {
         let atlas = UIImage(named: "EggMissionAtlas")?.cgImage
         return EggSpriteAssets.bounds.map { bounds in
@@ -401,6 +451,9 @@ final class EggSpriteScene: SKScene {
     private let beatMarker = SKShapeNode(ellipseOf: CGSize(width: 48, height: 12))
     private let nest = SKSpriteNode(texture: EggSceneTextures.original[7])
     private var rocks: [SKSpriteNode] = [], rewards: [SKShapeNode] = [], pebbles: [SKShapeNode] = [], dust: [SKShapeNode] = []
+    private var platforms: [SKSpriteNode] = [], platformTops: [SKShapeNode] = []
+    private let nextBeat = SKLabelNode(fontNamed: "ArialRoundedMTBold")
+    private let safety = SKShapeNode(ellipseOf: CGSize(width: 90, height: 22))
     private let glint: SKShapeNode
     private var characterSize: CGFloat = 118
     #if DEBUG
@@ -434,6 +487,18 @@ final class EggSpriteScene: SKScene {
             let reward = SKShapeNode(path: path); reward.name = "reward\(id)"; reward.fillColor = .systemYellow; reward.strokeColor = .clear
             reward.zPosition = 3; addChild(reward); rewards.append(reward)
         }
+        for index in 0...16 {
+            let platform = SKSpriteNode(texture: EggSceneTextures.original[8])
+            platform.name = "platform\(index)"; platform.anchorPoint = CGPoint(x: 0.5, y: 1)
+            platform.zPosition = 3; platform.isHidden = true; addChild(platform); platforms.append(platform)
+            let top = SKShapeNode(rectOf: CGSize(width: 72, height: 8), cornerRadius: 4)
+            top.strokeColor = .clear; top.zPosition = 4; top.isHidden = true
+            addChild(top); platformTops.append(top)
+        }
+        nextBeat.name = "nextLandingCue"; nextBeat.fontSize = 30; nextBeat.zPosition = 5
+        nextBeat.isHidden = true; addChild(nextBeat)
+        safety.name = "safetyCatch"; safety.strokeColor = .clear; safety.zPosition = 5
+        safety.isHidden = true; addChild(safety)
         for _ in 0..<10 {
             let pebble = SKShapeNode(ellipseOf: CGSize(width: 14, height: 5)); pebble.fillColor = UIColor(red: 0.78, green: 0.58, blue: 0.34, alpha: 1)
             pebble.strokeColor = .clear; pebble.zPosition = 2; addChild(pebble); pebbles.append(pebble)
@@ -516,6 +581,13 @@ final class EggSpriteScene: SKScene {
         guard graphReady, size.width > 0, size.height > 0, size.width.isFinite, size.height.isFinite else { return }
         let raw = snapshot.presentationElapsed?(host) ?? snapshot.elapsed
         let elapsed = raw.isFinite ? min(20.18, max(0, raw)) : 0
+        if snapshot.platformJourney { renderJourney(elapsed: elapsed, host: host); return }
+        island.texture = CompanionAtlas.background(theme)
+        floor.isHidden = false; edge.isHidden = false
+        pebbles.forEach { $0.isHidden = false }; rewards.forEach { $0.setScale(1) }
+        characterSize = min(180, max(118, size.height * 0.42))
+        platforms.forEach { $0.isHidden = true }; platformTops.forEach { $0.isHidden = true }
+        nextBeat.isHidden = true; safety.isHidden = true
         let action = EggMotion.action(accepted: snapshot.acceptedAction, latest: snapshot.latestAction, hostTime: host)
         let age = snapshot.presentationElapsed == nil ? snapshot.hitAge : action.map { max(0, host - $0.inputTime) }
         let grade = snapshot.presentationElapsed == nil ? snapshot.latestGrade : action?.grade
@@ -571,6 +643,79 @@ final class EggSpriteScene: SKScene {
         }
         glint.isHidden = grade != .perfect || age == nil || !(0..<0.48).contains(age!) || stopped
         glint.position = CGPoint(x: x + 54, y: ground + characterSize + hop - 24)
+    }
+    private func renderJourney(elapsed: Double, host: Double) {
+        let route = snapshot.route, reduced = snapshot.reduceMotion
+        let state = PlatformJourneyFrame.sample(route: route, elapsed: snapshot.preparing ? 0 : elapsed, reduced: reduced)
+        let stopped = snapshot.preparing || snapshot.finishedPassed != nil
+        let w = size.width, h = size.height, stride = w * 0.27, ground = h * 0.31
+        let completed = snapshot.finishedPassed == true
+        let step = completed ? 16 : state.step, camera = completed ? 14.7 : state.camera
+        let origin = w * 0.20 - CGFloat(camera) * stride
+        let activeFlight = !stopped && state.jumpAge.map { (0..<0.48).contains($0) } == true
+        let age = state.jumpAge ?? 1
+        let hop = activeFlight && !reduced ? CGFloat(sin(.pi * age / 0.48)) * min(78, h * 0.20) : 0
+        let fall = stopped ? 0 : CGFloat(state.fall)
+        let extraAge = route?.hits.last.flatMap { $0.grade == .extra ? elapsed - ($0.inputTime - (route?.epoch ?? 0)) : nil }
+        let extra = !stopped && !reduced && !activeFlight && age >= 0.64 && extraAge.map { (0..<0.22).contains($0) } == true ? CGFloat(sin(.pi * extraAge! / 0.22)) : 0
+        let x = origin + CGFloat(step) * stride + fall * stride * 0.30 + extra * 3
+        let y = ground + hop - fall * min(64, h * 0.18)
+        characterSize = min(132, max(90, h * 0.27))
+        island.texture = EggSceneTextures.journeyBackdrops[theme]
+        island.position = CGPoint(x: -CGFloat(camera) * 1.5, y: 0)
+        floor.isHidden = true; edge.isHidden = true
+        rocks.forEach { $0.isHidden = true }; rewards.forEach { $0.isHidden = true }
+        pebbles.forEach { $0.isHidden = true }
+        for index in platforms.indices {
+            let px = origin + CGFloat(index) * stride
+            let visible = px > -w * 0.2 && px < w * 1.2
+            let platform = platforms[index], top = platformTops[index]
+            platform.isHidden = !visible; top.isHidden = !visible
+            platform.texture = theme == .dinosaur ? EggSceneTextures.original[8] : CompanionAtlas.pack(theme).textures[20]
+            platform.size = CGSize(width: w * 0.19, height: min(72, w * 0.18))
+            platform.position = CGPoint(x: px, y: ground - 4)
+            platform.alpha = 1
+            top.position = CGPoint(x: px, y: ground - 3); top.xScale = w * 0.19 / 72
+            top.fillColor = theme.accent
+            let landed = index > 0 && index <= Int((step + 1e-8).rounded(.down))
+            if landed && index <= rewards.count {
+                let reward = rewards[index - 1]
+                reward.isHidden = !visible; reward.position = CGPoint(x: px, y: ground - 26)
+                reward.setScale(0.5)
+            }
+        }
+        let next = min(16, Int((step + 1e-8).rounded(.down)) + 1)
+        let landingX = origin + CGFloat(next) * stride
+        beatMarker.isHidden = completed || snapshot.finishedPassed == false
+        beatMarker.position = CGPoint(x: landingX, y: ground + 1)
+        beatMarker.alpha = EggBeatLane.markerAlpha(elapsed: elapsed, reduceMotion: reduced)
+        nextBeat.isHidden = stopped || route == nil || activeFlight
+        nextBeat.position = CGPoint(x: landingX, y: ground + 36)
+        nextBeat.fontColor = theme.accent
+        nextBeat.text = "♪"
+        nextBeat.alpha = reduced ? 1 : beatMarker.alpha
+        let endX = origin + 16 * stride
+        nest.isHidden = endX > w + 60; nest.position = CGPoint(x: endX, y: ground)
+        shadow.position = CGPoint(x: x, y: ground + 1)
+        shadow.xScale = 0.75 - hop / 300; shadow.alpha = fall > 0 ? 0 : 0.20 - hop / 600
+        player.position = CGPoint(x: x, y: y)
+        player.zRotation = reduced ? 0 : Double(fall) * -0.25 * Double(theme.lean)
+        let landing = !stopped && !reduced && (0.48..<0.64).contains(age) ? CGFloat(pow(sin(.pi * (age - 0.48) / 0.16), 2)) : 0
+        player.xScale = 1 + landing * 0.08 * theme.compression
+        player.yScale = 1 - landing * 0.10 * theme.compression
+        first.color = .white; first.colorBlendFactor = 0
+        if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
+        else { setAnimated(first, activeFlight ? EggAnimationFrame.sample(elapsed: elapsed, age: age, reduceMotion: reduced) : 14) }
+        safety.isHidden = fall == 0
+        safety.fillColor = theme.pad.withAlphaComponent(0.65)
+        safety.position = CGPoint(x: x, y: y - 6); safety.alpha = fall
+        for (index, puff) in dust.enumerated() {
+            puff.alpha = landing * 0.6; puff.xScale = 1 + landing
+            puff.position = CGPoint(x: x - 18 - CGFloat(index) * 12, y: ground + CGFloat(index) * 3)
+        }
+        let latest = route?.journeyHits.last
+        glint.isHidden = latest?.grade != .perfect || !activeFlight
+        glint.position = CGPoint(x: x + 36, y: y + characterSize - 20)
     }
     private func setOriginal(_ node: SKSpriteNode, _ index: Int) {
         if theme != .dinosaur { setAnimated(node, index == 5 ? 17 : 16); return }
@@ -641,84 +786,75 @@ struct EggMissionView: View {
             case .extra: return "多打一下，再跟上"
             }
         }
-        return route.missed(at: practice.elapsed) == nil ? "\(theme.obstacle)到腳下，跟鼓聲跳！" : "接住了！下一拍再跳"
+        return route.missed(at: practice.elapsed) == nil ? "跟鼓聲，跳到亮起的小島！" : "接回來了，下一拍再跳！"
     }
     var body: some View {
         GeometryReader { geometry in
-            ViewThatFits(in: .vertical) {
-                content(sceneHeight: max(160, geometry.size.height - 360))
-                ScrollView { content(sceneHeight: textSize.isAccessibilitySize ? 240 : 260) }
-            }.padding(.horizontal, 16).padding(.vertical, 8)
+            VStack(spacing: 8) {
+                ScrollView {
+                    VStack(spacing: 10) {
+                        HStack(alignment: .center) {
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("第 1 關 · 節奏跨島").font(.headline).accessibilityIdentifier("activeLessonNumber")
+                                Text("\(theme.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("activeCompanion")
+                            }
+                            Spacer(minLength: 6)
+                            Text("60 BPM").font(.subheadline.monospacedDigit())
+                        }
+                        phraseRoute
+                        EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
+                            presentationElapsed: { practice.presentationElapsed(at: $0) },
+                            acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route, platformJourney: true)
+                            .frame(height: max(200, geometry.size.height - 258))
+                            .overlay(alignment: .topLeading) {
+                                HStack(spacing: 6) {
+                                    MissionProp(theme: theme, destination: false).frame(width: 22, height: 24)
+                                    Text(theme.mission).font(.caption.bold())
+                                }.padding(9).foregroundStyle(ink).background(.regularMaterial, in: Capsule()).padding(12)
+                            }
+                        Text(cue).font(.subheadline.bold()).multilineTextAlignment(.center)
+                            .fixedSize(horizontal: false, vertical: true).accessibilityIdentifier("jumpCue")
+                    }
+                }
+                HStack {
+                    Text("抵達 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座小島").accessibilityIdentifier("jumpMatches")
+                    Spacer(minLength: 4)
+                    Text(streak >= 2 ? "連續 \(streak) 拍！" : "右手跟拍")
+                }.font(.caption.bold())
+                ZStack {
+                    RoundedRectangle(cornerRadius: 20).fill(Color(uiColor: theme.pad))
+                    Label("跟鼓聲跳", systemImage: "arrow.up.right").font(.headline.bold())
+                        .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
+                    TapPad(feedback: "跳，\(cue)") { time, accessible in practice.tap(at: time, accessibility: accessible) }
+                }.frame(height: 56)
+                Button(action: stop) { Label("停止挑戰", systemImage: "stop.fill").font(.subheadline).frame(maxWidth: .infinity, minHeight: 44) }
+                    .accessibilityIdentifier("stopPractice")
+            }.padding(.horizontal, 12).padding(.vertical, 6)
                 .frame(maxWidth: BeatLabStyle.maxWidth).frame(maxWidth: .infinity)
         }
-    }
-    private func content(sceneHeight: CGFloat) -> some View {
-        VStack(spacing: 10) {
-            HStack {
-                VStack(alignment: .leading, spacing: 3) {
-                    Text("第 1 關 · 節奏跑酷").font(.headline).accessibilityIdentifier("activeLessonNumber")
-                    Text("\(theme.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("activeCompanion")
-                }
-                Spacer()
-                Text("60 BPM").font(.subheadline.monospacedDigit())
-            }
-            phraseRoute
-            ProgressView(value: Double(route?.accepted.count ?? 0), total: Double(max(1, route?.targets.count ?? 0)))
-                .tint(Color(uiColor: theme.accent)).accessibilityLabel("已跨過的拍點")
-            EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
-                            presentationElapsed: { practice.presentationElapsed(at: $0) },
-                            acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route)
-                .frame(height: sceneHeight)
-            ZStack {
-                Text("跳過了，下一拍稍等一下").hidden().accessibilityHidden(true)
-                Text(cue).accessibilityIdentifier("jumpCue")
-            }.font(.system(.headline, design: .rounded)).multilineTextAlignment(.center)
-                .fixedSize(horizontal: false, vertical: true)
-            HStack {
-                Text("跨過 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 個障礙").accessibilityIdentifier("jumpMatches")
-                Spacer(minLength: 4)
-                Text(streak >= 2 ? "連續 \(streak) 拍漂亮！" : theme.mission)
-            }.font(.caption.bold())
-            ZStack {
-                RoundedRectangle(cornerRadius: 24).fill(Color(uiColor: theme.pad))
-                Label("跳！", systemImage: "arrow.up").font(.system(.title, design: .rounded).bold())
-                    .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
-                TapPad(feedback: "跳，\(cue)") { time, accessible in practice.tap(at: time, accessibility: accessible) }
-            }.frame(height: textSize.isAccessibilitySize ? 100 : 76)
-            Button(action: stop) { Label("停止挑戰", systemImage: "stop.fill").frame(maxWidth: .infinity, minHeight: 44) }
-                .accessibilityIdentifier("stopPractice")
-        }.fixedSize(horizontal: false, vertical: true)
     }
     private var phraseRoute: some View {
         let current = route?.currentIndex(at: practice.elapsed)
         let bar = (current ?? 0) / 4
-        return VStack(alignment: .leading, spacing: 8) {
-            HStack {
-                Text(current == nil ? "先聽 4 拍" : "跟鼓聲，一拍跳一次")
-                Spacer(minLength: 4)
-                Text("\(bar + 1) / \(((route?.targets.count ?? 16) + 3) / 4) 小節")
-            }.font(.caption.bold()).fixedSize(horizontal: false, vertical: true)
-            HStack(spacing: 6) {
-                ForEach(0..<4, id: \.self) { slot in
-                    let index = bar * 4 + slot
-                    let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
-                    let grade = target.flatMap { route?.grades[$0.id] }
-                    let expired = target.map { _ in practice.elapsed > (route?.relativeTimes[index] ?? .infinity) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
-                    let active = current == index
-                    VStack(spacing: 3) {
-                        Text("\(slot + 1)").font(.system(.title3, design: .rounded).bold())
-                        Text(grade != nil ? "已跳" : expired ? "接住" : "右手").font(.caption.bold())
-                    }.frame(maxWidth: .infinity).padding(.vertical, 8)
-                        .foregroundStyle(grade != nil ? Color.white : BeatLabStyle.ink)
-                        .background(grade != nil ? Color(uiColor: theme.accent) : expired ? BeatLabStyle.rewardSoft : BeatLabStyle.surface, in: RoundedRectangle(cornerRadius: 14))
-                        .overlay(RoundedRectangle(cornerRadius: 14).strokeBorder(active ? Color(uiColor: theme.accent) : Color.clear, lineWidth: 2))
-                        .accessibilityHidden(true)
-                }
+        return HStack(spacing: 8) {
+            Text(current == nil ? "聽 4 拍" : "\(bar + 1)/4 小節").font(.caption.bold())
+            Spacer(minLength: 2)
+            ForEach(0..<4, id: \.self) { slot in
+                let index = bar * 4 + slot
+                let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
+                let matched = target.flatMap { route?.grades[$0.id] } != nil
+                let expired = target.map { _ in practice.elapsed > (route?.relativeTimes[index] ?? .infinity) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
+                Image(systemName: matched ? "checkmark.circle.fill" : expired ? "arrow.uturn.backward.circle" : "music.note")
+                    .font(.system(size: 23, weight: .bold))
+                    .foregroundStyle(matched ? Color(uiColor: theme.accent) : expired ? Color.orange : BeatLabStyle.ink)
+                    .frame(width: 40, height: 36)
+                    .background(current == index ? Color(uiColor: theme.pad) : Color.clear, in: Circle())
+                    .accessibilityHidden(true)
             }
-        }.padding(10).background(BeatLabStyle.canvas, in: RoundedRectangle(cornerRadius: 20))
+        }.padding(.horizontal, 10).padding(.vertical, 3)
+            .background(BeatLabStyle.surface, in: Capsule())
             .accessibilityElement(children: .ignore).accessibilityLabel("這一小節的四個拍點")
-            .accessibilityValue(current.map { "第 \($0 % 4 + 1) 拍，右手；跨過 \(route?.accepted.count ?? 0) 拍" } ?? "先聽四拍，再跟鼓聲跳")
+            .accessibilityValue(current.map { "第 \($0 % 4 + 1) 拍，右手；抵達 \(route?.accepted.count ?? 0) 座小島" } ?? "先聽四拍，再跟鼓聲跳")
             .accessibilityIdentifier("rhythmLane")
     }
-
 }
