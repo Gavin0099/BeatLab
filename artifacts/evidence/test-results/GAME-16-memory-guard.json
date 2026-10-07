@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "env PYTHONPATH=ai-governance-framework TestResults/PRODUCT-ALPHA-01/sourcecheck-env-current/bin/python -m governance_tools.memory_workflow --check --repo . --run-guard",
+  "exit_code": 0,
+  "started_at": "2026-10-07T15:05:32Z",
+  "finished_at": "2026-10-07T15:05:33Z",
+  "runner": "pinned-memory-workflow-guard",
+  "linked_commit": "5243ed5b2f46dc24aba382e69d77414fcc253418",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-16-memory-guard.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

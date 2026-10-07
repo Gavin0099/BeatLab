@@ -48,3 +48,7 @@
 - TF-04 signed 0.1.0(11) ready; Xcode account sign-in required. Upload, Apple processing, owner group availability, notes saving and phone TestFlight update NOT completed; old build10 remains available. <!-- memory_record_projection:active-task-summary:eb53cb224acaae7eb0d31c5848402ff8acf8f8b02ca6e3915e8184912185078a -->
 
 - TF-04 owner TestFlight 0.1.0(11) available in 本人試玩; actual uploaded IPA and Apple/group/notes verified. Owner phone TestFlight update and physical fluidity/timing/child/public acceptance pending; GAME-15 source unchanged. <!-- memory_record_projection:active-task-summary:c1272c37d2bd4ab6565ccbf7800724124e94e1c574bf73401a5b5096cfb36f2b -->
+
+- Rhythm Swing six-slice plan written; GAME-16/17/18/19 QA-02 TF-05 all PLANNED. Existing TestFlight11 unchanged. Native/physical/child/public gates pending; this task is planning only. <!-- memory_record_projection:active-task-summary:68d8e6fd700df186e750a075f6c6f08b484cde6c19e53446ee2a214fa05ad922 -->
+
+- GAME-16概念完成browser60PASS/16Perfect0Extra、95native unchanged；Mac試玩入口已開啟，owner gameplay acceptance待回覆再進GAME-17；TestFlight build11與physical/child/public gates不變。 <!-- memory_record_projection:active-task-summary:05bffa50ee8ddb81020365adf2c9caaa80a253ba1cf2aebba3bbf57185a015a3 -->

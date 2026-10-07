@@ -124,3 +124,25 @@
 - Validation boundary: artifacts/evidence/test-results/TF-04-delivery-verified.json
 - Next action: Owner updates 拍拍冒險 in TestFlight to 0.1.0(11), then reports dinosaur/cat/robot run-jump continuity and 60 BPM obstacle synchronization. Physical FPS/timing, child enjoyment and public gates remain pending.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:68d8e6fd700df186e750a075f6c6f08b484cde6c19e53446ee2a214fa05ad922 -->
+### Canonical memory checkpoint — rhythm-swing-slices-20261007
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `68d8e6fd700df186e750a075f6c6f08b484cde6c19e53446ee2a214fa05ad922`
+- Commit binding: `f23f32e` (bound)
+- Record: Owner requested slice planning only. Created Rhythm Swing reference overview and six PLANNED exact-file contracts GAME-16/17/18/19 QA-02 TF-05; PLAN updated. Existing first-beat60BPM four-count-in plus16 targets and three themes retained as baseline. QA A/B/C embedded, target/epoch adapter classified L2; stars/save/audio authority unchanged. Document links/contracts and95 native hashes PASS; two local label check failures retained. No App implementation, new native tests, skill changes or upload.
+- Validation boundary: artifacts/evidence/test-results/RHYTHM-SWING-PLAN-01.json
+- Next action: When owner requests implementation, begin GAME-16 isolated playable first-lesson concept with real input success/failure/retry and owner comprehension/replay gate, then GAME-17 with QA-02A. KidsCharacterKit remains deferred; new delivery needs candidate-specific authorization.
+- PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:05bffa50ee8ddb81020365adf2c9caaa80a253ba1cf2aebba3bbf57185a015a3 -->
+### Canonical memory checkpoint — game16-concept-20261007
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `05bffa50ee8ddb81020365adf2c9caaa80a253ba1cf2aebba3bbf57185a015a3`
+- Commit binding: `5243ed5` (bound)
+- Record: Owner「好，往下走」後完成GAME-16隔離第一關可操作概念：4拍數拍＋16目標，四格路線、固定crossing、真實early/Perfect/late/extra/miss、送蛋成敗、取消／重試。Final browser60PASS，真實DOM16Perfect0Extra、零輸入失敗；ready/live窄屏深色放大字、Reduce Motion／鍵盤／素材失敗守護。預覽發現結算重複巢穴修正、圖片ready gate與引導移出场景避免遮角色；初始巢穴截圖保留。95native inputs unchanged、8run6jump素材不增；無native build、device timing/FPS、安裝或TestFlight更新。源碼及前輪六片規劃commit5243ed5。
+- Validation boundary: artifacts/evidence/test-results/GAME-16.json
+- Next action: Owner先在Mac開啟的7820試玩第一關，確認10秒內理解目標／拍點並願意再玩；接受後才進GAME-17。GAME17–19／QA02／TF05仍PLANNED，public／G1-G4／child／physical gates pending；KidsCharacterKit deferred。
+- PLAN reconciliation: `updated`
