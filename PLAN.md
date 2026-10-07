@@ -361,3 +361,5 @@ Owner 貼已安裝新版截圖（78B8245D-AC3B-4D0D-A35C-891358CA0C09），指�
 ### 2026-10-07 — GAME-20 跨島互動實作開始
 
 Owner接受角色逐拍跨落腳點/場景主體/漏拍跌落接回提案，明確授權實作後直接安裝。建立GAME-20 L2 exact-file contract：first-beat60、三角色、pure matched-driven world步數與延後camera、real expiry跌落、既有美術runtime crop、compact phrase；不改audio/input/score/save/asset/version。Status IN_PROGRESS；持續保留GAME17 rejected gameplay、cat restart/narrowXXXL和physical/child/public pending。Wi-Fi本人preview授權明確，不重詢。
+
+GAME-20 原生觀察修正（2026-10-08）：c1f9152 first signed candidate未安裝。App61/0成立；初次UI cat start FAIL，wide其它流程/小屏當時未完整執行，停止only owned xcodebuild保留logs。Actual owned screenshot確認跨島已渲染，但cue在scroll下方且背景stretch；在相同allowed範圍修scene高度/aspect-fill、避免相同texture/text每幀重設，新增背景比例assert。UI未開始/未結果原因尚未確認，不以Mac負載或App61 PASS代替UI gate。新fixed候選必須重新build/freeze與viewport/touch驗證；原95/78source與未安裝舊簽署包保留。

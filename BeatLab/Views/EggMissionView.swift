@@ -661,8 +661,12 @@ final class EggSpriteScene: SKScene {
         let x = origin + CGFloat(step) * stride + fall * stride * 0.30 + extra * 3
         let y = ground + hop - fall * min(64, h * 0.18)
         characterSize = min(132, max(90, h * 0.27))
-        island.texture = EggSceneTextures.journeyBackdrops[theme]
-        island.position = CGPoint(x: -CGFloat(camera) * 1.5, y: 0)
+        let backdrop = EggSceneTextures.journeyBackdrops[theme]
+        if island.texture !== backdrop { island.texture = backdrop }
+        let source = backdrop?.size() ?? CGSize(width: 2, height: 1)
+        let scale = max((w + 24) / max(1, source.width), h / max(1, source.height))
+        island.size = CGSize(width: source.width * scale, height: source.height * scale)
+        island.position = CGPoint(x: (w - island.size.width) / 2 - CGFloat(camera) * 1.5, y: (h - island.size.height) / 2)
         floor.isHidden = true; edge.isHidden = true
         rocks.forEach { $0.isHidden = true }; rewards.forEach { $0.isHidden = true }
         pebbles.forEach { $0.isHidden = true }
@@ -671,7 +675,8 @@ final class EggSpriteScene: SKScene {
             let visible = px > -w * 0.2 && px < w * 1.2
             let platform = platforms[index], top = platformTops[index]
             platform.isHidden = !visible; top.isHidden = !visible
-            platform.texture = theme == .dinosaur ? EggSceneTextures.original[8] : CompanionAtlas.pack(theme).textures[20]
+            let texture = theme == .dinosaur ? EggSceneTextures.original[8] : CompanionAtlas.pack(theme).textures[20]
+            if platform.texture !== texture { platform.texture = texture }
             platform.size = CGSize(width: w * 0.19, height: min(72, w * 0.18))
             platform.position = CGPoint(x: px, y: ground - 4)
             platform.alpha = 1
@@ -692,7 +697,7 @@ final class EggSpriteScene: SKScene {
         nextBeat.isHidden = stopped || route == nil || activeFlight
         nextBeat.position = CGPoint(x: landingX, y: ground + 36)
         nextBeat.fontColor = theme.accent
-        nextBeat.text = "♪"
+        if nextBeat.text != "♪" { nextBeat.text = "♪" }
         nextBeat.alpha = reduced ? 1 : beatMarker.alpha
         let endX = origin + 16 * stride
         nest.isHidden = endX > w + 60; nest.position = CGPoint(x: endX, y: ground)
@@ -805,7 +810,7 @@ struct EggMissionView: View {
                         EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
                             presentationElapsed: { practice.presentationElapsed(at: $0) },
                             acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route, platformJourney: true)
-                            .frame(height: max(200, geometry.size.height - 258))
+                            .frame(height: max(200, geometry.size.height - 320))
                             .overlay(alignment: .topLeading) {
                                 HStack(spacing: 6) {
                                     MissionProp(theme: theme, destination: false).frame(width: 22, height: 24)

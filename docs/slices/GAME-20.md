@@ -12,3 +12,9 @@ Presentation contract：一個真實matched target只增加一格；同target du
 Checks：獨立spec fixture和真實TimingSession early/late/extra/duplicate/miss、invalid時間、16 hits endpoint、camera continuity/dropped frames、Reduce Motion、新run空資料；三theme actualSKScene橫移/平台gaps/安全回復、不改node graph/physics/no scheduling。實際App regression（含save failure/interruption/restart）、dino actualtouch及zero-input結果與locked、companion流程、wide viewport及narrow dark最大字級立即驗，實際截圖檢視。建置95source/78production frozen hash/signature/device新inventory綁定，完成後Wi-Fi install/launch。未通過項保留FAIL；phone installation是owner preview，不等於full QA/G1-G4/child/physical timing/FPS/public接受。原cat重新start/narrowXXXL缺口不得隱藏。
 
 Rollback：只回復上述presentation/UI與相關測試至d13697b，保留owner拒絕/失敗證據與learner data；不改clock/grade/資料作補救。
+
+## 2026-10-08 原生畫面修正
+
+初次建置與61 App tests PASS；UI cat首次start未進入playing FAIL、其它流程尚未完整驗完，保留原始log。Actual owned-wide screenshot observed-current.png已看到跨島場景：cue被過高scene推入scroll下方，背景stretch使太陽變橢圓。僅修allowed呈現檔中的scene高度/aspect-fill背景並消除同texture/text的每幀重設，新增texture aspect guard；不推定UI start失敗原因已解決。停止only owned前候選測試，保留App61/partialUI結果，不稱全綠。後候選需重build/freeze並驗actual viewport/touch/no-input/companions，沿用未變的Core/App store/save證據需精確source reuse說明；真機節拍/FPS仍NOT RUN。
+
+比例guard首次使用1e-8，在3theme各觀察2.963e-8差異；SpriteKit浮點size round不能用Double機器精度要求。改為獨立1e-6比例誤差上限（低於百萬分之一），保留首次1 case/3 assertions FAIL，需重跑，不改production以配合test。
