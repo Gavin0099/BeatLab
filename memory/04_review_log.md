@@ -190,3 +190,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-21.json
 - Next action: When owner phone connects to same Wi-Fi and is unlocked, freshly verify unique paired device and install/launch unchanged GAME21 PhoneFrozen candidate preserving data, then record actual delivery. Owner motion play acceptance, physical timing/FPS/input latency and previous full UI/ten-level/accessibility/child/public gates remain pending.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:769d86add29b45693593f0fecd1f0e5be20b03296ddb7987343e9d394d528a25 -->
+### Canonical memory checkpoint — game22-dense-motion-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `769d86add29b45693593f0fecd1f0e5be20b03296ddb7987343e9d394d528a25`
+- Commit binding: `333012c3973c103ac3b6dfb571669265f8df7db4` (bound)
+- Record: Owner prioritized more effective animation drawings, research verified Adobe24fps common reference (not universal minimum) and Apple requested vs actual FPS. GAME22 source333012c adds three original32-cell PNG packs, active12 run/.5s=24poses/s,12 flight/.48s=25,4 landing/.16s=25, ready28 static;29-31 source alternatives unused/not inflated into live density. Built-in imagegen prompts/provenance saved; old PNG/audio/input/matcher/score/save/project unchanged. First robot equal-grid cuts10/11/19 rejected and regenerated with margins, source PNGs copied unedited; head/foot registration read-only. First native test compile failed Swift tuple inference, explicit test tuple types repaired. Final69 App PASS/0 FAIL,4new regressions: actual pose indices/callback progression (>8 live textures), single opaque actor, pause/ReduceMotion;84 sequential native specimens with synthetic matcher fixtures. Six apex/landing and Chrome run11→0/jump6/12/15 visually inspected; not physical timing/child acceptance. Sim/signed phonebuild PASS,101input/84production/93oldprotected hashes, signature/profile/new Assets.car verified. Frozen Debug0.1.0(11) candidate; owner phone paired unavailable, install/launch NOT RUN, GAME20 remains lastinstalled. Temporary own Chrome tab/server closed; owned simulator already restored Shutdown. Prior full UI/ten-level/physical/child/public gaps preserved; no TestFlight upload.
+- Validation boundary: artifacts/evidence/test-results/GAME-22.json
+- Next action: Install unchanged GAME22 PhoneFrozen candidate when owner phone is unlocked/on same Wi-Fi; update actual delivery receipt then owner plays new pose density. Measure presented FPS/timing separately and finish remaining full UI/accessibility/ten-level/child/public gates; keep current stable motion authority.
+- PLAN reconciliation: `updated`

@@ -385,3 +385,5 @@ Source fd1e75f54a6688365f571466507059398539d8d2；65App/0fail PASS，雙圖trial
 Owner要求先完成圖片畫格密度。32-cell/theme候選：12跑步/.5s、12飛行/.48s、4落地/.16s、4ready；目標24–25有效姿勢/s，60fps仍是場景請求值。新imagesets保留舊素材，素材品質與native連續播放先驗，再建置；不改audio/input/matcher/save/玩法。契約 docs/slices/GAME-22.md；DEFINED / ART_IN_PROGRESS，尚未宣稱真機流暢或接受。
 
 GAME-22 source gate: 新三套32格PNG與read-only對齊接入完成；實際motion28格（run12/flight12/landing4）＋固定ready28，沒有把未播放ready29–31當作flow提升。Final App69/0 PASS；原生fixtures確認每格使用＋真實SKView callback姿勢前進、停用/Reduce Motion；84段原生姿勢截圖已匯出，六張apex/landing與Chrome循環接點檢視。Phone Debug簽署build PASS。保留robot首次裁切失敗與Swift推斷compile failure；修正版不改transport/matcher/save/原素材。真機FPS/owner流暢/舊full UI、兒童及public gates仍pending；手機paired/unavailable、install NOT RUN。
+
+GAME-22 source333012c：來源與手機候選完整性已封存，簽署/profile/new3Assets.car PASS；App69/0 evidence與memory已記錄。手機unavailable，尚未安裝；TestFlight仍GAME15/build11。memory guard無current diff blocker，既有background warnings見verification，不宣稱full治理/上架驗收。

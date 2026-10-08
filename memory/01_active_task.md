@@ -60,3 +60,5 @@
 - GAME20 source0e83ed3 installed over Wi-Fi; launch blocked by locked phone. App61/0 and real no-input UI PASS; cat/touch/viewport/narrow/physical/child QA partial; GAME17 rejected; TestFlight unchanged. <!-- memory_record_projection:active-task-summary:ad5551c5e6d49220bddee595e4f6dbe1677100d14051a405a9ad0c6ad422f64c -->
 
 - GAME21 motion source tested 65 PASS; signed candidate frozen, owner iPhone unavailable, install/launch pending; sparse pose/full UI/physical/child acceptance unclaimed. <!-- memory_record_projection:active-task-summary:19d2de7b2f6ba7b5b88e14e75ba99de1c36848896c6e36759e542aeafcf1b28e -->
+
+- GAME22 dense24–25poses/s source integrated,69 App PASS; signed candidate frozen, owner phone unavailable install pending; actual device fluidity/public acceptance unclaimed. <!-- memory_record_projection:active-task-summary:769d86add29b45693593f0fecd1f0e5be20b03296ddb7987343e9d394d528a25 -->

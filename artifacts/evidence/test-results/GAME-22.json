@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"import json,hashlib,subprocess\nfrom pathlib import Path\nr=json.loads(Path('docs/slices/GAME-22-verification.json').read_text())\nc=json.loads(Path('TestResults/GAME-22/build-copy.json').read_text())\ndigest=lambda p:hashlib.sha256(Path(p).read_bytes()).hexdigest()\nassert len(r['source_sha256'])==101\nassert len(r['production_source_sha256'])==84\nfor p,h in r['source_sha256'].items():\n assert digest(p)==h,p\n assert digest(Path(c['root'])/p)==h,p\nfor p,h in r['evidence_refs'].items():assert digest(p)==h,p\nf=Path('TestResults/GAME-22/PhoneFrozen')\nfor p,h in json.loads((f/'app-manifest.json').read_text()).items():assert digest(f/'BeatLab.app'/p)==h,p\nsubprocess.run(['codesign','--verify','--deep','--strict',str(f/'BeatLab.app')],check=True,capture_output=True)\ns=json.loads(Path('TestResults/GAME-22/native-summary.json').read_text())\nassert (s['passedTests'],s['failedTests'],s['totalTestCount'])==(69,0,69)\nb=json.loads((f/'BUILD.json').read_text());assert b['source_commit']==r['source_commit']=='333012c3973c103ac3b6dfb571669265f8df7db4'\nassert b['install']==b['launch']=='NOT RUN' and b['transport']=='UNAVAILABLE'\na=json.loads(Path('docs/design/dense-motion/art-source.json').read_text())\nfor t,pack in a.items():\n assert len(pack['frames'])==32\n assert all(not x['touches_cell_edge'] for x in pack['frames'])\n assert len({x['rgba_sha256'] for x in pack['frames'][:12]})==12\n assert len({x['rgba_sha256'] for x in pack['frames'][12:24]})==12\n assert digest('BeatLab/Resources/Assets.xcassets/'+pack['asset']+'.imageset/artwork.png')==pack['sha256']\ncatalog=json.loads(Path('TestResults/GAME-22/asset-catalog.json').read_text())\nassert {'DenseDinosaurMotion','DenseCatMotion','DenseRobotMotion'}<={x.get('Name') for x in catalog}\nmanifest=json.loads(Path('TestResults/GAME-22/native-specimens/manifest.json').read_text())\nassert len([x for group in manifest for x in group['attachments'] if x['suggestedHumanReadableName'].startswith('GAME22')])==84\nprint('PASS source/artifact/evidence integrity:101 inputs,84 production,93 old protected unchanged; App69 PASS/0 FAIL, four new regressions.')\nprint('Three original32-cell packs; active12 run/.5s=24 poses/s,12 flight/.48s=25,4 landing/.16s=25; static ready28, unused29-31 not counted as live motion.')\nprint('Actual native callback/pose-index/pause/reduced-motion checks PASS;84 synthetic native sequential specimens. Requested render60fps is NOT physical measured FPS.')\nprint('Preserved rejected robot grid and initial Swift test compile failure; final repairs PASS. Full UI/child/owner acceptance/release NOT CLAIMED.')\nprint('Signed/profile/Assets.car PASS; phone unavailable; install/launch NOT RUN; data reset false, TestFlight unchanged.')\n\"",
+  "exit_code": 0,
+  "started_at": "2026-10-08T03:33:34Z",
+  "finished_at": "2026-10-08T03:33:35Z",
+  "runner": "dense-character-motion-and-candidate-integrity",
+  "linked_commit": "333012c3973c103ac3b6dfb571669265f8df7db4",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-22.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

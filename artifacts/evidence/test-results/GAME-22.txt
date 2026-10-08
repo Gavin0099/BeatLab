@@ -1,0 +1,5 @@
+PASS source/artifact/evidence integrity:101 inputs,84 production,93 old protected unchanged; App69 PASS/0 FAIL, four new regressions.
+Three original32-cell packs; active12 run/.5s=24 poses/s,12 flight/.48s=25,4 landing/.16s=25; static ready28, unused29-31 not counted as live motion.
+Actual native callback/pose-index/pause/reduced-motion checks PASS;84 synthetic native sequential specimens. Requested render60fps is NOT physical measured FPS.
+Preserved rejected robot grid and initial Swift test compile failure; final repairs PASS. Full UI/child/owner acceptance/release NOT CLAIMED.
+Signed/profile/Assets.car PASS; phone unavailable; install/launch NOT RUN; data reset false, TestFlight unchanged.
