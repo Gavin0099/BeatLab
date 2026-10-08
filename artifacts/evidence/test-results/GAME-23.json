@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-23/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T08:45:34Z",
+  "finished_at": "2026-10-08T08:45:34Z",
+  "runner": "local-native-fall-recovery-candidate-integrity",
+  "linked_commit": "73dcb174363c933b53933486ef98ee2801ec51e0",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-23.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

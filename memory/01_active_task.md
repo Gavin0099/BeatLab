@@ -68,3 +68,5 @@
 - TF-05 Xcode已登入；ASC登入仍阻擋，隔離101來源已備。build未選、archive/upload未執行。 <!-- memory_record_projection:active-task-summary:c837f20bcf77ed730422b3b702d320d940975d0cc7ce1d03a8b3ee7567c32db6 -->
 
 - TF-05已交付0.1.0(12)，本人試玩1 tester正在測試；本機125 tests＋DSP468 PASS，actual IPA/source核對。手機動作/physical/UI/child/public待驗，build/test固定本機。 <!-- memory_record_projection:active-task-summary:e3c0fb0b39bdc6a7220c99dfa9104ebad15c0f93df8f558cff4185d3b139aa56 -->
+
+- GAME23 fall/recovery source73dcb17 locally tested73App/53Core, signed Debug candidate ready; TestFlight12/GAME22 remains phone version, physical acceptance pending. <!-- memory_record_projection:active-task-summary:de0775549b4c8413fdd61b51d50da36cddffd6cb2e9f4986a18bdafcb0fff935 -->

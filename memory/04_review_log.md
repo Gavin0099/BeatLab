@@ -223,3 +223,14 @@
 - Validation boundary: artifacts/evidence/test-results/TF-05-local-build-tests.json, TF-05-uploaded-package.json, TF-05-delivery-verified.json PASS; local App69/Core53/capture3, DSP468; Release/actual IPA12/internal-only; Apple TESTING existing owner group1.
 - Next action: Owner update TestFlight0.1.0(12) and compare dinosaur/cat/robot first-level60BPM takeoff/landing/continuous jumps; physical FPS/timing, full UI, child and public release remain pending. Build/test stays local; no GitHub Mac dispatch.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:de0775549b4c8413fdd61b51d50da36cddffd6cb2e9f4986a18bdafcb0fff935 -->
+### Canonical memory checkpoint — game23-fall-recovery-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `de0775549b4c8413fdd61b51d50da36cddffd6cb2e9f4986a18bdafcb0fff935`
+- Commit binding: `73dcb174363c933b53933486ef98ee2801ec51e0` (bound)
+- Record: Owner found TestFlight12 jump acceptable but fall unrealistic/not smooth. GAME23 root cause: mirrored jump arc, static ready pose, follower glow and premature recovered text. Added .24s gravity descent/.08s braking cradle/.28s visible return using unchanged descending/contact poses; fixed cue on face and extra shake after native review. App73/0 and Core53/0 local;123 native specimens and signed Debug candidate/source101/unchanged99 verified. TestFlight remains12/GAME22; no install or upload. Setup-only path/venv/profile/XML failures retained; physical/UI/child/public gates pending.
+- Validation boundary: artifacts/evidence/test-results/GAME-23.json
+- Next action: Owner phone playtest is needed to assess fall/catch/return and next-beat response; do not treat simulator callbacks as physical FPS. Candidate ready, delivery not performed; respect local Mac builds/tests and current release authorization.
+- PLAN reconciliation: `updated`

@@ -1,0 +1,5 @@
+PASS: source101 / unchanged99, final App73/0 + Core53/0, four new fall regressions, native111 ordered +12 size/appearance specimens.
+PASS: actual SKView callback progression, suspension/static reduction, one opaque actor; .24 gravity / .08 catch / .28 carrier return.
+PASS: signed frozen Debug0.1.0(12) candidate/source binding. New source does not mean new TestFlight; upload/install NOT RUN.
+Scope: first level60BPM; approved jump/assets/audio/input/matcher/score/save unchanged. Physical FPS/timing/child/full UI/public acceptance NOT CLAIMED.
+Setup-only failures retained separately; both App runs73/0. All build/test local Mac; no GitHub Mac run.
