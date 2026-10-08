@@ -74,3 +74,5 @@
 - TF06 TESTFLIGHT_OWNER_TRIAL_AVAILABLE。GAME23修正版已提供原本人群組，工程local PASS；手機更新與體感、public gates未接受。 <!-- memory_record_projection:active-task-summary:4439bbac9063dbfb38342c9f866e3f540c9cd3a99f3c4a666841af7d69de894b -->
 
 - GAME24 SOURCE_NATIVE_TESTED；owner已接受13掉落，表情候選本機App76/Core53 PASS；第一關完整接受pending，2–10關等第一關完成後排slice，最新TF13未含本候選。 <!-- memory_record_projection:active-task-summary:84419145126b53707c2a61ff6e0e54bb8ae7cd2aa137bb748d1d81b466abccaa -->
+
+- GAME-24 expression candidate installed via Wi-Fi PHONE-08; launch BLOCKED_DEVICE_LOCKED awaiting owner unlock; TestFlight13 remains prior GAME23 source. First level acceptance pending, levels2–10 deferred. <!-- memory_record_projection:active-task-summary:b6ad8c17d430e76c2a9f6fa404642d1a8fa4c8c9104b2f05c5393654064bab1b -->

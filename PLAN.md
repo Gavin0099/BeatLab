@@ -417,3 +417,9 @@ TF-06本人可下載：0.1.0(13)、GAME23掉落／托盤承接／回平台修正
 Owner接受TestFlight13掉落動作，要求角色表情對應掉落；明確目前只有第一關做好，預設十關，待第一關完成再排其餘slice。本片只第一關facial feedback，保留已接受曲線與三角色motion/body資產，原關卡內容不擴展。先定義scope/checks/failure/rollback於GAME24 contract。Status DEFINED；第一關完整體感/child/timing仍未接受，第2–10關待後續規劃。
 
 GAME24表情本機完成：source2a77e49、107來源／99原始輸入不變，原JourneyRecovery/JourneyMotion/PlatformJourneyFrame/DenseAnimationFrame/DenseCharacterAtlas byte-text exact保留。三角色新增驚訝／閉眼承接／放鬆／ready faces，只inset face region覆蓋，原PNG/body腳部保留。最終App76/Core53、24 native表情尺寸/light-dark specimens、pixel changes與feet unchanged、state reset/missing/reduced及既有callback/paused PASS；sim全部state恢復。三次native76/0（shader同identity不重設、missing body不套臉保護），第一次evidence helper缺PIL保留，stdlib metadata/alpha檢查final PASS。Status SOURCE_NATIVE_TESTED；TestFlight最新仍13未含本片，未安裝／上傳。Owner接受13掉落，不等於第一關完整接受；只第一關收斂，2–10關slice等第一關完成才排。
+
+### 2026-10-08 — PHONE-08 表情修正版 Wi-Fi 安裝
+
+Owner明確要求透過Wi-Fi安裝。107來源已測試候選以本機簽署Debug建置，保留0.1.0(13) metadata及既有bundle/team/data；此source含GAME24，與TestFlight13不同。Fresh paired iPhone localNetwork已連線，Status BUILD_IN_PROGRESS；契約見PHONE-08。完成安裝和啟動後才記錄交付，第一關體感/physical FPS/timing/public仍pending，第2–10關不排新slice。
+
+PHONE08：本機signed Debug build／107來源綁定／手機profile／compiled三角色expression assets／原icon與privacy PASS。Fresh localNetwork Wi-Fi安裝PASS；launch實際回覆Locked，Status INSTALLED_LAUNCH_BLOCKED_DEVICE_LOCKED，已請owner解鎖，只重試啟動。未uninstall/reset或更新TestFlight；GAME24表情修正版已在手機，體感與第一關完整接受仍pending。

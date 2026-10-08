@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/PHONE-08/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T14:57:35Z",
+  "finished_at": "2026-10-08T14:57:36Z",
+  "runner": "phone08-local-wifi-install",
+  "linked_commit": "805833ffad27e87b6d704b9250e693a7be20304d",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/PHONE-08.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

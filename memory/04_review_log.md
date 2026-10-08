@@ -256,3 +256,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-24.json
 - Next action: 先以手機驗收第一關的表情與核心loop；第一關完成後才排第2–10關slice。TestFlight目前13未含GAME24，本片未安裝/上傳，physicalFPS/timing/child/public pending。
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:b6ad8c17d430e76c2a9f6fa404642d1a8fa4c8c9104b2f05c5393654064bab1b -->
+### Canonical memory checkpoint — phone08-game24-wifi-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `b6ad8c17d430e76c2a9f6fa404642d1a8fa4c8c9104b2f05c5393654064bab1b`
+- Commit binding: `805833ffad27e87b6d704b9250e693a7be20304d` (bound)
+- Record: PHONE-08: 107 unchanged GAME-24 sources signed locally as Debug0.1.0(13); signature/device profile/compiled expressions/icon/privacy verified. In-place localNetwork Wi-Fi install PASS. Launch blocked by actual device Locked error; asked owner unlock, retry launch only. No reset/uninstall/Apple upload/GitHub Mac. Prior App76/Core53 evidence reused.
+- Validation boundary: artifacts/evidence/test-results/PHONE-08.json
+- Next action: Owner unlock or open installed 拍拍冒險; retry only launch after unlock. Trial first-level three-character falling/catching/returning expressions. First-level acceptance and physical FPS/timing pending; levels2–10 slice planning deferred.
+- PLAN reconciliation: `updated`

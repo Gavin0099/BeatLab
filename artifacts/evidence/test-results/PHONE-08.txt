@@ -1,0 +1,1 @@
+{"artifact_source_profile_wifi_install_validation": "PASS", "source_inputs": 107, "install": "PASS", "launch": "BLOCKED_DEVICE_LOCKED", "launch_success_claim": false, "full_acceptance": false}
