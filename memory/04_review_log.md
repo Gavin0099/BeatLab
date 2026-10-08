@@ -179,3 +179,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-20.json
 - Next action: Owner unlock then retry launch only; play first60BPM cross-island loop. Full touch/viewport/narrow/companion/physical timingFPS/child appeal gates remain unaccepted; no new features or upload without applicable evidence.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:19d2de7b2f6ba7b5b88e14e75ba99de1c36848896c6e36759e542aeafcf1b28e -->
+### Canonical memory checkpoint — game21-motion-fix-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `19d2de7b2f6ba7b5b88e14e75ba99de1c36848896c6e36759e542aeafcf1b28e`
+- Commit binding: `fd1e75f54a6688365f571466507059398539d8d2` (bound)
+- Record: Owner rejected GAME20 installed motion. GAME21 source fd1e75f fixes post-landing camera backward slide, endpoint hard stop with C2 jump/fall curves, redundant configure rendering and cold texture/static color work. Existing audio/matcher/save/assets and one opaque character preserved. Two-sprite blend trial failed 3 of 65 cases with 6 assertions; native images showed ghosting, withdrawn uninstalled without weakening old assertions. Final App 65 PASS/0 FAIL including actual three-theme SKView callback ownership and motion regressions; final native apex specimens clean but synthetic fixture/stills only. Signed Debug 0.1.0(11) frozen with 95 source/78 production/93 protected hashes, signature/profile verified. Owner phone paired but unavailable, install and launch NOT RUN; readiness request pending. Existing sparse poses remain; no physical FPS, full UI, child, public or TestFlight claim.
+- Validation boundary: artifacts/evidence/test-results/GAME-21.json
+- Next action: When owner phone connects to same Wi-Fi and is unlocked, freshly verify unique paired device and install/launch unchanged GAME21 PhoneFrozen candidate preserving data, then record actual delivery. Owner motion play acceptance, physical timing/FPS/input latency and previous full UI/ten-level/accessibility/child/public gates remain pending.
+- PLAN reconciliation: `updated`

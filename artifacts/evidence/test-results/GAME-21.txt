@@ -1,0 +1,3 @@
+PASS evidence/source/frozen signature integrity: 95 source, 78 production, 93 protected; final App 65 PASS/0 FAIL.
+Withdrawn trial: 62 PASS/3 FAIL, rejected and never installed; final single opaque sprite assertions intact.
+Phone install/launch NOT RUN: paired owner device unavailable. Full UI/physical FPS/input latency/child/release acceptance NOT CLAIMED.

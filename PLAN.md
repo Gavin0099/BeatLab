@@ -375,3 +375,7 @@ Source 0e83ed34efa4a0e5576eee6ff52fb0c011042e94：第一關改成實際matched�
 Owner指出GAME20比舊跳躍更差、動作不順。Gameplay/motion acceptance REJECTED；source0e83ed3與本人安裝仍是歷史事實，不能因61App PASS稱順暢。GAME21 exact-file L2 contract先修camera落地後倒滑、sin落地速度硬停、sprite pose硬切以及live configure重複render；不換玩法/美術、不改audio/matching/score/save。Status IN_PROGRESS；同bundle個人Wi-Fi安裝授權沿用，既有UI/physical/child/public未接受。
 
 GAME21 source驗證：保持既有單一opaque角色guard；初次雙圖trial65測試中3case/6assert FAIL且native樣本實見ghostheads/limbs，已撤回且未安裝。Final65case/0fail PASS（包含4新增motion regression與三theme實際SKView），native3theme圖片無雙影。Camera flight同phase、C2起落/漏拍回復、live configure不額外render、theme一次texture預熱；既有pose素材未改，不能稱骨架動畫或商業遊戲流暢度。Status SOURCE_TESTED_OWNER_PREVIEW_PENDING，freeze/install/physical驗收仍須分開記錄。
+
+### 2026-10-08 — GAME21 tested/frozen, phone delivery pending
+
+Source fd1e75f54a6688365f571466507059398539d8d2；65App/0fail PASS，雙圖trial3cases/6assert FAIL與實見重影均保留，未安裝且撤回。Final三theme native樣本單角色無重影；只證明原生呈現fixture與callback，沒有fullAppUI/physicalFPS證據；姿勢仍使用既有素材。95source/78production/93protected未變與signed/profile綁定PASS。iPhone fresh inventory unavailable/缺transport，install NOT RUN、launch NOT RUN；已問同Wi-Fi與unlock，READY frozen候選不因docs再build，手機仍GAME20來源0e83ed3。Status SOURCE_TESTED_PHONE_DELIVERY_BLOCKED；既有cat/narrow/touch/child/G1-G4/public gaps保留、TestFlight未動。Owned wide本來Shutdown且最終已Shutdown，shutdown嘗試149表示alreadyShutdown。完整evidence见docs/slices/GAME-21-verification.json。
