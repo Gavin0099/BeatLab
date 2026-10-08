@@ -48,4 +48,11 @@ first/last R or follow missed platform index. Pause/reduce clears motion. Reject
 unreachable dual pads/stop or duplicate grading. Preserve failed attempts; fix
 before candidate delivery. Rollback only this slice source/doc changes to6a5381b;
 keep saved progress, receipts, protected baseline and framework unchanged.
-Status IMPLEMENTED / FINAL_LARGE_TEXT_GATE_PENDING. Levels3–10 and first-level F5 deferred.
+Status ENGINEERING_GATE_PASSED / OWNER_TRIAL_PENDING. Local full App87/0 before
+final hand-caption opacity-only delta; final native focus1/0 and real UI3/0;
+Core53/0 unchanged. Both original failed runs retained. All simulator states and
+light appearance restored. Largest-text controls are reachable, but native review
+observed actor below fold, dark material caption contrast and large result/tab
+overlap. These visual defects are open, not accepted; NIGHT01 permits a separate
+scoped shared accessibility/layout fix. Physical evidence and F5 remain pending.
+Levels3–10 now proceed under NIGHT01, not this slice alone.

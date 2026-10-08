@@ -56,3 +56,5 @@ instruction stays opaque while marker alone pulses. Final candidate differs from
 full-suite pass by this opacity-only production change and test assertions/
 chapter-navigation correction; focused native + final actual UI gates will bind
 that candidate. Do not claim a full App87 suite on this post-opacity source.
+
+01:38 GAME26 final focus1/0, normal UI2/0 and largest-dark UI1/0 passed; no physical trial yet. Reachable controls do not prove good layout: actual AXXX L capture has actor below fold, dark mission caption poor contrast, result/tab overlap. Schedule independent shared responsive presentation contract; defer owner acceptance until morning.

@@ -300,3 +300,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-25.json
 - Next action: Owner trial of first-level land→idle→anticipation→flight. Physical FPS/timing/input latency and full first-level acceptance pending; F5 result handoff and levels2–10 deferred. No TestFlight/public upload.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:604d4abbc74cc27e01d6f9cf9c8137cdc8f87d3c35dce718f4814d61fdf299d9 -->
+### Canonical memory checkpoint — game26-night-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `604d4abbc74cc27e01d6f9cf9c8137cdc8f87d3c35dce718f4814d61fdf299d9`
+- Commit binding: `e801bc4` (bound)
+- Record: GAME26 source e801bc4 implements authored65BPM16-note alternating-hand island mission; original timing/scoring/audio/save and motion blocks unchanged. Engineering gates passed; final opacity-only delta explicitly separated. NIGHT01 unattended ten-hour goal continues.
+- Validation boundary: PASS composed local evidence: artifacts/evidence/test-results/GAME-26.json; full App87 before opacity delta, final native1/UI3, Core53 unchanged; initial App/UI failures retained. No phone candidate or physical FPS/timing acceptance.
+- Next action: Implement GAME27 levels3/4 dense motion/path/cues; define responsive layout fix for observed largest-text actor occlusion, dark mission contrast, result/tab overlap. Preserve physical/child/F5 pending; questions after11:10.
+- PLAN reconciliation: `updated`
