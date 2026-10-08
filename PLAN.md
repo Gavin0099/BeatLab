@@ -427,3 +427,9 @@ PHONE08：本機signed Debug build／107來源綁定／手機profile／compiled�
 ### 2026-10-09 — 第一關完整動作循環 review
 
 Owner實際回報跳／掉落較順，但兩跳之間沒有動作；這是局部接受，不是第一關完成。唯讀review與本機production Swift抽樣確認：正常60BPM每兩跳間ready28固定.36s，early→late可.72s；三角色共用stationary branch且沒有anticipation；第一拍合法early已移動卻被elapsed≥4 guard保持站姿，t4才切flight16。既有native test明確要求static28，76/0不能證明完整motion loop。部分通過14/16得2星會直接切step16終點與舊慶祝素材，另有結果接點缺口。完整報告docs/reviews/2026-10-09-motion-review.md；Status REVIEW_COMPLETE_IMPLEMENTATION_PENDING。App/assets/timing/score/save/metadata未改、未build/install/upload；physical FPS/input latency仍未量測。建議先補第一關land→idle→anticipation→flight以及回復後銜接，保留已接受跳／掉落曲線；第2–10關slice仍deferred。PHONE08自動launch仍locked歷史，不補造成功receipt。
+
+### 2026-10-09 — PHONE-09 同 Wi-Fi 重裝
+
+Owner明確要求現在同Wi-Fi安裝。重用PHONE08已簽署GAME24 Debug0.1.0(13)，107來源／frozen包／簽章／原手機profile／compiled表情assets PASS，fresh paired localNetwork確認；不因review文件重建或加build號。Status INSTALL_PENDING；此次不是兩跳間動作修正版，已向owner說明。契約PHONE09；保持data/container、第一關接受pending及第2–10關deferred。
+
+PHONE09交付：in-place Wi-Fi install PASS、devicectl launch PASS，App已啟動（process receipt可查）；原版本／來源107不變、未reset/uninstall，未build或上傳TestFlight。Status INSTALLED_AND_LAUNCHED_FOR_TRIAL；PHONE08原locked launch仍保留歷史，本次成功另記。下一步仍是第一關完整idle/anticipation循環實作與體感／physical驗證，不將再次安裝當作修好或first-level完成。

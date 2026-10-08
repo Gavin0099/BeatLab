@@ -278,3 +278,14 @@
 - Validation boundary: artifacts/evidence/test-results/MOTION-REVIEW-20261009.json
 - Next action: Proposed first-level motion-loop slice should join landing→beat idle→anticipation→accepted flight and recovery→idle, fix first early texture guard, update whole-cycle native tests and physical frame-pacing evidence; preserve accepted curves/audio/score/save. First-level acceptance pending; defer levels2–10.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:a2e7f8f6cce4ecc890097dc9482297cad675396cc355faeb00b53d55fc2f5018 -->
+### Canonical memory checkpoint — phone09-game24-wifi-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `a2e7f8f6cce4ecc890097dc9482297cad675396cc355faeb00b53d55fc2f5018`
+- Commit binding: `ecb669e` (bound)
+- Record: PHONE09 owner requested same-Wi-Fi installation. Reused frozen GAME24 Debug0.1.0(13);107 current sources/artifact/signature/profile/compiled expressions/icon/privacy verified. Fresh paired localNetwork in-place install PASS and process launch PASS. Preserved data; no rebuild/version bump/test rerun/reset/upload/GitHub Mac. Told owner motion review fixes are not implemented. PHONE08 locked history preserved.
+- Validation boundary: artifacts/evidence/test-results/PHONE-09.json
+- Next action: Owner can trial installed three-character expression candidate. First-level idle/anticipation and first-early-pose fixes remain proposed, not implemented; preserve accepted jump/fall curves. Physical FPS/input latency/first-level acceptance pending; levels2–10 deferred.
+- PLAN reconciliation: `updated`

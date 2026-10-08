@@ -1,0 +1,92 @@
+{
+  "date": "2026-10-09",
+  "slice": "PHONE-09",
+  "status": "INSTALLED_AND_LAUNCHED_FOR_TRIAL",
+  "candidate": {
+    "device_identifier": "0F60A459-7EE8-5B1B-BDF6-6B4D6047FAB8",
+    "device_name": "GavinWu0099",
+    "transport": "localNetwork",
+    "configuration": "Debug",
+    "version": "0.1.0",
+    "build": "13",
+    "bundle_id": "com.gavin0099.beatlab",
+    "source_commit": "2a77e49a77572d12129dd373624c01b89ec43212",
+    "candidate_path": "/Users/pc49-58/Desktop/BeatLab/TestResults/PHONE-08/PhoneFrozen/BeatLab.app",
+    "candidate_reused": true,
+    "source_file_count": 107,
+    "source_match": true,
+    "artifact_match": true,
+    "signature_verified": true,
+    "owner_profile_coverage": true,
+    "inter_jump_fix_included": false,
+    "install": "PASS",
+    "launch": "PASS",
+    "install_receipt": "TestResults/PHONE-09/install.json",
+    "launch_receipt": "TestResults/PHONE-09/launch.json",
+    "frozen_manifest": "TestResults/PHONE-08/PhoneFrozen/app-manifest.json",
+    "source_receipt": "TestResults/PHONE-08/PhoneFrozen/BUILD.json"
+  },
+  "source_commit": "2a77e49a77572d12129dd373624c01b89ec43212",
+  "checks": {
+    "source107": "PASS",
+    "frozen_manifest": "PASS",
+    "signature_profile": "PASS",
+    "compiled_expression_assets": "PASS",
+    "icons_privacy_unchanged": "PASS",
+    "WiFi": "localNetwork",
+    "install": "PASS",
+    "launch": "PASS"
+  },
+  "receipts": {
+    "preflight.json": "TestResults/PHONE-09/preflight.json",
+    "BUILD.json": "TestResults/PHONE-09/BUILD.json",
+    "package-validation.json": "TestResults/PHONE-09/package-validation.json",
+    "device-details.json": "TestResults/PHONE-09/device-details.json",
+    "install.json": "TestResults/PHONE-09/install.json",
+    "install.log": "TestResults/PHONE-09/install.log",
+    "launch.json": "TestResults/PHONE-09/launch.json",
+    "launch.log": "TestResults/PHONE-09/launch.log"
+  },
+  "rebuild": false,
+  "test_rerun": false,
+  "prior_evidence": "docs/slices/GAME-24-verification.json App76/Core53",
+  "delivery": {
+    "in_place": true,
+    "uninstall": false,
+    "reset": false,
+    "Apple_upload": false,
+    "GitHub_Mac": false
+  },
+  "inter_jump_motion_fix": "NOT IMPLEMENTED; owner told before installation",
+  "first_level_acceptance": "PENDING",
+  "levels2_to10": "Deferred",
+  "physical_FPS": "NOT MEASURED",
+  "evidence_sha256": {
+    "TestResults/PHONE-09/package-validation.json": "78d2d416d06f17055d7ac57f5be96290010f287fe2a0d55e1d4fe28005cd2c82",
+    "TestResults/PHONE-09/launch.log": "ee8d06f21c067ac5fc639616fedf07e610af17be9cfb879fb825d12b07e20c04",
+    "TestResults/PHONE-09/device-details.json": "12db134973e2a0b23fe0484cb3bcc40de0dc79dda03d7ff273f1bd1850b0d2fc",
+    "TestResults/PHONE-09/device-details.log": "1c8c0c9b956119cf9fe603b0157f86beebebfb81d83ca1db9f091f6cedfc921a",
+    "TestResults/PHONE-09/devices.json": "bdb5d3d19bf1e19ab47717b38ca8cf6d4c9874243ac89c42bf1c995cfc52792b",
+    "TestResults/PHONE-09/launch.json": "da40339eb3122369acb0562e4d5d49db338de176672c6e4b9d10bdf11a7bba56",
+    "TestResults/PHONE-09/preflight.json": "f177d91c36b73cd75f588c734914f595c383265035e86da1d8cbd0503fa9e335",
+    "TestResults/PHONE-09/install.log": "754dc379420297765352525b505cabfc002cbfbd6016324b4e865928048c0273",
+    "TestResults/PHONE-09/install.json": "47baf6560e617eb9c553308ebf6eae289ec4b62b1f47a62bcd6d9d899b65369e",
+    "TestResults/PHONE-09/check-evidence.py": "6a1f2c9dead049e3e3888fbbc4faeba9386ddbe9041aba35f0942b8219e4f2ff",
+    "TestResults/PHONE-09/BUILD.json": "7794b4495a0ab37504dae6b737fd03f781b1f41215c9ed6e5fc88e58afea9dfd",
+    "TestResults/PHONE-09/memory-writer.log": "6c6a5b3647ac2f3ce44c3189167300c6529fe62f10c0cbf1df652c5d62809a63",
+    "TestResults/PHONE-09/memory-guard.log": "eca82e77fa8f009879c77f3b53a7c804c1a9f09042f5788063b0af4b4d40136e",
+    "artifacts/evidence/test-results/PHONE-09.json": "35fa1f7c4c7c7ff73ffe0a2e67c173080c5bc9c801a7f81e54d532d1df0f68f2"
+  },
+  "canonical_evidence": "artifacts/evidence/test-results/PHONE-09.json",
+  "memory_guard": {
+    "exit_code": 0,
+    "current_diff_blockers": 0,
+    "repo_state_blockers": 0,
+    "background_debt": [
+      "root canonical writer/guard absent",
+      "missing_canonical_memory=1",
+      "test_evidence_provenance_not_found=2"
+    ],
+    "claim_boundary": "No full governance adoption claim"
+  }
+}

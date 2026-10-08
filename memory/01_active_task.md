@@ -78,3 +78,5 @@
 - GAME-24 expression candidate installed via Wi-Fi PHONE-08; launch BLOCKED_DEVICE_LOCKED awaiting owner unlock; TestFlight13 remains prior GAME23 source. First level acceptance pending, levels2–10 deferred. <!-- memory_record_projection:active-task-summary:b6ad8c17d430e76c2a9f6fa404642d1a8fa4c8c9104b2f05c5393654064bab1b -->
 
 - 2026-10-09 complete motion review, implementation pending: missing inter-jump idle/anticipation, early-first pose guard and tests enforcing static28 confirmed. GAME24 installed PHONE08; jump/fall partly accepted, automatic launch receipt historically locked. First level not complete, levels2–10 deferred. <!-- memory_record_projection:active-task-summary:ae693bd62b1f99a183570569741502e25398e13fbe2712c17e99f667f9794b5e -->
+
+- PHONE09 installed and launched GAME24 Debug13 over Wi-Fi; source unchanged and inter-jump review fixes NOT IMPLEMENTED. Owner partly accepts jump/fall, first-level loop remains pending, levels2–10 deferred. PHONE08 previous locked receipt preserved. <!-- memory_record_projection:active-task-summary:a2e7f8f6cce4ecc890097dc9482297cad675396cc355faeb00b53d55fc2f5018 -->
