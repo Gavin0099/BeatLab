@@ -1,10 +1,6 @@
 name: iOS MVP
 
 on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [main, 'codex/**']
   workflow_dispatch:
 
 permissions:
@@ -12,6 +8,9 @@ permissions:
 
 jobs:
   mvp:
+    # Owner requires Apple builds/tests on the local Mac. Retain this recipe
+    # for reference, but never allocate a GitHub-hosted Mac runner.
+    if: false
     runs-on: macos-15
     timeout-minutes: 30
     steps:
