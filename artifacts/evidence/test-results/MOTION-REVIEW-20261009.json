@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/MOTION-REVIEW-20261009/check-review.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T16:18:33Z",
+  "finished_at": "2026-10-08T16:18:34Z",
+  "runner": "local-mac-read-only-motion-review",
+  "linked_commit": "eb73808197af1ff1666fcff67206547d54b10eb0",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/MOTION-REVIEW-20261009.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

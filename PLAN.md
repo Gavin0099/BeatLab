@@ -423,3 +423,7 @@ GAME24表情本機完成：source2a77e49、107來源／99原始輸入不變，�
 Owner明確要求透過Wi-Fi安裝。107來源已測試候選以本機簽署Debug建置，保留0.1.0(13) metadata及既有bundle/team/data；此source含GAME24，與TestFlight13不同。Fresh paired iPhone localNetwork已連線，Status BUILD_IN_PROGRESS；契約見PHONE-08。完成安裝和啟動後才記錄交付，第一關體感/physical FPS/timing/public仍pending，第2–10關不排新slice。
 
 PHONE08：本機signed Debug build／107來源綁定／手機profile／compiled三角色expression assets／原icon與privacy PASS。Fresh localNetwork Wi-Fi安裝PASS；launch實際回覆Locked，Status INSTALLED_LAUNCH_BLOCKED_DEVICE_LOCKED，已請owner解鎖，只重試啟動。未uninstall/reset或更新TestFlight；GAME24表情修正版已在手機，體感與第一關完整接受仍pending。
+
+### 2026-10-09 — 第一關完整動作循環 review
+
+Owner實際回報跳／掉落較順，但兩跳之間沒有動作；這是局部接受，不是第一關完成。唯讀review與本機production Swift抽樣確認：正常60BPM每兩跳間ready28固定.36s，early→late可.72s；三角色共用stationary branch且沒有anticipation；第一拍合法early已移動卻被elapsed≥4 guard保持站姿，t4才切flight16。既有native test明確要求static28，76/0不能證明完整motion loop。部分通過14/16得2星會直接切step16終點與舊慶祝素材，另有結果接點缺口。完整報告docs/reviews/2026-10-09-motion-review.md；Status REVIEW_COMPLETE_IMPLEMENTATION_PENDING。App/assets/timing/score/save/metadata未改、未build/install/upload；physical FPS/input latency仍未量測。建議先補第一關land→idle→anticipation→flight以及回復後銜接，保留已接受跳／掉落曲線；第2–10關slice仍deferred。PHONE08自動launch仍locked歷史，不補造成功receipt。

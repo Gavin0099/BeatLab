@@ -1,0 +1,436 @@
+{
+  "date": "2026-10-09",
+  "task": "First-level motion continuity review",
+  "status": "REVIEW_COMPLETE_IMPLEMENTATION_PENDING",
+  "reviewed_head": "eb73808",
+  "candidate_source": "2a77e49a77572d12129dd373624c01b89ec43212",
+  "owner_feedback": {
+    "jump_fall": "improved, partially accepted",
+    "between_jumps": "not smooth/no motion",
+    "first_level": "not accepted complete",
+    "levels2_to10": "deferred"
+  },
+  "report": "docs/reviews/2026-10-09-motion-review.md",
+  "scope": "read-only source/assets/existing native evidence and local production Swift diagnostic sampling",
+  "source_sha256": {
+    "BeatLab/Views/EggMissionView.swift": "4347075231f73c30394eded9358021186c6a7bdae47c8c559059086965cd8cab",
+    "BeatLab/Views/PracticeView.swift": "e062bfc5713e171a092cbfa9fc52a372cb64126f102858cdd017b6e7cfc14255",
+    "BeatLab/App/PracticeStore.swift": "57996835c1d18cfb7934101ad0ebec655f3d5dbe0b5f2fbb4efc363f03f694d1",
+    "BeatLab/Views/TapPad.swift": "c0b6d439b3f6d15d142f4a6e9ba2c93a80f0e930a3ad3cd2b19e83db6aaadc4f",
+    "Sources/BeatLabCore/TimingPractice.swift": "c771e19d11a0d6ac397ac3c9170bd877bb1a90375f2c2df1afaac5783f11655e",
+    "Sources/BeatLabCore/RhythmLesson.swift": "6c72debb6916480d38ab9e698c8d126a9e603ff8b7f963e077373e2148ba4140",
+    "BeatLabTests/PracticeStoreTests.swift": "7105c5fef0c96835185361b3375cd27c16ef3e49164b51ed6c514d54289293bb",
+    "BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/artwork.png": "2d8007c4ab227946ae87ff86d3ac1ed30af64251e13981f1744eac40eaa2f57b",
+    "BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/artwork.png": "4f234115f7470bb0b64e207e710852dd2fe7b975a47b11d37f8c493610d30c3d",
+    "BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/artwork.png": "f5ba432fcfa6c43b82634449ac5bbacc5e4d5627cc60633a7cda2f6684e8493e"
+  },
+  "production_inputs_unchanged": 107,
+  "findings": [
+    {
+      "id": "F1",
+      "priority": "P1",
+      "location": "BeatLab/Views/EggMissionView.swift:508",
+      "confirmed": "stationary ready28 after .64s; nominal .36s wait, early-to-late .72s",
+      "all_three_themes": true
+    },
+    {
+      "id": "F2",
+      "priority": "P2",
+      "location": "BeatLab/Views/EggMissionView.swift:505",
+      "confirmed": "First early hit moves actor before elapsed4, but count-in texture guard holds28 then selects16"
+    },
+    {
+      "id": "F3",
+      "priority": "P2",
+      "location": "BeatLab/Views/EggMissionView.swift:907",
+      "confirmed": "No idle/anticipation branch; direct landing27/ready28/flight12; 29–31 unused",
+      "visual_seam_acceptance": "PENDING physical replay"
+    },
+    {
+      "id": "F4",
+      "priority": "P1",
+      "location": "BeatLabTests/PracticeStoreTests.swift:989",
+      "confirmed": "Prior native test explicitly requires static texture28 at wait; callback count/flight uniqueness misses cycle continuity"
+    },
+    {
+      "id": "F5",
+      "priority": "P2",
+      "location": "BeatLab/Views/EggMissionView.swift:839",
+      "confirmed": "Actual 14/16 Perfect passes with2stars; result renderer overrides live step14/camera12.7 to16/14.7",
+      "visual_result_transition_acceptance": "PENDING physical replay"
+    }
+  ],
+  "checks": {
+    "local_production_swift_sampling": "PASS",
+    "source_hash_binding": "PASS",
+    "same_tested_candidate_sources": true,
+    "source_art_visual_review": "3 original dense sheets inspected",
+    "prior_App": "76/0 PASS historical",
+    "prior_Core": "53/0 PASS historical",
+    "native_or_core_suite_rerun": false,
+    "Xcode_build": "NOT RUN unchanged source",
+    "physical_profile": "NOT RUN"
+  },
+  "diagnostic_samples": {
+    "early_first_jump": [
+      {
+        "camera": 0,
+        "elapsed": 3.82,
+        "expression": "neutral",
+        "jump_age": -1,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 3.9,
+        "expression": "neutral",
+        "jump_age": 0.07999999999994989,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 0.03549382716043341
+      },
+      {
+        "camera": 0,
+        "elapsed": 3.99,
+        "expression": "neutral",
+        "jump_age": 0.1699999999999502,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 0.24167418774247074
+      },
+      {
+        "camera": 0,
+        "elapsed": 4,
+        "expression": "neutral",
+        "jump_age": 0.17999999999994998,
+        "pose": 16,
+        "recovery": "idle",
+        "step": 0.27520751953107836
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.02,
+        "expression": "neutral",
+        "jump_age": 0.19999999999994955,
+        "pose": 16,
+        "recovery": "idle",
+        "step": 0.3466194058640113
+      }
+    ],
+    "fps": "NOT MEASURED",
+    "idle_gaps": [
+      {
+        "camera": [
+          0
+        ],
+        "case": "on-beat",
+        "first_input": 4,
+        "freeze_seconds": 0.3600000000000003,
+        "next_input": 5,
+        "poses": [
+          28
+        ],
+        "sample_count": 87,
+        "steps": [
+          1
+        ]
+      },
+      {
+        "camera": [
+          0
+        ],
+        "case": "early-then-late",
+        "first_input": 3.82,
+        "freeze_seconds": 0.7199999999999998,
+        "next_input": 5.18,
+        "poses": [
+          28
+        ],
+        "sample_count": 173,
+        "steps": [
+          1
+        ]
+      },
+      {
+        "camera": [],
+        "case": "late-then-early",
+        "first_input": 4.18,
+        "freeze_seconds": 8.881784197001252e-16,
+        "next_input": 4.82,
+        "poses": [],
+        "sample_count": 0,
+        "steps": []
+      }
+    ],
+    "middle_beat_idle_samples": [
+      {
+        "beat": 4,
+        "camera": 0,
+        "pose": 28,
+        "step": 1
+      },
+      {
+        "beat": 5,
+        "camera": 0.7,
+        "pose": 28,
+        "step": 2
+      },
+      {
+        "beat": 6,
+        "camera": 1.7,
+        "pose": 28,
+        "step": 3
+      },
+      {
+        "beat": 7,
+        "camera": 2.7,
+        "pose": 28,
+        "step": 4
+      }
+    ],
+    "miss_return_seams": [
+      {
+        "camera": 0,
+        "elapsed": 4.3,
+        "phase": "falling",
+        "pose": 20,
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.42,
+        "phase": "falling",
+        "pose": 23,
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.5,
+        "phase": "returning",
+        "pose": 26,
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.58,
+        "phase": "returning",
+        "pose": 28,
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.779,
+        "phase": "returning",
+        "pose": 28,
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.779999999999999,
+        "phase": "returning",
+        "pose": 28,
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.99,
+        "phase": "idle",
+        "pose": 28,
+        "step": 0
+      }
+    ],
+    "nominal_seams": [
+      {
+        "camera": 0,
+        "elapsed": 4,
+        "expression": "neutral",
+        "jump_age": 0,
+        "pose": 12,
+        "recovery": "idle",
+        "step": 0
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.02,
+        "expression": "neutral",
+        "jump_age": 0.019999999999999574,
+        "pose": 12,
+        "recovery": "idle",
+        "step": 0.0006789219232252665
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.46,
+        "expression": "neutral",
+        "jump_age": 0.45999999999999996,
+        "pose": 23,
+        "recovery": "idle",
+        "step": 0.9993210780767756
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.48,
+        "expression": "neutral",
+        "jump_age": 0.4800000000000004,
+        "pose": 24,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.62,
+        "expression": "neutral",
+        "jump_age": 0.6200000000000001,
+        "pose": 27,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.64,
+        "expression": "neutral",
+        "jump_age": 0.6399999999999997,
+        "pose": 27,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.8,
+        "expression": "neutral",
+        "jump_age": 0.7999999999999998,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.999,
+        "expression": "neutral",
+        "jump_age": 0.9989999999999997,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 5,
+        "expression": "neutral",
+        "jump_age": 0,
+        "pose": 12,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0.00047524534625768654,
+        "elapsed": 5.02,
+        "expression": "neutral",
+        "jump_age": 0.019999999999999574,
+        "pose": 12,
+        "recovery": "idle",
+        "step": 1.0006789219232253
+      }
+    ],
+    "partial_result_stars": 2,
+    "partial_result_transition": {
+      "accepted_steps": 14,
+      "live_camera": 12.7,
+      "live_step": 14,
+      "result_camera_from_renderer": 14.7,
+      "result_step_from_renderer": 16
+    },
+    "pre_next_input": [
+      {
+        "camera": 0,
+        "elapsed": 4.7,
+        "expression": "neutral",
+        "jump_age": 0.7000000000000002,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.8,
+        "expression": "neutral",
+        "jump_age": 0.7999999999999998,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.9,
+        "expression": "neutral",
+        "jump_age": 0.9000000000000004,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 1
+      },
+      {
+        "camera": 0,
+        "elapsed": 4.98,
+        "expression": "neutral",
+        "jump_age": 0.9800000000000004,
+        "pose": 28,
+        "recovery": "idle",
+        "step": 1
+      }
+    ],
+    "recovery_last_phase": {
+      "age": 0.4,
+      "phase": "returning",
+      "pose": 28
+    },
+    "scope": "local production Swift sampling, not native frame/FPS measurement",
+    "source_extracted_without_edits": true,
+    "unused_ready_frames": [
+      29,
+      30,
+      31
+    ]
+  },
+  "canonical_evidence": "artifacts/evidence/test-results/MOTION-REVIEW-20261009.json",
+  "evidence_sha256": {
+    "TestResults/MOTION-REVIEW-20261009/motion-samples.json": "b9c706e2eba129154febed582e799f597824a5ac7596783b699622d27d21bb5b",
+    "TestResults/MOTION-REVIEW-20261009/motion-audit.swift": "d31cca95602544920d0ae744dc4b30e86aad238b054caf436ec7cb8b9abd5551",
+    "TestResults/MOTION-REVIEW-20261009/source-hashes.json": "af70570e2f3a58d93221d239a6845dd0d8698eef81f257bef0b4c70cbaf4c0d1",
+    "TestResults/MOTION-REVIEW-20261009/check-review.py": "38251b1c6d70161e5d6ff998f1407a4f49611044933bb4a41c54c76cd925a710",
+    "TestResults/MOTION-REVIEW-20261009/compile.log": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "TestResults/MOTION-REVIEW-20261009/memory-writer.log": "2fb398c33a754c08458ad4ee6ee8efaa9fe7bdcc160f2fee1264cd1e4c4b1a8c",
+    "TestResults/MOTION-REVIEW-20261009/memory-guard.log": "eca82e77fa8f009879c77f3b53a7c804c1a9f09042f5788063b0af4b4d40136e",
+    "artifacts/evidence/test-results/MOTION-REVIEW-20261009.json": "2a8c3a5b250221eb23e1174b1271dcdc45cfcf99260078c6cbb145dfe8eff13a"
+  },
+  "changes": {
+    "App": false,
+    "assets": false,
+    "timing_scoring_save": false,
+    "version": false,
+    "install": false,
+    "upload": false,
+    "docs_plan_memory": true
+  },
+  "not_claimed": [
+    "Fixed animation",
+    "Native presented FPS",
+    "Physical input latency",
+    "New native regression pass",
+    "First-level acceptance",
+    "Child appeal",
+    "Public readiness",
+    "PHONE08 automatic launch success"
+  ],
+  "memory_guard": {
+    "exit_code": 0,
+    "current_diff_blockers": 0,
+    "repo_state_blockers": 0,
+    "background_debt": [
+      "root canonical writer/guard absent",
+      "missing_canonical_memory=1",
+      "test_evidence_provenance_not_found=2"
+    ],
+    "claim_boundary": "Review/memory validation only; no full governance adoption claim"
+  }
+}

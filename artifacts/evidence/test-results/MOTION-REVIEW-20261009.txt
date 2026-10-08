@@ -1,0 +1,1 @@
+{"review_evidence_validation": "PASS", "production_source_unchanged": 107, "reviewed_source_art_files": 10, "confirmed_wait_seconds": [0.36, 0.72], "early_first_jump_pose_guard": "REPRODUCED", "passing_partial_result_scene_jump": "SOURCE_CONFIRMED", "native_test_rerun": false, "physical_FPS": "NOT MEASURED", "implementation": "NOT CHANGED"}

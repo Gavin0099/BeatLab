@@ -267,3 +267,14 @@
 - Validation boundary: artifacts/evidence/test-results/PHONE-08.json
 - Next action: Owner unlock or open installed 拍拍冒險; retry only launch after unlock. Trial first-level three-character falling/catching/returning expressions. First-level acceptance and physical FPS/timing pending; levels2–10 slice planning deferred.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:ae693bd62b1f99a183570569741502e25398e13fbe2712c17e99f667f9794b5e -->
+### Canonical memory checkpoint — motion-review-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `ae693bd62b1f99a183570569741502e25398e13fbe2712c17e99f667f9794b5e`
+- Commit binding: `eb73808` (bound)
+- Record: Owner reports jump/fall improved but inter-jump motion absent. Complete read-only first-level motion review: stationary28 freezes nominal .36s, valid early-to-late .72s; first early accepted jump moves while count-in pose guard holds28 until elapsed4 then frame16. No anticipation/idle branch; old native tests enforce static wait. Actual14/16 Perfect earns2stars but result scene forces step16. Local extracted production Swift+real matcher diagnostic PASS,107 candidate inputs unchanged; original3dense sheets inspected. No App edit/build/install/upload or native FPS claim.
+- Validation boundary: artifacts/evidence/test-results/MOTION-REVIEW-20261009.json
+- Next action: Proposed first-level motion-loop slice should join landing→beat idle→anticipation→accepted flight and recovery→idle, fix first early texture guard, update whole-cycle native tests and physical frame-pacing evidence; preserve accepted curves/audio/score/save. First-level acceptance pending; defer levels2–10.
+- PLAN reconciliation: `updated`
