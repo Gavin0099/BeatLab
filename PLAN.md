@@ -433,3 +433,9 @@ Owner實際回報跳／掉落較順，但兩跳之間沒有動作；這是局部
 Owner明確要求現在同Wi-Fi安裝。重用PHONE08已簽署GAME24 Debug0.1.0(13)，107來源／frozen包／簽章／原手機profile／compiled表情assets PASS，fresh paired localNetwork確認；不因review文件重建或加build號。Status INSTALL_PENDING；此次不是兩跳間動作修正版，已向owner說明。契約PHONE09；保持data/container、第一關接受pending及第2–10關deferred。
 
 PHONE09交付：in-place Wi-Fi install PASS、devicectl launch PASS，App已啟動（process receipt可查）；原版本／來源107不變、未reset/uninstall，未build或上傳TestFlight。Status INSTALLED_AND_LAUNCHED_FOR_TRIAL；PHONE08原locked launch仍保留歷史，本次成功另記。下一步仍是第一關完整idle/anticipation循環實作與體感／physical驗證，不將再次安裝當作修好或first-level完成。
+
+### 2026-10-09 — GAME-25 兩跳之間銜接實作
+
+Owner明確授權「做下去幫我安裝」。先定GAME25 exact-file L2 contract：補grounded呼吸／局部tail-ear-antenna連續動作、real upcoming note蓄力、landing/recovery淡入及有效first early優先顯示flight。保持originalPNG/anchors與已接受flight/recovery曲線、音訊/input/grade/save不變；full App/Core及native整段/像素/脚點檢查後才Wi-Fi安裝。Status IMPLEMENTATION_IN_PROGRESS；F5結果接點另留pending，不擴第2–10關，不上傳TestFlight/public。
+
+GAME25 source/native gate通過：107來源isolated/current一致、105個GAME24輸入不變，八個既有曲線／atlas／route block完全保留。App81/Core53、實際觸控與stop/restart UI1 PASS；333 native specimens涵蓋三角色四跳、回復與尺寸/light-dark。原生像素證明grounded上半身改變、脚點固定；scene-local cached shader及paused/reduced reset檢查PASS。Status SOURCE_NATIVE_TESTED / WIFI_INSTALL_PENDING。25samples/s重播不是physical FPS證据；first-level體感/physical timing及F5結果接點仍pending。

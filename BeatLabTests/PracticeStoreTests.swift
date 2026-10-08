@@ -946,7 +946,7 @@ final class DenseCharacterMotionTests: XCTestCase {
         XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.500001, age: nil, reduceMotion: false, stationary: false), 0)
         XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.48, age: 0.48, reduceMotion: false, stationary: true), 24)
         XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.64, age: 0.64, reduceMotion: false, stationary: true), 28)
-        for time in [Double.nan, .infinity, -.infinity, -1, 3.99, 100, Double.greatestFiniteMagnitude] {
+        for time in [Double.nan, .infinity, -.infinity, -1, 100, Double.greatestFiniteMagnitude] {
             XCTAssertEqual(DenseAnimationFrame.sample(elapsed: time, age: 0.16, reduceMotion: false, stationary: false), 28)
         }
         for time in [4.01,4.3,4.6,5.01] {
@@ -986,7 +986,7 @@ final class DenseCharacterMotionTests: XCTestCase {
                 XCTAssertTrue(character.texture === pack.textures[index])
             }
             scene.configure(EggSceneSnapshot(elapsed: 4.8, theme: theme, route: route, platformJourney: true))
-            XCTAssertTrue(character.texture === pack.textures[28], "Standing on a platform cannot animate a running gait")
+            XCTAssertTrue(character.texture === pack.textures[28], "Standing keeps its registered base texture; grounded shader supplies idle motion, not running")
             scene.configure(EggSceneSnapshot(elapsed: 4.2, reduceMotion: true, theme: theme, route: route, platformJourney: true))
             XCTAssertTrue(character.texture === pack.textures[28])
             XCTAssertEqual(player.xScale, 1); XCTAssertEqual(player.yScale, 1)
@@ -1207,8 +1207,10 @@ final class JourneyRecoveryExpressionTests: XCTestCase {
                 XCTAssertTrue(actor.shader === expressions.shaders[pose]); XCTAssertEqual(actor.alpha,1)
                 XCTAssertEqual(scene.children.count,count)
             }
-            for snapshot in [EggSceneSnapshot(elapsed:4.80,theme:theme,route:route,platformJourney:true),
-                EggSceneSnapshot(elapsed:4.46,reduceMotion:true,theme:theme,route:route,platformJourney:true),
+            scene.configure(EggSceneSnapshot(elapsed:4.80,theme:theme,route:route,platformJourney:true))
+            XCTAssertNotNil(actor.shader, "Recovery hands off to grounded motion")
+            XCTAssertFalse(expressions.shaders.contains { $0 === actor.shader }, "No stuck recovery expression on grounded idle")
+            for snapshot in [EggSceneSnapshot(elapsed:4.46,reduceMotion:true,theme:theme,route:route,platformJourney:true),
                 EggSceneSnapshot(elapsed:0,preparing:true,theme:theme,platformJourney:true),
                 EggSceneSnapshot(elapsed:4.46,finishedPassed:false,theme:theme,route:route,platformJourney:true),
                 EggSceneSnapshot(elapsed:4.46,theme:theme,platformJourney:true)] {
@@ -1258,5 +1260,161 @@ final class JourneyRecoveryExpressionTests: XCTestCase {
         let context=try XCTUnwrap(CGContext(data:&result,width:image.width,height:image.height,bitsPerComponent:8,bytesPerRow:image.width*4,space:CGColorSpaceCreateDeviceRGB(),bitmapInfo:CGImageAlphaInfo.premultipliedLast.rawValue))
         context.draw(image,in:CGRect(x:0,y:0,width:image.width,height:image.height))
         return result
+    }
+}
+
+
+final class JourneyIdleContinuityTests: XCTestCase {
+    func testGroundedCycleAnticipatesWithoutMovingOrOverridingFlightAndInvalidStates() throws {
+        let route = try routeFixture(accepted: [0,1,2,3])
+        func sample(_ time: Double, reduced: Bool = false, stopped: Bool = false) -> JourneyIdleMotion {
+            JourneyIdleMotion.sample(route: route, elapsed: time,
+                frame: PlatformJourneyFrame.sample(route: route, elapsed: time, reduced: reduced),
+                theme: .dinosaur, reduced: reduced, stopped: stopped)
+        }
+        XCTAssertEqual(sample(4.62).phase, .inactive)
+        XCTAssertEqual(sample(4.70).phase, .waiting)
+        XCTAssertEqual(sample(4.90).phase, .anticipating)
+        XCTAssertGreaterThan(sample(4.90).charge, sample(4.80).charge)
+        XCTAssertEqual(sample(5.02).phase, .releasing)
+        XCTAssertEqual(sample(5.12).phase, .inactive)
+        XCTAssertNotEqual(sample(4.72).breath, sample(4.76).breath)
+        for beat in 0..<4 {
+            let time = Double(4 + beat) + 0.90
+            let frame = PlatformJourneyFrame.sample(route: route, elapsed: time, reduced: false)
+            XCTAssertEqual(frame.step, Double(beat + 1), accuracy: 1e-10, "Anticipation never advances a platform")
+            XCTAssertEqual(sample(time).phase, .anticipating)
+        }
+        for time in [Double.nan, .infinity, -.infinity, -1, 3.0, 100] { XCTAssertEqual(sample(time).phase, .inactive) }
+        XCTAssertEqual(sample(4.90,reduced:true).phase,.inactive)
+        XCTAssertEqual(sample(4.90,stopped:true).phase,.inactive)
+        XCTAssertEqual(JourneyIdleMotion.sample(route:nil,elapsed:4.90,
+            frame:PlatformJourneyFrame.sample(route:nil,elapsed:4.90,reduced:false),theme:.cat,reduced:false,stopped:false).phase,.inactive)
+    }
+    func testActualMatcherFirstEarlyFlightAndMissReturnKeepJudgmentAndWorldAuthority() throws {
+        let epoch=1000.0,targets=(0..<16).map { TimingTarget(id:$0,time:epoch+4+Double($0),stroke:.right) }
+        for inputs in [[3.82,5.18],[4.18,4.82],[4.0,5.0]] {
+            var session=try TimingSession(targets:targets)
+            for time in inputs { session.tap(at:epoch+time) }
+            let route=try XCTUnwrap(RunnerRoute(targets:targets,hits:session.hits,epoch:epoch,endTime:epoch+20.18,alignment:0))
+            XCTAssertEqual(session.summary.matched.count,2)
+            let time=inputs[0]+0.09,frame=PlatformJourneyFrame.sample(route:route,elapsed:time,reduced:false)
+            XCTAssertGreaterThan(frame.step,0)
+            XCTAssertEqual(DenseAnimationFrame.sample(elapsed:time,age:frame.jumpAge,reduceMotion:false,stationary:true),14,
+                "First early press must show flight before count-in ends")
+            let before=route.accepted
+            _=JourneyIdleMotion.sample(route:route,elapsed:inputs[0]+0.80,frame:frame,theme:.robot,reduced:false,stopped:false)
+            XCTAssertEqual(route.accepted,before)
+            XCTAssertEqual(session.summary.matched.count,2)
+        }
+        var session=try TimingSession(targets:targets)
+        XCTAssertEqual(session.tap(at:epoch+4.4)?.grade,.extra)
+        let missed=try XCTUnwrap(RunnerRoute(targets:targets,hits:session.hits,epoch:epoch,endTime:epoch+20.18,alignment:0))
+        for time in [4.2,4.5,4.7] {
+            let frame=PlatformJourneyFrame.sample(route:missed,elapsed:time,reduced:false)
+            XCTAssertEqual(JourneyIdleMotion.sample(route:missed,elapsed:time,frame:frame,theme:.cat,reduced:false,stopped:false).phase,.inactive)
+            XCTAssertEqual(frame.step,0)
+        }
+        let returning=PlatformJourneyFrame.sample(route:missed,elapsed:4.80,reduced:false)
+        XCTAssertEqual(JourneyIdleMotion.sample(route:missed,elapsed:4.80,frame:returning,theme:.cat,reduced:false,stopped:false).phase,.anticipating)
+        XCTAssertEqual(session.tap(at:epoch+4.82)?.targetID,1)
+        let recovered=try XCTUnwrap(RunnerRoute(targets:targets,hits:session.hits,epoch:epoch,endTime:epoch+20.18,alignment:0))
+        let frame=PlatformJourneyFrame.sample(route:recovered,elapsed:4.90,reduced:false)
+        XCTAssertEqual(frame.recovery.phase,.idle);XCTAssertGreaterThan(frame.step,0)
+        XCTAssertEqual(session.summary.matched.count,1);XCTAssertEqual(session.summary.extraCount,1)
+    }
+    @MainActor
+    func testNativeIdleChangesUpperBodyPixelsButPreservesFeetAndSceneLocalRig() throws {
+        for theme in RunnerTheme.allCases {
+            let window=UIWindow(frame:CGRect(x:0,y:0,width:400,height:800)),controller=UIViewController()
+            let view=SKView(frame:CGRect(x:0,y:0,width:400,height:500)),scene=EggSpriteScene(size:CGSize(width:400,height:500))
+            window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+            defer { scene.detach();view.presentScene(nil);window.isHidden=true }
+            let route=try routeFixture(accepted:[0,1,2,3])
+            let actor=try XCTUnwrap(scene.childNode(withName:"player/characterPrimary") as? SKSpriteNode)
+            let player=try XCTUnwrap(scene.childNode(withName:"player")),nodes=scene.children.count
+            scene.configure(EggSceneSnapshot(elapsed:4.76,theme:theme,route:route,platformJourney:true))
+            let shader=try XCTUnwrap(actor.shader),position=player.position,texture=actor.texture
+            let a=try XCTUnwrap(view.texture(from:actor)).cgImage()
+            scene.configure(EggSceneSnapshot(elapsed:4.94,theme:theme,route:route,platformJourney:true))
+            let b=try XCTUnwrap(view.texture(from:actor)).cgImage()
+            XCTAssertTrue(actor.shader === shader);XCTAssertTrue(actor.texture === texture)
+            XCTAssertEqual(player.position,position);XCTAssertEqual(player.xScale,1);XCTAssertEqual(player.yScale,1)
+            XCTAssertEqual(player.children.count,1);XCTAssertEqual(scene.children.count,nodes)
+            XCTAssertEqual(a.width,b.width);XCTAssertEqual(a.height,b.height)
+            let bytesA=try rgba(a),bytesB=try rgba(b)
+            XCTAssertNotEqual(bytesA,bytesB,"Previously frozen inter-jump native pixels must actually move")
+            let feetStart=a.width*a.height*3
+            XCTAssertEqual(Array(bytesA[feetStart...]),Array(bytesB[feetStart...]),"Planted feet cannot drift during breathing or charge")
+            let other=EggSpriteScene(size:CGSize(width:400,height:500))
+            other.configure(EggSceneSnapshot(elapsed:4.94,theme:theme,route:route,platformJourney:true))
+            let otherActor=try XCTUnwrap(other.childNode(withName:"player/characterPrimary") as? SKSpriteNode)
+            let otherShader=try XCTUnwrap(otherActor.shader)
+            XCTAssertFalse(otherShader === shader,"Scene-local uniforms must not leak across previews")
+            let otherCharge=otherShader.uniformNamed("u_charge")?.floatValue
+            scene.configure(EggSceneSnapshot(elapsed:4.76,theme:theme,route:route,platformJourney:true))
+            XCTAssertEqual(otherShader.uniformNamed("u_charge")?.floatValue,otherCharge)
+            for state in [EggSceneSnapshot(elapsed:4.94,reduceMotion:true,theme:theme,route:route,platformJourney:true),
+                EggSceneSnapshot(elapsed:0,preparing:true,theme:theme,platformJourney:true),
+                EggSceneSnapshot(elapsed:4.94,finishedPassed:false,theme:theme,route:route,platformJourney:true),
+                EggSceneSnapshot(elapsed:4.94,theme:theme,platformJourney:true)] {
+                scene.configure(state);XCTAssertNil(actor.shader)
+            }
+        }
+    }
+    @MainActor
+    func testNativeFourJumpSequencesAndRecoveryHandoffAcrossThemesAndViewports() throws {
+        for theme in RunnerTheme.allCases {
+            let window=UIWindow(frame:CGRect(x:0,y:0,width:400,height:800)),controller=UIViewController()
+            let view=SKView(frame:CGRect(x:0,y:0,width:400,height:500)),scene=EggSpriteScene(size:CGSize(width:400,height:500))
+            window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+            defer { scene.detach();view.presentScene(nil);window.isHidden=true }
+            let route=try routeFixture(accepted:[0,1,2,3]),missed=try routeFixture()
+            for index in 0...100 {
+                let time=4+Double(index)/25
+                scene.configure(EggSceneSnapshot(elapsed:time,theme:theme,route:route,platformJourney:true))
+                let image=try XCTUnwrap(view.texture(from:scene)).cgImage()
+                let attachment=XCTAttachment(image:UIImage(cgImage:image));attachment.name="GAME25 \(theme.rawValue) loop \(index)";attachment.lifetime = .keepAlways;add(attachment)
+            }
+            for time in [4.70,4.78,4.82,4.86,4.90,4.98] {
+                scene.configure(EggSceneSnapshot(elapsed:time,theme:theme,route:missed,platformJourney:true))
+                let image=try XCTUnwrap(view.texture(from:scene)).cgImage()
+                let attachment=XCTAttachment(image:UIImage(cgImage:image));attachment.name="GAME25 \(theme.rawValue) return \(time)";attachment.lifetime = .keepAlways;add(attachment)
+            }
+            for height in [240.0,650.0] {
+                scene.size=CGSize(width:320,height:height)
+                for style in [UIUserInterfaceStyle.light,.dark] {
+                    view.overrideUserInterfaceStyle=style
+                    scene.configure(EggSceneSnapshot(elapsed:4.94,theme:theme,route:route,platformJourney:true))
+                    let image=try XCTUnwrap(view.texture(from:scene)).cgImage()
+                    let attachment=XCTAttachment(image:UIImage(cgImage:image));attachment.name="GAME25 \(theme.rawValue) height\(height) style\(style.rawValue)";attachment.lifetime = .keepAlways;add(attachment)
+                }
+            }
+        }
+    }
+    @MainActor
+    func testLiveIdleUniformsAdvanceOnDisplayCallbacksThenFreezeWhenSuspended() async throws {
+        let window=UIWindow(frame:CGRect(x:0,y:0,width:400,height:800)),controller=UIViewController()
+        let view=SKView(frame:CGRect(x:0,y:0,width:400,height:500)),scene=EggSpriteScene(size:CGSize(width:400,height:500))
+        window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+        defer { scene.detach();view.presentScene(nil);window.isHidden=true }
+        let route=try routeFixture(accepted:[0]),epoch=PracticeStore.now()-4.72
+        scene.configure(EggSceneSnapshot(presentationElapsed:{$0-epoch},theme:.dinosaur,route:route,platformJourney:true))
+        let actor=try XCTUnwrap(scene.childNode(withName:"player/characterPrimary") as? SKSpriteNode)
+        let shader=try XCTUnwrap(actor.shader),count=scene.callbackCount
+        let old=shader.uniformNamed("u_charge")?.floatValue
+        try await Task.sleep(nanoseconds:100_000_000)
+        XCTAssertGreaterThan(scene.callbackCount,count)
+        XCTAssertTrue(actor.shader === shader)
+        XCTAssertNotEqual(shader.uniformNamed("u_charge")?.floatValue,old)
+        scene.configure(EggSceneSnapshot(suspended:true,presentationElapsed:{$0-epoch},theme:.dinosaur,route:route,platformJourney:true))
+        let paused=scene.callbackCount,charge=shader.uniformNamed("u_charge")?.floatValue
+        try await Task.sleep(nanoseconds:100_000_000)
+        XCTAssertEqual(scene.callbackCount,paused);XCTAssertEqual(shader.uniformNamed("u_charge")?.floatValue,charge)
+    }
+    private func rgba(_ image: CGImage) throws -> [UInt8] {
+        var result=[UInt8](repeating:0,count:image.width*image.height*4)
+        let context=try XCTUnwrap(CGContext(data:&result,width:image.width,height:image.height,bitsPerComponent:8,bytesPerRow:image.width*4,space:CGColorSpaceCreateDeviceRGB(),bitmapInfo:CGImageAlphaInfo.premultipliedLast.rawValue))
+        context.draw(image,in:CGRect(x:0,y:0,width:image.width,height:image.height));return result
     }
 }

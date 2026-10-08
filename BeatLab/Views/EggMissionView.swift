@@ -499,12 +499,112 @@ enum RecoveryExpressionAtlas {
     }
 }
 
+/// Grounded follow-through samples actual note/input times, never creates a hit.
+/// Base art stays registered; only the upper body breathes/anticipates a cue.
+struct JourneyIdleMotion {
+    enum Phase { case inactive, waiting, anticipating, releasing }
+    let phase: Phase
+    let breath: Double
+    let sway: Double
+    let detail: Double
+    let charge: Double
+    static let inactive = Self(phase: .inactive, breath: 0, sway: 0, detail: 0, charge: 0)
+
+    static func sample(route: RunnerRoute?, elapsed: Double, frame: PlatformJourneyFrame,
+                       theme: RunnerTheme, reduced: Bool, stopped: Bool) -> Self {
+        guard let route, !reduced, !stopped, elapsed.isFinite, (0...20.18).contains(elapsed),
+              frame.recovery.phase == .idle, let first = route.relativeTimes.first,
+              elapsed >= first - 0.36, route.beatDuration.isFinite, route.beatDuration > 0 else { return .inactive }
+        var time = elapsed
+        var gain = 1.0
+        var releasing = false
+        if let age = frame.jumpAge {
+            guard age.isFinite, age >= 0 else { return .inactive }
+            if age < 0.10 {
+                // Preserve the pose at the actual press, then release it gently.
+                // No pending animation delays an early/late accepted takeoff.
+                time -= age
+                gain = 1 - JourneyMotion.progress(age / 0.10)
+                releasing = true
+            } else if age < 0.64 { return .inactive }
+            else { gain = JourneyMotion.progress((age - 0.64) / 0.08) }
+        } else { gain = JourneyMotion.progress((time - first + 0.36) / 0.08) }
+
+        // Future fixture hits must not hide their upcoming cue. A hit exactly at
+        // sample time is deliberately excluded when reconstructing pre-press pose.
+        let prior = Set(route.journeyHits.filter { $0.inputTime - route.epoch < time - 1e-9 }.compactMap(\.targetID))
+        if let missed = route.targets.indices.last(where: {
+            !prior.contains(route.targets[$0].id) && time - route.relativeTimes[$0] - route.alignment - TimingSession.matchingWindow >= 0.60
+        }) {
+            let recoveredAge = time - route.relativeTimes[missed] - route.alignment - TimingSession.matchingWindow
+            gain *= JourneyMotion.progress((recoveredAge - 0.60) / 0.08)
+        }
+        let next = route.targets.indices.first {
+            !prior.contains(route.targets[$0].id) && route.relativeTimes[$0] >= time - TimingSession.matchingWindow - 1e-9
+        }
+        var charge = 0.0
+        if let next {
+            let delta = route.relativeTimes[next] - time
+            if delta >= 0 { charge = JourneyMotion.progress(1 - delta / 0.24) }
+            else {
+                charge = 1 - JourneyMotion.progress(-delta / TimingSession.matchingWindow)
+                // Return to neutral before a real miss switches to falling art.
+                gain *= 1 - JourneyMotion.progress((-delta - 0.10) / 0.08)
+            }
+        }
+        let angle = 2 * Double.pi * (time - first) / route.beatDuration
+        return Self(phase: releasing ? .releasing : charge > 0 ? .anticipating : .waiting,
+                    breath: sin(angle) * gain,
+                    sway: sin(angle * (theme == .robot ? 1 : 0.5)) * gain,
+                    detail: sin(angle * (theme == .cat ? 2 : 1)) * gain,
+                    charge: charge * gain)
+    }
+}
+
+/// Scene-local uniforms: two views cannot change one another's actor. A single
+/// texture is deformed, never cross-faded into a second silhouette. The lower
+/// 28% is unchanged so waiting/charging does not slide the planted feet.
+private struct JourneyGroundedRig {
+    let breath = SKUniform(name: "u_breath", float: 0)
+    let sway = SKUniform(name: "u_sway", float: 0)
+    let detail = SKUniform(name: "u_detail", float: 0)
+    let charge = SKUniform(name: "u_charge", float: 0)
+    let shader: SKShader
+    init(theme: RunnerTheme) {
+        shader = SKShader(source: """
+        void main() {
+            vec2 uv = v_tex_coord;
+            float upper = smoothstep(0.28, 0.72, uv.y);
+            float mechanical = step(1.5, u_style);
+            float feline = step(0.5, u_style) * (1.0 - mechanical);
+            uv.y += upper * (u_charge * mix(0.045, 0.025, mechanical)
+                          - u_breath * mix(0.016, 0.008, mechanical));
+            uv.x -= upper * u_sway * mix(0.012, 0.004, mechanical);
+            float tail = (1.0 - smoothstep(0.27, 0.47, v_tex_coord.x))
+                       * smoothstep(0.28, 0.40, v_tex_coord.y)
+                       * (1.0 - smoothstep(0.68, 0.78, v_tex_coord.y));
+            uv.y -= tail * u_detail * mix(0.036, 0.045, feline) * (1.0 - mechanical);
+            float tips = smoothstep(0.80, 0.93, v_tex_coord.y);
+            uv.x -= tips * u_detail * (mechanical * 0.014 + feline * 0.007);
+            vec4 body = texture2D(u_texture, uv);
+            gl_FragColor = body * v_color_mix;
+        }
+        """, uniforms: [breath, sway, detail, charge,
+                         SKUniform(name: "u_style", float: theme == .robot ? 2 : theme == .cat ? 1 : 0)])
+    }
+    func apply(_ value: JourneyIdleMotion) {
+        breath.floatValue = Float(value.breath); sway.floatValue = Float(value.sway)
+        detail.floatValue = Float(value.detail); charge.floatValue = Float(value.charge)
+    }
+}
+
 enum DenseAnimationFrame {
     static let ready = 28
     static func sample(elapsed: Double, age: Double?, reduceMotion: Bool, stationary: Bool) -> Int {
-        guard !reduceMotion, elapsed.isFinite, (0...20.18).contains(elapsed), elapsed >= 4 else { return ready }
+        guard !reduceMotion, elapsed.isFinite, (0...20.18).contains(elapsed) else { return ready }
         if let age, age.isFinite, (0..<0.48).contains(age) { return 12 + min(11, Int(age * 25)) }
         if let age, age.isFinite, (0.48..<0.64).contains(age) { return 24 + min(3, Int((age - 0.48) * 25)) }
+        guard elapsed >= 4 else { return ready }
         guard !stationary else { return ready }
         return Int(((elapsed - 4) * 24).truncatingRemainder(dividingBy: 12))
     }
@@ -621,6 +721,7 @@ final class EggSpriteScene: SKScene {
     private let safety = SKShapeNode(ellipseOf: CGSize(width: 90, height: 22))
     private let glint: SKShapeNode
     private var characterSize: CGFloat = 118
+    private var groundedRig = JourneyGroundedRig(theme: .dinosaur)
     #if DEBUG
     private(set) var callbackCount = 0
     private(set) var renderCount = 0
@@ -718,6 +819,7 @@ final class EggSpriteScene: SKScene {
     }
     private func applyTheme(_ next: RunnerTheme) {
         theme = next
+        groundedRig = JourneyGroundedRig(theme: next)
         EggSceneTextures.warm(next)
         island.texture = CompanionAtlas.background(next)
         if next == .dinosaur {
@@ -898,7 +1000,12 @@ final class EggSpriteScene: SKScene {
         player.yScale = 1 - contact * 0.10 * theme.compression
         let faceShader = !stopped && RecoveryExpression.sample(recovery, reduced: reduced) != .neutral
             ? RecoveryExpressionAtlas.shader(theme: theme, pose: recovery.pose) : nil
-        if first.shader !== faceShader { first.shader = faceShader }
+        let idle = JourneyIdleMotion.sample(route: route, elapsed: elapsed, frame: state, theme: theme,
+                                           reduced: reduced, stopped: stopped)
+        groundedRig.apply(idle)
+        let idleShader = idle.phase != .inactive && DenseCharacterAtlas.packs[theme]?.isValid == true ? groundedRig.shader : nil
+        let shader = faceShader ?? idleShader
+        if first.shader !== shader { first.shader = shader }
         first.color = .white; first.colorBlendFactor = 0; first.alpha = 1
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
         else if recovery.phase != .idle {
