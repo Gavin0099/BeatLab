@@ -370,9 +370,10 @@ struct DenseJourneyFrame {
     let poseAge: Double?
     let landing: Double
     let active: Bool
-    static func sample(route: RunnerRoute?, elapsed: Double, reduced: Bool) -> Self? {
+    static func sample(route: RunnerRoute?, elapsed: Double, reduced: Bool, presentationTail: Double = 0) -> Self? {
         guard let route, let grid = route.grid, grid.isDense else { return nil }
-        guard elapsed.isFinite, (0...route.duration).contains(elapsed) else {
+        let tail = presentationTail.isFinite ? min(0.80,max(0,presentationTail)) : 0
+        guard elapsed.isFinite, (0...route.duration+tail).contains(elapsed) else {
             return Self(world: .sample(route:nil,elapsed:0,reduced:true),height:0,poseAge:nil,landing:0,active:false)
         }
         let flight = grid.flightDuration, contact = min(0.10, grid.interval * 0.20)
@@ -452,6 +453,49 @@ struct PlatformJourneyFrame {
     }
 }
 
+/// Result display may finish an existing flight/catch; never extends transport.
+enum JourneyResultPresentation {
+    static let maximumTail = 0.80
+    static func isAtEnd(route: RunnerRoute?, elapsed: Double) -> Bool {
+        guard let route, route.duration.isFinite, route.duration >= 0, elapsed.isFinite else { return false }
+        return elapsed >= route.duration - 1e-9
+    }
+    static func settlingDuration(_ route: RunnerRoute?) -> Double {
+        guard let route, isAtEnd(route:route,elapsed:route.duration) else { return 0 }
+        let dense = route.grid?.isDense == true
+        let flight = dense ? route.grid!.flightDuration : 0.48
+        let contact = dense ? min(0.10,route.grid!.interval*0.20) : 0.16
+        var end = route.duration
+        for hit in route.journeyHits where hit.inputTime-route.epoch <= route.duration+1e-9 {
+            end = max(end,hit.inputTime-route.epoch+flight+contact)
+        }
+        for index in route.targets.indices where !route.accepted.contains(route.targets[index].id) {
+            end = max(end,route.relativeTimes[index]+route.alignment+TimingSession.matchingWindow+0.60)
+        }
+        return min(maximumTail,max(0,end-route.duration))
+    }
+    static func elapsed(route: RunnerRoute, start: Double, host: Double, reduced: Bool) -> Double {
+        let tail = settlingDuration(route)
+        let age = start.isFinite && host.isFinite ? max(0,host-start) : 0
+        return route.duration + (reduced ? tail : min(tail,age))
+    }
+    static func allNotes(_ route: RunnerRoute?) -> Bool {
+        guard let route else { return false }
+        return route.journeyHits.count == route.targets.count
+    }
+    static func title(theme: RunnerTheme, passed: Bool, route: RunnerRoute?) -> String {
+        guard passed else { return theme.retry }
+        guard let route else { return "挑戰通過！" }
+        if allNotes(route) { return theme.passed }
+        return "跟上 \(route.journeyHits.count)/\(route.targets.count) 拍，挑戰通過！"
+    }
+    static func caption(theme: RunnerTheme, passed: Bool, route: RunnerRoute?, compact: Bool) -> String {
+        guard passed else { return compact ? "接住了！" : "\(theme.item)安全接住了" }
+        if allNotes(route) { return compact ? "送到了！" : theme.passed }
+        return "跟上 \(route?.journeyHits.count ?? 0)/\(route?.targets.count ?? 0) 拍"
+    }
+}
+
 /// A failed step is not a reversed jump. Descent gains speed, the catch brakes
 /// it, then a visible carrier returns the actor. Read-only presentation at60BPM.
 struct JourneyRecovery {
@@ -524,6 +568,9 @@ struct EggMissionScene: View {
     @Environment(\.dynamicTypeSize) private var textSize
     private let ink = Color(red: 0.08, green: 0.25, blue: 0.18)
     private var sceneCaption: String {
+        if platformJourney, let passed = finishedPassed {
+            return JourneyResultPresentation.caption(theme:theme,passed:passed,route:route,compact:textSize.isAccessibilitySize)
+        }
         if textSize.isAccessibilitySize {
             if let passed = finishedPassed { return passed ? "送到了！" : "接住了！" }
             if preparing { return theme == .cat ? "帶魚出發" : theme == .robot ? "帶能源" : "帶蛋出發" }
@@ -552,7 +599,7 @@ struct EggMissionScene: View {
             }
         }.clipShape(RoundedRectangle(cornerRadius: 26))
             .accessibilityElement(children: .ignore).accessibilityLabel(theme.mission)
-            .accessibilityValue(finishedPassed.map { $0 ? "任務通過" : "需要再試一次" } ?? (platformJourney ? "抵達 \(accepted.count) 座小島" : "已跨過 \(accepted.count) 個障礙"))
+            .accessibilityValue(finishedPassed.map { ($0 ? "任務通過" : "需要再試一次") + (platformJourney ? "，抵達 \(route?.journeyHits.count ?? 0)/\(route?.targets.count ?? 0) 座小島" : "") } ?? (platformJourney ? "抵達 \(accepted.count) 座小島" : "已跨過 \(accepted.count) 個障礙"))
             .accessibilityIdentifier("eggMissionScene")
     }
 }
@@ -748,7 +795,8 @@ private struct JourneyGroundedRig {
 enum DenseAnimationFrame {
     static let ready = 28
     static func sample(elapsed: Double, age: Double?, reduceMotion: Bool, stationary: Bool) -> Int {
-        guard !reduceMotion, elapsed.isFinite, (0...20.18).contains(elapsed) else { return ready }
+        // Absolute-to-relative conversion may exceed the authored literal by an ULP.
+        guard !reduceMotion, elapsed.isFinite, (0...20.18+1e-9).contains(elapsed) else { return ready }
         if let age, age.isFinite, (0..<0.48).contains(age) { return 12 + min(11, Int(age * 25)) }
         if let age, age.isFinite, (0.48..<0.64).contains(age) { return 24 + min(3, Int((age - 0.48) * 25)) }
         guard elapsed >= 4 else { return ready }
@@ -875,6 +923,20 @@ final class EggSpriteScene: SKScene {
     private let glint: SKShapeNode
     private var characterSize: CGFloat = 118
     private var groundedRig = JourneyGroundedRig(theme: .dinosaur)
+    private struct ResultKey: Equatable {
+        let epoch: Double, duration: Double, alignment: Double
+        let matched: Int
+        let lastInput: Double?
+        let theme: RunnerTheme
+        let passed: Bool
+    }
+    private var resultKey: ResultKey?
+    private(set) var resultStartHost: Double?
+    private func resultTailActive(at host: Double) -> Bool {
+        guard let start = resultStartHost, let route = snapshot.route,
+              !snapshot.reduceMotion, !snapshot.suspended, host.isFinite else { return false }
+        return max(0,host-start) < JourneyResultPresentation.settlingDuration(route)
+    }
     #if DEBUG
     private(set) var callbackCount = 0
     private(set) var renderCount = 0
@@ -962,13 +1024,21 @@ final class EggSpriteScene: SKScene {
         let themeChanged = theme != state.theme
         if themeChanged { applyTheme(state.theme) }
         snapshot = state
+        if state.platformJourney, let passed = state.finishedPassed, let route = state.route,
+           JourneyResultPresentation.isAtEnd(route:route,elapsed:state.elapsed), !state.preparing {
+            let key = ResultKey(epoch:route.epoch,duration:route.duration,alignment:route.alignment,
+                                matched:route.journeyHits.count,lastInput:route.latestAccepted?.inputTime,
+                                theme:state.theme,passed:passed)
+            if key != resultKey { resultKey = key; resultStartHost = PracticeStore.now() }
+        } else { resultKey = nil; resultStartHost = nil }
         #if DEBUG
         if !state.animate { previousHost = nil }
         #endif
         // One display callback owns live drawing. SwiftUI publishes elapsed
         // around33Hz; it must not introduce a second render loop between frames.
         if !state.animate || !wasAnimating || themeChanged { render(at: PracticeStore.now()) }
-        if view?.isPaused != !state.animate { view?.isPaused = !state.animate }
+        let frames = state.animate || resultTailActive(at:PracticeStore.now())
+        if view?.isPaused != !frames { view?.isPaused = !frames }
     }
     private func applyTheme(_ next: RunnerTheme) {
         theme = next
@@ -997,13 +1067,17 @@ final class EggSpriteScene: SKScene {
     }
     func detach() {
         snapshot.presentationElapsed = nil; snapshot.acceptedAction = nil; snapshot.latestAction = nil
+        resultKey = nil; resultStartHost = nil
         view?.isPaused = true
         #if DEBUG
         previousHost = nil
         #endif
     }
     override func update(_ currentTime: TimeInterval) {
-        guard snapshot.animate else { return }
+        // Render one terminal sample before pausing; a callback arriving just
+        // after the tail deadline must not leave the SKView running forever.
+        guard snapshot.animate || resultTailActive(at:PracticeStore.now()) ||
+              (resultStartHost != nil && view?.isPaused == false) else { return }
         // Framework currentTime is not transported into matching/audio clocks.
         let host = PracticeStore.now(); render(at: host)
         #if DEBUG
@@ -1020,8 +1094,15 @@ final class EggSpriteScene: SKScene {
         #endif
         let raw = snapshot.presentationElapsed?(host) ?? snapshot.elapsed
         let limit = snapshot.platformJourney ? snapshot.route?.duration ?? 20.18 : 20.18
-        let elapsed = raw.isFinite ? min(limit, max(0, raw)) : 0
-        if snapshot.platformJourney { renderJourney(elapsed: elapsed, host: host); return }
+        let elapsed: Double
+        if let start = resultStartHost, let route = snapshot.route {
+            elapsed = JourneyResultPresentation.elapsed(route:route,start:start,host:host,reduced:snapshot.reduceMotion)
+        } else { elapsed = raw.isFinite ? min(limit,max(0,raw)) : 0 }
+        if snapshot.platformJourney {
+            renderJourney(elapsed:elapsed,host:host)
+            if resultStartHost != nil && !resultTailActive(at:host) { view?.isPaused = true }
+            return
+        }
         first.alpha = 1
         island.texture = CompanionAtlas.background(theme)
         floor.isHidden = false; edge.isHidden = false
@@ -1088,21 +1169,24 @@ final class EggSpriteScene: SKScene {
     }
     private func renderJourney(elapsed: Double, host: Double) {
         let route = snapshot.route, reduced = snapshot.reduceMotion
-        let dense = DenseJourneyFrame.sample(route: route, elapsed: snapshot.preparing ? 0 : elapsed, reduced: reduced)
+        let result = resultStartHost != nil
+        let dense = DenseJourneyFrame.sample(route:route,elapsed:snapshot.preparing ? 0 : elapsed,reduced:reduced,
+                                            presentationTail:result ? JourneyResultPresentation.settlingDuration(route) : 0)
         let state = dense?.world ?? PlatformJourneyFrame.sample(route: route, elapsed: snapshot.preparing ? 0 : elapsed, reduced: reduced)
         let stopped = snapshot.preparing || snapshot.finishedPassed != nil
+        let motionStopped = snapshot.preparing || (snapshot.finishedPassed != nil && !result)
         let w = size.width, h = size.height, stride = w * 0.27, ground = h * 0.31
         let completed = snapshot.finishedPassed == true
         let total = route?.targets.count ?? 16
-        let step = completed ? Double(total) : state.step, camera = completed ? max(0,Double(total)-1.3) : state.camera
+        let step = state.step, camera = state.camera
         let origin = w * 0.20 - CGFloat(camera) * stride
-        let activeFlight = !stopped && (dense?.active ?? (state.jumpAge.map { (0..<0.48).contains($0) } == true))
+        let activeFlight = !motionStopped && (dense?.active ?? (state.jumpAge.map { (0..<0.48).contains($0) } == true))
         let age = state.jumpAge ?? 1
         // Two valid four-grid presses can share an arc apex. Reserve headroom
         // for the registered sprite's rotation, scaling the whole trajectory.
         let highDensity = route?.grid.map { $0.interval < 0.30 } == true
         let hop = activeFlight && !reduced ? CGFloat(dense?.height ?? JourneyMotion.arc(age / 0.48)) * min(78, h * (dense == nil ? 0.20 : highDensity ? 0.14 : 0.16)) : 0
-        let recovery = stopped ? JourneyRecovery.idle : state.recovery
+        let recovery = motionStopped ? JourneyRecovery.idle : state.recovery
         let fall = CGFloat(recovery.depth)
         let extraAge = route?.hits.last.flatMap { $0.grade == .extra ? elapsed - ($0.inputTime - (route?.epoch ?? 0)) : nil }
         let extra = !stopped && !reduced && !activeFlight && recovery.phase == .idle && age >= 0.64 && extraAge.map { (0..<0.22).contains($0) } == true ? CGFloat(sin(.pi * extraAge! / 0.22)) : 0
@@ -1160,24 +1244,24 @@ final class EggSpriteScene: SKScene {
         shadow.xScale = 0.75 - hop / 300; shadow.alpha = (0.20 - hop / 600) * max(0, 1 - fall * 2)
         player.position = CGPoint(x: x, y: y)
         player.zRotation = reduced ? 0 : (-recovery.drift * 0.36 - (activeFlight ? JourneyMotion.arc(age / 0.48) * 0.05 : 0)) * Double(theme.lean)
-        let landing = !stopped && !reduced ? CGFloat(dense?.landing ?? ((0.48..<0.64).contains(age) ? pow(sin(.pi * (age - 0.48) / 0.16), 2) : 0)) : 0
+        let landing = !motionStopped && !reduced ? CGFloat(dense?.landing ?? ((0.48..<0.64).contains(age) ? pow(sin(.pi * (age - 0.48) / 0.16), 2) : 0)) : 0
         let contact = max(landing, CGFloat(recovery.compression))
         player.xScale = 1 + contact * 0.08 * theme.compression
         player.yScale = 1 - contact * 0.10 * theme.compression
-        let faceShader = !stopped && RecoveryExpression.sample(recovery, reduced: reduced) != .neutral
+        let faceShader = !motionStopped && RecoveryExpression.sample(recovery, reduced: reduced) != .neutral
             ? RecoveryExpressionAtlas.shader(theme: theme, pose: recovery.pose) : nil
-        let idle = JourneyIdleMotion.sample(route: route, elapsed: elapsed, frame: state, theme: theme,
-                                           reduced: reduced, stopped: stopped)
+        let idle = JourneyIdleMotion.sample(route:route,elapsed:result ? min(elapsed,route?.duration ?? elapsed) : elapsed,
+                                           frame:state,theme:theme,reduced:reduced,stopped:motionStopped)
         groundedRig.apply(idle)
         let idleShader = idle.phase != .inactive && DenseCharacterAtlas.packs[theme]?.isValid == true ? groundedRig.shader : nil
         let shader = faceShader ?? idleShader
         if first.shader !== shader { first.shader = shader }
         first.color = .white; first.colorBlendFactor = 0; first.alpha = 1
-        if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
-        else if recovery.phase != .idle {
+        if recovery.phase != .idle {
             setRecoveryPose(first, recovery.pose)
         }
-        else { setMotion(first, elapsed: snapshot.preparing ? 0 : elapsed, age: stopped ? nil : age, reduced: reduced, stationary: true) }
+        else { setMotion(first,elapsed:snapshot.preparing ? 0 : result ? min(elapsed,20.18) : elapsed,
+                         age:motionStopped ? nil : age,reduced:reduced,stationary:true) }
         safety.isHidden = recovery.phase == .idle
         let catchX = recovery.phase == .falling ? origin + CGFloat(step + 0.50) * stride : x
         let catchDepth = recovery.phase == .falling ? 0.75 : recovery.depth

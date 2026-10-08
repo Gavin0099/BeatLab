@@ -232,6 +232,7 @@ final class PracticeUITests: XCTestCase {
         capture(app,"GAME30 largest mixed full scene and four groups")
         XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:25))
         XCTAssertEqual(app.otherElements["practiceStars"].label,"這次得到 0 顆星");XCTAssertFalse(app.buttons["nextLesson"].exists)
+        XCTAssertEqual(app.otherElements["eggMissionScene"].value as? String,"需要再試一次，抵達 0/40 座小島")
         try reveal(app.otherElements["practiceStars"],in:app,requiresHit:false)
         XCTAssertLessThanOrEqual(app.otherElements["practiceStars"].frame.maxY,app.tabBars.firstMatch.frame.minY)
         capture(app,"GAME30 largest mixed zero result")

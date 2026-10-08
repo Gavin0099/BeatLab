@@ -817,7 +817,7 @@ struct PracticeView: View {
             return practice.calibrationSaved ? "對齊完成" : "對齊需要再試一次"
         }
         if practice.needsSaveRetry { return "星星等待保存" }
-        if practice.isEggMission { return practice.stars > 0 ? missionTheme.passed : missionTheme.retry }
+        if practice.isEggMission { return JourneyResultPresentation.title(theme:missionTheme,passed:practice.stars > 0,route:practice.runnerRoute) }
         if practice.stars > 0 && completed == practice.lessons.count { return "十關完成，節奏由你掌握" }
         return practice.stars > 0 ? "跑到終點，挑戰成功！" : "還沒通過，再跑一次！"
     }

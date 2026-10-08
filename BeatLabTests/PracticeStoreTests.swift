@@ -836,9 +836,9 @@ final class PlatformJourneyTests: XCTestCase {
             scene.configure(EggSceneSnapshot(elapsed: 0, preparing: true, theme: theme, platformJourney: true))
             XCTAssertEqual(player.position.x, 80, accuracy: 1e-8)
             XCTAssertEqual(scene.children.count, count); XCTAssertNil(player.physicsBody); XCTAssertFalse(player.hasActions())
-            scene.configure(EggSceneSnapshot(elapsed: 20, finishedPassed: true, theme: theme, route: route, platformJourney: true))
-            XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "destination")).isHidden)
-            XCTAssertEqual(player.position.x, try XCTUnwrap(scene.childNode(withName: "destination")).position.x, accuracy: 1e-8)
+            scene.configure(EggSceneSnapshot(elapsed:route.duration,finishedPassed:true,theme:theme,route:route,platformJourney:true))
+            XCTAssertTrue(try XCTUnwrap(scene.childNode(withName:"destination")).isHidden,"A passing flag cannot fabricate15 unplayed islands")
+            XCTAssertEqual(player.position.x,188,accuracy:1e-8)
             scene.configure(EggSceneSnapshot(elapsed: 20, finishedPassed: false, theme: theme, route: try routeFixture(), platformJourney: true))
             XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "destination")).isHidden, "Only actual passed flag can show arriving at the end")
         }
@@ -2102,6 +2102,164 @@ final class SixteenthIslandLessonTests: XCTestCase {
             XCTAssertEqual(store.phase,.finished);XCTAssertEqual(store.summary?.matched.count,route.targets.count);XCTAssertEqual(store.summary?.missedCount,0);XCTAssertEqual(store.summary?.extraCount,0);XCTAssertEqual(store.stars,3);XCTAssertTrue(store.resultSaved)
             let restored=PracticeStore(repository:repo);XCTAssertEqual(restored.progress.results[lesson.id]?.stars,3);XCTAssertEqual(restored.progress.results[lesson.id]?.bestBPM,lesson.bpm)
             if level<10{XCTAssertTrue(restored.unlocked(catalog[level]));XCTAssertFalse(restored.unlocked(catalog[level+1]))}else{XCTAssertEqual(restored.progress.results.filter{$0.value.stars>0}.count,10)}
+        }
+    }
+}
+
+final class JourneyResultTests: XCTestCase {
+    private func fixture(_ level: Int, count: Int, alignment: Double = 0, lateLast: Bool = false) throws -> (RunnerRoute, TimingSummary, Lesson) {
+        let lesson = try LessonCatalog.bundled().lessons[level-1]
+        let end = 100 + 20*60/Double(lesson.bpm) + 0.18
+        var matcher = try TimingSession(targets:lesson.pattern.targets(bpm:lesson.bpm,bars:4,epoch:100),calibrationOffset:alignment)
+        for (index,target) in matcher.targets.prefix(count).enumerated() {
+            matcher.tap(at:lateLast && index == count-1 ? end-1e-6 : target.time+alignment)
+        }
+        return (try XCTUnwrap(RunnerRoute(targets:matcher.targets,hits:matcher.hits,epoch:100,endTime:end,alignment:alignment)),matcher.summary,lesson)
+    }
+    func testReviewedPartialPassKeepsRealFourteenAndTwentyEightCountsAndTwoStars() throws {
+        for (level,count,total,missed) in [(1,14,16,2),(3,28,32,4)] {
+            let (route,summary,lesson) = try fixture(level,count:count)
+            XCTAssertEqual(summary.targetCount,total);XCTAssertEqual(summary.matched.count,count);XCTAssertEqual(summary.missedCount,missed);XCTAssertEqual(summary.extraCount,0)
+            XCTAssertTrue(lesson.passes(summary));XCTAssertEqual(lesson.stars(summary),2,"Reviewed85%/55% pass and80% two-star gates")
+            XCTAssertFalse(JourneyResultPresentation.allNotes(route))
+            for theme in RunnerTheme.allCases {
+                XCTAssertEqual(JourneyResultPresentation.title(theme:theme,passed:true,route:route),"跟上 \(count)/\(total) 拍，挑戰通過！")
+                XCTAssertEqual(JourneyResultPresentation.caption(theme:theme,passed:true,route:route,compact:true),"跟上 \(count)/\(total) 拍")
+                XCTAssertNotEqual(JourneyResultPresentation.title(theme:theme,passed:true,route:route),theme.passed)
+            }
+            var progress = PracticeProgress();progress.record(lesson,summary:summary)
+            XCTAssertEqual(progress.results[lesson.id]?.stars,2);XCTAssertEqual(progress.results[lesson.id]?.bestBPM,lesson.bpm)
+        }
+        let (all,summary,lesson) = try fixture(1,count:16)
+        XCTAssertTrue(JourneyResultPresentation.allNotes(all));XCTAssertEqual(lesson.stars(summary),3)
+        XCTAssertEqual(JourneyResultPresentation.title(theme:.cat,passed:true,route:all),RunnerTheme.cat.passed)
+        let (zero,z,_) = try fixture(1,count:0)
+        XCTAssertEqual(z.missedCount,16);XCTAssertEqual(JourneyResultPresentation.title(theme:.dinosaur,passed:false,route:zero),RunnerTheme.dinosaur.retry)
+    }
+    func testReviewedResultTailFinishesOnlyExistingCatchOrLateFlightAndIsBounded() throws {
+        let first = try fixture(1,count:0).0, half = try fixture(3,count:0).0, mixed = try fixture(10,count:0).0
+        // Reviewed60BPM half-grid lastnote19.5, miss19.68, return20.28 versus end20.18.
+        XCTAssertEqual(JourneyResultPresentation.settlingDuration(first),0)
+        XCTAssertEqual(JourneyResultPresentation.settlingDuration(half),0.10,accuracy:1e-8)
+        // Reviewed70BPM mixed lastID62; final rest and recovery leave6/35sec.
+        XCTAssertEqual(JourneyResultPresentation.settlingDuration(mixed),6.0/35,accuracy:1e-8)
+        let late = try fixture(7,count:64,alignment:0.25,lateLast:true).0
+        XCTAssertEqual(late.journeyHits.count,64);XCTAssertEqual(late.journeyHits.last?.targetID,63)
+        XCTAssertEqual(JourneyResultPresentation.settlingDuration(late),0.20-1e-6,accuracy:1e-8)
+        let terminalMiss = try fixture(7,count:63,alignment:0.25).0
+        XCTAssertEqual(JourneyResultPresentation.settlingDuration(terminalMiss),0.60,accuracy:1e-8)
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed:20.18+7e-15,age:0.001,reduceMotion:false,stationary:true),12)
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed:20.18+1e-6,age:0.001,reduceMotion:false,stationary:true),28)
+        for route in [first,half,mixed,late,terminalMiss] {
+            let tail = JourneyResultPresentation.settlingDuration(route)
+            XCTAssertGreaterThanOrEqual(tail,0);XCTAssertLessThanOrEqual(tail,0.80)
+            XCTAssertEqual(JourneyResultPresentation.elapsed(route:route,start:100,host:100,reduced:false),route.duration)
+            XCTAssertEqual(JourneyResultPresentation.elapsed(route:route,start:100,host:99,reduced:false),route.duration)
+            XCTAssertEqual(JourneyResultPresentation.elapsed(route:route,start:100,host:10000,reduced:false),route.duration+tail)
+            XCTAssertEqual(JourneyResultPresentation.elapsed(route:route,start:100,host:100,reduced:true),route.duration+tail)
+            XCTAssertFalse(JourneyResultPresentation.isAtEnd(route:route,elapsed:route.duration-0.001))
+            for time in [Double.nan,.infinity,-.infinity,-1] {
+                XCTAssertFalse(JourneyResultPresentation.isAtEnd(route:route,elapsed:time))
+                XCTAssertEqual(JourneyResultPresentation.elapsed(route:route,start:100,host:time,reduced:false),route.duration)
+            }
+        }
+        XCTAssertEqual(JourneyResultPresentation.settlingDuration(nil),0)
+        let end = half.duration+0.10
+        XCTAssertEqual(DenseJourneyFrame.sample(route:half,elapsed:end,reduced:false)?.world.step,0,"Active default still rejects past transport end")
+        XCTAssertEqual(DenseJourneyFrame.sample(route:half,elapsed:end,reduced:false,presentationTail:0.10)?.world.recovery.phase,.idle)
+        for invalid in [Double.nan,.infinity,-1] { XCTAssertEqual(DenseJourneyFrame.sample(route:late,elapsed:late.duration+0.1,reduced:false,presentationTail:invalid)?.world.step,0) }
+    }
+    func testReviewedLiveStartSettledTravelAndBoundsAcrossAllTen() throws {
+        for level in 1...10 {
+            let lesson = try LessonCatalog.bundled().lessons[level-1]
+            let total = try lesson.pattern.targets(bpm:lesson.bpm,bars:4,epoch:100).count
+            let count = total/2,route = try fixture(level,count:count).0
+            let settled = try XCTUnwrap(route.journeyHits.last).inputTime-route.epoch+0.64
+            let dense = DenseJourneyFrame.sample(route:route,elapsed:settled,reduced:false)
+            let frame = dense?.world ?? PlatformJourneyFrame.sample(route:route,elapsed:settled,reduced:false)
+            XCTAssertEqual(frame.step,Double(count),accuracy:1e-8,"Each completed accepted jump contributes exactly one island")
+            XCTAssertEqual(frame.camera,Double(count)-1.3,accuracy:1e-8,"Reviewed1.3-island camera lead")
+            if let dense { XCTAssertEqual(dense.height,0);XCTAssertEqual(dense.landing,0) }
+            let start = route.journeyHits[0].inputTime-route.epoch
+            let beginning = DenseJourneyFrame.sample(route:route,elapsed:start,reduced:false)?.world ?? PlatformJourneyFrame.sample(route:route,elapsed:start,reduced:false)
+            XCTAssertEqual(beginning.step,0,accuracy:1e-8);XCTAssertEqual(beginning.camera,0,accuracy:1e-8)
+            for fraction in [0.0,0.18,0.5,0.95,1.0] {
+                if let value = DenseJourneyFrame.sample(route:route,elapsed:route.duration*fraction,reduced:false) {
+                    XCTAssertGreaterThanOrEqual(value.world.step,0);XCTAssertLessThanOrEqual(value.world.step,Double(count))
+                    XCTAssertGreaterThanOrEqual(value.height,0);XCTAssertLessThanOrEqual(value.height,1+1e-8,"Exact grid-time presses do not overlap authored shorter flights")
+                }
+            }
+            if route.grid?.isDense == true {
+                XCTAssertEqual(DenseJourneyFrame.sample(route:route,elapsed:route.duration+0.001,reduced:false)?.world.step,0,"Default active sampler still stops at transport end")
+            }
+        }
+    }
+    @MainActor
+    func testNativeResultBoundaryPreservesActorTerrainRegistrationAndSettlesAcrossThemesAndSizes() throws {
+        let cases:[(String,RunnerRoute,Bool)] = [("partial14",try fixture(1,count:14).0,true),("partial28",try fixture(3,count:28).0,true),("lastmiss",try fixture(3,count:31).0,true),("late64",try fixture(7,count:64,alignment:0.25,lateLast:true).0,true),("boundaryMiss63",try fixture(7,count:63,alignment:0.25).0,true),("zero",try fixture(10,count:0).0,false)]
+        for (name,route,passed) in cases { for theme in RunnerTheme.allCases { for height in [200.0,520.0] {
+            let window = UIWindow(frame:CGRect(x:0,y:0,width:375,height:812)),controller = UIViewController();controller.overrideUserInterfaceStyle = .dark
+            let view = SKView(frame:CGRect(x:0,y:0,width:375,height:height)),scene = EggSpriteScene(size:CGSize(width:375,height:height))
+            window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+            defer{scene.detach();view.presentScene(nil);window.isHidden=true}
+            let actor = try XCTUnwrap(scene.childNode(withName:"player")),sprite = try XCTUnwrap(actor.childNode(withName:"characterPrimary") as? SKSpriteNode),nest = try XCTUnwrap(scene.childNode(withName:"destination"))
+            scene.configure(EggSceneSnapshot(elapsed:route.duration,theme:theme,route:route,platformJourney:true))
+            let position = actor.position,rotation=actor.zRotation,texture=sprite.texture,anchor=sprite.anchorPoint,scale=CGPoint(x:actor.xScale,y:actor.yScale),nestX=nest.position.x,nodeCount=scene.children.count
+            scene.configure(EggSceneSnapshot(elapsed:route.duration,finishedPassed:passed,theme:theme,route:route,platformJourney:true))
+            let start = try XCTUnwrap(scene.resultStartHost),tail = JourneyResultPresentation.settlingDuration(route)
+            scene.render(at:start)
+            XCTAssertEqual(actor.position.x,position.x,accuracy:1e-8);XCTAssertEqual(actor.position.y,position.y,accuracy:1e-8);XCTAssertEqual(actor.zRotation,rotation)
+            XCTAssertEqual(actor.xScale,scale.x);XCTAssertEqual(actor.yScale,scale.y);XCTAssertTrue(sprite.texture === texture);XCTAssertEqual(sprite.anchorPoint,anchor);XCTAssertEqual(nest.position.x,nestX,accuracy:1e-8)
+            for (frame,age) in [("handoff",0.0),("settling",tail/2),("settled",tail+0.01)] {
+                scene.render(at:start+age)
+                XCTAssertEqual(scene.children.count,nodeCount);XCTAssertEqual(actor.children.count,1);XCTAssertEqual(sprite.alpha,1)
+                XCTAssertLessThan(actor.calculateAccumulatedFrame().maxY,height);XCTAssertGreaterThanOrEqual(actor.calculateAccumulatedFrame().minY,0)
+                if frame == "settled" {
+                    XCTAssertEqual(actor.position.y,height*0.31,accuracy:1e-5)
+                    XCTAssertEqual(nest.position.x-actor.position.x,Double(route.targets.count-route.journeyHits.count)*375*0.27,accuracy:1e-6,"Unplayed islands remain ahead; passing flag cannot invent travel")
+                    XCTAssertTrue(view.isPaused);XCTAssertTrue(try XCTUnwrap(scene.childNode(withName:"safetyCatch")).isHidden)
+                }
+                let attachment = XCTAttachment(image:UIImage(cgImage:try XCTUnwrap(view.texture(from:scene)).cgImage()));attachment.name="GAME31 \(name) \(theme.rawValue) h\(Int(height)) dark \(frame)";attachment.lifetime = .keepAlways;add(attachment)
+            }
+        } } }
+    }
+    @MainActor
+    func testResultCallbackIsFiniteDoesNotRestartAndResetsOnPrepareSuspendReduceAndDetach() async throws {
+        let route = try fixture(3,count:0).0
+        let window = UIWindow(frame:CGRect(x:0,y:0,width:375,height:812)),controller = UIViewController(),view=SKView(frame:CGRect(x:0,y:0,width:375,height:300)),scene=EggSpriteScene(size:CGSize(width:375,height:300))
+        window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+        defer{scene.detach();view.presentScene(nil);window.isHidden=true}
+        var state=EggSceneSnapshot(elapsed:route.duration,finishedPassed:false,theme:.cat,route:route,platformJourney:true)
+        scene.configure(state);let start=try XCTUnwrap(scene.resultStartHost);XCTAssertFalse(view.isPaused)
+        scene.configure(state);XCTAssertEqual(scene.resultStartHost,start)
+        try await Task.sleep(nanoseconds:350_000_000);XCTAssertTrue(view.isPaused)
+        let count=scene.callbackCount;try await Task.sleep(nanoseconds:80_000_000);XCTAssertEqual(scene.callbackCount,count)
+        scene.configure(state);XCTAssertEqual(scene.resultStartHost,start);XCTAssertTrue(view.isPaused)
+        scene.configure(EggSceneSnapshot(preparing:true,theme:.cat,platformJourney:true));XCTAssertNil(scene.resultStartHost);XCTAssertTrue(view.isPaused)
+        scene.configure(state);XCTAssertGreaterThan(try XCTUnwrap(scene.resultStartHost),start)
+        state.suspended=true;scene.configure(state);XCTAssertTrue(view.isPaused)
+        state.suspended=false;state.reduceMotion=true;scene.configure(state);XCTAssertTrue(view.isPaused)
+        let player=try XCTUnwrap(scene.childNode(withName:"player"));XCTAssertEqual(player.position.y,93,accuracy:1e-8)
+        scene.detach();XCTAssertNil(scene.resultStartHost);XCTAssertTrue(view.isPaused)
+        scene.configure(EggSceneSnapshot(elapsed:.nan,finishedPassed:false,theme:.cat,route:route,platformJourney:true));XCTAssertNil(scene.resultStartHost);XCTAssertTrue(view.isPaused)
+    }
+    @MainActor
+    func testActualPartialStoreFinishKeepsTwoStarsSavesMissesAndOriginalUnlocks() async throws {
+        let catalog=try LessonCatalog.bundled().lessons
+        for (level,matched,missed) in [(1,14,2),(3,28,4)] {
+            let name="BeatLabTests.Result.\(UUID().uuidString)",defaults=try XCTUnwrap(UserDefaults(suiteName:name));defer{defaults.removePersistentDomain(forName:name)}
+            let repository=ProgressRepository(defaults:defaults),lesson=catalog[level-1]
+            var progress=PracticeProgress()
+            for prior in catalog.prefix(level-1) { var session=try TimingSession(targets:prior.pattern.targets(bpm:prior.bpm,bars:4,epoch:100));for target in session.targets{session.tap(at:target.time)};progress.record(prior,summary:session.summary) }
+            try repository.save(progress)
+            let store=PracticeStore(repository:repository),audio=MetronomeAudio();defer{audio.stop()}
+            store.select(lesson);store.start(lesson,audio:audio,eggMission:true)
+            for _ in 0..<40 where store.phase == .preparing{try await Task.sleep(nanoseconds:50_000_000)}
+            let route=try XCTUnwrap(store.runnerRoute);for target in route.targets.prefix(matched){store.tap(at:target.time)}
+            for _ in 0..<440 where store.phase == .playing{try await Task.sleep(nanoseconds:50_000_000)}
+            XCTAssertEqual(store.phase,.finished);XCTAssertEqual(store.stars,2);XCTAssertEqual(store.summary?.matched.count,matched);XCTAssertEqual(store.summary?.missedCount,missed);XCTAssertEqual(store.summary?.extraCount,0);XCTAssertTrue(store.resultSaved);XCTAssertFalse(audio.isPlaying)
+            let finished=try XCTUnwrap(store.runnerRoute);XCTAssertEqual(finished.journeyHits.count,matched)
+            let restored=PracticeStore(repository:repository);XCTAssertEqual(restored.progress.results[lesson.id]?.stars,2);XCTAssertTrue(restored.unlocked(catalog[level]));XCTAssertFalse(restored.unlocked(catalog[level+1]))
         }
     }
 }
