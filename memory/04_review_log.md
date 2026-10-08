@@ -344,3 +344,36 @@
 - Validation boundary: PASS artifacts/evidence/test-results/GAME-29.json local fullApp101/UI2,54native/10UI,107source; Core53 unchanged; no phone/physical claim
 - Next action: NIGHT01 continues GAME30 existing7/8/10 high density, then GAME31 truthful result handoff; physical/child/audio cue owner preference after11:10.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:6927093209378207028a91a14c97e07d5e097bf2a5115b8f5e66fc4cce1fcb8d -->
+### Canonical memory checkpoint — game30-night-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `6927093209378207028a91a14c97e07d5e097bf2a5115b8f5e66fc4cce1fcb8d`
+- Commit binding: `4eb1adb` (bound)
+- Record: GAME30 existing levels7/8/10 authored64/64/40-note four-grid journeys; initial rotated bounds overshoot resolved with high-only14% trajectory preserving original C2 and first6/9 motion. Local native9/UI3 and72native/10UI captures;107 source binding, audio/input/save/art unchanged.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-30.json native9/UI3; fullApp101 GAME29 baseline only; physical FPS pending
+- Next action: NIGHT01 continues GAME31 actual result handoff, final local regression and available Wi-Fi candidate; physical/child/audio-cue preference after11:10.
+- PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:2da4bc2c222ca789eaf8f481db94a747acbb521e39728bbdc8d40769a94298ec -->
+### Canonical memory checkpoint — game30-evidence-correction-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `2da4bc2c222ca789eaf8f481db94a747acbb521e39728bbdc8d40769a94298ec`
+- Commit binding: `4eb1adb` (bound)
+- Record: Correction GAME30 first canonical evidence checker FAILED because20 files absent from temporary frozen source after successful build; source hashes not fully rebound yet. Prior memory PASS label was written before inspecting checker and is invalid. Native9/UI3 results remain observed; build log shows original lessons/privacy copy existed then, removal cause unknown. Preserve failed receipt and roots, create persistent107-input freeze and rerun binding/build/gates.
+- Validation boundary: FAIL artifacts/evidence/test-results/GAME-30.json missing frozen20 inputs; no full source-binding completion claim
+- Next action: Rebind source in ignored persistent TestResults directory; preserve original results and only claim canonical PASS after successful checker.
+- PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:563c7dffac07d18edcac143bca6e8266d4aae6e12ec3a6e947e800aef19133cd -->
+### Canonical memory checkpoint — game30-rebound-pass-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `563c7dffac07d18edcac143bca6e8266d4aae6e12ec3a6e947e800aef19133cd`
+- Commit binding: `4eb1adb` (bound)
+- Record: GAME30 correction completed: persistent107 current/git4eb1adb/frozen sources exact, fresh local build/native9/UI3 and72native/10UI captures passed; all states/light restored. First canonical binding FAIL20 absent temporary files and premature PASS memory superseded; failed receipt/raw roots remain. Source unchanged during rebound; no physical acceptance.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-30.json fresh native9/UI3 and107 binding; original FAIL retained TestResults/GAME-30/pre-retention-gates/GAME-30.json
+- Next action: NIGHT01 continues GAME31 actual result-position handoff, final local regression, available Wi-Fi frozen candidate; owner preference/physical trial after11:10.
+- PLAN reconciliation: `updated`

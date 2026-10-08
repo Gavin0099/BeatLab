@@ -90,3 +90,9 @@
 - NIGHT01 active: GAME26-28 engineering gates complete; GAME29 rests next, phone/public acceptance pending. <!-- memory_record_projection:active-task-summary:fde122bbcdb1375a8666d3061874ecfec09a06b7826765832ba49b384a9261ed -->
 
 - NIGHT01 active: GAME26-29 engineering gates passed; GAME30 high density next, physical/public pending. <!-- memory_record_projection:active-task-summary:3c080bc88d9a3518c9347f3ce9f962381fd3d25fa2dcd9c63f677e0255f68236 -->
+
+- NIGHT01 GAME30 engineering gates passed; GAME31 result teleport next, phone pending, no Apple upload or GitHub Mac. <!-- memory_record_projection:active-task-summary:6927093209378207028a91a14c97e07d5e097bf2a5115b8f5e66fc4cce1fcb8d -->
+
+- GAME30 canonical evidence binding failed, correcting persistent source before GAME31; original native/UI results retained. <!-- memory_record_projection:active-task-summary:2da4bc2c222ca789eaf8f481db94a747acbb521e39728bbdc8d40769a94298ec -->
+
+- NIGHT01 GAME30 persistent rebound and canonical checker passed; GAME31 next, phone and physical acceptance pending. <!-- memory_record_projection:active-task-summary:563c7dffac07d18edcac143bca6e8266d4aae6e12ec3a6e947e800aef19133cd -->
