@@ -1,0 +1,36 @@
+{
+  "date": "2026-10-08",
+  "scope": "first-level recovery facial feedback",
+  "provenance": [
+    {
+      "character": "Dinosaur",
+      "asset": "BeatLab/Resources/Assets.xcassets/RecoveryDinosaurExpressions.imageset/artwork.png",
+      "sha256": "87b824a3b7a06234c0d5b7be36573c8374b3c8f6c3095ecf1e0b78292da4031a",
+      "reference": "BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/artwork.png",
+      "tool": "built-in image_gen",
+      "generated_source": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-b99971e6-8e34-40cd-8dda-15d05ff22b19.png",
+      "transparent": true,
+      "prompt": "precise-object-edit: preserve exact8x4 grid/head/body/poses/accessories; change only face cells18-23 surprised/worried wide eyes/O mouth,24-25 braced closed eyes,26-27 relieved closed eyes/small smile,28 relaxed ready. No text/props/symbols. Only facial region consumed; original body/curves remain unchanged."
+    },
+    {
+      "character": "Cat",
+      "asset": "BeatLab/Resources/Assets.xcassets/RecoveryCatExpressions.imageset/artwork.png",
+      "sha256": "1236371c628ba59fe1d6ba606d9789ef0693ca036333058a93885a653f7d2510",
+      "reference": "BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/artwork.png",
+      "tool": "built-in image_gen",
+      "generated_source": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-30ae9448-26f0-40c5-9d22-2c453d7d9a45.png",
+      "transparent": true,
+      "prompt": "precise-object-edit: preserve exact8x4 grid/head/body/poses/accessories; change only face cells18-23 surprised/worried wide eyes/O mouth,24-25 braced closed eyes,26-27 relieved closed eyes/small smile,28 relaxed ready. No text/props/symbols. Only facial region consumed; original body/curves remain unchanged."
+    },
+    {
+      "character": "Robot",
+      "asset": "BeatLab/Resources/Assets.xcassets/RecoveryRobotExpressions.imageset/artwork.png",
+      "sha256": "40b137fac9e0ac8e1a77b912606b362a8b4ce1b462718f8ad6b18d3bf651f10b",
+      "reference": "BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/artwork.png",
+      "tool": "built-in image_gen",
+      "generated_source": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-d803b9b7-23e7-4de8-bf7f-d0e968b03767.png",
+      "transparent": true,
+      "prompt": "precise-object-edit: preserve exact8x4 grid/head/body/poses/accessories; change only face cells18-23 surprised/worried wide eyes/O mouth,24-25 braced closed eyes,26-27 relieved closed eyes/small smile,28 relaxed ready. No text/props/symbols. Only facial region consumed; original body/curves remain unchanged."
+    }
+  ]
+}

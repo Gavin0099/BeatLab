@@ -440,6 +440,65 @@ enum DenseCharacterAtlas {
     ]
 }
 
+/// Facial response reads the accepted recovery; it never changes body motion or judgment.
+enum RecoveryExpression: String {
+    case neutral, surprised, braced, relieved, ready
+    static func sample(_ recovery: JourneyRecovery, reduced: Bool = false) -> Self {
+        guard !reduced else { return .neutral }
+        switch recovery.phase {
+        case .idle: return .neutral
+        case .falling: return .surprised
+        case .catching: return .braced
+        case .returning: return recovery.age < 0.40 ? .relieved : .ready
+        }
+    }
+}
+
+/// Original body pixels remain the primary texture. Only an inset face region
+/// reads the sibling expression atlas; missing art leaves the original intact.
+enum RecoveryExpressionAtlas {
+    struct Pack {
+        let textures: [SKTexture]
+        let shaders: [SKShader]
+        init(name: String, face: SIMD4<Float>) {
+            guard let image = UIImage(named: name)?.cgImage else { textures = []; shaders = []; return }
+            textures = (0..<32).compactMap { index in
+                let x0 = (Double(index % 8) * Double(image.width) / 8).rounded(.toNearestOrEven)
+                let y0 = (Double(index / 8) * Double(image.height) / 4).rounded(.toNearestOrEven)
+                let x1 = (Double(index % 8 + 1) * Double(image.width) / 8).rounded(.toNearestOrEven)
+                let y1 = (Double(index / 8 + 1) * Double(image.height) / 4).rounded(.toNearestOrEven)
+                guard let cell = image.cropping(to: CGRect(x: x0, y: y0, width: x1 - x0, height: y1 - y0)) else { return nil }
+                let texture = SKTexture(cgImage: cell); texture.filteringMode = .linear; return texture
+            }
+            shaders = textures.map { texture in
+                SKShader(source: """
+                void main() {
+                    vec2 uv = v_tex_coord;
+                    vec4 base = texture2D(u_texture, uv);
+                    vec4 face = texture2D(u_expression, uv);
+                    vec2 lo = smoothstep(u_faceRect.xy, u_faceRect.xy + vec2(0.025), uv);
+                    vec2 hi = 1.0 - smoothstep(u_faceRect.zw - vec2(0.025), u_faceRect.zw, uv);
+                    float mask = lo.x * lo.y * hi.x * hi.y * face.a;
+                    gl_FragColor = vec4(mix(base.rgb, face.rgb, mask), base.a) * v_color_mix;
+                }
+                """, uniforms: [SKUniform(name: "u_expression", texture: texture),
+                                SKUniform(name: "u_faceRect", vectorFloat4: face)])
+            }
+        }
+        var isValid: Bool { textures.count == 32 && shaders.count == 32 }
+    }
+    static let packs: [RunnerTheme: Pack] = [
+        .dinosaur: Pack(name: "RecoveryDinosaurExpressions", face: SIMD4(0.49, 0.42, 0.92, 0.80)),
+        .cat: Pack(name: "RecoveryCatExpressions", face: SIMD4(0.51, 0.44, 0.92, 0.76)),
+        .robot: Pack(name: "RecoveryRobotExpressions", face: SIMD4(0.43, 0.54, 0.75, 0.79))
+    ]
+    static func shader(theme: RunnerTheme, pose: Int) -> SKShader? {
+        guard (18...28).contains(pose), DenseCharacterAtlas.packs[theme]?.isValid == true,
+              let pack = packs[theme], pack.isValid else { return nil }
+        return pack.shaders[pose]
+    }
+}
+
 enum DenseAnimationFrame {
     static let ready = 28
     static func sample(elapsed: Double, age: Double?, reduceMotion: Bool, stationary: Bool) -> Int {
@@ -510,7 +569,7 @@ private enum EggSceneTextures {
         guard warmedThemes.insert(theme).inserted else { return }
         let poses = theme == .dinosaur ? animated + original : CompanionAtlas.pack(theme).textures
         let backdrops = [journeyBackdrops[theme], CompanionAtlas.background(theme)].compactMap { $0 }
-        SKTexture.preload(poses + (DenseCharacterAtlas.packs[theme]?.textures ?? []) + backdrops, withCompletionHandler: {})
+        SKTexture.preload(poses + (DenseCharacterAtlas.packs[theme]?.textures ?? []) + (RecoveryExpressionAtlas.packs[theme]?.textures ?? []) + backdrops, withCompletionHandler: {})
     }
     static let journeyBackdrops: [RunnerTheme: SKTexture] = Dictionary(uniqueKeysWithValues: RunnerTheme.allCases.map { theme in
         guard let image = UIImage(named: theme.backdrop)?.cgImage,
@@ -758,6 +817,7 @@ final class EggSpriteScene: SKScene {
         player.zRotation = -motion.angle * Double(theme.lean)
         player.xScale = 1 + (motion.scaleX - 1) * theme.compression
         player.yScale = 1 + (motion.scaleY - 1) * theme.compression
+        if first.shader != nil { first.shader = nil }
         first.color = .white; first.colorBlendFactor = recovery
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
         else {
@@ -836,9 +896,14 @@ final class EggSpriteScene: SKScene {
         let contact = max(landing, CGFloat(recovery.compression))
         player.xScale = 1 + contact * 0.08 * theme.compression
         player.yScale = 1 - contact * 0.10 * theme.compression
+        let faceShader = !stopped && RecoveryExpression.sample(recovery, reduced: reduced) != .neutral
+            ? RecoveryExpressionAtlas.shader(theme: theme, pose: recovery.pose) : nil
+        if first.shader !== faceShader { first.shader = faceShader }
         first.color = .white; first.colorBlendFactor = 0; first.alpha = 1
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
-        else if recovery.phase != .idle { setRecoveryPose(first, recovery.pose) }
+        else if recovery.phase != .idle {
+            setRecoveryPose(first, recovery.pose)
+        }
         else { setMotion(first, elapsed: snapshot.preparing ? 0 : elapsed, age: stopped ? nil : age, reduced: reduced, stationary: true) }
         safety.isHidden = recovery.phase == .idle
         let catchX = recovery.phase == .falling ? origin + CGFloat(step + 0.50) * stride : x

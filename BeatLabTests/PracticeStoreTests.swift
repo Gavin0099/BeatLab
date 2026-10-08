@@ -1173,3 +1173,90 @@ final class JourneyFallRecoveryTests: XCTestCase {
         }
     }
 }
+
+final class JourneyRecoveryExpressionTests: XCTestCase {
+    func testReviewedEmotionsAndResetBoundariesDoNotExtendRecovery() {
+        let reviewed: [(Double, RecoveryExpression)] = [(0,.neutral),(0.02,.surprised),(0.239,.surprised),
+            (0.24,.braced),(0.319,.braced),(0.32,.relieved),(0.399,.relieved),
+            (0.40,.ready),(0.599,.ready),(0.60,.neutral),(1,.neutral)]
+        for (age, expression) in reviewed {
+            let recovery = JourneyRecovery.sample(age: age)
+            XCTAssertEqual(RecoveryExpression.sample(recovery), expression)
+            XCTAssertEqual(RecoveryExpression.sample(recovery, reduced: true), .neutral)
+        }
+        for invalid in [Double.nan,.infinity,-.infinity,-0.1] {
+            XCTAssertEqual(RecoveryExpression.sample(.sample(age: invalid)), .neutral)
+        }
+        // Another miss repeats the same feedback; no expression carries into a new beat.
+        XCTAssertEqual(RecoveryExpression.sample(.sample(age: 0.02)), .surprised)
+    }
+    @MainActor
+    func testThreeThemeFaceShadersKeepOriginalBodyAndClearAfterMissAndStop() throws {
+        let route = try routeFixture()
+        for theme in RunnerTheme.allCases {
+            let scene = EggSpriteScene(size: CGSize(width:400,height:500))
+            let actor = try XCTUnwrap(scene.childNode(withName:"player/characterPrimary") as? SKSpriteNode)
+            let body = try XCTUnwrap(DenseCharacterAtlas.packs[theme])
+            let expressions = try XCTUnwrap(RecoveryExpressionAtlas.packs[theme])
+            XCTAssertTrue(expressions.isValid)
+            let count=scene.children.count
+            for (age,pose) in [(0.02,18),(0.06,19),(0.10,20),(0.14,21),(0.18,22),(0.22,23),
+                               (0.26,24),(0.30,25),(0.34,26),(0.38,27),(0.46,28)] {
+                scene.configure(EggSceneSnapshot(elapsed:4.18+age,theme:theme,route:route,platformJourney:true))
+                XCTAssertTrue(actor.texture === body.textures[pose], "The accepted body pack remains the texture authority")
+                XCTAssertTrue(actor.shader === expressions.shaders[pose]); XCTAssertEqual(actor.alpha,1)
+                XCTAssertEqual(scene.children.count,count)
+            }
+            for snapshot in [EggSceneSnapshot(elapsed:4.80,theme:theme,route:route,platformJourney:true),
+                EggSceneSnapshot(elapsed:4.46,reduceMotion:true,theme:theme,route:route,platformJourney:true),
+                EggSceneSnapshot(elapsed:0,preparing:true,theme:theme,platformJourney:true),
+                EggSceneSnapshot(elapsed:4.46,finishedPassed:false,theme:theme,route:route,platformJourney:true),
+                EggSceneSnapshot(elapsed:4.46,theme:theme,platformJourney:true)] {
+                scene.configure(snapshot); XCTAssertNil(actor.shader, "No stuck facial reaction after reset/reduction/finish/missing route")
+            }
+            XCTAssertNil(RecoveryExpressionAtlas.shader(theme:theme,pose:17))
+            XCTAssertNil(RecoveryExpressionAtlas.shader(theme:theme,pose:29))
+            XCTAssertFalse(RecoveryExpressionAtlas.Pack(name:"MissingExpressions",face:SIMD4(0,0,1,1)).isValid)
+        }
+    }
+    @MainActor
+    func testNativeFacePixelsChangeButFeetRemainIdenticalAndSaveThreeThemeSpecimens() throws {
+        let route = try routeFixture()
+        for theme in RunnerTheme.allCases {
+            let window=UIWindow(frame:CGRect(x:0,y:0,width:400,height:800)),controller=UIViewController()
+            let view=SKView(frame:CGRect(x:0,y:0,width:400,height:500)),scene=EggSpriteScene(size:CGSize(width:400,height:500))
+            window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+            defer { scene.detach();view.presentScene(nil);window.isHidden=true }
+            for (label,age) in [("surprised",0.10),("braced",0.26),("relieved",0.34),("ready",0.46)] {
+                scene.configure(EggSceneSnapshot(elapsed:4.18+age,theme:theme,route:route,platformJourney:true))
+                let actor=try XCTUnwrap(scene.childNode(withName:"player/characterPrimary") as? SKSpriteNode)
+                let expression=try XCTUnwrap(view.texture(from:actor)).cgImage()
+                let shader=actor.shader;actor.shader=nil
+                let original=try XCTUnwrap(view.texture(from:actor)).cgImage();actor.shader=shader
+                XCTAssertEqual(expression.width,original.width);XCTAssertEqual(expression.height,original.height)
+                let a=try rgba(expression),b=try rgba(original)
+                XCTAssertNotEqual(a,b,"Expression must be present in native rendered pixels, not only in state")
+                // Feet occupy the lower quarter in these registered full-body fixtures.
+                let feetStart=expression.width * expression.height * 3
+                XCTAssertEqual(Array(a[feetStart...]),Array(b[feetStart...]),"No generated body pixels may alter the accepted feet/pose")
+                let image=try XCTUnwrap(view.texture(from:scene)).cgImage()
+                let attachment=XCTAttachment(image:UIImage(cgImage:image));attachment.name="GAME24 \(theme.rawValue) \(label)";attachment.lifetime = .keepAlways;add(attachment)
+            }
+            for height in [240.0,650.0] {
+                scene.size=CGSize(width:320,height:height)
+                for style in [UIUserInterfaceStyle.light,.dark] {
+                    view.overrideUserInterfaceStyle=style
+                    scene.configure(EggSceneSnapshot(elapsed:4.44,theme:theme,route:route,platformJourney:true))
+                    let image=try XCTUnwrap(view.texture(from:scene)).cgImage()
+                    let attachment=XCTAttachment(image:UIImage(cgImage:image));attachment.name="GAME24 \(theme.rawValue) height\(height) style\(style.rawValue)";attachment.lifetime = .keepAlways;add(attachment)
+                }
+            }
+        }
+    }
+    private func rgba(_ image: CGImage) throws -> [UInt8] {
+        var result=[UInt8](repeating:0,count:image.width*image.height*4)
+        let context=try XCTUnwrap(CGContext(data:&result,width:image.width,height:image.height,bitsPerComponent:8,bytesPerRow:image.width*4,space:CGColorSpaceCreateDeviceRGB(),bitmapInfo:CGImageAlphaInfo.premultipliedLast.rawValue))
+        context.draw(image,in:CGRect(x:0,y:0,width:image.width,height:image.height))
+        return result
+    }
+}
