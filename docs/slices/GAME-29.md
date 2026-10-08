@@ -37,3 +37,7 @@ Build/test local Mac; owned simulator restoration, source/component audit. Keep
 physical mixed cue clarity/timing/FPS/child acceptance pending owner trial.
 Rollback only this scoped delta to completed GAME28; preserve saves/evidence.
 Status DEFINED / WAITING_GAME27_GAME28.
+
+GAME28 final gate33665f6 passed. Implementation begins: add read-only grid cell and count-in helpers from actual route, distinguish rest from next actual target; grade feedback takes precedence over wait. Sparse quarter path goal8, dense path20/16. First4 profiles and original motion blocks must remain equivalent. Status IMPLEMENTING / DEPENDENCIES_PASSED.
+
+Final source gate: full App101/0, new RestIsland7 included; actual native-touch UI2/0 across5/6/9 and ninth zero result/retry.54native/10UI PNG inspected for wait/early/actual final platform and preparation.107source inputs/103 unchanged,11 shared motion blocks byte-exact; Store/audio/Core/DSP/catalog/assets/input/save exact. Owned simulator restored all states/light. Status ENGINEERING_GATE_PASSED_OWNER_TRIAL_PENDING. Physical timing/FPS/readability and F5 result handoff pending; no phone build/install/upload. Big-beat click plus actual-input feedback retained, no automatic fine-note soundtrack claim.

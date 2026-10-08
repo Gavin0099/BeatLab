@@ -13,8 +13,9 @@ Execution order:
 - GAME26 level2 R/L quarter notes,65BPM, dual-pad journey.
 - Define the next slice from actual code after GAME26 passes. Level3 half-beat
   density must solve motion/path/cue reuse before levels4/6/9 can build on it.
-- Define rest behavior separately: silence/wait cue; tapping rest is existing
-  extra, never a skipped target/platform. Motion cannot derive grade from gap.
+- Define rest behavior separately: silence/wait cue; there is no rest target.
+  Taps keep nearest-note/window authority, including legal early notes near a rest;
+  extras never produce a platform. Motion cannot derive grade from gap.
 - Sixteenth/triplet/high density must have a reachable/readable input/cue and
   continuous handoff; do not merely enable unsupported profiles at higher rate.
 - Test catalog patterns/count-in/timestamps/extra/miss, locks/results/restart,
@@ -62,3 +63,7 @@ that candidate. Do not claim a full App87 suite on this post-opacity source.
 02:14 temporary local caffeinate idle-system assertion started until NIGHT01 deadline; display assertion false and persistent power settings unchanged. Exact owned PID/command in ignored TestResults/NIGHT-01/local-awake.json; end-of-work cleanup must stop only this owned assertion. GAME26/GAME27 engineering gates pushed throughd69e2a2; GAME28 responsive presentation in local validation.
 
 02:55 GAME28 responsive engineering gates passed; local build/native1/UI6, raw first failures preserved. Next GAME29 levels5/6/9 authored rest cues/path, no new modes or authority changes. No owner questions, phone/public acceptance remains pending.
+
+03:06 read-only audio finding: PracticeStore.begin still starts quarter subdivision; original60BPM groove bed only first lesson. Other dense/rest lessons receive big-beat click plus actual-input feedback, not an automated authored-note soundtrack. This batch preserves audio authority; verify child clarity/owner preference after deadline, do not claim audible half/sixteenth reference tones.
+
+03:13 GAME29 local engineering gate App101/UI2 passed,54 native/10 UI images; first4 motion and timing/input/save preserved. NextGAME30 authors7/8/10, pending physical/child/audio-cue preference remains deferred.

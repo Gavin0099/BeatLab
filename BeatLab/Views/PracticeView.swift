@@ -432,10 +432,21 @@ struct PracticeView: View {
                 .accessibilityIdentifier("preparedLessonNumber")
             Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
             EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true, platformJourney: true).frame(height: 260)
-            Text(profile.dense ? "先聽 4 拍，再跟細分的鼓聲，每拍跳兩次。" : "先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
+            Text(profile.hasRests ? "先聽 4 拍。看到 R／L 跟拍跳，看到 — 站穩，先聽下一拍。" : profile.dense ? "先聽 4 拍，再跟細分的鼓聲，每拍跳兩次。" : "先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
                 .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
             Text("\(profile.handInstruction) · \(lesson.bpm) BPM · 約 \(seconds) 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
-            if profile.usesBothHands {
+            if profile.hasRests {
+                HStack(spacing:4) {
+                    ForEach(profile.pattern.indices,id:\.self) { index in
+                        Text(profile.pattern[index] == .rest ? "—" : profile.pattern[index] == .left ? "L" : "R")
+                            .font(.system(size:18,weight:.bold)).frame(maxWidth:.infinity,minHeight:44)
+                            .background(Color(uiColor:missionTheme.pad).opacity(profile.pattern[index] == .rest ? 0.20 : 0.55),in:RoundedRectangle(cornerRadius:10))
+                    }
+                }.accessibilityElement(children:.ignore)
+                    .accessibilityLabel("一小節節奏：" + profile.pattern.map { $0 == .rest ? "休息" : $0 == .left ? "左手" : "右手" }.joined(separator:"、"))
+                Text("— 不用按，也不會前進。R／L 是手別提示，星星依拍點判定。")
+                    .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            } else if profile.usesBothHands {
                 HStack(spacing: 8) {
                     ForEach(0..<4, id: \.self) { index in
                         Text(lesson.pattern.steps[index] == .right ? "右 R" : "左 L")

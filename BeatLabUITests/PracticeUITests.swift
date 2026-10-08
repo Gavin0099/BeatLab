@@ -110,8 +110,8 @@ final class PracticeUITests: XCTestCase {
             capture(app, "Lesson \(index + 1) preparation")
             let start = app.buttons["startLesson"]
             try reveal(start, in: app); start.tap()
-            XCTAssertTrue(app.buttons[[1,3].contains(index) ? "practiceTapPad.right" : "practiceTapPad"].waitForExistence(timeout: 5))
-            let heading = index == 0 ? "第 1 關 · 節奏跨島" : index == 1 ? "第 2 關 · 左右接力跨島" : index == 2 ? "第 3 關 · 半拍小島" : index == 3 ? "第 4 關 · 半拍左右接力" : "第 \(index + 1) 關 · 節奏跑酷"
+            XCTAssertTrue(app.buttons[[1,3,5,8].contains(index) ? "practiceTapPad.right" : "practiceTapPad"].waitForExistence(timeout: 5))
+            let heading = index == 0 ? "第 1 關 · 節奏跨島" : index == 1 ? "第 2 關 · 左右接力跨島" : index == 2 ? "第 3 關 · 半拍小島" : index == 3 ? "第 4 關 · 半拍左右接力" : index == 4 ? "第 5 關 · 留白小島" : index == 5 ? "第 6 關 · 半拍與休息" : index == 8 ? "第 9 關 · 反拍跨島" : "第 \(index + 1) 關 · 節奏跑酷"
             XCTAssertEqual(app.staticTexts["activeLessonNumber"].label, heading)
             capture(app, "Lesson \(index + 1) count-in smoke")
             let stop = app.buttons["stopPractice"]
@@ -184,6 +184,53 @@ final class PracticeUITests: XCTestCase {
         try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
         try reveal(app.buttons["journeyLesson.quarter-rest"],in:app,requiresHit:false)
         XCTAssertFalse(app.buttons["journeyLesson.quarter-rest"].isEnabled)
+    }
+
+    @MainActor
+    func testRestLessonsActualGridWaitTouchesCancelAndEmptyRestart() throws {
+        continueAfterFailure=false
+        let app=XCUIApplication();app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.RestLevels"
+        app.launch();XCTAssertTrue(app.staticTexts["8 / 10 關"].waitForExistence(timeout:5))
+        app.tabBars.buttons["練習"].tap()
+        for (level,id,total,chapter) in [(5,"quarter-rest",8,1),(6,"eighth-rest",20,1),(9,"offbeat",16,2)] {
+            try reveal(app.buttons["journeyChapter.\(chapter)"],in:app);app.buttons["journeyChapter.\(chapter)"].tap()
+            try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
+            XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
+            XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 \(level) 關"));capture(app,"GAME29 level\(level) preparation")
+            try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+            assertWholeGameVisible(app,dual:level != 5)
+            let pad=app.buttons[level == 5 ? "practiceTapPad" : "practiceTapPad.right"]
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / \(total) 座小島")
+            let resting=XCTNSPredicateExpectation(predicate:NSPredicate(format:"value CONTAINS %@","休息"),object:app.otherElements["rhythmLane"])
+            XCTAssertEqual(XCTWaiter.wait(for:[resting],timeout:10),.completed,"Observe actual musical rest, no injected clock")
+            capture(app,"GAME29 level\(level) actual rest cell")
+            pad.tap(withNumberOfTaps:10,numberOfTouches:1)
+            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual post-count-in touches must match at least one authored note")
+            capture(app,"GAME29 level\(level) actual touch")
+            app.buttons["stopPractice"].tap()
+            XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["journeyProgress"].label,"8 / 10 關完成")
+            try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
+            try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+            XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / \(total) 座小島")
+            app.buttons["stopPractice"].tap()
+        }
+        try reveal(app.buttons["journeyLesson.mixed"],in:app,requiresHit:false);XCTAssertFalse(app.buttons["journeyLesson.mixed"].isEnabled)
+    }
+    @MainActor
+    func testOffbeatActualZeroResultDoesNotUnlockAndRetryKeeps16Notes() throws {
+        continueAfterFailure=false
+        let app=XCUIApplication();app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.RestZero"
+        app.launch();XCTAssertTrue(app.staticTexts["8 / 10 關"].waitForExistence(timeout:5))
+        try reveal(app.buttons["dailyPractice"],in:app);app.buttons["dailyPractice"].tap()
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5));XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 9 關"))
+        try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+        XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:25))
+        XCTAssertEqual(app.otherElements["practiceStars"].label,"這次得到 0 顆星");XCTAssertFalse(app.buttons["nextLesson"].exists)
+        capture(app,"GAME29 ninth zero result")
+        try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
+        assertWholeGameVisible(app,dual:true);XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 16 座小島")
+        app.buttons["stopPractice"].tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["journeyProgress"].label,"8 / 10 關完成")
     }
 
     @MainActor
