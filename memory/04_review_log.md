@@ -377,3 +377,14 @@
 - Validation boundary: PASS artifacts/evidence/test-results/GAME-30.json fresh native9/UI3 and107 binding; original FAIL retained TestResults/GAME-30/pre-retention-gates/GAME-30.json
 - Next action: NIGHT01 continues GAME31 actual result-position handoff, final local regression, available Wi-Fi frozen candidate; owner preference/physical trial after11:10.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:b8f2aef51bfe234c78d9607e48e5a9054e45c1e2a820ac4a12cd6b83237ab0de -->
+### Canonical memory checkpoint — game31-night-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `b8f2aef51bfe234c78d9607e48e5a9054e45c1e2a820ac4a12cd6b83237ab0de`
+- Commit binding: `1949867` (bound)
+- Record: GAME31 removes passed-flag forced terrain/end travel and original result bitmap; partial14/16 and28/32 actual matches remain2stars and actual world location. Finite cosmetic tail settles real flight/catch with same registered actor; audio/input/score/save untouched. Local native7/UI2 and108native/4UI PNG;107source binding. Initial test-build API/try failure and focus6pass/1fail27assertions preserved;1e-9 display ULP guard and1e-5pt ground tolerance not timing precision. Nine original motion blocks exact, dense math default unchanged.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-31.json native7/UI2 and107binding; full combined suite next, physical pending
+- Next action: NIGHT01 continues full combined local App/Core and ten-lesson UI walkthrough, frozen signed Wi-Fi phone candidate if available; physical/child and audio-cue preference after11:10.
+- PLAN reconciliation: `updated`
