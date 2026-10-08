@@ -1,0 +1,35 @@
+{
+  "dinosaur": {
+    "tool": "built-in image_gen",
+    "generated_original": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-b86a4850-e126-4be1-82d3-e01e57049212.png",
+    "asset": "BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/artwork.png",
+    "sha256": "2d8007c4ab227946ae87ff86d3ac1ed30af64251e13981f1744eac40eaa2f57b",
+    "prompt": "docs/design/dense-motion/dinosaur-prompt.txt",
+    "PNG_pixels_edited": false,
+    "postprocess": "read-only registration; native texture cropping only"
+  },
+  "cat": {
+    "tool": "built-in image_gen",
+    "generated_original": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-ea0dc4ec-0bc8-41d5-82af-697a7cb570c4.png",
+    "asset": "BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/artwork.png",
+    "sha256": "4f234115f7470bb0b64e207e710852dd2fe7b975a47b11d37f8c493610d30c3d",
+    "prompt": "docs/design/dense-motion/cat-prompt.txt",
+    "PNG_pixels_edited": false,
+    "postprocess": "read-only registration; native texture cropping only"
+  },
+  "robot": {
+    "tool": "built-in image_gen",
+    "generated_original": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-e51a0e70-5209-4106-9853-ff658c976839.png",
+    "asset": "BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/artwork.png",
+    "sha256": "f5ba432fcfa6c43b82634449ac5bbacc5e4d5627cc60633a7cda2f6684e8493e",
+    "prompt": "docs/design/dense-motion/robot-repair-prompt.txt",
+    "PNG_pixels_edited": false,
+    "postprocess": "read-only registration; native texture cropping only"
+  },
+  "withdrawn_robot": {
+    "generated_original": "/Users/pc49-58/.codex/generated_images/01a10648-d7a1-7450-bb5b-ecde7257332d/exec-778568b9-0da5-4c9c-a134-918801ec799c.png",
+    "preserved": "TestResults/GAME-22/rejected-robot-cropped.png",
+    "reason": "equal grid crops touch adjacent rows at frames10,11,19; rejected before native build",
+    "installed": false
+  }
+}

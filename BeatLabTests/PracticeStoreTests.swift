@@ -929,3 +929,101 @@ final class JourneyMotionRegressionTests: XCTestCase {
         }
     }
 }
+
+final class DenseCharacterMotionTests: XCTestCase {
+    func testReviewed24To25PoseCadenceAndBoundariesWithoutDependingOnDisplayRate() {
+        // Independent contract: twelve poses in .5s, twelve in .48s, four in .16s.
+        for (index, time) in [4.02,4.06,4.10,4.145,4.185,4.225,4.27,4.31,4.35,4.395,4.435,4.475].enumerated() {
+            XCTAssertEqual(DenseAnimationFrame.sample(elapsed: time, age: nil, reduceMotion: false, stationary: false), index)
+        }
+        for (index, age) in [0.02,0.06,0.10,0.14,0.18,0.22,0.26,0.30,0.34,0.38,0.42,0.46].enumerated() {
+            XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4 + age, age: age, reduceMotion: false, stationary: true), 12 + index)
+        }
+        for (index, age) in [0.50,0.54,0.58,0.62].enumerated() {
+            XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4 + age, age: age, reduceMotion: false, stationary: true), 24 + index)
+        }
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.499999, age: nil, reduceMotion: false, stationary: false), 11)
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.500001, age: nil, reduceMotion: false, stationary: false), 0)
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.48, age: 0.48, reduceMotion: false, stationary: true), 24)
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed: 4.64, age: 0.64, reduceMotion: false, stationary: true), 28)
+        for time in [Double.nan, .infinity, -.infinity, -1, 3.99, 100, Double.greatestFiniteMagnitude] {
+            XCTAssertEqual(DenseAnimationFrame.sample(elapsed: time, age: 0.16, reduceMotion: false, stationary: false), 28)
+        }
+        for time in [4.01,4.3,4.6,5.01] {
+            XCTAssertEqual(DenseAnimationFrame.sample(elapsed: time, age: 0.16, reduceMotion: true, stationary: false), 28)
+        }
+    }
+    @MainActor
+    func testThreeLoadedPacksAndMissingArtFailureUseRegisteredCells() throws {
+        XCTAssertFalse(DenseCharacterAtlas.Pack(name: "not-an-asset", referenceHeight: 200, anchors: Array(repeating: .zero, count: 32)).isValid)
+        for theme in RunnerTheme.allCases {
+            let pack = try XCTUnwrap(DenseCharacterAtlas.packs[theme])
+            XCTAssertTrue(pack.isValid); XCTAssertEqual(pack.textures.count, 32)
+            XCTAssertEqual(Set(pack.textures.map { ObjectIdentifier($0) }).count, 32)
+            for (index, texture) in pack.textures.enumerated() {
+                XCTAssertGreaterThan(texture.size().width, 100)
+                XCTAssertGreaterThan(texture.size().height, 100)
+                XCTAssertTrue(pack.anchors[index].x.isFinite && pack.anchors[index].y.isFinite)
+                XCTAssertGreaterThan(pack.referenceHeight, 100)
+            }
+        }
+    }
+    @MainActor
+    func testNativeSceneActuallyUsesAllFlightLandingAndRunPosesAndReadyWhileStanding() throws {
+        for theme in RunnerTheme.allCases {
+            let scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            let player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let character = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            let pack = try XCTUnwrap(DenseCharacterAtlas.packs[theme])
+            let route = try routeFixture(accepted: [0,1])
+            for (index, age) in [0.02,0.06,0.10,0.14,0.18,0.22,0.26,0.30,0.34,0.38,0.42,0.46,0.50,0.54,0.58,0.62].enumerated() {
+                scene.configure(EggSceneSnapshot(elapsed: 4 + age, theme: theme, route: route, platformJourney: true))
+                XCTAssertTrue(character.texture === pack.textures[12 + index], "New in-between art must be used, not only supplied in assets")
+                XCTAssertEqual(player.children.count, 1); XCTAssertEqual(character.alpha, 1)
+            }
+            for (index, time) in [4.02,4.06,4.10,4.145,4.185,4.225,4.27,4.31,4.35,4.395,4.435,4.475].enumerated() {
+                scene.configure(EggSceneSnapshot(elapsed: time, theme: theme, route: try routeFixture()))
+                XCTAssertTrue(character.texture === pack.textures[index])
+            }
+            scene.configure(EggSceneSnapshot(elapsed: 4.8, theme: theme, route: route, platformJourney: true))
+            XCTAssertTrue(character.texture === pack.textures[28], "Standing on a platform cannot animate a running gait")
+            scene.configure(EggSceneSnapshot(elapsed: 4.2, reduceMotion: true, theme: theme, route: route, platformJourney: true))
+            XCTAssertTrue(character.texture === pack.textures[28])
+            XCTAssertEqual(player.xScale, 1); XCTAssertEqual(player.yScale, 1)
+        }
+    }
+    @MainActor
+    func testDisplayCallbacksAdvanceDenseFramesAndCaptureNativeSequences() async throws {
+        for theme in RunnerTheme.allCases {
+            let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 400, height: 800)), controller = UIViewController()
+            let view = SKView(frame: CGRect(x: 0, y: 0, width: 400, height: 500)), scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            window.rootViewController = controller; controller.view.addSubview(view); window.makeKeyAndVisible()
+            defer { scene.detach(); view.presentScene(nil); window.isHidden = true }
+            view.preferredFramesPerSecond = 60; view.presentScene(scene)
+            let route = try routeFixture(accepted: [0,1]), epoch = PracticeStore.now() - 4
+            scene.configure(EggSceneSnapshot(presentationElapsed: { $0 - epoch }, theme: theme, route: route, platformJourney: true))
+            let character = try XCTUnwrap(scene.childNode(withName: "player/characterPrimary") as? SKSpriteNode)
+            var observed = Set<ObjectIdentifier>()
+            for _ in 0..<100 {
+                try await Task.sleep(nanoseconds: 8_000_000)
+                observed.insert(ObjectIdentifier(try XCTUnwrap(character.texture)))
+            }
+            XCTAssertGreaterThan(observed.count, 8, "Live callbacks must actually expose denser poses, not a static actor or sparse fallback")
+            scene.configure(EggSceneSnapshot(suspended: true, presentationElapsed: { $0 - epoch }, theme: theme, route: route, platformJourney: true))
+            let count = scene.callbackCount, stoppedTexture = character.texture
+            try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertEqual(scene.callbackCount, count); XCTAssertTrue(character.texture === stoppedTexture)
+            // Full native sequential specimens, synthetic matcher fixture; not UI taps/physical FPS.
+            let runSamples: [(String, Int, Double)] = (0..<12).map { ("run", $0, 4 + (Double($0)+0.5)/24) }
+            let jumpSamples: [(String, Int, Double)] = (0..<16).map { ("jump", $0, 4 + (Double($0)+0.5)/25) }
+            let samples = runSamples + jumpSamples
+            for (phase,index,time) in samples {
+                scene.configure(EggSceneSnapshot(elapsed: time, theme: theme, route: phase == "run" ? try routeFixture() : route, platformJourney: phase != "run"))
+                let texture = try XCTUnwrap(view.texture(from: scene))
+                let attachment = XCTAttachment(image: UIImage(cgImage: texture.cgImage()))
+                attachment.name = "GAME22 \(theme.rawValue) \(phase) \(index)"
+                attachment.lifetime = .keepAlways; add(attachment)
+            }
+        }
+    }
+}

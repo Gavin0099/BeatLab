@@ -367,6 +367,47 @@ struct EggMissionScene: View {
     }
 }
 
+/// Authored in-between poses; cadence is independent of display refresh and beats.
+/// Missing art falls back to the preserved sparse pack, never to a blank player.
+enum DenseCharacterAtlas {
+    struct Pack {
+        let textures: [SKTexture]
+        let anchors: [CGPoint]
+        let referenceHeight: CGFloat
+        init(name: String, referenceHeight: CGFloat, anchors: [CGPoint]) {
+            self.referenceHeight = referenceHeight; self.anchors = anchors
+            guard referenceHeight > 0, anchors.count == 32, let image = UIImage(named: name)?.cgImage else { textures = []; return }
+            textures = (0..<32).compactMap { index in
+                let x0 = (Double(index % 8) * Double(image.width) / 8).rounded(.toNearestOrEven)
+                let y0 = (Double(index / 8) * Double(image.height) / 4).rounded(.toNearestOrEven)
+                let x1 = (Double(index % 8 + 1) * Double(image.width) / 8).rounded(.toNearestOrEven)
+                let y1 = (Double(index / 8 + 1) * Double(image.height) / 4).rounded(.toNearestOrEven)
+                guard let cell = image.cropping(to: CGRect(x: x0, y: y0, width: x1 - x0, height: y1 - y0)) else { return nil }
+                let texture = SKTexture(cgImage: cell); texture.filteringMode = .linear; return texture
+            }
+        }
+        var isValid: Bool { textures.count == 32 && anchors.count == 32 && referenceHeight > 0 }
+    }
+    // Generated PNGs remain byte-identical; read-only alpha/head-mass registration.
+    // Registered head/scale stays stable in flight; contact poses use actual foot baseline.
+    static let packs: [RunnerTheme: Pack] = [
+        .dinosaur: Pack(name: "DenseDinosaurMotion", referenceHeight: 189, anchors: [CGPoint(x: 121.4285, y: 205), CGPoint(x: 121.0003, y: 205), CGPoint(x: 120.6215, y: 205), CGPoint(x: 120.741, y: 205), CGPoint(x: 121.1707, y: 203), CGPoint(x: 120.6974, y: 204), CGPoint(x: 120.9337, y: 206), CGPoint(x: 120.6463, y: 205), CGPoint(x: 119.8498, y: 203), CGPoint(x: 120.0899, y: 203), CGPoint(x: 119.5937, y: 203), CGPoint(x: 120.3573, y: 203), CGPoint(x: 120.5284, y: 204), CGPoint(x: 119.9687, y: 203), CGPoint(x: 120.6517, y: 203), CGPoint(x: 120.1395, y: 203), CGPoint(x: 118.5186, y: 198), CGPoint(x: 119.137, y: 201), CGPoint(x: 118.4708, y: 202), CGPoint(x: 118.1722, y: 202), CGPoint(x: 120.1535, y: 202), CGPoint(x: 119.9798, y: 203), CGPoint(x: 120.5478, y: 204), CGPoint(x: 120.1491, y: 203), CGPoint(x: 120.048, y: 202), CGPoint(x: 120.4279, y: 203), CGPoint(x: 120.0393, y: 202), CGPoint(x: 120.3275, y: 201), CGPoint(x: 119.7939, y: 201), CGPoint(x: 119.5795, y: 201), CGPoint(x: 120.0733, y: 202), CGPoint(x: 119.4144, y: 202)]),
+        .cat: Pack(name: "DenseCatMotion", referenceHeight: 194, anchors: [CGPoint(x: 118.9282, y: 212), CGPoint(x: 120.639, y: 212), CGPoint(x: 124.1791, y: 212), CGPoint(x: 125.8537, y: 212), CGPoint(x: 126.0232, y: 212), CGPoint(x: 123.3623, y: 211), CGPoint(x: 124.4837, y: 212), CGPoint(x: 122.2294, y: 212), CGPoint(x: 125.2264, y: 208), CGPoint(x: 121.5337, y: 208), CGPoint(x: 120.9444, y: 206), CGPoint(x: 121.7452, y: 206), CGPoint(x: 122.5345, y: 208), CGPoint(x: 122.2199, y: 207), CGPoint(x: 118.2766, y: 206), CGPoint(x: 117.8604, y: 207), CGPoint(x: 122.546, y: 205), CGPoint(x: 119.6753, y: 206), CGPoint(x: 117.9349, y: 201), CGPoint(x: 115.2497, y: 201), CGPoint(x: 121.0228, y: 208), CGPoint(x: 120.1415, y: 208), CGPoint(x: 120.7901, y: 206), CGPoint(x: 120.3608, y: 208), CGPoint(x: 116.6617, y: 203), CGPoint(x: 112.7894, y: 204), CGPoint(x: 120.3969, y: 203), CGPoint(x: 120.2308, y: 203), CGPoint(x: 117.5834, y: 203), CGPoint(x: 117.9329, y: 204), CGPoint(x: 119.34, y: 203), CGPoint(x: 116.8849, y: 203)]),
+        .robot: Pack(name: "DenseRobotMotion", referenceHeight: 185, anchors: [CGPoint(x: 119.2793, y: 205), CGPoint(x: 120.8582, y: 205), CGPoint(x: 122.3635, y: 205), CGPoint(x: 123.4546, y: 205), CGPoint(x: 123.2228, y: 205), CGPoint(x: 121.7421, y: 205), CGPoint(x: 121.4395, y: 205), CGPoint(x: 121.2221, y: 205), CGPoint(x: 122.6622, y: 205), CGPoint(x: 120.8174, y: 205), CGPoint(x: 117.3791, y: 205), CGPoint(x: 117.277, y: 205), CGPoint(x: 123.369, y: 205), CGPoint(x: 124.1673, y: 205), CGPoint(x: 126.7748, y: 205), CGPoint(x: 125.0228, y: 205), CGPoint(x: 124.3694, y: 202), CGPoint(x: 124.1064, y: 204), CGPoint(x: 128.22, y: 203), CGPoint(x: 126.727, y: 203), CGPoint(x: 125.337, y: 203), CGPoint(x: 126.7635, y: 203), CGPoint(x: 128.3564, y: 203), CGPoint(x: 127.9103, y: 202), CGPoint(x: 126.6102, y: 192), CGPoint(x: 122.1243, y: 194), CGPoint(x: 118.2486, y: 195), CGPoint(x: 114.1323, y: 196), CGPoint(x: 114.3311, y: 199), CGPoint(x: 114.0865, y: 199), CGPoint(x: 113.8978, y: 199), CGPoint(x: 116.5594, y: 199)])
+    ]
+}
+
+enum DenseAnimationFrame {
+    static let ready = 28
+    static func sample(elapsed: Double, age: Double?, reduceMotion: Bool, stationary: Bool) -> Int {
+        guard !reduceMotion, elapsed.isFinite, (0...20.18).contains(elapsed), elapsed >= 4 else { return ready }
+        if let age, age.isFinite, (0..<0.48).contains(age) { return 12 + min(11, Int(age * 25)) }
+        if let age, age.isFinite, (0.48..<0.64).contains(age) { return 24 + min(3, Int((age - 0.48) * 25)) }
+        guard !stationary else { return ready }
+        return Int(((elapsed - 4) * 24).truncatingRemainder(dividingBy: 12))
+    }
+}
+
 struct EggAnimationFrame {
     static func ease(_ value: Double) -> CGFloat {
         let t = value.isFinite ? min(1, max(0, value)) : 0
@@ -426,7 +467,7 @@ private enum EggSceneTextures {
         guard warmedThemes.insert(theme).inserted else { return }
         let poses = theme == .dinosaur ? animated + original : CompanionAtlas.pack(theme).textures
         let backdrops = [journeyBackdrops[theme], CompanionAtlas.background(theme)].compactMap { $0 }
-        SKTexture.preload(poses + backdrops, withCompletionHandler: {})
+        SKTexture.preload(poses + (DenseCharacterAtlas.packs[theme]?.textures ?? []) + backdrops, withCompletionHandler: {})
     }
     static let journeyBackdrops: [RunnerTheme: SKTexture] = Dictionary(uniqueKeysWithValues: RunnerTheme.allCases.map { theme in
         guard let image = UIImage(named: theme.backdrop)?.cgImage,
@@ -669,7 +710,7 @@ final class EggSpriteScene: SKScene {
         first.color = .white; first.colorBlendFactor = recovery
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
         else {
-            setAnimated(first, EggAnimationFrame.sample(elapsed: snapshot.preparing ? 0 : elapsed, age: age, reduceMotion: reduced))
+            setMotion(first, elapsed: snapshot.preparing ? 0 : elapsed, age: age, reduced: reduced, stationary: false)
         }
         for (i, puff) in dust.enumerated() {
             puff.alpha = motion.landing * 0.7; puff.xScale = 1 + motion.landing * 2 / 3
@@ -743,7 +784,7 @@ final class EggSpriteScene: SKScene {
         player.yScale = 1 - landing * 0.10 * theme.compression
         first.color = .white; first.colorBlendFactor = 0; first.alpha = 1
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
-        else { setAnimated(first, activeFlight ? EggAnimationFrame.sample(elapsed: elapsed, age: age, reduceMotion: reduced) : 14) }
+        else { setMotion(first, elapsed: snapshot.preparing ? 0 : elapsed, age: stopped ? nil : age, reduced: reduced, stationary: true) }
         safety.isHidden = fall == 0
         safety.position = CGPoint(x: x, y: y - 6); safety.alpha = fall
         for (index, puff) in dust.enumerated() {
@@ -753,6 +794,18 @@ final class EggSpriteScene: SKScene {
         let latest = route?.journeyHits.last
         glint.isHidden = latest?.grade != .perfect || !activeFlight
         glint.position = CGPoint(x: x + 36, y: y + characterSize - 20)
+    }
+    private func setMotion(_ node: SKSpriteNode, elapsed: Double, age: Double?, reduced: Bool, stationary: Bool) {
+        guard let pack = DenseCharacterAtlas.packs[theme], pack.isValid else {
+            let fallback = stationary && !(age.map { (0..<0.64).contains($0) } ?? false) ? 14 : EggAnimationFrame.sample(elapsed: elapsed, age: age, reduceMotion: reduced)
+            setAnimated(node, fallback)
+            return
+        }
+        let index = DenseAnimationFrame.sample(elapsed: elapsed, age: age, reduceMotion: reduced, stationary: stationary)
+        let texture = pack.textures[index], source = texture.size(), anchor = pack.anchors[index]
+        if node.texture !== texture { node.texture = texture }
+        node.anchorPoint = CGPoint(x: anchor.x / source.width, y: 1 - anchor.y / source.height)
+        node.size = CGSize(width: source.width * characterSize / pack.referenceHeight, height: source.height * characterSize / pack.referenceHeight)
     }
     private func setOriginal(_ node: SKSpriteNode, _ index: Int) {
         if theme != .dinosaur { setAnimated(node, index == 5 ? 17 : 16); return }

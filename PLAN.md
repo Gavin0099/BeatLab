@@ -379,3 +379,9 @@ GAME21 source驗證：保持既有單一opaque角色guard；初次雙圖trial65�
 ### 2026-10-08 — GAME21 tested/frozen, phone delivery pending
 
 Source fd1e75f54a6688365f571466507059398539d8d2；65App/0fail PASS，雙圖trial3cases/6assert FAIL與實見重影均保留，未安裝且撤回。Final三theme native樣本單角色無重影；只證明原生呈現fixture與callback，沒有fullAppUI/physicalFPS證據；姿勢仍使用既有素材。95source/78production/93protected未變與signed/profile綁定PASS。iPhone fresh inventory unavailable/缺transport，install NOT RUN、launch NOT RUN；已問同Wi-Fi與unlock，READY frozen候選不因docs再build，手機仍GAME20來源0e83ed3。Status SOURCE_TESTED_PHONE_DELIVERY_BLOCKED；既有cat/narrow/touch/child/G1-G4/public gaps保留、TestFlight未動。Owned wide本來Shutdown且最終已Shutdown，shutdown嘗試149表示alreadyShutdown。完整evidence见docs/slices/GAME-21-verification.json。
+
+### 2026-10-08 — GAME-22 優先補連續姿勢
+
+Owner要求先完成圖片畫格密度。32-cell/theme候選：12跑步/.5s、12飛行/.48s、4落地/.16s、4ready；目標24–25有效姿勢/s，60fps仍是場景請求值。新imagesets保留舊素材，素材品質與native連續播放先驗，再建置；不改audio/input/matcher/save/玩法。契約 docs/slices/GAME-22.md；DEFINED / ART_IN_PROGRESS，尚未宣稱真機流暢或接受。
+
+GAME-22 source gate: 新三套32格PNG與read-only對齊接入完成；實際motion28格（run12/flight12/landing4）＋固定ready28，沒有把未播放ready29–31當作flow提升。Final App69/0 PASS；原生fixtures確認每格使用＋真實SKView callback姿勢前進、停用/Reduce Motion；84段原生姿勢截圖已匯出，六張apex/landing與Chrome循環接點檢視。Phone Debug簽署build PASS。保留robot首次裁切失敗與Swift推斷compile failure；修正版不改transport/matcher/save/原素材。真機FPS/owner流暢/舊full UI、兒童及public gates仍pending；手機paired/unavailable、install NOT RUN。
