@@ -403,3 +403,11 @@ TF-05 本人TestFlight可下載：Apple build 5ba3107d-7dca-4f5c-9a19-f058b613c1
 Owner 在TestFlight12確認跳躍尚可，但掉落不真實且不順。只修掉落／承接／回平台和对应反馈，不改已接受的跳跃、節拍/判分/保存或素材。根因：對稱跳躍曲線反用為下墜、ready站姿、跟著角色移動的承接與提前顯示已接回。範圍／失敗路徑／本機native regression與rollback先定義於 docs/slices/GAME-23.md。Status DEFINED；手機體感與public gates不因先前測試PASS而接受。
 
 GAME-23本機來源Gate：101 source inputs，其中99與TF05不變；App73/0與Core53/0 PASS，4個新增掉落回歸、123原生三theme序列/尺寸/light-dark specimens、實際callback進度與suspend／Reduce Motion靜態檢查。下墜與承接速度連續、25pose/s下降素材、托盤回平台、miss/extra不前進和下一個early hit恢復通過。檢圖後修正標記遮臉與extra晃動，final全App再跑73/0。簽署Debug候選0.1.0(12)已凍結，此build metadata未加號、不可誤認為新的TestFlight。Status SOURCE_TESTED_SIGNED_READY；physical/owner/public acceptance pending，未安裝／未上傳。
+
+### 2026-10-08 — TF-06 掉落修正版本人交付
+
+Owner明確要求「改好再幫我傳上去讓我測試」，授權GAME23 source73dcb17 Release與既有本人試玩內部分發。本機App73/Core53與來源101已備；先fresh ASC核對版本，再選build號封存，所有build/test維持本機。精確scope/失敗路徑/rollback見docs/slices/TF-06.md。Status REMOTE_PREFLIGHT；玩法、真機FPS與public接受仍pending，不增加內容或tester。
+
+TF-06 local gate PASS：App73/0、Core53/0、來源101（100與GAME23不變）、sim restore。build13 metadata1545fcb；第一次本機archive自訂輸出路徑冲突保留失敗log/partial，標準archive重跑Release13 PASS。Xcode TestFlight Internal Only上傳分析中，Status UPLOAD_IN_PROGRESS；Apple processing/group availability、owner phone update pending。
+
+TF-06本人可下載：0.1.0(13)、GAME23掉落／托盤承接／回平台修正版，Release與actual uploaded distribution IPA/internal-only/assets/source101/icon/privacy PASS。App73/Core53本機通過，未dispatch GitHub Mac；Apple build43e88b95-fdb8-4657-a17c-57884820d405已處理並顯示正在測試、本人試玩1位原tester、zh-Hant說明已儲存。Status TESTFLIGHT_OWNER_TRIAL_AVAILABLE；owner手機更新、真機流暢度/timing/FPS、fullUI/child/public gates保持pending。首次archive路徑失敗已保留，標準命令重跑PASS。

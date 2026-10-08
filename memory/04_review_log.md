@@ -234,3 +234,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-23.json
 - Next action: Owner phone playtest is needed to assess fall/catch/return and next-beat response; do not treat simulator callbacks as physical FPS. Candidate ready, delivery not performed; respect local Mac builds/tests and current release authorization.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:4439bbac9063dbfb38342c9f866e3f540c9cd3a99f3c4a666841af7d69de894b -->
+### Canonical memory checkpoint — tf06-fall-delivery-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `4439bbac9063dbfb38342c9f866e3f540c9cd3a99f3c4a666841af7d69de894b`
+- Commit binding: `1545fcb6e099424b277106796facd5e677bf0615` (bound)
+- Record: GAME23掉落修正版以0.1.0(13)本人內部TestFlight交付。本機App73/Core53、Release/source101、actual distribution IPA/internal-only PASS，Apple處理完成、原本人試玩1位tester正在測試、繁體說明已儲存。第一次archive自訂輸出路徑失敗保存，標準命令重跑PASS。僅metadata12→13，未跑GitHub Mac、未PR/merge/public。
+- Validation boundary: artifacts/evidence/test-results/TF-06-delivery-verified.json
+- Next action: Owner從TestFlight更新13，三角色第一關漏拍檢查下墜/承接/回平台和下一拍銜接；physicalFPS/timing/fullUI/child/public pending。
+- PLAN reconciliation: `updated`

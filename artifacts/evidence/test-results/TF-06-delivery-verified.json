@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/TF-06/check-delivery.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T09:06:26Z",
+  "finished_at": "2026-10-08T09:06:26Z",
+  "runner": "tf06-app-store-connect-observed",
+  "linked_commit": "1545fcb6e099424b277106796facd5e677bf0615",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/TF-06-delivery-verified.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

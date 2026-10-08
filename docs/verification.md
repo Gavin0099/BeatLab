@@ -1,4 +1,6 @@
-> **2026-10-08 掉落修正候選**：保留owner認為尚可的跳躍；GAME23下墜加速／托盤承接回平台與姿勢、提示修正。本機App73/Core53、123原生三theme樣本和簽署Debug候選PASS，99/101來源與TF05不變。手機TestFlight仍12/GAME22，本候選未安裝或上傳；真機FPS、體感、完整UI/兒童/public gates仍pending。[GAME23 evidence](slices/GAME-23-verification.json)。
+> **2026-10-08 掉落修正版交付**：0.1.0（13）已上傳、Apple處理完成，既有「本人試玩」可下載。本機App73/Core53及來源101、實際簽署IPA與internal-only檢查PASS。下墜加速、承接減速與托盤回平台已實作，手機更新與流暢度／physical timingFPS／public接受仍pending；所有build/tests本機，GitHub Mac未跑。[TF06 evidence](slices/TF-06-verification.json)。
+
+> **2026-10-08 掉落修正候選**：保留owner認為尚可的跳躍；GAME23下墜加速／托盤承接回平台與姿勢、提示修正。本機App73/Core53、123原生三theme樣本和簽署Debug候選PASS，99/101來源與TF05不變。此段為上傳前歷史狀態；最新TestFlight13/GAME23交付見上方TF06；真機FPS、體感、完整UI/兒童/public gates仍pending。[GAME23 evidence](slices/GAME-23-verification.json)。
 
 > **2026-10-08 本人 TestFlight 動作新版**：0.1.0（12）已上傳並完成 Apple 處理，既有「本人試玩」1位內部 tester 可下載。GAME-22 三套連續動作與101來源绑定；本機 App69/Core53/capture3、DSP468離線矩陣及Release／實際IPA檢查PASS。僅build metadata11→12，GitHub Mac job在目前分支禁用，本次未dispatch；未merge main。手機更新／流暢度、真機timing/FPS、完整UI、兒童與公開gate仍待驗收。[TF-05 evidence](slices/TF-05-verification.json)。
 
