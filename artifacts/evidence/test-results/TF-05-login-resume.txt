@@ -1,0 +1,1 @@
+PASS: Xcode existing-team login restored; fresh ASC login still required;101 current/isolated sources unchanged. Version/archive/upload/processing/availability NOT RUN.

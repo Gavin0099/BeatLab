@@ -391,3 +391,5 @@ GAME-22 source333012c：來源與手機候選完整性已封存，簽署/profile
 ### 2026-10-08 — TF-05 GAME-22 本人試玩交付
 
 Owner 明確要求推 TestFlight 後試玩，授權 GAME-22 三角色高密度姿勢候選的 Release / internal-only 上傳、既有「本人試玩」群組與 zh-Hant 測試說明；玩法／流暢度接受仍待試玩，不將 owner acceptance 前提當成本次 delivery blocker。Status IN_PROGRESS / BLOCKED_LOGIN：fresh Xcode Apple Accounts 空白、ASC 登出，已請登入；遠端最新 build 尚未讀取，版本號不猜測、未改 build metadata、未開始上傳。先綁定101 source hashes和既有69/0工程證據，製作測試說明。保留既有 full UI / physical / child / G1–G4 / public 缺口，不增功能或 tester，不提交公開 App Store。
+
+TF-05登入續行：Xcode已恢復既有Developer Team；ASC網頁仍登出，已請owner只補網頁登入。101來源已隔離，metadata未改、archive/upload/availability未執行；當前阻擋為ASC登入。

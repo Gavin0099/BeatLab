@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"from pathlib import Path\nimport json,hashlib\nv=json.loads(Path('docs/slices/TF-05-verification.json').read_text());m=json.loads(Path('TestResults/TF-05/source-copy-pre-metadata.json').read_text())\nassert v['build'] is None and v['status']=='IN_PROGRESS_BLOCKED_ASC_LOGIN'\nassert 'Wu Jui-Yi Developer Team' in Path(v['receipts']['xcode_login_restored']).read_text()\nassert '\u767b\u5165\u4f60\u7684 Apple' in Path(v['receipts']['asc_login_still_required']).read_text()\nfor f,h in m['source_sha256'].items():\n assert hashlib.sha256(Path(f).read_bytes()).hexdigest()==h\n assert hashlib.sha256((Path(m['root'])/f).read_bytes()).hexdigest()==h\nassert len(m['source_sha256'])==101\nprint('PASS: Xcode existing-team login restored; fresh ASC login still required;101 current/isolated sources unchanged. Version/archive/upload/processing/availability NOT RUN.')\n\"",
+  "exit_code": 0,
+  "started_at": "2026-10-08T03:48:39Z",
+  "finished_at": "2026-10-08T03:48:39Z",
+  "runner": "testflight-login-resume",
+  "linked_commit": "c38a03535545cf20b179fc3df3d4ee540ca41b7e",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/TF-05-login-resume.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
