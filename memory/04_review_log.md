@@ -245,3 +245,14 @@
 - Validation boundary: artifacts/evidence/test-results/TF-06-delivery-verified.json
 - Next action: Owner從TestFlight更新13，三角色第一關漏拍檢查下墜/承接/回平台和下一拍銜接；physicalFPS/timing/fullUI/child/public pending。
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:84419145126b53707c2a61ff6e0e54bb8ae7cd2aa137bb748d1d81b466abccaa -->
+### Canonical memory checkpoint — game24-first-level-expression-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `84419145126b53707c2a61ff6e0e54bb8ae7cd2aa137bb748d1d81b466abccaa`
+- Commit binding: `2a77e49a77572d12129dd373624c01b89ec43212` (bound)
+- Record: Owner接受TestFlight13掉落動作，要求表情連動；原32-frame三角色一直笑是原因。GAME24只第一關新增face expression assets與inset face rendering，motion/body/clock/score/save和原PNG保留。App76/Core53、24native specimens、實際臉pixel change且feet unchanged、reset/reduced/fallback與既有回歸PASS；所有tests本機。初次evidence helper缺PIL已保存，stdlib PNG/alpha檢查後final PASS。只第一關收斂，不能把預設10關當完成。
+- Validation boundary: artifacts/evidence/test-results/GAME-24.json
+- Next action: 先以手機驗收第一關的表情與核心loop；第一關完成後才排第2–10關slice。TestFlight目前13未含GAME24，本片未安裝/上傳，physicalFPS/timing/child/public pending。
+- PLAN reconciliation: `updated`

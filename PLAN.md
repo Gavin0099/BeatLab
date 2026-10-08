@@ -411,3 +411,9 @@ Owner明確要求「改好再幫我傳上去讓我測試」，授權GAME23 sourc
 TF-06 local gate PASS：App73/0、Core53/0、來源101（100與GAME23不變）、sim restore。build13 metadata1545fcb；第一次本機archive自訂輸出路徑冲突保留失敗log/partial，標準archive重跑Release13 PASS。Xcode TestFlight Internal Only上傳分析中，Status UPLOAD_IN_PROGRESS；Apple processing/group availability、owner phone update pending。
 
 TF-06本人可下載：0.1.0(13)、GAME23掉落／托盤承接／回平台修正版，Release與actual uploaded distribution IPA/internal-only/assets/source101/icon/privacy PASS。App73/Core53本機通過，未dispatch GitHub Mac；Apple build43e88b95-fdb8-4657-a17c-57884820d405已處理並顯示正在測試、本人試玩1位原tester、zh-Hant說明已儲存。Status TESTFLIGHT_OWNER_TRIAL_AVAILABLE；owner手機更新、真機流暢度/timing/FPS、fullUI/child/public gates保持pending。首次archive路徑失敗已保留，標準命令重跑PASS。
+
+### 2026-10-08 — GAME-24 第一關掉落表情
+
+Owner接受TestFlight13掉落動作，要求角色表情對應掉落；明確目前只有第一關做好，預設十關，待第一關完成再排其餘slice。本片只第一關facial feedback，保留已接受曲線與三角色motion/body資產，原關卡內容不擴展。先定義scope/checks/failure/rollback於GAME24 contract。Status DEFINED；第一關完整體感/child/timing仍未接受，第2–10關待後續規劃。
+
+GAME24表情本機完成：source2a77e49、107來源／99原始輸入不變，原JourneyRecovery/JourneyMotion/PlatformJourneyFrame/DenseAnimationFrame/DenseCharacterAtlas byte-text exact保留。三角色新增驚訝／閉眼承接／放鬆／ready faces，只inset face region覆蓋，原PNG/body腳部保留。最終App76/Core53、24 native表情尺寸/light-dark specimens、pixel changes與feet unchanged、state reset/missing/reduced及既有callback/paused PASS；sim全部state恢復。三次native76/0（shader同identity不重設、missing body不套臉保護），第一次evidence helper缺PIL保留，stdlib metadata/alpha檢查final PASS。Status SOURCE_NATIVE_TESTED；TestFlight最新仍13未含本片，未安裝／上傳。Owner接受13掉落，不等於第一關完整接受；只第一關收斂，2–10關slice等第一關完成才排。

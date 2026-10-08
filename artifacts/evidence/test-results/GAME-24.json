@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-24/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T09:52:39Z",
+  "finished_at": "2026-10-08T09:52:39Z",
+  "runner": "game24-local-native-expression-regression",
+  "linked_commit": "2a77e49a77572d12129dd373624c01b89ec43212",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-24.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

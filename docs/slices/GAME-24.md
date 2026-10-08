@@ -12,3 +12,5 @@ Behavior: 正常保持原表情；漏拍下墜驚訝張口/眼睛睜大、接住
 Checks: phase expression fixtures含邊界/invalid/repeated/reset/reduced/missing texture；GAME23既有curve/anchor/body texture與jump regression；本機App/Core、native三角色fall/catch/return/wait/light-dark/compact specimens、live callbacks/node count。工程通過不證明physicalFPS/timing/兒童體感。僅source/candidate可備，不在本片自動宣稱TF14。
 
 Failure: 新表情face registration/色差不符，保留失敗素材並針對修正，不能用整張新body替換已接受motion。Rollback只revert facial code/new assets/test，保留build13與learner資料。Status DEFINED。
+
+GAME24表情本機完成：source2a77e49、107來源／99原始輸入不變，原JourneyRecovery/JourneyMotion/PlatformJourneyFrame/DenseAnimationFrame/DenseCharacterAtlas byte-text exact保留。三角色新增驚訝／閉眼承接／放鬆／ready faces，只inset face region覆蓋，原PNG/body腳部保留。最終App76/Core53、24 native表情尺寸/light-dark specimens、pixel changes與feet unchanged、state reset/missing/reduced及既有callback/paused PASS；sim全部state恢復。三次native76/0（shader同identity不重設、missing body不套臉保護），第一次evidence helper缺PIL保留，stdlib metadata/alpha檢查final PASS。Status SOURCE_NATIVE_TESTED；TestFlight最新仍13未含本片，未安裝／上傳。Owner接受13掉落，不等於第一關完整接受；只第一關收斂，2–10關slice等第一關完成才排。
