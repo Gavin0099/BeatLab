@@ -41,3 +41,5 @@ by0/NaN, no off-screen goal/empty island path beyond16 or motion authority chang
 Rollback only new dense-profile source changes to completedGAME26 source; preserve
 progress/evidence. Status IMPLEMENTING / GAME26_ENGINEERING_GATE_PASSED. Rest and sixteenth
 behavior need separate later contracts; labels alone do not complete those levels.
+
+01:59 final composition boundary: full App92/0 before added native overlap viewport test; production byte-identical to final source20a99b8. Additional compact/tall/light/dark overlap test1/0 with72 native images. Initial focus5/0 has30 path images. UI first regression1passed; dense harness failed before gesture because XCTest max10 (requested12). Raw attempts retained. Fixed10 gesture UI run pending; no physical trial/FPS claims.

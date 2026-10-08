@@ -143,8 +143,14 @@ final class PracticeUITests: XCTestCase {
             if level == 4 {XCTAssertTrue(app.buttons["practiceTapPad.left"].isHittable)}
             XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
             XCTAssertTrue(app.staticTexts["activeLessonNumber"].label.hasPrefix("第 \(level) 關"))
-            pad.tap(withNumberOfTaps:10,numberOfTouches:1)
-            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual UIKit input must match dense targets")
+            // Observe the real four-beat count-in; input before it must be ignored.
+            let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
+            XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
+            if level == 4 {
+                pad.tap(withNumberOfTaps:5,numberOfTouches:1)
+                app.buttons["practiceTapPad.left"].tap(withNumberOfTaps:5,numberOfTouches:1)
+            } else {pad.tap(withNumberOfTaps:10,numberOfTouches:1)}
+            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual UIKit input after count-in must match dense targets")
             capture(app,"GAME27 level\(level) live touches")
             app.buttons["stopPractice"].tap()
             XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
