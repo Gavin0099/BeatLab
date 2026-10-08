@@ -1,0 +1,43 @@
+{
+  "date": "2026-10-08",
+  "slice": "TF-05",
+  "status": "IN_PROGRESS_BLOCKED_LOGIN",
+  "candidate_source_commit": "333012c3973c103ac3b6dfb571669265f8df7db4",
+  "bundle_id": "com.gavin0099.beatlab",
+  "team": "P358EB3X9H",
+  "version": "0.1.0",
+  "build": null,
+  "fresh_latest_remote_build": "NOT VERIFIED; ASC login required",
+  "source_manifest": "TestResults/TF-05/GAME-22-source-before-metadata.json",
+  "source_file_count": 101,
+  "prior_native_evidence": {
+    "pass": 69,
+    "fail": 0,
+    "rerun": false,
+    "reference": "docs/slices/GAME-22-verification.json"
+  },
+  "archive": "NOT RUN; next build number not yet established",
+  "upload": "BLOCKED_XCODE_ACCOUNT_REQUIRED",
+  "processing": "NOT RUN",
+  "owner_tester_assignment": "NOT RUN",
+  "owner_group": "本人試玩",
+  "what_to_test_saved": "NOT RUN; prepared locally",
+  "device_testflight_update": "NOT RUN",
+  "external_testing": false,
+  "new_testers_invited": false,
+  "app_store_submission": false,
+  "production_delta": [],
+  "receipts": {
+    "xcode_login": "TestResults/TF-05/xcode-login-required.txt",
+    "asc_login": "TestResults/TF-05/asc-login-required.txt",
+    "source_preflight": "TestResults/TF-05/source-preflight.json"
+  },
+  "not_claimed": [
+    "Owner motion acceptance",
+    "Physical FPS/timing validation",
+    "Full UI regression",
+    "Child enjoyment",
+    "G1-G4 acceptance",
+    "Public release readiness"
+  ]
+}

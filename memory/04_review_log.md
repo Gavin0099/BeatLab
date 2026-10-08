@@ -201,3 +201,14 @@
 - Validation boundary: artifacts/evidence/test-results/GAME-22.json
 - Next action: Install unchanged GAME22 PhoneFrozen candidate when owner phone is unlocked/on same Wi-Fi; update actual delivery receipt then owner plays new pose density. Measure presented FPS/timing separately and finish remaining full UI/accessibility/ten-level/child/public gates; keep current stable motion authority.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:0d880d077ba174a3947181d6fbe056d5bd5d26e3bcbe7771b3d759a416cf66ed -->
+### Canonical memory checkpoint — tf05-owner-trial-preflight-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `0d880d077ba174a3947181d6fbe056d5bd5d26e3bcbe7771b3d759a416cf66ed`
+- Commit binding: `03f4cd461ae23ee432404126715d35b2da27f611` (bound)
+- Record: Owner explicitly authorized GAME-22 TestFlight trial. Updated TF-05 delivery scope; prepared three-character motion test notes and source binding. Fresh Xcode Apple Accounts empty and ASC signed out; requested owner login. No build number chosen or upload attempted.
+- Validation boundary: artifacts/evidence/test-results/TF-05-preflight.json: PASS 101 unchanged source hashes and real login blocker; prior App69/0; archive/upload/processing NOT RUN.
+- Next action: After Xcode and ASC login, read latest remote build, bump metadata only, isolated Release archive and internal-only upload, confirm Apple processing and existing 本人試玩 availability; preserve physical/UI/child/public pending gates.
+- PLAN reconciliation: `updated`

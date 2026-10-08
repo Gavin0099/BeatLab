@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"from pathlib import Path\nimport json,hashlib\nm=json.loads(Path('TestResults/TF-05/GAME-22-source-before-metadata.json').read_text())\nassert len(m['source_sha256'])==101\nfor f,h in m['source_sha256'].items():assert hashlib.sha256(Path(f).read_bytes()).hexdigest()==h,f\nv=json.loads(Path('docs/slices/TF-05-verification.json').read_text())\nassert v['build'] is None and v['upload']=='BLOCKED_XCODE_ACCOUNT_REQUIRED'\nassert v['processing']==v['owner_tester_assignment']=='NOT RUN'\nassert 'Add Apple Account' in Path('TestResults/TF-05/xcode-login-required.txt').read_text()\nassert '\u767b\u5165' in Path('TestResults/TF-05/asc-login-required.txt').read_text()\nassert len(Path('TestResults/TF-05/what-to-test-zh-Hant.txt').read_text())>100\nprint('PASS: 101 GAME-22 source hashes unchanged; TestFlight delivery authorization recorded; owner trial notes prepared.')\nprint('Actual Xcode empty-account and ASC signed-out evidence retained. Latest build NOT VERIFIED; archive/upload/processing/availability NOT RUN; no release success claim.')\n\"",
+  "exit_code": 0,
+  "started_at": "2026-10-08T03:42:34Z",
+  "finished_at": "2026-10-08T03:42:34Z",
+  "runner": "testflight-owner-trial-preflight",
+  "linked_commit": "03f4cd461ae23ee432404126715d35b2da27f611",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/TF-05-preflight.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

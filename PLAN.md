@@ -387,3 +387,7 @@ Owner要求先完成圖片畫格密度。32-cell/theme候選：12跑步/.5s、12
 GAME-22 source gate: 新三套32格PNG與read-only對齊接入完成；實際motion28格（run12/flight12/landing4）＋固定ready28，沒有把未播放ready29–31當作flow提升。Final App69/0 PASS；原生fixtures確認每格使用＋真實SKView callback姿勢前進、停用/Reduce Motion；84段原生姿勢截圖已匯出，六張apex/landing與Chrome循環接點檢視。Phone Debug簽署build PASS。保留robot首次裁切失敗與Swift推斷compile failure；修正版不改transport/matcher/save/原素材。真機FPS/owner流暢/舊full UI、兒童及public gates仍pending；手機paired/unavailable、install NOT RUN。
 
 GAME-22 source333012c：來源與手機候選完整性已封存，簽署/profile/new3Assets.car PASS；App69/0 evidence與memory已記錄。手機unavailable，尚未安裝；TestFlight仍GAME15/build11。memory guard無current diff blocker，既有background warnings見verification，不宣稱full治理/上架驗收。
+
+### 2026-10-08 — TF-05 GAME-22 本人試玩交付
+
+Owner 明確要求推 TestFlight 後試玩，授權 GAME-22 三角色高密度姿勢候選的 Release / internal-only 上傳、既有「本人試玩」群組與 zh-Hant 測試說明；玩法／流暢度接受仍待試玩，不將 owner acceptance 前提當成本次 delivery blocker。Status IN_PROGRESS / BLOCKED_LOGIN：fresh Xcode Apple Accounts 空白、ASC 登出，已請登入；遠端最新 build 尚未讀取，版本號不猜測、未改 build metadata、未開始上傳。先綁定101 source hashes和既有69/0工程證據，製作測試說明。保留既有 full UI / physical / child / G1–G4 / public 缺口，不增功能或 tester，不提交公開 App Store。
