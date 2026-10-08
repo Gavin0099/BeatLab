@@ -769,11 +769,11 @@ final class PlatformJourneyTests: XCTestCase {
         XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 4.18, reduced: false).fall, 0)
         let bottom = PlatformJourneyFrame.sample(route: empty, elapsed: 4.42, reduced: false)
         XCTAssertEqual(bottom.step, 0); XCTAssertEqual(bottom.camera, 0)
-        XCTAssertEqual(bottom.fall, 1, accuracy: 1e-8)
-        XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 4.661, reduced: false).fall, 0)
+        XCTAssertEqual(bottom.fall, 0.75, accuracy: 1e-8, "Gravity phase ends at .24s; catch then brakes to full depth")
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 4.781, reduced: false).fall, 0)
         let aligned = try routeFixture(alignment: 0.20)
         XCTAssertEqual(PlatformJourneyFrame.sample(route: aligned, elapsed: 4.38, reduced: false).fall, 0)
-        XCTAssertEqual(PlatformJourneyFrame.sample(route: aligned, elapsed: 4.62, reduced: false).fall, 1, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: aligned, elapsed: 4.62, reduced: false).fall, 0.75, accuracy: 1e-8)
         let resumed = try routeFixture(accepted: [1])
         XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 5.24, reduced: false).step, 0.5, accuracy: 1e-8)
         XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 5.24, reduced: false).fall, 0)
@@ -828,10 +828,10 @@ final class PlatformJourneyTests: XCTestCase {
             scene.configure(EggSceneSnapshot(elapsed: 4.48, theme: theme, route: route, platformJourney: true))
             XCTAssertEqual(player.position.x, 188, accuracy: 1e-8)
             XCTAssertEqual(player.position.y, 155, accuracy: 1e-8)
-            scene.configure(EggSceneSnapshot(elapsed: 4.42, theme: theme, route: try routeFixture(), platformJourney: true))
+            scene.configure(EggSceneSnapshot(elapsed: 4.50, theme: theme, route: try routeFixture(), platformJourney: true))
             XCTAssertLessThan(player.position.y, 100)
             XCTAssertFalse(try XCTUnwrap(scene.childNode(withName: "safetyCatch")).isHidden)
-            scene.configure(EggSceneSnapshot(elapsed: 4.661, theme: theme, route: try routeFixture(), platformJourney: true))
+            scene.configure(EggSceneSnapshot(elapsed: 4.781, theme: theme, route: try routeFixture(), platformJourney: true))
             XCTAssertEqual(player.position.x, 80, accuracy: 1e-8); XCTAssertEqual(player.position.y, 155, accuracy: 1e-8)
             scene.configure(EggSceneSnapshot(elapsed: 0, preparing: true, theme: theme, platformJourney: true))
             XCTAssertEqual(player.position.x, 80, accuracy: 1e-8)
@@ -862,7 +862,7 @@ final class JourneyMotionRegressionTests: XCTestCase {
             XCTAssertEqual(landed.step - landed.camera, settled.step - settled.camera, accuracy: 1e-10)
         }
     }
-    func testFlightAndFallHaveZeroEndpointVelocityAndAcceleration() {
+    func testApprovedFlightHasZeroEndpointVelocityAndAcceleration() {
         XCTAssertEqual(JourneyMotion.arc(0.5), 1)
         XCTAssertEqual(JourneyMotion.progress(0.5), 0.5)
         let h = 1e-5
@@ -1023,6 +1023,152 @@ final class DenseCharacterMotionTests: XCTestCase {
                 let attachment = XCTAttachment(image: UIImage(cgImage: texture.cgImage()))
                 attachment.name = "GAME22 \(theme.rawValue) \(phase) \(index)"
                 attachment.lifetime = .keepAlways; add(attachment)
+            }
+        }
+    }
+}
+
+
+final class JourneyFallRecoveryTests: XCTestCase {
+    func testReviewedGravityCatchReturnDepthsAndContinuousVelocity() {
+        // Independent art-direction contract: quadratic gravity, braking catch,
+        // separate carrier return; never mirror the approved jump arc.
+        let samples: [(Double, Double, JourneyRecovery.Phase)] = [
+            (0.12, 0.1875, .falling), (0.24, 0.75, .catching),
+            (0.28, 0.9375, .catching), (0.32, 1, .returning),
+            (0.46, 0.5, .returning), (0.60, 0, .idle)]
+        for (age, depth, phase) in samples {
+            let value = JourneyRecovery.sample(age: age)
+            XCTAssertEqual(value.depth, depth, accuracy: 1e-9); XCTAssertEqual(value.phase, phase)
+        }
+        let h = 1e-5
+        for seam in [0.0, 0.24, 0.32, 0.60] {
+            let left = JourneyRecovery.sample(age: seam - h).depth
+            let center = JourneyRecovery.sample(age: seam).depth
+            let right = JourneyRecovery.sample(age: seam + h).depth
+            XCTAssertLessThan(abs(right - left), 0.001)
+            XCTAssertEqual((center - left) / h, (right - center) / h, accuracy: 0.003,
+                           "No teleport or velocity snap at catch/return contact")
+        }
+        XCTAssertGreaterThan(JourneyRecovery.sample(age: 0.20).depth - JourneyRecovery.sample(age: 0.16).depth,
+                             JourneyRecovery.sample(age: 0.08).depth - JourneyRecovery.sample(age: 0.04).depth)
+        var prior = 0.0
+        for tick in 0...320 {
+            let value = JourneyRecovery.sample(age: Double(tick) / 1000)
+            XCTAssertGreaterThanOrEqual(value.depth + 1e-10, prior)
+            XCTAssertTrue((0...0.5).contains(value.drift)); prior = value.depth
+        }
+        for invalid in [Double.nan, .infinity, -.infinity, -1, 0, 0.60, 99] {
+            XCTAssertEqual(JourneyRecovery.sample(age: invalid).phase, .idle)
+        }
+        XCTAssertNotEqual(JourneyRecovery.sample(age: 0.01).instruction, "接回來了，下一拍再跳！")
+    }
+    func testActualMissExtraAlignmentAndEarliestNextPressDoNotManufactureTravelOrSnap() throws {
+        let fixture = try routeFixture()
+        var session = try TimingSession(targets: fixture.targets)
+        session.tap(at: 104.40) // Actual extra: expired first beat, too early for second.
+        let failed = try routeFixture(hits: session.hits)
+        XCTAssertEqual(session.hits.first?.grade, .extra)
+        for time in [4.20, 4.42, 4.50, 4.64, 4.78] {
+            let frame = PlatformJourneyFrame.sample(route: failed, elapsed: time, reduced: false)
+            XCTAssertEqual(frame.step, 0); XCTAssertEqual(frame.camera, 0)
+        }
+        // A valid early second beat begins after recovery finishes at4.78.
+        session.tap(at: 104.83)
+        XCTAssertEqual(session.hits.last?.grade, .early)
+        let resumed = try routeFixture(hits: session.hits)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 4.829999, reduced: false).fall, 0)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 4.830001, reduced: false).step, 0, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 5.31, reduced: false).step, 1, accuracy: 1e-8)
+        XCTAssertEqual(failed.accepted.count, 0); XCTAssertEqual(resumed.accepted.count, 1)
+        for beat in 0..<16 {
+            let route = try routeFixture(alignment: 0.20)
+            let value = PlatformJourneyFrame.sample(route: route, elapsed: Double(4 + beat) + 0.70, reduced: false)
+            XCTAssertEqual(value.fall, 1, accuracy: 1e-8); XCTAssertEqual(value.step, 0)
+            XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: Double(4 + beat) + 0.981, reduced: false).fall, 0)
+        }
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: failed, elapsed: 4.50, reduced: true).recovery.phase, .idle)
+    }
+    @MainActor
+    func testAllThemesCatchBelowBeforeContactUseFallPosesAndReturnWithoutGhostOrNodeChurn() throws {
+        for theme in RunnerTheme.allCases {
+            let scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            let player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let actor = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            let catchNode = try XCTUnwrap(scene.childNode(withName: "safetyCatch"))
+            let pack = try XCTUnwrap(DenseCharacterAtlas.packs[theme]), route = try routeFixture()
+            let count = scene.children.count
+            // Reviewed six existing descending poses, then four contact poses.
+            for (age,index) in [(0.02,18),(0.06,19),(0.10,20),(0.14,21),(0.18,22),(0.22,23),
+                                (0.26,24),(0.30,25),(0.34,26),(0.38,27),(0.46,28)] {
+                scene.configure(EggSceneSnapshot(elapsed: 4.18 + age, theme: theme, route: route, platformJourney: true))
+                XCTAssertTrue(actor.texture === pack.textures[index]); XCTAssertEqual(actor.alpha, 1)
+                XCTAssertEqual(player.children.count, 1); XCTAssertEqual(scene.children.count, count)
+                XCTAssertFalse(catchNode.isHidden)
+                XCTAssertLessThan(try XCTUnwrap(scene.childNode(withName: "beatMarker")).zPosition, player.zPosition, "Upcoming cue must not paint over a falling face")
+                if age < 0.24 { XCTAssertLessThan(catchNode.position.y + 6, player.position.y) }
+                else { XCTAssertEqual(catchNode.position.y + 6, player.position.y, accuracy: 1e-8) }
+            }
+            scene.configure(EggSceneSnapshot(elapsed: 4.50, theme: theme, route: route, platformJourney: true))
+            let caught = player.position
+            var session = try TimingSession(targets: route.targets); session.tap(at: 104.40)
+            scene.configure(EggSceneSnapshot(elapsed: 4.50, theme: theme, route: try routeFixture(hits: session.hits), platformJourney: true))
+            XCTAssertEqual(player.position, caught, "Extra text feedback cannot shake a caught actor off its carrier")
+            scene.configure(EggSceneSnapshot(elapsed: 4.80, theme: theme, route: route, platformJourney: true))
+            XCTAssertEqual(player.position.x, 80, accuracy: 1e-8); XCTAssertEqual(player.position.y, 155, accuracy: 1e-8)
+            XCTAssertTrue(catchNode.isHidden); XCTAssertTrue(actor.texture === pack.textures[28])
+            for state in [EggSceneSnapshot(elapsed: 4.46, reduceMotion: true, theme: theme, route: route, platformJourney: true),
+                          EggSceneSnapshot(elapsed: 0, preparing: true, theme: theme, platformJourney: true),
+                          EggSceneSnapshot(elapsed: 4.50, finishedPassed: false, theme: theme, route: route, platformJourney: true)] {
+                scene.configure(state); XCTAssertTrue(catchNode.isHidden)
+                XCTAssertEqual(player.position.y, 155, accuracy: 1e-8); XCTAssertEqual(player.zRotation, 0)
+            }
+        }
+    }
+    @MainActor
+    func testLiveFallCallbacksAndNativeContinuousSpecimensInThreeThemes() async throws {
+        for theme in RunnerTheme.allCases {
+            let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 400, height: 800)), controller = UIViewController()
+            let view = SKView(frame: CGRect(x: 0, y: 0, width: 400, height: 500)), scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            window.rootViewController = controller; controller.view.addSubview(view); window.makeKeyAndVisible()
+            defer { scene.detach(); view.presentScene(nil); window.isHidden = true }
+            view.preferredFramesPerSecond = 60; view.presentScene(scene)
+            let route = try routeFixture(), epoch = PracticeStore.now() - 4.17
+            scene.configure(EggSceneSnapshot(presentationElapsed: { $0 - epoch }, theme: theme, route: route, platformJourney: true))
+            let player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let actor = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            var textures = Set<ObjectIdentifier>(), lowest = player.position.y
+            for _ in 0..<46 {
+                try await Task.sleep(nanoseconds: 16_000_000)
+                lowest = min(lowest, player.position.y); textures.insert(ObjectIdentifier(try XCTUnwrap(actor.texture)))
+            }
+            XCTAssertGreaterThan(textures.count, 5); XCTAssertLessThan(lowest, 100)
+            XCTAssertEqual(player.position.y, 155, accuracy: 1e-6)
+            scene.configure(EggSceneSnapshot(suspended: true, presentationElapsed: { $0 - epoch }, theme: theme, route: route, platformJourney: true))
+            let callbacks = scene.callbackCount
+            try await Task.sleep(nanoseconds: 80_000_000)
+            XCTAssertEqual(scene.callbackCount, callbacks)
+            // Native full-scene 60Hz time samples, not measured physical60fps.
+            for index in 0...36 {
+                scene.configure(EggSceneSnapshot(elapsed: 4.18 + Double(index) / 60, theme: theme, route: route, platformJourney: true))
+                let texture = try XCTUnwrap(view.texture(from: scene))
+                let attachment = XCTAttachment(image: UIImage(cgImage: texture.cgImage()))
+                attachment.name = "GAME23 \(theme.rawValue) fall \(String(format: "%02d", index))"
+                attachment.lifetime = .keepAlways; add(attachment)
+            }
+            // Changed artwork/geometry at compact and tall sizes, both appearances.
+            for height in [240.0,650.0] {
+                scene.size = CGSize(width: 320, height: height)
+                for style in [UIUserInterfaceStyle.light,.dark] {
+                    view.overrideUserInterfaceStyle = style
+                    scene.configure(EggSceneSnapshot(elapsed: 4.46, theme: theme, route: route, platformJourney: true))
+                    XCTAssertTrue(player.position.x.isFinite && player.position.y.isFinite)
+                    XCTAssertGreaterThan(player.position.y, 0)
+                    let texture = try XCTUnwrap(view.texture(from: scene))
+                    let attachment = XCTAttachment(image: UIImage(cgImage: texture.cgImage()))
+                    attachment.name = "GAME23 \(theme.rawValue) height\(height) style\(style.rawValue)"
+                    attachment.lifetime = .keepAlways; add(attachment)
+                }
             }
         }
     }

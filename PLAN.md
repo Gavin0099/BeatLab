@@ -1,12 +1,12 @@
 # BeatLab — iOS MVP Roadmap
 <!-- governance-baseline: overridable -->
-> **最後更新**: 2026-10-05
+> **最後更新**: 2026-10-08
 > **Owner**: BeatLab owner
 > **Freshness**: Sprint (7d)
 
 ## Current Phase
 
-目前內部試玩版為「拍拍冒險」TestFlight 0.1.0（10），已完成 Release 封存、實際上傳包驗證、Apple 處理與「本人試玩」分發。2026-10-05 owner 以手機截圖確認首頁風格，並指出節拍器／練習風格仍不一致；本輪要求功能盤點、後續 slice 與目前進度 commit／branch push。S0～S17 來源、MET-01 控制、GAME-07 runner 與 HOME-01 首頁均保留；G1～G4、物理 timing／兒童體驗／完整 accessibility 未接受。治理 runtime 自動化仍為既有非阻塞 debt。當前功能與切分見 [功能盤點](docs/design/FEATURE-AUDIT-20261005.md)。
+目前內部試玩版為「拍拍冒險」TestFlight 0.1.0（12），Apple已處理並分發到既有「本人試玩」群組。2026-10-08 owner 回報跳躍尚可，掉落不真實且不順；GAME-23針對下墜／承接／回平台呈現修正，本機App73/Core53、三角色連續場景fixture與簽署候選通過，手機體感待驗。維持既有節拍／判分／保存、已接受跳躍與素材；尚未安裝或上傳GAME23，手機TestFlight仍是12。G1～G4、物理timing/FPS、完整UI/accessibility與兒童體驗未接受；治理runtime自動化仍是既有非阻塞debt。功能盤點與歷史切分見 [功能盤點](docs/design/FEATURE-AUDIT-20261005.md)。
 
 以下為歷史迭代／拒絕結果，來源與當時交付狀態保留：
 GAME-03 跳島呈現已建置為 0.1.0（6），owner 判斷玩法不足；其後 PHONE-06 已依明確要求安裝供試玩，仍為未接受草稿。GAME-04 改以可玩「恐龍救援跑酷」概念先確認玩法，並建立 `beatlab-rhythm-game-design` 個人 skill。
@@ -397,3 +397,9 @@ TF-05登入續行：Xcode已恢復既有Developer Team；ASC網頁仍登出，�
 TF-05 本機建置與上傳（2026-10-08）：owner網頁登入完成並要求所有build/test在本機，fresh ASC最新11，App metadata commit b814321 僅build11→12，GitHub iOS push/PR事件移除、Mac job `if: false` 保留腳本但不配置runner。本機App69/0、Core53/0、capture3/0、DSP468離線matrix PASS；Release12 archive／actual uploaded distribution IPA／internal-only／new3dense assets／icon/privacy與101來源一致 PASS。Xcode15:46上傳成功，Apple處理中，試玩群組availability仍pending。Python YAML缺模組與隔離複本缺capture helper初次setup失敗保留，Ruby解析／補unchanged helper後final PASS；own simulator已restore Shutdown，其他sim未動。工程PASS不代表physicalFPS/timing/fullUI/child/public接受，手機TestFlight更新待owner。
 
 TF-05 本人TestFlight可下載：Apple build 5ba3107d-7dca-4f5c-9a19-f058b613c1d1（0.1.0/12）處理完成，已加入原本人試玩1位internal tester，列表「正在測試」；繁體說明「已儲存」。實際上傳IPA SHA256 adb0f9ca84a235670db0aaad7a54c164d441084f8bb6123cd8b145444a5afc40，internal-only distribution/source/icon/privacy檢查PASS。Status TESTFLIGHT_OWNER_TRIAL_AVAILABLE；手機更新／動作與physical timingFPS/child/public接受仍pending。所有本次build/tests在本機，GitHub無dispatch；workflow停用屬目前分支，未merge main。詳TF-05 verification與canonical delivery receipt。
+
+### 2026-10-08 — GAME-23 掉落修正
+
+Owner 在TestFlight12確認跳躍尚可，但掉落不真實且不順。只修掉落／承接／回平台和对应反馈，不改已接受的跳跃、節拍/判分/保存或素材。根因：對稱跳躍曲線反用為下墜、ready站姿、跟著角色移動的承接與提前顯示已接回。範圍／失敗路徑／本機native regression與rollback先定義於 docs/slices/GAME-23.md。Status DEFINED；手機體感與public gates不因先前測試PASS而接受。
+
+GAME-23本機來源Gate：101 source inputs，其中99與TF05不變；App73/0與Core53/0 PASS，4個新增掉落回歸、123原生三theme序列/尺寸/light-dark specimens、實際callback進度與suspend／Reduce Motion靜態檢查。下墜與承接速度連續、25pose/s下降素材、托盤回平台、miss/extra不前進和下一個early hit恢復通過。檢圖後修正標記遮臉與extra晃動，final全App再跑73/0。簽署Debug候選0.1.0(12)已凍結，此build metadata未加號、不可誤認為新的TestFlight。Status SOURCE_TESTED_SIGNED_READY；physical/owner/public acceptance pending，未安裝／未上傳。

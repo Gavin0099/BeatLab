@@ -277,10 +277,11 @@ struct PlatformJourneyFrame {
     let step: Double
     let camera: Double
     let jumpAge: Double?
-    let fall: Double
+    let recovery: JourneyRecovery
+    var fall: Double { recovery.depth }
     static func sample(route: RunnerRoute?, elapsed: Double, reduced: Bool) -> Self {
         guard let route, elapsed.isFinite, elapsed >= 0 else {
-            return Self(step: 0, camera: 0, jumpAge: nil, fall: 0)
+            return Self(step: 0, camera: 0, jumpAge: nil, recovery: .idle)
         }
         var step = 0.0, camera = 0.0
         var age: Double?
@@ -293,13 +294,55 @@ struct PlatformJourneyFrame {
             camera += delta * (reduced ? 1 : progress)
             age = a
         }
-        var fall = 0.0
+        var recovery = JourneyRecovery.idle
         if !reduced, age.map({ $0 >= 0.64 }) ?? true,
-           let id = route.missed(at: elapsed), let index = route.targets.firstIndex(where: { $0.id == id }) {
-            let a = elapsed - route.relativeTimes[index] - route.alignment - TimingSession.matchingWindow
-            fall = JourneyMotion.arc(a / 0.48)
+           let index = route.targets.indices.last(where: {
+               let a = elapsed - route.relativeTimes[$0] - route.alignment - TimingSession.matchingWindow
+               return a > 1e-10 && a < 0.60 && !route.accepted.contains(route.targets[$0].id)
+           }) {
+            recovery = JourneyRecovery.sample(age: elapsed - route.relativeTimes[index] - route.alignment - TimingSession.matchingWindow)
         }
-        return Self(step: step, camera: camera, jumpAge: age, fall: max(0, fall))
+        return Self(step: step, camera: camera, jumpAge: age, recovery: recovery)
+    }
+}
+
+/// A failed step is not a reversed jump. Descent gains speed, the catch brakes
+/// it, then a visible carrier returns the actor. Read-only presentation at60BPM.
+struct JourneyRecovery {
+    enum Phase { case idle, falling, catching, returning }
+    let phase: Phase
+    let age: Double
+    let depth: Double
+    let drift: Double
+    let compression: Double
+    let pose: Int
+    static let idle = Self(phase: .idle, age: 0, depth: 0, drift: 0, compression: 0, pose: 28)
+    static func sample(age: Double) -> Self {
+        guard age.isFinite, age > 0, age < 0.60 else { return .idle }
+        if age < 0.24 {
+            let p = age / 0.24
+            return Self(phase: .falling, age: age, depth: 0.75 * p * p,
+                        drift: 0.50 * JourneyMotion.progress(p), compression: 0,
+                        pose: 18 + min(5, Int(age * 25)))
+        }
+        if age < 0.32 {
+            let p = (age - 0.24) / 0.08
+            return Self(phase: .catching, age: age, depth: 0.75 + 0.25 * (2 * p - p * p),
+                        drift: 0.50, compression: sin(.pi * p),
+                        pose: 24 + min(1, Int((age - 0.24) * 25)))
+        }
+        let progress = JourneyMotion.progress((age - 0.32) / 0.28)
+        let pose = age < 0.36 ? 26 : (age < 0.40 ? 27 : 28)
+        return Self(phase: .returning, age: age, depth: 1 - progress,
+                    drift: 0.50 * (1 - progress), compression: 0, pose: pose)
+    }
+    var instruction: String? {
+        switch phase {
+        case .idle: return nil
+        case .falling: return "沒跟上，準備接住！"
+        case .catching: return "接住了，站穩一下！"
+        case .returning: return "回到小島，聽下一拍！"
+        }
     }
 }
 
@@ -561,7 +604,15 @@ final class EggSpriteScene: SKScene {
         }
         nextBeat.name = "nextLandingCue"; nextBeat.fontSize = 30; nextBeat.zPosition = 5
         nextBeat.isHidden = true; addChild(nextBeat)
-        safety.name = "safetyCatch"; safety.strokeColor = .clear; safety.zPosition = 5
+        // A shallow cradle with raised ends makes contact readable, rather
+        // than a glow following a standing character through the water.
+        let cradle = CGMutablePath()
+        cradle.move(to: CGPoint(x: -48, y: 9))
+        cradle.addQuadCurve(to: CGPoint(x: 48, y: 9), control: CGPoint(x: 0, y: -21))
+        cradle.addLine(to: CGPoint(x: 43, y: 14))
+        cradle.addQuadCurve(to: CGPoint(x: -43, y: 14), control: CGPoint(x: 0, y: 1))
+        cradle.closeSubpath(); safety.path = cradle
+        safety.name = "safetyCatch"; safety.lineWidth = 2; safety.zPosition = 5
         safety.isHidden = true; addChild(safety)
         for _ in 0..<10 {
             let pebble = SKShapeNode(ellipseOf: CGSize(width: 14, height: 5)); pebble.fillColor = UIColor(red: 0.78, green: 0.58, blue: 0.34, alpha: 1)
@@ -627,7 +678,7 @@ final class EggSpriteScene: SKScene {
         beatMarker.fillColor = .systemYellow
         glint.fillColor = next == .robot ? .cyan : .systemYellow
         for top in platformTops { top.fillColor = next.accent }
-        safety.fillColor = next.pad.withAlphaComponent(0.65)
+        safety.fillColor = next.pad; safety.strokeColor = next.accent
         resizeNodes()
     }
     func detach() {
@@ -730,10 +781,11 @@ final class EggSpriteScene: SKScene {
         let activeFlight = !stopped && state.jumpAge.map { (0..<0.48).contains($0) } == true
         let age = state.jumpAge ?? 1
         let hop = activeFlight && !reduced ? CGFloat(JourneyMotion.arc(age / 0.48)) * min(78, h * 0.20) : 0
-        let fall = stopped ? 0 : CGFloat(state.fall)
+        let recovery = stopped ? JourneyRecovery.idle : state.recovery
+        let fall = CGFloat(recovery.depth)
         let extraAge = route?.hits.last.flatMap { $0.grade == .extra ? elapsed - ($0.inputTime - (route?.epoch ?? 0)) : nil }
-        let extra = !stopped && !reduced && !activeFlight && age >= 0.64 && extraAge.map { (0..<0.22).contains($0) } == true ? CGFloat(sin(.pi * extraAge! / 0.22)) : 0
-        let x = origin + CGFloat(step) * stride + fall * stride * 0.30 + extra * 3
+        let extra = !stopped && !reduced && !activeFlight && recovery.phase == .idle && age >= 0.64 && extraAge.map { (0..<0.22).contains($0) } == true ? CGFloat(sin(.pi * extraAge! / 0.22)) : 0
+        let x = origin + CGFloat(step) * stride + CGFloat(recovery.drift) * stride + extra * 3
         let y = ground + hop - fall * min(64, h * 0.18)
         characterSize = min(132, max(90, h * 0.27))
         let backdrop = EggSceneTextures.journeyBackdrops[theme]
@@ -765,6 +817,7 @@ final class EggSpriteScene: SKScene {
         }
         let next = min(16, Int((step + 1e-8).rounded(.down)) + 1)
         let landingX = origin + CGFloat(next) * stride
+        beatMarker.zPosition = recovery.phase == .idle ? 8 : 4
         beatMarker.isHidden = completed || snapshot.finishedPassed == false
         beatMarker.position = CGPoint(x: landingX, y: ground + 1)
         beatMarker.alpha = EggBeatLane.markerAlpha(elapsed: elapsed, reduceMotion: reduced)
@@ -776,17 +829,24 @@ final class EggSpriteScene: SKScene {
         let endX = origin + 16 * stride
         nest.isHidden = endX > w + 60; nest.position = CGPoint(x: endX, y: ground)
         shadow.position = CGPoint(x: x, y: ground + 1)
-        shadow.xScale = 0.75 - hop / 300; shadow.alpha = fall > 0 ? 0 : 0.20 - hop / 600
+        shadow.xScale = 0.75 - hop / 300; shadow.alpha = (0.20 - hop / 600) * max(0, 1 - fall * 2)
         player.position = CGPoint(x: x, y: y)
-        player.zRotation = reduced ? 0 : (-Double(fall) * 0.25 - (activeFlight ? JourneyMotion.arc(age / 0.48) * 0.05 : 0)) * Double(theme.lean)
+        player.zRotation = reduced ? 0 : (-recovery.drift * 0.36 - (activeFlight ? JourneyMotion.arc(age / 0.48) * 0.05 : 0)) * Double(theme.lean)
         let landing = !stopped && !reduced && (0.48..<0.64).contains(age) ? CGFloat(pow(sin(.pi * (age - 0.48) / 0.16), 2)) : 0
-        player.xScale = 1 + landing * 0.08 * theme.compression
-        player.yScale = 1 - landing * 0.10 * theme.compression
+        let contact = max(landing, CGFloat(recovery.compression))
+        player.xScale = 1 + contact * 0.08 * theme.compression
+        player.yScale = 1 - contact * 0.10 * theme.compression
         first.color = .white; first.colorBlendFactor = 0; first.alpha = 1
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
+        else if recovery.phase != .idle { setRecoveryPose(first, recovery.pose) }
         else { setMotion(first, elapsed: snapshot.preparing ? 0 : elapsed, age: stopped ? nil : age, reduced: reduced, stationary: true) }
-        safety.isHidden = fall == 0
-        safety.position = CGPoint(x: x, y: y - 6); safety.alpha = fall
+        safety.isHidden = recovery.phase == .idle
+        let catchX = recovery.phase == .falling ? origin + CGFloat(step + 0.50) * stride : x
+        let catchDepth = recovery.phase == .falling ? 0.75 : recovery.depth
+        safety.position = CGPoint(x: catchX, y: ground - CGFloat(catchDepth) * min(64, h * 0.18) - 6)
+        safety.alpha = CGFloat(JourneyMotion.progress(recovery.age / 0.08) * (1 - JourneyMotion.progress((recovery.age - 0.54) / 0.06)))
+        safety.xScale = 1 + CGFloat(recovery.compression) * 0.12
+        safety.yScale = 1 - CGFloat(recovery.compression) * 0.25
         for (index, puff) in dust.enumerated() {
             puff.alpha = landing * 0.6; puff.xScale = 1 + landing
             puff.position = CGPoint(x: x - 18 - CGFloat(index) * 12, y: ground + CGFloat(index) * 3)
@@ -802,6 +862,15 @@ final class EggSpriteScene: SKScene {
             return
         }
         let index = DenseAnimationFrame.sample(elapsed: elapsed, age: age, reduceMotion: reduced, stationary: stationary)
+        setDense(node, index: index, pack: pack)
+    }
+    private func setRecoveryPose(_ node: SKSpriteNode, _ index: Int) {
+        guard let pack = DenseCharacterAtlas.packs[theme], pack.isValid else {
+            setAnimated(node, index < 24 ? 13 : 15); return
+        }
+        setDense(node, index: index, pack: pack)
+    }
+    private func setDense(_ node: SKSpriteNode, index: Int, pack: DenseCharacterAtlas.Pack) {
         let texture = pack.textures[index], source = texture.size(), anchor = pack.anchors[index]
         if node.texture !== texture { node.texture = texture }
         node.anchorPoint = CGPoint(x: anchor.x / source.width, y: 1 - anchor.y / source.height)
@@ -858,6 +927,7 @@ struct EggMissionView: View {
     @EnvironmentObject private var practice: PracticeStore
     @EnvironmentObject private var audio: MetronomeAudio
     @Environment(\.dynamicTypeSize) private var textSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     let accepted: Set<Int>
     let streak: Int
     let stop: () -> Void
@@ -876,7 +946,9 @@ struct EggMissionView: View {
             case .extra: return "多打一下，再跟上"
             }
         }
-        return route.missed(at: practice.elapsed) == nil ? "跟鼓聲，跳到亮起的小島！" : "接回來了，下一拍再跳！"
+        let recovery = PlatformJourneyFrame.sample(route: route, elapsed: practice.elapsed, reduced: false).recovery
+        if reduceMotion, recovery.phase != .idle { return "沒跟上，聽下一拍再試！" }
+        return recovery.instruction ?? "跟鼓聲，跳到亮起的小島！"
     }
     var body: some View {
         GeometryReader { geometry in
