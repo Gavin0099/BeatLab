@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-29/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T19:14:01Z",
+  "finished_at": "2026-10-08T19:14:02Z",
+  "runner": "game29-local-authored-rest-journeys",
+  "linked_commit": "feebc667cb36de2e64166e74124cf57d0f4a949d",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-29.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

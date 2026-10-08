@@ -333,3 +333,14 @@
 - Validation boundary: PASS artifacts/evidence/test-results/GAME-28.json local native1/UI6 exact107source; Core53 unchanged component; no physical acceptance or phone delivery
 - Next action: NIGHT01 continues GAME29 existing rest lessons5/6/9; physical owner trial and GAME31 F5 pending, no question before11:10.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:3c080bc88d9a3518c9347f3ce9f962381fd3d25fa2dcd9c63f677e0255f68236 -->
+### Canonical memory checkpoint — game29-night-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `3c080bc88d9a3518c9347f3ce9f962381fd3d25fa2dcd9c63f677e0255f68236`
+- Commit binding: `feebc66` (bound)
+- Record: GAME29 enables authored rest lessons5/6/9 with8/20/16 note islands and16/32/32 musical cells; initial rest still4 musical count-in. Actual matcher allows valid near-rest early/late, rest centers are extras, silence never adds platform or fall. Shared11 motion blocks and input/audio/Core/save exact. Quarter guide click retained, no fine-note soundtrack claim.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-29.json local fullApp101/UI2,54native/10UI,107source; Core53 unchanged; no phone/physical claim
+- Next action: NIGHT01 continues GAME30 existing7/8/10 high density, then GAME31 truthful result handoff; physical/child/audio cue owner preference after11:10.
+- PLAN reconciliation: `updated`
