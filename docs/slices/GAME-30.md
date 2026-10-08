@@ -24,8 +24,16 @@ pose/camera continuity of closest actually accepted pairs, largest plausible arc
 sum bound for legal match sequence,64-node journey using fixedpool and last island,
 invalid grid safety, Reduce Motion, first6 equivalence. Native all3themes compact/
 tall/dark and mixed wait; actual touch/restart/zero result with isolated reviewed
-prior progress only; no injected target/grade/hit in UI. Real save32/64/40 count and
+prior progress only; no injected target/grade/hit in UI. Real save64/64/40 count and
 lock persistence unaffected. Local Mac only; final regression/phone package frozen
 manifest later. Physical fast touch/output/FPS/child readability remain pending.
 Rollback only new profile/cue/density delta to completed GAME29; no saved-data reset.
 Status DEFINED / WAITING_GAME27_GAME28_GAME29.
+
+GAME29 gate7548d92 passed. Status IMPLEMENTING / DEPENDENCIES_PASSED. Keep shared DenseJourneyFrame and motion unchanged if actual closest-input fixtures pass. Four groups of four cells, fixed musical glyph sizes plus full speech semantics; preparation explicitly divides the big beat, without claiming automatic fine-note audio. Mixed rest-center may legitimately match a nearby note under180ms authority, unlike slower GAME29 centers; positive grade remains immediate.
+
+Initial focus8passed/1failed test,6 assertions: dino/cat closest two accepted arcs on200pt scene exceed top~1–2pt under rotated sprite bounds. Pure continuity/ties/bound/save passed;72 raw PNG/source/bundle retained. Scoped allowed extension BEFORE edit: only new grid.interval<.30 high-density hop amplitude reduces16%→14% scene height, preserving C2 curve/travel/camera and all lower-density first6/9 motion. Native full burst-pose bounding loop added, not a top clamp. No timing/matcher change. Final source and gates must be rebound.
+
+Failure interpretation: rotated actor bounding rectangle overshot0.622–2.034pt; raw PNG ears remain visible, so visible-pixel clipping was not established. Reserve margin rather than claiming reproduced physical cropping. Final high-only14% scaling retains curve; all65 poses per burst/theme/height now checked.
+
+Final local gates native9/0 (six new high-density tests plus three earlier-profile regressions), actual UI3/0 (primary dark2,narrow largest-light1).72 native/10 actual UI PNG reviewed; all simulator states and booted light restored. Full App101 is GAME29 baseline only; Core53 unchanged component. Source binding/evidence companion will record exact source commit. Status ENGINEERING_GATE_PASSED / OWNER_PHONE_TRIAL_PENDING. Initial8/1 rotated bounds failure retained; final65-pose sweep validates high-only14% curve scaling. Misused attachment-export flag and existing-manifest export retry retained as tool history; final manifest export succeeded, no source/test change.

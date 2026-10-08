@@ -6,10 +6,10 @@ import BeatLabCore
 /// Authored mission profiles only; other lessons and faster practice retain
 /// their existing runner. This does not change catalog targets or unlock rules.
 enum IslandLesson: Equatable {
-    case first, alternating, eighth, eighthAlternating, quarterRest, eighthRest, offbeat
-    var number: Int { switch self { case .first: return 1; case .alternating: return 2; case .eighth: return 3; case .eighthAlternating: return 4; case .quarterRest: return 5; case .eighthRest: return 6; case .offbeat: return 9 } }
-    var bpm: Int { switch self { case .first,.eighth: return 60; case .alternating,.eighthAlternating: return 65; case .quarterRest,.eighthRest: return 70; case .offbeat: return 75 } }
-    var stepsPerBeat: Int { self == .first || self == .alternating || self == .quarterRest ? 1 : 2 }
+    case first, alternating, eighth, eighthAlternating, quarterRest, eighthRest, sixteenth, sixteenthAlternating, offbeat, mixed
+    var number: Int { switch self { case .first: return 1; case .alternating: return 2; case .eighth: return 3; case .eighthAlternating: return 4; case .quarterRest: return 5; case .eighthRest: return 6; case .sixteenth: return 7; case .sixteenthAlternating: return 8; case .offbeat: return 9; case .mixed: return 10 } }
+    var bpm: Int { switch self { case .first,.eighth,.sixteenth: return 60; case .alternating,.eighthAlternating,.sixteenthAlternating: return 65; case .quarterRest,.eighthRest,.mixed: return 70; case .offbeat: return 75 } }
+    var stepsPerBeat: Int { switch self { case .first,.alternating,.quarterRest: return 1; case .eighth,.eighthAlternating,.eighthRest,.offbeat: return 2; case .sixteenth,.sixteenthAlternating,.mixed: return 4 } }
     var pattern: [Stroke] {
         switch self {
         case .first: return [.right,.right,.right,.right]
@@ -19,17 +19,20 @@ enum IslandLesson: Equatable {
         case .quarterRest: return [.right,.rest,.right,.rest]
         case .eighthRest: return [.right,.left,.rest,.right,.rest,.left,.right,.rest]
         case .offbeat: return [.rest,.right,.rest,.left,.rest,.right,.rest,.left]
+        case .sixteenth: return Array(repeating:.right,count:16)
+        case .sixteenthAlternating: return (0..<16).map { $0%2 == 0 ? .right : .left }
+        case .mixed: return [.right,.left,.rest,.right,.rest,.left,.right,.left,.rest,.right,.rest,.left,.right,.rest,.left,.rest]
         }
     }
     var usesBothHands: Bool { pattern.contains(.left) }
     var hasRests: Bool { pattern.contains(.rest) }
     var dense: Bool { stepsPerBeat > 1 }
-    var title: String { switch self { case .first: return "節奏跨島"; case .alternating: return "左右接力跨島"; case .eighth: return "半拍小島"; case .eighthAlternating: return "半拍左右接力"; case .quarterRest: return "留白小島"; case .eighthRest: return "半拍與休息"; case .offbeat: return "反拍跨島" } }
-    var preparation: String { switch self { case .first: return "找到大拍"; case .alternating: return "左右輪流"; case .eighth: return "一拍兩下"; case .eighthAlternating: return "半拍左右輪流"; case .quarterRest: return "留白也是節奏"; case .eighthRest: return "八分與休止"; case .offbeat: return "反拍留白" } }
-    var handInstruction: String { hasRests ? (usesBothHands ? "R 右手、L 左手；— 先聽拍" : "R 右手；— 先聽拍") : dense ? (usesBothHands ? "每拍右、左各一下" : "每拍用右手點兩下") : (usesBothHands ? "右、左手輪流跟拍" : "用右手跟拍") }
+    var title: String { switch self { case .first: return "節奏跨島"; case .alternating: return "左右接力跨島"; case .eighth: return "半拍小島"; case .eighthAlternating: return "半拍左右接力"; case .quarterRest: return "留白小島"; case .eighthRest: return "半拍與休息"; case .sixteenth: return "一拍四格"; case .sixteenthAlternating: return "四格左右接力"; case .offbeat: return "反拍跨島"; case .mixed: return "節奏小高手" } }
+    var preparation: String { switch self { case .first: return "找到大拍"; case .alternating: return "左右輪流"; case .eighth: return "一拍兩下"; case .eighthAlternating: return "半拍左右輪流"; case .quarterRest: return "留白也是節奏"; case .eighthRest: return "八分與休止"; case .sixteenth: return "一拍四格"; case .sixteenthAlternating: return "十六分左右"; case .offbeat: return "反拍留白"; case .mixed: return "節奏小高手" } }
+    var handInstruction: String { hasRests ? (usesBothHands ? "R 右手、L 左手；— 先聽拍" : "R 右手；— 先聽拍") : stepsPerBeat == 4 ? (usesBothHands ? "每拍右、左輪流四下" : "每拍用右手點四下") : dense ? (usesBothHands ? "每拍右、左各一下" : "每拍用右手點兩下") : (usesBothHands ? "右、左手輪流跟拍" : "用右手跟拍") }
     static func profile(_ lesson: Lesson) -> Self? {
         guard lesson.bars == 4 else { return nil }
-        let profiles: [(String, Self)] = [("first-beat",.first),("quarter-hands",.alternating),("eighth",.eighth),("eighth-hands",.eighthAlternating),("quarter-rest",.quarterRest),("eighth-rest",.eighthRest),("offbeat",.offbeat)]
+        let profiles: [(String, Self)] = [("first-beat",.first),("quarter-hands",.alternating),("eighth",.eighth),("eighth-hands",.eighthAlternating),("quarter-rest",.quarterRest),("eighth-rest",.eighthRest),("sixteenth",.sixteenth),("sixteenth-hands",.sixteenthAlternating),("offbeat",.offbeat),("mixed",.mixed)]
         guard let profile = profiles.first(where: { $0.0 == lesson.id })?.1,
               lesson.bpm == profile.bpm, lesson.pattern.stepsPerBeat == profile.stepsPerBeat else { return nil }
         return lesson.pattern.steps == profile.pattern ? profile : nil
@@ -1095,7 +1098,10 @@ final class EggSpriteScene: SKScene {
         let origin = w * 0.20 - CGFloat(camera) * stride
         let activeFlight = !stopped && (dense?.active ?? (state.jumpAge.map { (0..<0.48).contains($0) } == true))
         let age = state.jumpAge ?? 1
-        let hop = activeFlight && !reduced ? CGFloat(dense?.height ?? JourneyMotion.arc(age / 0.48)) * min(78, h * (dense == nil ? 0.20 : 0.16)) : 0
+        // Two valid four-grid presses can share an arc apex. Reserve headroom
+        // for the registered sprite's rotation, scaling the whole trajectory.
+        let highDensity = route?.grid.map { $0.interval < 0.30 } == true
+        let hop = activeFlight && !reduced ? CGFloat(dense?.height ?? JourneyMotion.arc(age / 0.48)) * min(78, h * (dense == nil ? 0.20 : highDensity ? 0.14 : 0.16)) : 0
         let recovery = stopped ? JourneyRecovery.idle : state.recovery
         let fall = CGFloat(recovery.depth)
         let extraAge = route?.hits.last.flatMap { $0.grade == .extra ? elapsed - ($0.inputTime - (route?.epoch ?? 0)) : nil }
@@ -1392,7 +1398,7 @@ struct EggMissionView: View {
                 .font(.caption.bold()).lineLimit(1)
             Spacer(minLength: 2)
             ForEach(0..<4, id: \.self) { beat in
-                HStack(spacing: 2) {
+                HStack(spacing: perBeat == 4 ? 1 : 2) {
                     ForEach(0..<perBeat, id: \.self) { subdivision in
                         let index = bar * perBar + beat * perBeat + subdivision
                         let target = route?.cellTarget(index)
@@ -1400,17 +1406,17 @@ struct EggMissionView: View {
                         let expired = target.map { practice.elapsed > $0.time - (route?.epoch ?? 0) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
                         VStack(spacing: 0) {
                             Image(systemName: target == nil && route != nil ? "minus" : matched ? "checkmark.circle.fill" : expired ? "arrow.uturn.backward.circle" : "music.note")
-                                .font(.system(size: perBeat == 1 ? 23 : 15, weight: .bold))
+                                .font(.system(size: perBeat == 1 ? 23 : perBeat == 4 ? 11 : 15, weight: .bold))
                                 .foregroundStyle(target == nil && route != nil ? BeatLabStyle.muted : matched ? Color(uiColor: theme.accent) : expired ? Color.orange : BeatLabStyle.ink)
                             if profile.usesBothHands { Text(target == nil && route != nil ? "—" : target?.stroke == .left ? "L" : "R").font(.system(size:compact ? 16 : 13,weight:.bold)) }
-                        }.frame(width: perBeat == 1 ? (compact ? 32 : 40) : (compact ? 18 : 21),height:36)
+                        }.frame(width: perBeat == 1 ? (compact ? 32 : 40) : perBeat == 4 ? (compact ? 12 : 14) : (compact ? 18 : 21),height:36)
                             .background(current == index ? Color(uiColor:theme.pad) : Color.clear,in:Capsule())
                     }
                 }.accessibilityHidden(true)
             }
         }.padding(.horizontal,10).padding(.vertical,3)
             .background(BeatLabStyle.surface,in:Capsule())
-            .accessibilityElement(children:.ignore).accessibilityLabel(profile.dense ? "每拍兩下的四個拍點" : "這一小節的四個拍點")
+            .accessibilityElement(children:.ignore).accessibilityLabel(profile.stepsPerBeat == 4 ? "每拍四格的四個拍點" : profile.dense ? "每拍兩下的四個拍點" : "這一小節的四個拍點")
             .accessibilityValue(current.map { "第 \($0 / perBeat % 4 + 1) 拍，第 \($0 % perBeat + 1) 格，\(route?.cellTarget($0).map { $0.stroke == .left ? "左手" : "右手" } ?? "休息")；抵達 \(route?.accepted.count ?? 0) 座小島" } ?? "先聽四拍，再跟鼓聲跳")
             .accessibilityIdentifier("rhythmLane")
     }

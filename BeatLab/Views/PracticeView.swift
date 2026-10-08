@@ -432,10 +432,29 @@ struct PracticeView: View {
                 .accessibilityIdentifier("preparedLessonNumber")
             Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
             EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true, platformJourney: true).frame(height: 260)
-            Text(profile.hasRests ? "先聽 4 拍。看到 R／L 跟拍跳，看到 — 站穩，先聽下一拍。" : profile.dense ? "先聽 4 拍，再跟細分的鼓聲，每拍跳兩次。" : "先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
+            Text(profile.hasRests ? "先聽 4 拍。看到 R／L 跟拍跳，看到 — 站穩，先聽下一拍。" : profile.stepsPerBeat == 4 ? "先聽 4 拍，把每拍分成四格，跟著音符跳。" : profile.dense ? "先聽 4 拍，把每拍分成兩格，跟著音符跳。" : "先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
                 .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
             Text("\(profile.handInstruction) · \(lesson.bpm) BPM · 約 \(seconds) 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
-            if profile.hasRests {
+            if profile.stepsPerBeat == 4 {
+                HStack(spacing:8) {
+                    ForEach(0..<4,id:\.self) { beat in
+                        VStack(spacing:4) {
+                            Text("\(beat+1)").font(.caption.bold()).lineLimit(1)
+                            HStack(spacing:1) {
+                                ForEach(0..<4,id:\.self) { sub in
+                                    let stroke=profile.pattern[beat*4+sub]
+                                    Text(stroke == .rest ? "—" : stroke == .left ? "L" : "R")
+                                        .font(.system(size:14,weight:.bold)).frame(maxWidth:.infinity,minHeight:32)
+                                }
+                            }
+                        }.padding(4).frame(maxWidth:.infinity)
+                            .background(Color(uiColor:missionTheme.pad).opacity(0.4),in:RoundedRectangle(cornerRadius:10))
+                    }
+                }.accessibilityElement(children:.ignore)
+                    .accessibilityLabel("每拍四格。一小節節奏：" + profile.pattern.map { $0 == .rest ? "休息" : $0 == .left ? "左手" : "右手" }.joined(separator:"、"))
+                Text(profile.hasRests ? "每拍四格；— 先聽拍。R／L 是手別提示，星星依拍點判定。" : "每拍四格，先保持均勻。星星依拍點判定。")
+                    .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            } else if profile.hasRests {
                 HStack(spacing:4) {
                     ForEach(profile.pattern.indices,id:\.self) { index in
                         Text(profile.pattern[index] == .rest ? "—" : profile.pattern[index] == .left ? "L" : "R")
