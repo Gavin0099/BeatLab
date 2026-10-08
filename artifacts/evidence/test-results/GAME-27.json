@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-27/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T18:07:02Z",
+  "finished_at": "2026-10-08T18:07:03Z",
+  "runner": "game27-local-half-beat-island-journey",
+  "linked_commit": "1a29f8dca6c0ae959cc5da31220e73ad95806dcf",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-27.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

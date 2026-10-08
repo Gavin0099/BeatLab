@@ -39,7 +39,9 @@ Failure paths: invalid/nonuniform grid falls back safely; missing art uses origi
 fallback; unsupported accelerated profile retains generic practice; no division
 by0/NaN, no off-screen goal/empty island path beyond16 or motion authority change.
 Rollback only new dense-profile source changes to completedGAME26 source; preserve
-progress/evidence. Status IMPLEMENTING / GAME26_ENGINEERING_GATE_PASSED. Rest and sixteenth
+progress/evidence. Status ENGINEERING_GATE_PASSED / OWNER_TRIAL_PENDING. Rest and sixteenth
 behavior need separate later contracts; labels alone do not complete those levels.
 
 01:59 final composition boundary: full App92/0 before added native overlap viewport test; production byte-identical to final source20a99b8. Additional compact/tall/light/dark overlap test1/0 with72 native images. Initial focus5/0 has30 path images. UI first regression1passed; dense harness failed before gesture because XCTest max10 (requested12). Raw attempts retained. Fixed10 gesture UI run pending; no physical trial/FPS claims.
+
+02:04 corrected count-in UI1/0 passed both levels actual native touches/cancel/restart and fifth lock. First-level UI regression1/0 on byte-identical production before harness corrections. All simulator states restored. Shutdown appearance CLI returned unknown both before/after; no global appearance mutation was performed, but do not claim light restoration. Source1a29f8d (production20a99b8). No phone trial; continue GAME28.

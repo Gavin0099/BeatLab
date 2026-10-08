@@ -84,3 +84,5 @@
 - GAME25 source cdc2e1e is tested and Wi-Fi installed/launched for trial. All simulator states restored. Original PNG/flight/fall/audio/score/save unchanged. Grounded rendered pixels move while feet stay planted, first early press displays flight before count-in ends. Physical smoothness/child appeal and first-level acceptance remain pending; do not expand levels2–10 or claim public readiness. <!-- memory_record_projection:active-task-summary:df4ed0ba4e5b163d509b66fe49b66e8daea216c9695ab4148619acca5f7da9bf -->
 
 - NIGHT01 active: GAME26 local engineering gates passed, physical trial pending; continue GAME27 density and shared responsive layout defect slice; no Apple upload. <!-- memory_record_projection:active-task-summary:604d4abbc74cc27e01d6f9cf9c8137cdc8f87d3c35dce718f4814d61fdf299d9 -->
+
+- NIGHT01 active: GAME26/GAME27 engineering gates passed, first4 authored missions; continue GAME28 responsive gameplay, then rest/dense catalog slices; physical trial and public readiness pending. <!-- memory_record_projection:active-task-summary:c5a0a18a8b9bc720251e9173c913912ca749a192410eb3c689f27f0f3e018fa3 -->

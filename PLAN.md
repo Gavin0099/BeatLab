@@ -459,3 +459,5 @@ GAME26 engineering進度：App87/0、Core53/0通過；後續僅R/L場景提示op
 2026-10-09 01:58 GAME27 source complete, local App92/0 and added viewport overlap1/0, initial focus5/0. UI1passed first-level regression/1failed new harness before input because XCTest gesture max10 versus12 requested. Corrected test to10 only; production unchanged; final real dense UI gate pending. Raw source/results preserved.
 
 2026-10-09 02:01 GAME27 second UI attempt sent all10 native touches within first~2.6s of four-beat count-in and correctly got0 hits. Harness now observes actual visible count-in completion (no injected route/targets), then uses10 single-pad or5right+5left native taps. Production unchanged. Both failed UI attempts retained; final gate pending.
+
+2026-10-09 02:04 GAME27 ENGINEERING_GATE_PASSED: production20a99b8/final test1a29f8d. Full App92/0, added native overlap1/0, Core53 component unchanged; final dense UI1/0 + earlier first UI1/0.102 native PNGs,4 actual dense UI screenshots; all raw failure attempts preserved, all sim states restored. Physical pending; GAME28 proceeds.

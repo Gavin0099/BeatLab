@@ -311,3 +311,14 @@
 - Validation boundary: PASS composed local evidence: artifacts/evidence/test-results/GAME-26.json; full App87 before opacity delta, final native1/UI3, Core53 unchanged; initial App/UI failures retained. No phone candidate or physical FPS/timing acceptance.
 - Next action: Implement GAME27 levels3/4 dense motion/path/cues; define responsive layout fix for observed largest-text actor occlusion, dark mission contrast, result/tab overlap. Preserve physical/child/F5 pending; questions after11:10.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:c5a0a18a8b9bc720251e9173c913912ca749a192410eb3c689f27f0f3e018fa3 -->
+### Canonical memory checkpoint — game27-night-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `c5a0a18a8b9bc720251e9173c913912ca749a192410eb3c689f27f0f3e018fa3`
+- Commit binding: `1a29f8d` (bound)
+- Record: GAME27 authored levels3/4 continuous half-beat32-target journey, bounded concurrent accepted arcs, reused beyond16 islands, grouped cues, first-only music bed. Production20a99b8/final test1a29f8d. Both UI failures and receipt assertion correction preserved; source/component boundary explicit.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-27.json: App92 exact production, added native overlap1 with72images, focus5 with30images, final dense actual UI1 and earlier first regression1, Core53 unchanged. Global appearance NOT VERIFIED because shutdown CLI unknown; device states restored. No phone install.
+- Next action: NIGHT01 continues GAME28 shared visible scene/largest-text/contrast/result clearance; then GAME29 rests and GAME30 sixteenths, GAME31 actual result handoff. Physical/child acceptance pending; no Apple upload.
+- PLAN reconciliation: `updated`
