@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-28/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T18:55:31Z",
+  "finished_at": "2026-10-08T18:55:32Z",
+  "runner": "game28-local-responsive-game-layout",
+  "linked_commit": "0e9a3464a6381c57cdf4a2920b8bd9bcd6b20389",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-28.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

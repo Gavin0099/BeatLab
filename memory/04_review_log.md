@@ -322,3 +322,14 @@
 - Validation boundary: PASS artifacts/evidence/test-results/GAME-27.json: App92 exact production, added native overlap1 with72images, focus5 with30images, final dense actual UI1 and earlier first regression1, Core53 unchanged. Global appearance NOT VERIFIED because shutdown CLI unknown; device states restored. No phone install.
 - Next action: NIGHT01 continues GAME28 shared visible scene/largest-text/contrast/result clearance; then GAME29 rests and GAME30 sixteenths, GAME31 actual result handoff. Physical/child acceptance pending; no Apple upload.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:fde122bbcdb1375a8666d3061874ecfec09a06b7826765832ba49b384a9261ed -->
+### Canonical memory checkpoint — game28-night-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `fde122bbcdb1375a8666d3061874ecfec09a06b7826765832ba49b384a9261ed`
+- Commit binding: `0e9a346` (bound)
+- Record: GAME28 keeps full game scene/input/stop visible across normal and AXXX L text; fixed caption contrast and result tab clearance, dense compact backdrop coverage. Original motion/input/audio/matcher/save exact; initial native anchor and absent statusbar AX failures retained; same-bundle xcresult reads now sequential.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-28.json local native1/UI6 exact107source; Core53 unchanged component; no physical acceptance or phone delivery
+- Next action: NIGHT01 continues GAME29 existing rest lessons5/6/9; physical owner trial and GAME31 F5 pending, no question before11:10.
+- PLAN reconciliation: `updated`
