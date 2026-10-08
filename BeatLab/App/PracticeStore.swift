@@ -105,7 +105,7 @@ final class PracticeStore: ObservableObject {
         do { selected = try lesson.atTempo(max(lesson.bpm, practiceBPM)) }
         catch { notice = "練習速度無法使用。"; return }
         isCalibrating = false
-        isEggMission = eggMission && selected?.id == "first-beat" && selected?.bpm == 60
+        isEggMission = eggMission && selected.flatMap(IslandLesson.profile) != nil
         begin(audio: audio, bpm: selected!.bpm)
     }
     func startCalibration(audio: MetronomeAudio) {

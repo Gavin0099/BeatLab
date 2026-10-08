@@ -31,11 +31,15 @@ private final class TouchPad: UIView {
 
 struct TapPad: UIViewRepresentable {
     var feedback: String = "跟著拍，點這裡"
+    var label: String = "跟拍區"
+    var identifier: String = "practiceTapPad"
     let onTap: (Double, Bool) -> Void
     func makeUIView(context: Context) -> UIView {
-        let view = TouchPad(); view.tapped = onTap; view.accessibilityValue = feedback; return view
+        let view = TouchPad(); view.tapped = onTap; view.accessibilityValue = feedback
+        view.accessibilityLabel = label; view.accessibilityIdentifier = identifier; return view
     }
     func updateUIView(_ uiView: UIView, context: Context) {
         (uiView as? TouchPad)?.tapped = onTap; uiView.accessibilityValue = feedback
+        uiView.accessibilityLabel = label; uiView.accessibilityIdentifier = identifier
     }
 }

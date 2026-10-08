@@ -3,6 +3,25 @@ import UIKit
 import SpriteKit
 import BeatLabCore
 
+/// Authored mission profiles only; other lessons and faster practice retain
+/// their existing runner. This does not change catalog targets or unlock rules.
+enum IslandLesson: Equatable {
+    case first, alternating
+    var number: Int { self == .first ? 1 : 2 }
+    var bpm: Int { self == .first ? 60 : 65 }
+    var title: String { self == .first ? "節奏跨島" : "左右接力跨島" }
+    var preparation: String { self == .first ? "找到大拍" : "左右輪流" }
+    var handInstruction: String { self == .first ? "用右手跟拍" : "右、左手輪流跟拍" }
+    static func profile(_ lesson: Lesson) -> Self? {
+        guard lesson.bars == 4, lesson.pattern.stepsPerBeat == 1 else { return nil }
+        if lesson.id == "first-beat", lesson.bpm == 60,
+           lesson.pattern.steps == [.right,.right,.right,.right] { return .first }
+        if lesson.id == "quarter-hands", lesson.bpm == 65,
+           lesson.pattern.steps == [.right,.left,.right,.left] { return .alternating }
+        return nil
+    }
+}
+
 /// Cosmetic mission vocabulary and motion personality; never creates targets.
 enum RunnerTheme: String, CaseIterable {
     case dinosaur, cat, robot
@@ -244,7 +263,18 @@ struct RunnerRoute {
     }
     func currentIndex(at elapsed: Double) -> Int? {
         guard elapsed.isFinite else { return nil }
-        return relativeTimes.lastIndex { $0 <= elapsed }
+        // Absolute-host subtraction can put a fractional65BPM boundary a few
+        // floating-point units ahead of its equivalent relative time.
+        return relativeTimes.lastIndex { $0 <= elapsed + 1e-10 }
+    }
+    /// Musical cue, independent of how many platforms the actor reached.
+    /// A matched early press moves the prompt on; a miss cannot freeze R/L.
+    func promptTarget(at elapsed: Double) -> TimingTarget? {
+        guard elapsed.isFinite, elapsed >= 0, elapsed <= duration else { return nil }
+        let played = Set(journeyHits.filter { $0.inputTime - epoch <= elapsed + 1e-10 }.compactMap(\.targetID))
+        return targets.indices.first {
+            !played.contains(targets[$0].id) && elapsed <= relativeTimes[$0] + alignment + TimingSession.matchingWindow + 1e-9
+        }.map { targets[$0] }
     }
     func missed(at elapsed: Double) -> Int? {
         guard elapsed.isFinite else { return nil }
@@ -512,7 +542,7 @@ struct JourneyIdleMotion {
 
     static func sample(route: RunnerRoute?, elapsed: Double, frame: PlatformJourneyFrame,
                        theme: RunnerTheme, reduced: Bool, stopped: Bool) -> Self {
-        guard let route, !reduced, !stopped, elapsed.isFinite, (0...20.18).contains(elapsed),
+        guard let route, !reduced, !stopped, elapsed.isFinite, (0...route.duration).contains(elapsed),
               frame.recovery.phase == .idle, let first = route.relativeTimes.first,
               elapsed >= first - 0.36, route.beatDuration.isFinite, route.beatDuration > 0 else { return .inactive }
         var time = elapsed
@@ -642,6 +672,12 @@ enum EggBeatLane {
         guard !reduceMotion, elapsed.isFinite, (4..<20).contains(elapsed) else { return 0.45 }
         let phase = (elapsed - 4).truncatingRemainder(dividingBy: 1)
         return 0.45 + 0.55 * CGFloat(max(0, 1 - phase / 0.12))
+    }
+    static func markerAlpha(route: RunnerRoute?, elapsed: Double, reduceMotion: Bool) -> CGFloat {
+        guard !reduceMotion, let route, let index = route.currentIndex(at: elapsed),
+              elapsed < route.duration - TimingSession.matchingWindow else { return 0.45 }
+        let age = max(0, elapsed - route.relativeTimes[index])
+        return 0.45 + 0.55 * CGFloat(max(0, 1 - age / 0.12))
     }
 }
 
@@ -866,7 +902,8 @@ final class EggSpriteScene: SKScene {
         renderCount += 1
         #endif
         let raw = snapshot.presentationElapsed?(host) ?? snapshot.elapsed
-        let elapsed = raw.isFinite ? min(20.18, max(0, raw)) : 0
+        let limit = snapshot.platformJourney ? snapshot.route?.duration ?? 20.18 : 20.18
+        let elapsed = raw.isFinite ? min(limit, max(0, raw)) : 0
         if snapshot.platformJourney { renderJourney(elapsed: elapsed, host: host); return }
         first.alpha = 1
         island.texture = CompanionAtlas.background(theme)
@@ -982,12 +1019,15 @@ final class EggSpriteScene: SKScene {
         beatMarker.zPosition = recovery.phase == .idle ? 8 : 4
         beatMarker.isHidden = completed || snapshot.finishedPassed == false
         beatMarker.position = CGPoint(x: landingX, y: ground + 1)
-        beatMarker.alpha = EggBeatLane.markerAlpha(elapsed: elapsed, reduceMotion: reduced)
+        beatMarker.alpha = EggBeatLane.markerAlpha(route: route, elapsed: elapsed, reduceMotion: reduced)
         nextBeat.isHidden = stopped || route == nil || activeFlight
         nextBeat.position = CGPoint(x: landingX, y: ground + 36)
         nextBeat.fontColor = theme.accent
-        if nextBeat.text != "♪" { nextBeat.text = "♪" }
-        nextBeat.alpha = reduced ? 1 : beatMarker.alpha
+        let alternating = route?.targets.contains { $0.stroke == .left } == true
+        let prompt = alternating ? route?.promptTarget(at: elapsed).map { $0.stroke == .right ? "R" : "L" } ?? "" : "♪"
+        if nextBeat.text != prompt { nextBeat.text = prompt }
+        // Hand instruction remains readable; only the landing marker pulses.
+        nextBeat.alpha = alternating || reduced ? 1 : beatMarker.alpha
         let endX = origin + 16 * stride
         nest.isHidden = endX > w + 60; nest.position = CGPoint(x: endX, y: ground)
         shadow.position = CGPoint(x: x, y: ground + 1)
@@ -1105,6 +1145,8 @@ struct EggMissionView: View {
     let stop: () -> Void
     var theme: RunnerTheme = .dinosaur
     private var route: RunnerRoute? { practice.runnerRoute }
+    private var profile: IslandLesson { practice.selected.flatMap(IslandLesson.profile) ?? .first }
+    private var promptStroke: Stroke? { route?.promptTarget(at: practice.elapsed)?.stroke }
     private let ink = Color(red: 0.08, green: 0.25, blue: 0.18)
     private var age: Double? { practice.latestHit.map { max(0, PracticeStore.now() - $0.inputTime) } }
     private var cue: String {
@@ -1129,11 +1171,11 @@ struct EggMissionView: View {
                     VStack(spacing: 10) {
                         HStack(alignment: .center) {
                             VStack(alignment: .leading, spacing: 2) {
-                                Text("第 1 關 · 節奏跨島").font(.headline).accessibilityIdentifier("activeLessonNumber")
+                                Text("第 \(profile.number) 關 · \(profile.title)").font(.headline).accessibilityIdentifier("activeLessonNumber")
                                 Text("\(theme.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("activeCompanion")
                             }
                             Spacer(minLength: 6)
-                            Text("60 BPM").font(.subheadline.monospacedDigit())
+                            Text("\(practice.selected?.bpm ?? profile.bpm) BPM").font(.subheadline.monospacedDigit())
                         }
                         phraseRoute
                         EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
@@ -1153,19 +1195,38 @@ struct EggMissionView: View {
                 HStack {
                     Text("抵達 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座小島").accessibilityIdentifier("jumpMatches")
                     Spacer(minLength: 4)
-                    Text(streak >= 2 ? "連續 \(streak) 拍！" : "右手跟拍")
+                    Text(streak >= 2 ? "連續 \(streak) 拍！" : profile == .alternating ? "右左接力" : "右手跟拍")
                 }.font(.caption.bold())
+                if profile == .alternating {
+                    HStack(spacing: 10) { handPad(.right); handPad(.left) }.frame(height: 56)
+                } else {
                 ZStack {
                     RoundedRectangle(cornerRadius: 20).fill(Color(uiColor: theme.pad))
                     Label("跟鼓聲跳", systemImage: "arrow.up.right").font(.headline.bold())
                         .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
                     TapPad(feedback: "跳，\(cue)") { time, accessible in practice.tap(at: time, accessibility: accessible) }
                 }.frame(height: 56)
+                }
                 Button(action: stop) { Label("停止挑戰", systemImage: "stop.fill").font(.subheadline).frame(maxWidth: .infinity, minHeight: 44) }
                     .accessibilityIdentifier("stopPractice")
             }.padding(.horizontal, 12).padding(.vertical, 6)
                 .frame(maxWidth: BeatLabStyle.maxWidth).frame(maxWidth: .infinity)
         }
+    }
+    private func handPad(_ stroke: Stroke) -> some View {
+        let right = stroke == .right
+        let active = promptStroke == stroke
+        return ZStack {
+            RoundedRectangle(cornerRadius: 20).fill(Color(uiColor: theme.pad).opacity(active ? 1 : 0.55))
+            RoundedRectangle(cornerRadius: 20).strokeBorder(active ? ink : Color.clear, lineWidth: 3)
+            Text(right ? "右手 R ↗" : "左手 L ↗").font(.headline.bold()).lineLimit(1).minimumScaleFactor(0.6)
+                .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
+            TapPad(feedback: "\(active ? "下一拍" : "準備接力")，\(cue)",
+                   label: right ? "右手鼓墊" : "左手鼓墊",
+                   identifier: right ? "practiceTapPad.right" : "practiceTapPad.left") {
+                time, accessible in practice.tap(at: time, accessibility: accessible)
+            }
+        }.frame(maxWidth: .infinity)
     }
     private var phraseRoute: some View {
         let current = route?.currentIndex(at: practice.elapsed)
@@ -1178,9 +1239,12 @@ struct EggMissionView: View {
                 let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
                 let matched = target.flatMap { route?.grades[$0.id] } != nil
                 let expired = target.map { _ in practice.elapsed > (route?.relativeTimes[index] ?? .infinity) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
+                VStack(spacing: 0) {
                 Image(systemName: matched ? "checkmark.circle.fill" : expired ? "arrow.uturn.backward.circle" : "music.note")
                     .font(.system(size: 23, weight: .bold))
                     .foregroundStyle(matched ? Color(uiColor: theme.accent) : expired ? Color.orange : BeatLabStyle.ink)
+                if profile == .alternating { Text(target?.stroke == .left ? "L" : "R").font(.caption2.bold()) }
+                }
                     .frame(width: 40, height: 36)
                     .background(current == index ? Color(uiColor: theme.pad) : Color.clear, in: Circle())
                     .accessibilityHidden(true)
@@ -1188,7 +1252,7 @@ struct EggMissionView: View {
         }.padding(.horizontal, 10).padding(.vertical, 3)
             .background(BeatLabStyle.surface, in: Capsule())
             .accessibilityElement(children: .ignore).accessibilityLabel("這一小節的四個拍點")
-            .accessibilityValue(current.map { "第 \($0 % 4 + 1) 拍，右手；抵達 \(route?.accepted.count ?? 0) 座小島" } ?? "先聽四拍，再跟鼓聲跳")
+            .accessibilityValue(current.map { "第 \($0 % 4 + 1) 拍，\(route?.targets[$0].stroke == .left ? "左手" : "右手")；抵達 \(route?.accepted.count ?? 0) 座小島" } ?? "先聽四拍，再跟鼓聲跳")
             .accessibilityIdentifier("rhythmLane")
     }
 }

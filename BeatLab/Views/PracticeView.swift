@@ -416,20 +416,36 @@ struct PracticeView: View {
 
     private var missionTheme: RunnerTheme { RunnerTheme(rawValue: companion.rawValue) ?? .dinosaur }
     private func missionEligible(_ lesson: Lesson) -> Bool {
-        lesson.id == "first-beat" && max(lesson.bpm, practice.practiceBPM) == 60
+        guard max(lesson.bpm, practice.practiceBPM) == lesson.bpm else { return false }
+        return IslandLesson.profile(lesson) != nil
     }
     private func startLesson(_ lesson: Lesson) {
         practice.start(lesson, audio: audio, eggMission: missionEligible(lesson))
     }
     private func missionPreparation(_ lesson: Lesson) -> some View {
+        let profile = IslandLesson.profile(lesson) ?? .first
+        let seconds = Int(ceil(Double(4 + lesson.bars * 4) * 60 / Double(lesson.bpm)))
+        return
         VStack(alignment: .leading, spacing: 16) {
-            Text("第 1 關 · 找到大拍").font(.subheadline.bold()).foregroundStyle(BeatLabStyle.muted)
+            Text("第 \(profile.number) 關 · \(profile.preparation)").font(.subheadline.bold()).foregroundStyle(BeatLabStyle.muted)
                 .accessibilityIdentifier("preparedLessonNumber")
             Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
             EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true, platformJourney: true).frame(height: 260)
             Text("先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
                 .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
-            Text("用右手跟拍 · 60 BPM · 約 20 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            Text("\(profile.handInstruction) · \(lesson.bpm) BPM · 約 \(seconds) 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            if profile == .alternating {
+                HStack(spacing: 8) {
+                    ForEach(0..<4, id: \.self) { index in
+                        Text(lesson.pattern.steps[index] == .right ? "右 R" : "左 L")
+                            .font(.headline).frame(maxWidth: .infinity, minHeight: 44)
+                            .background(Color(uiColor: missionTheme.pad).opacity(0.55), in: RoundedRectangle(cornerRadius: 12))
+                    }
+                }.accessibilityElement(children: .ignore)
+                    .accessibilityLabel("第二關節奏：右、左、右、左，每拍一下")
+                Text("跟著右、左提示輪流用手；這關依拍點給星星。")
+                    .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            }
             Text("漏拍會跌下去，再接回原來的小島。準備好，下一拍再跳；多打不會前進。")
                 .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
             if practice.mode == .standard {

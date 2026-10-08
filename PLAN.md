@@ -441,3 +441,13 @@ Owner明確授權「做下去幫我安裝」。先定GAME25 exact-file L2 contra
 GAME25 source/native gate通過：107來源isolated/current一致、105個GAME24輸入不變，八個既有曲線／atlas／route block完全保留。App81/Core53、實際觸控與stop/restart UI1 PASS；333 native specimens涵蓋三角色四跳、回復與尺寸/light-dark。原生像素證明grounded上半身改變、脚點固定；scene-local cached shader及paused/reduced reset檢查PASS。Status SOURCE_NATIVE_TESTED / WIFI_INSTALL_PENDING。25samples/s重播不是physical FPS證据；first-level體感/physical timing及F5結果接點仍pending。
 
 GAME25交付：source cdc2e1e，以本機signed Debug0.1.0(13)候選凍結並綁定107測試來源，compiled motion/expression/icon/privacy、原手機profile及fresh localNetwork PASS。in-place Wi-Fi install與launch皆PASS，未reset/uninstall，與TestFlight13來源不同。三角色grounded上半身motion、蓄力、landing/recovery回接、first early顯示已實作；Status INSTALLED_AND_LAUNCHED_FOR_TRIAL。原飛行／掉落travel、音訊/input/判分/save不變；實機FPS、體感、第一關完整接受pending，F5結果接點及第2–10關延後。未上傳TestFlight/public，未用GitHub Mac。
+
+### 2026-10-09 — GAME-26 第二關左右接力跨島
+
+Owner明確開始第二關，僅第二關解除之前2–10關deferred；不把這個指示當作第一關physical/child驗收。保留既有quarter-hands65BPM／4bars／16 R,L,R,L與unlock/star/save。新片準備/HUD/scene交替R/L與双鼓墊，原生timestamp/matcher仍依拍點、無手別偵測；原飛行/回復/素材/audio不改，60BPM music bed留第一關。契約GAME26先定allowed/forbidden/failures/checks/rollback；Status IMPLEMENTATION_PENDING。其餘3–10關、F5結果接點及public gates待後續，build/tests本機。
+
+### 2026-10-09 01:10 — 約十小時無人值守工作授權
+
+Owner將睡覺，要求切續工作並持續做下去，疑慮十小時後集中確認。起點2026-10-08T17:10:43Z（台北10/09 01:10:43），集中回報時間約2026-10-09T03:10:43Z（台北11:10:43）。先完成第二關及獨立檢查，再按既有十關catalog逐片推進；3–10關原先等待條件在此授權下改為工程驗證依賴，不臆造第一關physical/child接受。每片先契約、檢查再本機實作/驗證，保存來源/失敗/進度、commit及branch push。需owner決定的玩法/素材或真機鎖定等記錄後做獨立工作，這段時間不反覆詢問。仍不做未授權功能、PR/merge/TestFlight/public，不把機器測試當physical驗收，不重跑無新增理由的測試填滿時間。
+
+GAME26 engineering進度：App87/0、Core53/0通過；後續僅R/L場景提示opacity固定1、native斷言及UI章節腳本修正，最終候選另驗native1/0、actual touch/stop/restart UI2/0。保存失敗/重試/恢復與原第三關lock成立。首次App86pass/1fail（fractional65BPM提示相等點10assertions）及首次UI1pass/1fail（harness查錯篇章）原始證據保留；不稱所有嘗試皆綠。Status FINAL_LARGE_TEXT_GATE_PENDING。第二關phonetrial尚未安裝；Night後續stage已定third/fourth密拍契約，待此gate完成。

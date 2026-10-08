@@ -1418,3 +1418,162 @@ final class JourneyIdleContinuityTests: XCTestCase {
         context.draw(image,in:CGRect(x:0,y:0,width:image.width,height:image.height));return result
     }
 }
+
+final class SecondIslandLessonTests: XCTestCase {
+    private func secondRoute(hits: [TimingHit] = []) throws -> RunnerRoute {
+        let lesson = try LessonCatalog.bundled().lessons[1]
+        return try XCTUnwrap(RunnerRoute(targets: lesson.pattern.targets(bpm:65,bars:4,epoch:100),
+            hits:hits,epoch:100,endTime:100+1200.0/65+0.18,alignment:0))
+    }
+    func testOnlyAuthoredFirstTwoBaseTempoProfilesAndReviewedSecondTargets() throws {
+        let lessons = try LessonCatalog.bundled().lessons
+        XCTAssertEqual(IslandLesson.profile(lessons[0]),.first)
+        XCTAssertEqual(IslandLesson.profile(lessons[1]),.alternating)
+        XCTAssertNil(IslandLesson.profile(try lessons[0].atTempo(65)))
+        XCTAssertNil(IslandLesson.profile(try lessons[1].atTempo(70)))
+        for lesson in lessons.dropFirst(2) { XCTAssertNil(IslandLesson.profile(lesson)) }
+        let route=try secondRoute()
+        XCTAssertEqual(route.targets.count,16)
+        XCTAssertEqual(route.relativeTimes[0],240.0/65,accuracy:1e-10)
+        XCTAssertEqual(route.relativeTimes[15],1140.0/65,accuracy:1e-10)
+        XCTAssertEqual(route.duration,1200.0/65+0.18,accuracy:1e-10)
+        for i in 0..<16 {
+            XCTAssertEqual(route.targets[i].id,i)
+            XCTAssertEqual(route.targets[i].stroke,i%2==0 ? .right : .left)
+            if i>0 { XCTAssertEqual(route.relativeTimes[i]-route.relativeTimes[i-1],60.0/65,accuracy:1e-10) }
+        }
+    }
+    func testPromptAndPulseUse65BPMNotesAfterEarlyDuplicateLateAndMiss() throws {
+        let fixture=try secondRoute(),t=240.0/65,beat=60.0/65
+        XCTAssertEqual(fixture.promptTarget(at:0)?.stroke,.right)
+        XCTAssertNil(fixture.currentIndex(at:t-0.000001))
+        XCTAssertEqual(fixture.currentIndex(at:t),0,"Equivalent absolute/relative fractional boundary")
+        XCTAssertEqual(fixture.promptTarget(at:t+0.181)?.id,1,"Miss advances the cue, not the world")
+        for invalid in [Double.nan,.infinity,-1,fixture.duration+0.01] { XCTAssertNil(fixture.promptTarget(at:invalid)) }
+        var session=try TimingSession(targets:fixture.targets)
+        session.tap(at:100+t-0.14);session.tap(at:100+t-0.13)
+        let early=try secondRoute(hits:session.hits)
+        XCTAssertEqual(early.promptTarget(at:t-0.14)?.stroke,.left)
+        XCTAssertEqual(early.accepted,[0]);XCTAssertEqual(session.summary.extraCount,1)
+        session.tap(at:100+t+beat+0.14)
+        let late=try secondRoute(hits:session.hits)
+        XCTAssertEqual(late.promptTarget(at:t+beat+0.14)?.stroke,.right)
+        XCTAssertEqual(late.grades[1],.late)
+        for i in 0..<16 {
+            XCTAssertEqual(EggBeatLane.markerAlpha(route:fixture,elapsed:routeTime(i),reduceMotion:false),1,accuracy:1e-8)
+            XCTAssertEqual(EggBeatLane.markerAlpha(route:fixture,elapsed:routeTime(i)+0.06,reduceMotion:false),0.725,accuracy:1e-8)
+        }
+        XCTAssertEqual(EggBeatLane.markerAlpha(route:fixture,elapsed:t,reduceMotion:true),0.45)
+        let first=try routeFixture()
+        for time in [3.9,4,4.06,5.2,18.9,19.06,20] {
+            XCTAssertEqual(EggBeatLane.markerAlpha(route:first,elapsed:time,reduceMotion:false),
+                           EggBeatLane.markerAlpha(elapsed:time,reduceMotion:false),accuracy:1e-8)
+        }
+        func routeTime(_ i:Int)->Double { (240+Double(i)*60)/65 }
+    }
+    func testClosest65BPMHitsKeepWorldContinuousAndMissNeverMovesIsland() throws {
+        let fixture=try secondRoute(),t=240.0/65,beat=60.0/65
+        var session=try TimingSession(targets:fixture.targets)
+        // Specification: adjacent legal late→early presses can be60/65-.36 apart.
+        session.tap(at:100+t+0.18);session.tap(at:100+t+beat-0.18)
+        let route=try secondRoute(hits:session.hits),second=t+beat-0.18
+        XCTAssertEqual(route.accepted,[0,1]);XCTAssertEqual(session.summary.matched.count,2)
+        let before=PlatformJourneyFrame.sample(route:route,elapsed:second-0.001,reduced:false)
+        let after=PlatformJourneyFrame.sample(route:route,elapsed:second+0.001,reduced:false)
+        XCTAssertEqual(before.step,1,accuracy:1e-7);XCTAssertLessThan(after.step-before.step,0.001)
+        XCTAssertEqual(DenseAnimationFrame.sample(elapsed:second+0.04,age:after.jumpAge.map{$0+0.039},reduceMotion:false,stationary:true),13)
+        let missed=PlatformJourneyFrame.sample(route:fixture,elapsed:t+0.30,reduced:false)
+        XCTAssertEqual(missed.step,0);XCTAssertEqual(missed.recovery.phase,.falling)
+        XCTAssertEqual(fixture.promptTarget(at:t+0.30)?.stroke,.left)
+        for i in 0..<16 {session.tap(at:fixture.targets[i].time)}
+        XCTAssertTrue(session.summary.extraCount>=2,"Duplicate hits cannot become another island")
+    }
+    @MainActor
+    func testNativeSecondLevelThemesShowAlternatingCueAndRetainIdleFlightRecovery() throws {
+        let t=240.0/65,beat=60.0/65,empty=try secondRoute()
+        var session=try TimingSession(targets:empty.targets);session.tap(at:100+t)
+        let matched=try secondRoute(hits:session.hits)
+        for theme in RunnerTheme.allCases {
+            let window=UIWindow(frame:CGRect(x:0,y:0,width:400,height:800)),controller=UIViewController()
+            let view=SKView(frame:CGRect(x:0,y:0,width:400,height:500)),scene=EggSpriteScene(size:CGSize(width:400,height:500))
+            window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+            defer {scene.detach();view.presentScene(nil);window.isHidden=true}
+            let prompt=try XCTUnwrap(scene.childNode(withName:"nextLandingCue") as? SKLabelNode)
+            let actor=try XCTUnwrap(scene.childNode(withName:"player/characterPrimary") as? SKSpriteNode)
+            for (name,time,route) in [("count-in",t-0.10,empty),("flight",t+0.25,matched),
+                                     ("idle-left",t+0.70,matched),("left",t+beat,empty),
+                                     ("right-after-miss",t+2*beat,empty)] {
+                scene.configure(EggSceneSnapshot(elapsed:time,theme:theme,route:route,platformJourney:true))
+                XCTAssertEqual(prompt.text,time<t ? "R" : route.promptTarget(at:time)?.stroke.rawValue)
+                XCTAssertNotNil(actor.texture);XCTAssertEqual(actor.parent?.children.count,1)
+                XCTAssertEqual(prompt.alpha,1,"Hand instructions do not fade with decorative pulse")
+                if name=="idle-left" { XCTAssertNotNil(actor.shader);XCTAssertFalse(prompt.isHidden) }
+                let image=try XCTUnwrap(view.texture(from:scene)).cgImage()
+                let attachment=XCTAttachment(image:UIImage(cgImage:image));attachment.name="GAME26 \(theme.rawValue) \(name)";attachment.lifetime = .keepAlways;add(attachment)
+            }
+            scene.configure(EggSceneSnapshot(elapsed:t+0.70,reduceMotion:true,theme:theme,route:matched,platformJourney:true))
+            XCTAssertNil(actor.shader);XCTAssertEqual(prompt.text,"L")
+            scene.configure(EggSceneSnapshot(elapsed:0,preparing:true,theme:theme,platformJourney:true))
+            XCTAssertNil(actor.shader);XCTAssertTrue(prompt.isHidden)
+        }
+    }
+    @MainActor
+    func testSecondMissionLocksActualScorePersistenceCancelAndFasterFallback() async throws {
+        try await checkStoreSave(fail:false)
+    }
+    @MainActor
+    func testSecondMissionFailedSaveCannotUnlockUntilRetry() async throws {
+        try await checkStoreSave(fail:true)
+    }
+    @MainActor
+    private func checkStoreSave(fail:Bool) async throws {
+        let name="BeatLabTests.SecondLevel.\(UUID().uuidString)",defaults=try XCTUnwrap(UserDefaults(suiteName:name))
+        defer {defaults.removePersistentDomain(forName:name)}
+        let repo=ProgressRepository(defaults:defaults),store=PracticeStore(repository:repo),audio=MetronomeAudio()
+        defer {audio.stop()}
+        let second=store.lessons[1]
+        store.start(second,audio:audio,eggMission:true)
+        XCTAssertEqual(store.phase,.idle);XCTAssertFalse(store.unlocked(second));XCTAssertFalse(audio.isPlaying)
+        // Reviewed saved-first fixture goes through the real catalog scorer/repository.
+        let first=store.lessons[0],targets=try first.pattern.targets(bpm:60,bars:4,epoch:100)
+        var session=try TimingSession(targets:targets);for target in targets {session.tap(at:target.time)}
+        var progress=PracticeProgress();progress.record(first,summary:session.summary);try repo.save(progress)
+        let unlocked=PracticeStore(repository:repo);unlocked.select(second)
+        XCTAssertEqual(unlocked.practiceBPM,65);XCTAssertFalse(unlocked.unlocked(unlocked.lessons[2]))
+        unlocked.start(second,audio:audio,eggMission:true)
+        for _ in 0..<40 where unlocked.phase == .preparing {try await Task.sleep(nanoseconds:50_000_000)}
+        XCTAssertEqual(unlocked.phase,.playing);XCTAssertTrue(unlocked.isEggMission)
+        XCTAssertFalse(audio.practiceGrooveAvailable,"The60BPM bed must not leak into65BPM")
+        let route=try XCTUnwrap(unlocked.runnerRoute),anchor=try XCTUnwrap(audio.audibleEpoch())
+        XCTAssertEqual(route.relativeTimes.first!,240.0/65,accuracy:0.00001)
+        unlocked.tap(at:anchor+1);XCTAssertNil(unlocked.latestHit)
+        unlocked.tap(at:route.targets[0].time);XCTAssertEqual(unlocked.latestHit?.grade,.perfect)
+        unlocked.cancel(audio:audio);XCTAssertNil(unlocked.runnerRoute);XCTAssertFalse(unlocked.isEggMission)
+        XCTAssertEqual(unlocked.progress.results.count,1)
+        unlocked.start(second,audio:audio,eggMission:true)
+        for _ in 0..<40 where unlocked.phase == .preparing {try await Task.sleep(nanoseconds:50_000_000)}
+        let restarted=try XCTUnwrap(unlocked.runnerRoute);XCTAssertTrue(restarted.accepted.isEmpty)
+        for target in restarted.targets {unlocked.tap(at:target.time)}
+        let savedFirst=try XCTUnwrap(defaults.data(forKey:ProgressRepository.storageKey))
+        if fail {defaults.set(Data("{\"schemaVersion\":99}".utf8),forKey:ProgressRepository.storageKey)}
+        for _ in 0..<440 where unlocked.phase == .playing {try await Task.sleep(nanoseconds:50_000_000)}
+        XCTAssertEqual(unlocked.phase,.finished);XCTAssertEqual(unlocked.stars,3)
+        XCTAssertEqual(unlocked.summary?.matched.count,16);XCTAssertEqual(unlocked.summary?.missedCount,0)
+        if fail {
+            XCTAssertFalse(unlocked.resultSaved);XCTAssertTrue(unlocked.needsSaveRetry)
+            XCTAssertFalse(unlocked.unlocked(unlocked.lessons[2]))
+            unlocked.retrySave();XCTAssertFalse(unlocked.resultSaved)
+            defaults.set(savedFirst,forKey:ProgressRepository.storageKey)
+            unlocked.retrySave()
+        }
+        XCTAssertTrue(unlocked.resultSaved);XCTAssertFalse(unlocked.needsSaveRetry)
+        let restored=PracticeStore(repository:repo)
+        XCTAssertEqual(restored.progress.results[second.id]?.stars,3)
+        XCTAssertEqual(restored.progress.results[second.id]?.bestBPM,65)
+        XCTAssertTrue(restored.unlocked(restored.lessons[2]));XCTAssertFalse(restored.unlocked(restored.lessons[3]))
+        restored.select(second);restored.setPracticeBPM(70);restored.start(second,audio:audio,eggMission:true)
+        for _ in 0..<40 where restored.phase == .preparing {try await Task.sleep(nanoseconds:50_000_000)}
+        XCTAssertFalse(restored.isEggMission);XCTAssertNil(restored.runnerRoute)
+        restored.cancel(audio:audio)
+    }
+}

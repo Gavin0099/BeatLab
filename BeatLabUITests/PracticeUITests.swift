@@ -110,8 +110,9 @@ final class PracticeUITests: XCTestCase {
             capture(app, "Lesson \(index + 1) preparation")
             let start = app.buttons["startLesson"]
             try reveal(start, in: app); start.tap()
-            XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout: 5))
-            XCTAssertEqual(app.staticTexts["activeLessonNumber"].label, "第 \(index + 1) 關 · 節奏跑酷")
+            XCTAssertTrue(app.buttons[index == 1 ? "practiceTapPad.right" : "practiceTapPad"].waitForExistence(timeout: 5))
+            let heading = index == 0 ? "第 1 關 · 節奏跨島" : index == 1 ? "第 2 關 · 左右接力跨島" : "第 \(index + 1) 關 · 節奏跑酷"
+            XCTAssertEqual(app.staticTexts["activeLessonNumber"].label, heading)
             capture(app, "Lesson \(index + 1) count-in smoke")
             let stop = app.buttons["stopPractice"]
             try reveal(stop, in: app); stop.tap()
@@ -121,6 +122,76 @@ final class PracticeUITests: XCTestCase {
             try reveal(prepare, in: app); prepare.tap()
         }
     }
+    @MainActor
+    private func secondLevelApp(largestText: Bool = false) -> XCUIApplication {
+        continueAfterFailure = false
+        let app = XCUIApplication()
+        // External fixture saves ONLY a reviewed first-level result in this
+        // isolated suite. Production unlock/start code still runs unchanged.
+        app.launchEnvironment["BEATLAB_UI_TEST_SUITE"] = "BeatLabUITests.SecondLevel"
+        if largestText {
+            app.launchArguments = ["-UIPreferredContentSizeCategoryName", "UICTContentSizeCategoryAccessibilityXXXL"]
+        }
+        app.launch()
+        XCTAssertTrue(app.staticTexts["1 / 10 關"].waitForExistence(timeout:5),"Requires explicit saved-first fixture")
+        return app
+    }
+    @MainActor
+    func testSecondLevelActualDualTouchesCancelAndRestart() throws {
+        let app = secondLevelApp()
+        app.buttons["dailyPractice"].tap()
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["preparedLessonNumber"].label,"第 2 關 · 左右輪流")
+        capture(app,"GAME26 second preparation")
+        try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+        let right=app.buttons["practiceTapPad.right"],left=app.buttons["practiceTapPad.left"]
+        XCTAssertTrue(right.waitForExistence(timeout:5));XCTAssertTrue(left.isHittable)
+        XCTAssertEqual(app.staticTexts["activeLessonNumber"].label,"第 2 關 · 左右接力跨島")
+        XCTAssertTrue(app.staticTexts["65 BPM"].exists)
+        XCTAssertGreaterThanOrEqual(right.frame.height,44);XCTAssertGreaterThanOrEqual(left.frame.height,44)
+        XCTAssertLessThanOrEqual(right.frame.maxX,left.frame.minX)
+        let counter=app.staticTexts["jumpMatches"]
+        for i in 0..<12 {
+            (i%2==0 ? right : left).tap()
+            if i>2 && !counter.label.hasPrefix("抵達 0 ") {break}
+        }
+        XCTAssertFalse(counter.label.hasPrefix("抵達 0 "),"Actual UIKit dual-pad touches must be matched")
+        capture(app,"GAME26 actual dual-pad live game")
+        app.buttons["stopPractice"].tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["journeyProgress"].label,"1 / 10 關完成")
+        try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
+        try reveal(app.buttons["journeyLesson.eighth"],in:app,requiresHit:false)
+        XCTAssertFalse(app.buttons["journeyLesson.eighth"].isEnabled)
+        try reveal(app.buttons["journeyChapter.0"],in:app);app.buttons["journeyChapter.0"].tap()
+        try reveal(app.buttons["journeyLesson.quarter-hands"],in:app);app.buttons["journeyLesson.quarter-hands"].tap()
+        try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+        XCTAssertTrue(counter.waitForExistence(timeout:5));XCTAssertEqual(counter.label,"抵達 0 / 16 座小島")
+        app.buttons["stopPractice"].tap()
+    }
+    @MainActor
+    func testSecondLevelLargestTextZeroInputFailureKeepsThirdLocked() throws {
+        let app = secondLevelApp(largestText:true)
+        app.buttons["dailyPractice"].tap()
+        try reveal(app.buttons["startLesson"],in:app);capture(app,"GAME26 largest preparation")
+        app.buttons["startLesson"].tap()
+        let right=app.buttons["practiceTapPad.right"],left=app.buttons["practiceTapPad.left"],stop=app.buttons["stopPractice"]
+        XCTAssertTrue(right.waitForExistence(timeout:5));XCTAssertTrue(left.isHittable);XCTAssertTrue(stop.isHittable)
+        XCTAssertGreaterThanOrEqual(right.frame.height,44);XCTAssertGreaterThanOrEqual(left.frame.height,44)
+        XCTAssertLessThanOrEqual(right.frame.maxY,stop.frame.minY)
+        capture(app,"GAME26 largest dual-pad controls")
+        XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:25))
+        XCTAssertEqual(app.otherElements["practiceStars"].label,"這次得到 0 顆星")
+        XCTAssertFalse(app.buttons["nextLesson"].exists);capture(app,"GAME26 actual zero-input failure")
+        try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
+        XCTAssertTrue(right.waitForExistence(timeout:5));XCTAssertTrue(left.exists)
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 16 座小島")
+        stop.tap();XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
+        try reveal(app.buttons["journeyLesson.eighth"],in:app,requiresHit:false)
+        XCTAssertFalse(app.buttons["journeyLesson.eighth"].isEnabled)
+    }
+
     @MainActor
     private func freshApp(largestText: Bool = false) -> XCUIApplication {
         continueAfterFailure = false
@@ -246,6 +317,8 @@ final class PracticeUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["adventureDestination"].label, "回聲森林")
         try reveal(app.staticTexts["adventureDestination"], in: app)
         capture(app, "Adventure echo forest")
+        try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
+        try reveal(app.buttons["journeyLesson.eighth"],in:app,requiresHit:false)
         XCTAssertFalse(app.buttons["journeyLesson.eighth"].isEnabled)
         XCTAssertEqual(app.buttons["journeyLesson.eighth"].value as? String, "完成第 2 關後解鎖")
         try reveal(app.buttons["journeyChapter.2"], in: app); app.buttons["journeyChapter.2"].tap()
