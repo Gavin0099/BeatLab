@@ -128,7 +128,7 @@ final class PracticeStore: ObservableObject {
         summary = nil; latestHit = nil; stars = 0; session = nil; elapsed = 0; calibrated = false
         resultSaved = false; calibrationSaved = false; pendingProgress = nil; needsSaveRetry = false; notice = nil
         phase = .preparing
-        audio.start(configuration: configuration, practiceFeedback: !isCalibrating, eggMission: isEggMission)
+        audio.start(configuration: configuration, practiceFeedback: !isCalibrating, eggMission: isEggMission && selected.flatMap(IslandLesson.profile) == .first)
         task = Task { [weak self, weak audio] in
             guard let self, let audio else { return }
             let deadline = Self.now() + 2

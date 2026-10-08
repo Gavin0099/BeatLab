@@ -110,8 +110,8 @@ final class PracticeUITests: XCTestCase {
             capture(app, "Lesson \(index + 1) preparation")
             let start = app.buttons["startLesson"]
             try reveal(start, in: app); start.tap()
-            XCTAssertTrue(app.buttons[index == 1 ? "practiceTapPad.right" : "practiceTapPad"].waitForExistence(timeout: 5))
-            let heading = index == 0 ? "第 1 關 · 節奏跨島" : index == 1 ? "第 2 關 · 左右接力跨島" : "第 \(index + 1) 關 · 節奏跑酷"
+            XCTAssertTrue(app.buttons[[1,3].contains(index) ? "practiceTapPad.right" : "practiceTapPad"].waitForExistence(timeout: 5))
+            let heading = index == 0 ? "第 1 關 · 節奏跨島" : index == 1 ? "第 2 關 · 左右接力跨島" : index == 2 ? "第 3 關 · 半拍小島" : index == 3 ? "第 4 關 · 半拍左右接力" : "第 \(index + 1) 關 · 節奏跑酷"
             XCTAssertEqual(app.staticTexts["activeLessonNumber"].label, heading)
             capture(app, "Lesson \(index + 1) count-in smoke")
             let stop = app.buttons["stopPractice"]
@@ -122,6 +122,43 @@ final class PracticeUITests: XCTestCase {
             try reveal(prepare, in: app); prepare.tap()
         }
     }
+    @MainActor
+    func testDenseLevelsActualTouchesCancelAnd32IslandRestart() throws {
+        continueAfterFailure = false
+        let app=XCUIApplication()
+        // External reviewed prior-level fixture only. No injected hits/routes.
+        app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.DenseLevels"
+        app.launch()
+        XCTAssertTrue(app.staticTexts["3 / 10 關"].waitForExistence(timeout:5))
+        app.tabBars.buttons["練習"].tap()
+        for (level,id) in [(3,"eighth"),(4,"eighth-hands")] {
+            try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
+            try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
+            XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
+            XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 \(level) 關"))
+            capture(app,"GAME27 level\(level) preparation")
+            try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+            let pad=app.buttons[level == 3 ? "practiceTapPad" : "practiceTapPad.right"]
+            XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertGreaterThanOrEqual(pad.frame.height,44)
+            if level == 4 {XCTAssertTrue(app.buttons["practiceTapPad.left"].isHittable)}
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
+            XCTAssertTrue(app.staticTexts["activeLessonNumber"].label.hasPrefix("第 \(level) 關"))
+            pad.tap(withNumberOfTaps:10,numberOfTouches:1)
+            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual UIKit input must match dense targets")
+            capture(app,"GAME27 level\(level) live touches")
+            app.buttons["stopPractice"].tap()
+            XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+            XCTAssertEqual(app.staticTexts["journeyProgress"].label,"3 / 10 關完成")
+            try reveal(app.buttons["journeyLesson.quarter-rest"],in:app,requiresHit:false)
+            XCTAssertFalse(app.buttons["journeyLesson.quarter-rest"].isEnabled)
+            try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
+            try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+            XCTAssertTrue(pad.waitForExistence(timeout:5))
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
+            app.buttons["stopPractice"].tap()
+        }
+    }
+
     @MainActor
     private func secondLevelApp(largestText: Bool = false) -> XCUIApplication {
         continueAfterFailure = false

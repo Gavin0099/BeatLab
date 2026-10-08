@@ -6,19 +6,22 @@ import BeatLabCore
 /// Authored mission profiles only; other lessons and faster practice retain
 /// their existing runner. This does not change catalog targets or unlock rules.
 enum IslandLesson: Equatable {
-    case first, alternating
-    var number: Int { self == .first ? 1 : 2 }
-    var bpm: Int { self == .first ? 60 : 65 }
-    var title: String { self == .first ? "節奏跨島" : "左右接力跨島" }
-    var preparation: String { self == .first ? "找到大拍" : "左右輪流" }
-    var handInstruction: String { self == .first ? "用右手跟拍" : "右、左手輪流跟拍" }
+    case first, alternating, eighth, eighthAlternating
+    var number: Int { switch self { case .first: return 1; case .alternating: return 2; case .eighth: return 3; case .eighthAlternating: return 4 } }
+    var bpm: Int { usesBothHands ? 65 : 60 }
+    var usesBothHands: Bool { self == .alternating || self == .eighthAlternating }
+    var dense: Bool { self == .eighth || self == .eighthAlternating }
+    var title: String { switch self { case .first: return "節奏跨島"; case .alternating: return "左右接力跨島"; case .eighth: return "半拍小島"; case .eighthAlternating: return "半拍左右接力" } }
+    var preparation: String { switch self { case .first: return "找到大拍"; case .alternating: return "左右輪流"; case .eighth: return "一拍兩下"; case .eighthAlternating: return "半拍左右輪流" } }
+    var handInstruction: String { dense ? (usesBothHands ? "每拍右、左各一下" : "每拍用右手點兩下") : (usesBothHands ? "右、左手輪流跟拍" : "用右手跟拍") }
     static func profile(_ lesson: Lesson) -> Self? {
-        guard lesson.bars == 4, lesson.pattern.stepsPerBeat == 1 else { return nil }
-        if lesson.id == "first-beat", lesson.bpm == 60,
-           lesson.pattern.steps == [.right,.right,.right,.right] { return .first }
-        if lesson.id == "quarter-hands", lesson.bpm == 65,
-           lesson.pattern.steps == [.right,.left,.right,.left] { return .alternating }
-        return nil
+        guard lesson.bars == 4 else { return nil }
+        let profiles: [(String, Self)] = [("first-beat",.first),("quarter-hands",.alternating),("eighth",.eighth),("eighth-hands",.eighthAlternating)]
+        guard let profile = profiles.first(where: { $0.0 == lesson.id })?.1,
+              lesson.bpm == profile.bpm, lesson.pattern.stepsPerBeat == (profile.dense ? 2 : 1) else { return nil }
+        let count = profile.dense ? 8 : 4
+        let expected: [Stroke] = (0..<count).map { profile.usesBothHands && $0 % 2 == 1 ? .left : .right }
+        return lesson.pattern.steps == expected ? profile : nil
     }
 }
 
@@ -237,6 +240,7 @@ struct RunnerRoute {
     let alignment: Double
     let duration: Double
     let beatDuration: Double
+    let grid: IslandRouteGrid?
     let accepted: Set<Int>
     let latestAccepted: TimingHit?
     let grades: [Int: TimingGrade]
@@ -260,6 +264,7 @@ struct RunnerRoute {
         relativeTimes = targets.map { $0.time - epoch }
         beatDuration = targets[1].time - targets[0].time
         duration = endTime - epoch
+        grid = IslandRouteGrid(targets: targets, epoch: epoch, endTime: endTime)
     }
     func currentIndex(at elapsed: Double) -> Int? {
         guard elapsed.isFinite else { return nil }
@@ -299,6 +304,86 @@ struct RunnerRoute {
         guard relativeTimes.indices.contains(index), elapsed.isFinite,
               accepted.contains(targets[index].id), elapsed > relativeTimes[index] else { return 1 }
         return reduced ? 0 : CGFloat(max(0, 1 - (elapsed - relativeTimes[index]) / 0.25))
+    }
+}
+
+/// Read-only grid validated against existing target IDs/times. Missing rest
+/// cells are never synthesized as matcher targets. Invalid routes stay legacy.
+struct IslandRouteGrid {
+    let interval: Double
+    let start: Double
+    let steps: Int
+    init?(targets: [TimingTarget], epoch: Double, endTime: Double) {
+        guard targets.count >= 2, epoch.isFinite, endTime.isFinite,
+              targets.allSatisfy({ $0.id >= 0 && $0.time.isFinite }),
+              zip(targets, targets.dropFirst()).allSatisfy({ $0.id < $1.id }) else { return nil }
+        let interval = (targets[1].time - targets[0].time) / Double(targets[1].id - targets[0].id)
+        guard interval.isFinite, interval > 0 else { return nil }
+        let start = targets[0].time - epoch - Double(targets[0].id) * interval
+        let length = (endTime - epoch - TimingSession.matchingWindow - start) / interval
+        guard start >= 0, length.isFinite, length >= 1, length <= 256,
+              abs(length - length.rounded()) < 1e-6,
+              targets.allSatisfy({ abs(($0.time - epoch) - (start + Double($0.id) * interval)) < 1e-6 }),
+              targets.last!.id < Int(length.rounded()) else { return nil }
+        self.interval = interval; self.start = start; steps = Int(length.rounded())
+    }
+    var isDense: Bool { interval < 0.60 }
+    var flightDuration: Double { min(0.48, interval * 0.60) }
+}
+
+/// Dense-only presentation: summing C2 accepted-input travel/arcs preserves
+/// height and camera at another legal press. Input/judgment stays authoritative.
+struct DenseJourneyFrame {
+    let world: PlatformJourneyFrame
+    let height: Double
+    let poseAge: Double?
+    let landing: Double
+    let active: Bool
+    static func sample(route: RunnerRoute?, elapsed: Double, reduced: Bool) -> Self? {
+        guard let route, let grid = route.grid, grid.isDense else { return nil }
+        guard elapsed.isFinite, (0...route.duration).contains(elapsed) else {
+            return Self(world: .sample(route:nil,elapsed:0,reduced:true),height:0,poseAge:nil,landing:0,active:false)
+        }
+        let flight = grid.flightDuration, contact = min(0.10, grid.interval * 0.20)
+        var step = 0.0, camera = 0.0, height = 0.0, weightedPhase = 0.0, landing = 0.0
+        var latestAge: Double?
+        for (index, hit) in route.journeyHits.enumerated() {
+            let age = elapsed - (hit.inputTime - route.epoch)
+            guard age >= 0 else { continue }
+            latestAge = age
+            let progress = reduced ? 1 : JourneyMotion.progress(age / flight)
+            step += progress
+            camera += (max(0, Double(index+1)-1.3) - max(0, Double(index)-1.3)) * progress
+            if !reduced {
+                let arc = JourneyMotion.arc(age / flight)
+                height += arc; weightedPhase += arc * age / flight
+                if (flight..<flight+contact).contains(age) { landing += pow(sin(.pi * (age-flight)/contact),2) }
+            }
+        }
+        var recovery = JourneyRecovery.idle
+        if !reduced {
+            for index in route.targets.indices where !route.accepted.contains(route.targets[index].id) {
+                let failure = route.relativeTimes[index] + route.alignment + TimingSession.matchingWindow
+                var candidate = JourneyRecovery.sample(age: elapsed - failure)
+                // A new accepted jump starts at zero; fade the existing fall
+                // displacement instead of teleporting back to its platform.
+                if let next = route.journeyHits.first(where: { $0.inputTime-route.epoch > failure && $0.inputTime-route.epoch <= elapsed }) {
+                    let gain = 1-JourneyMotion.progress((elapsed-(next.inputTime-route.epoch))/min(0.10,flight))
+                    candidate = JourneyRecovery(phase:candidate.phase,age:candidate.age,depth:candidate.depth*gain,drift:candidate.drift*gain,compression:candidate.compression*gain,pose:candidate.pose)
+                }
+                if candidate.depth > recovery.depth { recovery = candidate }
+            }
+        }
+        let active = height > 1e-12
+        let pose = active ? 0.48 * weightedPhase / height : latestAge.map { $0 < flight ? 0.48*$0/flight : $0 < flight+contact ? 0.48+0.16*($0-flight)/contact : 0.64+($0-flight-contact) }
+        let world = PlatformJourneyFrame(step:step,camera:camera,jumpAge:pose,recovery:recovery)
+        return Self(world:world,height:reduced ? 0 : tanh(height)/tanh(1),poseAge:pose,landing:reduced ? 0 : min(1,landing),active:active)
+    }
+    /// Reuse a fixed node pool, including the actual final island after16.
+    static func platformIndex(slot: Int, camera: Double, total: Int) -> Int? {
+        guard camera.isFinite, camera >= 0, total >= 0, slot >= 0 else { return nil }
+        let index = max(0,Int(camera.rounded(.down))-2)+slot
+        return index <= total ? index : nil
     }
 }
 
@@ -971,15 +1056,17 @@ final class EggSpriteScene: SKScene {
     }
     private func renderJourney(elapsed: Double, host: Double) {
         let route = snapshot.route, reduced = snapshot.reduceMotion
-        let state = PlatformJourneyFrame.sample(route: route, elapsed: snapshot.preparing ? 0 : elapsed, reduced: reduced)
+        let dense = DenseJourneyFrame.sample(route: route, elapsed: snapshot.preparing ? 0 : elapsed, reduced: reduced)
+        let state = dense?.world ?? PlatformJourneyFrame.sample(route: route, elapsed: snapshot.preparing ? 0 : elapsed, reduced: reduced)
         let stopped = snapshot.preparing || snapshot.finishedPassed != nil
         let w = size.width, h = size.height, stride = w * 0.27, ground = h * 0.31
         let completed = snapshot.finishedPassed == true
-        let step = completed ? 16 : state.step, camera = completed ? 14.7 : state.camera
+        let total = dense == nil ? 16 : route?.targets.count ?? 16
+        let step = completed ? Double(total) : state.step, camera = completed ? max(0,Double(total)-1.3) : state.camera
         let origin = w * 0.20 - CGFloat(camera) * stride
-        let activeFlight = !stopped && state.jumpAge.map { (0..<0.48).contains($0) } == true
+        let activeFlight = !stopped && (dense?.active ?? (state.jumpAge.map { (0..<0.48).contains($0) } == true))
         let age = state.jumpAge ?? 1
-        let hop = activeFlight && !reduced ? CGFloat(JourneyMotion.arc(age / 0.48)) * min(78, h * 0.20) : 0
+        let hop = activeFlight && !reduced ? CGFloat(dense?.height ?? JourneyMotion.arc(age / 0.48)) * min(78, h * (dense == nil ? 0.20 : 0.16)) : 0
         let recovery = stopped ? JourneyRecovery.idle : state.recovery
         let fall = CGFloat(recovery.depth)
         let extraAge = route?.hits.last.flatMap { $0.grade == .extra ? elapsed - ($0.inputTime - (route?.epoch ?? 0)) : nil }
@@ -996,10 +1083,11 @@ final class EggSpriteScene: SKScene {
         floor.isHidden = true; edge.isHidden = true
         rocks.forEach { $0.isHidden = true }; rewards.forEach { $0.isHidden = true }
         pebbles.forEach { $0.isHidden = true }
-        for index in platforms.indices {
+        for slot in platforms.indices {
+            let index = dense == nil ? slot : DenseJourneyFrame.platformIndex(slot:slot,camera:camera,total:total) ?? total+1
             let px = origin + CGFloat(index) * stride
-            let visible = px > -w * 0.2 && px < w * 1.2
-            let platform = platforms[index], top = platformTops[index]
+            let visible = index <= total && px > -w * 0.2 && px < w * 1.2
+            let platform = platforms[slot], top = platformTops[slot]
             platform.isHidden = !visible; top.isHidden = !visible
             let texture = theme == .dinosaur ? EggSceneTextures.original[8] : CompanionAtlas.pack(theme).textures[20]
             if platform.texture !== texture { platform.texture = texture }
@@ -1008,13 +1096,13 @@ final class EggSpriteScene: SKScene {
             platform.alpha = 1
             top.position = CGPoint(x: px, y: ground - 3); top.xScale = w * 0.19 / 72
             let landed = index > 0 && index <= Int((step + 1e-8).rounded(.down))
-            if landed && index <= rewards.count {
-                let reward = rewards[index - 1]
+            if landed && (dense != nil ? slot < rewards.count : index <= rewards.count) {
+                let reward = rewards[dense != nil ? slot : index - 1]
                 reward.isHidden = !visible; reward.position = CGPoint(x: px, y: ground - 26)
                 reward.setScale(0.5)
             }
         }
-        let next = min(16, Int((step + 1e-8).rounded(.down)) + 1)
+        let next = min(total, Int((step + 1e-8).rounded(.down)) + 1)
         let landingX = origin + CGFloat(next) * stride
         beatMarker.zPosition = recovery.phase == .idle ? 8 : 4
         beatMarker.isHidden = completed || snapshot.finishedPassed == false
@@ -1028,13 +1116,13 @@ final class EggSpriteScene: SKScene {
         if nextBeat.text != prompt { nextBeat.text = prompt }
         // Hand instruction remains readable; only the landing marker pulses.
         nextBeat.alpha = alternating || reduced ? 1 : beatMarker.alpha
-        let endX = origin + 16 * stride
+        let endX = origin + CGFloat(total) * stride
         nest.isHidden = endX > w + 60; nest.position = CGPoint(x: endX, y: ground)
         shadow.position = CGPoint(x: x, y: ground + 1)
         shadow.xScale = 0.75 - hop / 300; shadow.alpha = (0.20 - hop / 600) * max(0, 1 - fall * 2)
         player.position = CGPoint(x: x, y: y)
         player.zRotation = reduced ? 0 : (-recovery.drift * 0.36 - (activeFlight ? JourneyMotion.arc(age / 0.48) * 0.05 : 0)) * Double(theme.lean)
-        let landing = !stopped && !reduced && (0.48..<0.64).contains(age) ? CGFloat(pow(sin(.pi * (age - 0.48) / 0.16), 2)) : 0
+        let landing = !stopped && !reduced ? CGFloat(dense?.landing ?? ((0.48..<0.64).contains(age) ? pow(sin(.pi * (age - 0.48) / 0.16), 2) : 0)) : 0
         let contact = max(landing, CGFloat(recovery.compression))
         player.xScale = 1 + contact * 0.08 * theme.compression
         player.yScale = 1 - contact * 0.10 * theme.compression
@@ -1151,7 +1239,7 @@ struct EggMissionView: View {
     private var age: Double? { practice.latestHit.map { max(0, PracticeStore.now() - $0.inputTime) } }
     private var cue: String {
         guard let route else { return "準備拍點，馬上開始…" }
-        if practice.elapsed < route.relativeTimes[0], practice.latestHit == nil { return "先聽 \(max(1, Int(ceil((route.relativeTimes[0] - practice.elapsed) / route.beatDuration)))) 拍，準備跳" }
+        if practice.elapsed < route.relativeTimes[0], practice.latestHit == nil { return "先聽 \(max(1, Int(ceil((route.relativeTimes[0] - practice.elapsed) / (route.beatDuration * (profile.dense ? 2 : 1)))))) 拍，準備跳" }
         if let age, age < 0.48, let grade = practice.latestHit?.grade {
             switch grade {
             case .perfect: return "漂亮！\(theme.item)亮起來了"
@@ -1160,7 +1248,7 @@ struct EggMissionView: View {
             case .extra: return "多打一下，再跟上"
             }
         }
-        let recovery = PlatformJourneyFrame.sample(route: route, elapsed: practice.elapsed, reduced: false).recovery
+        let recovery = (DenseJourneyFrame.sample(route:route,elapsed:practice.elapsed,reduced:false)?.world ?? PlatformJourneyFrame.sample(route: route, elapsed: practice.elapsed, reduced: false)).recovery
         if reduceMotion, recovery.phase != .idle { return "沒跟上，聽下一拍再試！" }
         return recovery.instruction ?? "跟鼓聲，跳到亮起的小島！"
     }
@@ -1195,9 +1283,9 @@ struct EggMissionView: View {
                 HStack {
                     Text("抵達 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座小島").accessibilityIdentifier("jumpMatches")
                     Spacer(minLength: 4)
-                    Text(streak >= 2 ? "連續 \(streak) 拍！" : profile == .alternating ? "右左接力" : "右手跟拍")
+                    Text(streak >= 2 ? "連續 \(streak) 拍！" : profile.usesBothHands ? "右左接力" : "右手跟拍")
                 }.font(.caption.bold())
-                if profile == .alternating {
+                if profile.usesBothHands {
                     HStack(spacing: 10) { handPad(.right); handPad(.left) }.frame(height: 56)
                 } else {
                 ZStack {
@@ -1230,29 +1318,32 @@ struct EggMissionView: View {
     }
     private var phraseRoute: some View {
         let current = route?.currentIndex(at: practice.elapsed)
-        let bar = (current ?? 0) / 4
+        let perBeat = profile.dense ? 2 : 1, perBar = perBeat * 4
+        let bar = (current ?? 0) / perBar
         return HStack(spacing: 8) {
             Text(current == nil ? "聽 4 拍" : "\(bar + 1)/4 小節").font(.caption.bold())
             Spacer(minLength: 2)
-            ForEach(0..<4, id: \.self) { slot in
-                let index = bar * 4 + slot
-                let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
-                let matched = target.flatMap { route?.grades[$0.id] } != nil
-                let expired = target.map { _ in practice.elapsed > (route?.relativeTimes[index] ?? .infinity) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
-                VStack(spacing: 0) {
-                Image(systemName: matched ? "checkmark.circle.fill" : expired ? "arrow.uturn.backward.circle" : "music.note")
-                    .font(.system(size: 23, weight: .bold))
-                    .foregroundStyle(matched ? Color(uiColor: theme.accent) : expired ? Color.orange : BeatLabStyle.ink)
-                if profile == .alternating { Text(target?.stroke == .left ? "L" : "R").font(.caption2.bold()) }
-                }
-                    .frame(width: 40, height: 36)
-                    .background(current == index ? Color(uiColor: theme.pad) : Color.clear, in: Circle())
-                    .accessibilityHidden(true)
+            ForEach(0..<4, id: \.self) { beat in
+                HStack(spacing: 2) {
+                    ForEach(0..<perBeat, id: \.self) { subdivision in
+                        let index = bar * perBar + beat * perBeat + subdivision
+                        let target = route.flatMap { $0.targets.indices.contains(index) ? $0.targets[index] : nil }
+                        let matched = target.flatMap { route?.grades[$0.id] } != nil
+                        let expired = target.map { _ in practice.elapsed > (route?.relativeTimes[index] ?? .infinity) + (route?.alignment ?? 0) + TimingSession.matchingWindow } ?? false
+                        VStack(spacing: 0) {
+                            Image(systemName: matched ? "checkmark.circle.fill" : expired ? "arrow.uturn.backward.circle" : "music.note")
+                                .font(.system(size: perBeat == 1 ? 23 : 15, weight: .bold))
+                                .foregroundStyle(matched ? Color(uiColor: theme.accent) : expired ? Color.orange : BeatLabStyle.ink)
+                            if profile.usesBothHands { Text(target?.stroke == .left ? "L" : "R").font(.caption2.bold()) }
+                        }.frame(width: perBeat == 1 ? 40 : 21,height:36)
+                            .background(current == index ? Color(uiColor:theme.pad) : Color.clear,in:Capsule())
+                    }
+                }.accessibilityHidden(true)
             }
-        }.padding(.horizontal, 10).padding(.vertical, 3)
-            .background(BeatLabStyle.surface, in: Capsule())
-            .accessibilityElement(children: .ignore).accessibilityLabel("這一小節的四個拍點")
-            .accessibilityValue(current.map { "第 \($0 % 4 + 1) 拍，\(route?.targets[$0].stroke == .left ? "左手" : "右手")；抵達 \(route?.accepted.count ?? 0) 座小島" } ?? "先聽四拍，再跟鼓聲跳")
+        }.padding(.horizontal,10).padding(.vertical,3)
+            .background(BeatLabStyle.surface,in:Capsule())
+            .accessibilityElement(children:.ignore).accessibilityLabel(profile.dense ? "每拍兩下的四個拍點" : "這一小節的四個拍點")
+            .accessibilityValue(current.map { "第 \($0 / perBeat % 4 + 1) 拍，第 \($0 % perBeat + 1) 下，\(route?.targets[$0].stroke == .left ? "左手" : "右手")；抵達 \(route?.accepted.count ?? 0) 座小島" } ?? "先聽四拍，再跟鼓聲跳")
             .accessibilityIdentifier("rhythmLane")
     }
 }

@@ -5,8 +5,7 @@ catalog slices. Risk L2: read-only display cadence/world/cue and existing input
 boundary. Define now; implementation only after GAME26 source/evidence commit.
 Allowed: EggMissionView.swift (finite validated route-grid/cadence presentation,
 pooled visible islands, half-beat profiles/HUD); PracticeView.swift (authored
-preparation metadata); PracticeStore.swift (read-only route metadata only if
-needed); PracticeStoreTests.swift and PracticeUITests.swift; slice/PLAN/evidence/
+preparation metadata); PracticeStore.swift (read-only route metadata and restrict old music-bed flag to first lesson only); PracticeStoreTests.swift and PracticeUITests.swift; slice/PLAN/evidence/
 canonical memory. No core/DSP/audio/JSON/scoring/window/save schema, original PNG,
 first/second-level flight/fall curves, new characters, services or metadata.
 
@@ -40,5 +39,5 @@ Failure paths: invalid/nonuniform grid falls back safely; missing art uses origi
 fallback; unsupported accelerated profile retains generic practice; no division
 by0/NaN, no off-screen goal/empty island path beyond16 or motion authority change.
 Rollback only new dense-profile source changes to completedGAME26 source; preserve
-progress/evidence. Status DEFINED / WAITING_GAME26_GATE. Rest and sixteenth
+progress/evidence. Status IMPLEMENTING / GAME26_ENGINEERING_GATE_PASSED. Rest and sixteenth
 behavior need separate later contracts; labels alone do not complete those levels.

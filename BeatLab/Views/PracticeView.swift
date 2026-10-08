@@ -431,10 +431,10 @@ struct PracticeView: View {
                 .accessibilityIdentifier("preparedLessonNumber")
             Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
             EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true, platformJourney: true).frame(height: 260)
-            Text("先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
+            Text(profile.dense ? "先聽 4 拍，再跟細分的鼓聲，每拍跳兩次。" : "先聽 4 拍，再跟鼓聲按一下，跳到亮起的下一座小島。")
                 .font(.title3.bold()).fixedSize(horizontal: false, vertical: true)
             Text("\(profile.handInstruction) · \(lesson.bpm) BPM · 約 \(seconds) 秒").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
-            if profile == .alternating {
+            if profile.usesBothHands {
                 HStack(spacing: 8) {
                     ForEach(0..<4, id: \.self) { index in
                         Text(lesson.pattern.steps[index] == .right ? "右 R" : "左 L")
@@ -442,7 +442,7 @@ struct PracticeView: View {
                             .background(Color(uiColor: missionTheme.pad).opacity(0.55), in: RoundedRectangle(cornerRadius: 12))
                     }
                 }.accessibilityElement(children: .ignore)
-                    .accessibilityLabel("第二關節奏：右、左、右、左，每拍一下")
+                    .accessibilityLabel(profile.dense ? "第四關節奏：每拍右、左各一下" : "第二關節奏：右、左、右、左，每拍一下")
                 Text("跟著右、左提示輪流用手；這關依拍點給星星。")
                     .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
             }
@@ -721,7 +721,7 @@ struct PracticeView: View {
                             .background(BeatLabStyle.accentSoft, in: Circle()).accessibilityHidden(true)
                     } else {
                         if practice.isEggMission {
-                            EggMissionScene(theme: missionTheme, elapsed: 20, accepted: practice.runnerRoute?.accepted ?? [], finishedPassed: practice.stars > 0, route: practice.runnerRoute, platformJourney: true)
+                            EggMissionScene(theme: missionTheme, elapsed: practice.runnerRoute?.duration ?? 20, accepted: practice.runnerRoute?.accepted ?? [], finishedPassed: practice.stars > 0, route: practice.runnerRoute, platformJourney: true)
                                 .frame(height: textSize.isAccessibilitySize ? 280 : 220)
                         } else {
                             AdventureFinish(companion: companion, celebrating: practice.stars > 0).frame(height: 170)
