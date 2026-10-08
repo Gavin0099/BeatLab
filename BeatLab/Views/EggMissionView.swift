@@ -287,19 +287,34 @@ struct PlatformJourneyFrame {
         for (index, hit) in route.journeyHits.enumerated() {
             let a = elapsed - (hit.inputTime - route.epoch)
             guard a >= 0 else { continue }
-            step += reduced ? 1 : Double(EggAnimationFrame.ease(a / 0.48))
+            let progress = JourneyMotion.progress(a / 0.48)
+            step += reduced ? 1 : progress
             let delta = max(0, Double(index + 1) - 1.3) - max(0, Double(index) - 1.3)
-            camera += delta * (reduced ? 1 : Double(EggAnimationFrame.ease((a - 0.48) / 0.32)))
+            camera += delta * (reduced ? 1 : progress)
             age = a
         }
         var fall = 0.0
         if !reduced, age.map({ $0 >= 0.64 }) ?? true,
            let id = route.missed(at: elapsed), let index = route.targets.firstIndex(where: { $0.id == id }) {
             let a = elapsed - route.relativeTimes[index] - route.alignment - TimingSession.matchingWindow
-            fall = sin(.pi * min(1, max(0, a / 0.48)))
+            fall = JourneyMotion.arc(a / 0.48)
         }
         return Self(step: step, camera: camera, jumpAge: age, fall: max(0, fall))
     }
+}
+
+/// Endpoint-resting C2 travel curves. One opaque registered sprite remains.
+/// These are presentation samples, never timing targets or input judgments.
+enum JourneyMotion {
+    static func progress(_ value: Double) -> Double {
+        let p = value.isFinite ? min(1, max(0, value)) : 0
+        return p * p * p * (10 + p * (-15 + 6 * p))
+    }
+    static func arc(_ value: Double) -> Double {
+        guard value.isFinite, (0...1).contains(value) else { return 0 }
+        return 64 * pow(value * (1 - value), 3)
+    }
+
 }
 
 struct EggMissionScene: View {
@@ -406,6 +421,13 @@ struct EggSceneSnapshot {
 }
 
 private enum EggSceneTextures {
+    private static var warmedThemes = Set<RunnerTheme>()
+    static func warm(_ theme: RunnerTheme) {
+        guard warmedThemes.insert(theme).inserted else { return }
+        let poses = theme == .dinosaur ? animated + original : CompanionAtlas.pack(theme).textures
+        let backdrops = [journeyBackdrops[theme], CompanionAtlas.background(theme)].compactMap { $0 }
+        SKTexture.preload(poses + backdrops, withCompletionHandler: {})
+    }
     static let journeyBackdrops: [RunnerTheme: SKTexture] = Dictionary(uniqueKeysWithValues: RunnerTheme.allCases.map { theme in
         guard let image = UIImage(named: theme.backdrop)?.cgImage,
               let sky = image.cropping(to: CGRect(x: 0, y: 0, width: CGFloat(image.width), height: CGFloat(image.height) * 0.74)) else {
@@ -458,6 +480,7 @@ final class EggSpriteScene: SKScene {
     private var characterSize: CGFloat = 118
     #if DEBUG
     private(set) var callbackCount = 0
+    private(set) var renderCount = 0
     private var previousHost: Double?
     private var intervals = Array(repeating: 0.0, count: 256)
     private var work = Array(repeating: 0.0, count: 256)
@@ -509,7 +532,7 @@ final class EggSpriteScene: SKScene {
         }
         glint.fillColor = .systemYellow; glint.strokeColor = .clear; glint.zPosition = 7; addChild(glint)
         graphReady = true
-        resizeNodes()
+        applyTheme(theme)
     }
     required init?(coder: NSCoder) { nil }
     override func didChangeSize(_ oldSize: CGSize) { resizeNodes(); render(at: PracticeStore.now()) }
@@ -530,16 +553,21 @@ final class EggSpriteScene: SKScene {
         }
     }
     func configure(_ state: EggSceneSnapshot) {
-        if theme != state.theme { applyTheme(state.theme) }
+        let wasAnimating = snapshot.animate
+        let themeChanged = theme != state.theme
+        if themeChanged { applyTheme(state.theme) }
         snapshot = state
         #if DEBUG
         if !state.animate { previousHost = nil }
         #endif
-        render(at: PracticeStore.now())
-        view?.isPaused = !state.animate
+        // One display callback owns live drawing. SwiftUI publishes elapsed
+        // around33Hz; it must not introduce a second render loop between frames.
+        if !state.animate || !wasAnimating || themeChanged { render(at: PracticeStore.now()) }
+        if view?.isPaused != !state.animate { view?.isPaused = !state.animate }
     }
     private func applyTheme(_ next: RunnerTheme) {
         theme = next
+        EggSceneTextures.warm(next)
         island.texture = CompanionAtlas.background(next)
         if next == .dinosaur {
             nest.texture = EggSceneTextures.original[7]
@@ -557,6 +585,8 @@ final class EggSpriteScene: SKScene {
         for puff in dust { puff.fillColor = next.pad }
         beatMarker.fillColor = .systemYellow
         glint.fillColor = next == .robot ? .cyan : .systemYellow
+        for top in platformTops { top.fillColor = next.accent }
+        safety.fillColor = next.pad.withAlphaComponent(0.65)
         resizeNodes()
     }
     func detach() {
@@ -579,9 +609,13 @@ final class EggSpriteScene: SKScene {
     func render(at host: Double) {
         // SKScene can call didChangeSize from super.init before children exist.
         guard graphReady, size.width > 0, size.height > 0, size.width.isFinite, size.height.isFinite else { return }
+        #if DEBUG
+        renderCount += 1
+        #endif
         let raw = snapshot.presentationElapsed?(host) ?? snapshot.elapsed
         let elapsed = raw.isFinite ? min(20.18, max(0, raw)) : 0
         if snapshot.platformJourney { renderJourney(elapsed: elapsed, host: host); return }
+        first.alpha = 1
         island.texture = CompanionAtlas.background(theme)
         floor.isHidden = false; edge.isHidden = false
         pebbles.forEach { $0.isHidden = false }; rewards.forEach { $0.setScale(1) }
@@ -654,7 +688,7 @@ final class EggSpriteScene: SKScene {
         let origin = w * 0.20 - CGFloat(camera) * stride
         let activeFlight = !stopped && state.jumpAge.map { (0..<0.48).contains($0) } == true
         let age = state.jumpAge ?? 1
-        let hop = activeFlight && !reduced ? CGFloat(sin(.pi * age / 0.48)) * min(78, h * 0.20) : 0
+        let hop = activeFlight && !reduced ? CGFloat(JourneyMotion.arc(age / 0.48)) * min(78, h * 0.20) : 0
         let fall = stopped ? 0 : CGFloat(state.fall)
         let extraAge = route?.hits.last.flatMap { $0.grade == .extra ? elapsed - ($0.inputTime - (route?.epoch ?? 0)) : nil }
         let extra = !stopped && !reduced && !activeFlight && age >= 0.64 && extraAge.map { (0..<0.22).contains($0) } == true ? CGFloat(sin(.pi * extraAge! / 0.22)) : 0
@@ -681,7 +715,6 @@ final class EggSpriteScene: SKScene {
             platform.position = CGPoint(x: px, y: ground - 4)
             platform.alpha = 1
             top.position = CGPoint(x: px, y: ground - 3); top.xScale = w * 0.19 / 72
-            top.fillColor = theme.accent
             let landed = index > 0 && index <= Int((step + 1e-8).rounded(.down))
             if landed && index <= rewards.count {
                 let reward = rewards[index - 1]
@@ -704,15 +737,14 @@ final class EggSpriteScene: SKScene {
         shadow.position = CGPoint(x: x, y: ground + 1)
         shadow.xScale = 0.75 - hop / 300; shadow.alpha = fall > 0 ? 0 : 0.20 - hop / 600
         player.position = CGPoint(x: x, y: y)
-        player.zRotation = reduced ? 0 : Double(fall) * -0.25 * Double(theme.lean)
+        player.zRotation = reduced ? 0 : (-Double(fall) * 0.25 - (activeFlight ? JourneyMotion.arc(age / 0.48) * 0.05 : 0)) * Double(theme.lean)
         let landing = !stopped && !reduced && (0.48..<0.64).contains(age) ? CGFloat(pow(sin(.pi * (age - 0.48) / 0.16), 2)) : 0
         player.xScale = 1 + landing * 0.08 * theme.compression
         player.yScale = 1 - landing * 0.10 * theme.compression
-        first.color = .white; first.colorBlendFactor = 0
+        first.color = .white; first.colorBlendFactor = 0; first.alpha = 1
         if let passed = snapshot.finishedPassed { setOriginal(first, passed ? 5 : 4) }
         else { setAnimated(first, activeFlight ? EggAnimationFrame.sample(elapsed: elapsed, age: age, reduceMotion: reduced) : 14) }
         safety.isHidden = fall == 0
-        safety.fillColor = theme.pad.withAlphaComponent(0.65)
         safety.position = CGPoint(x: x, y: y - 6); safety.alpha = fall
         for (index, puff) in dust.enumerated() {
             puff.alpha = landing * 0.6; puff.xScale = 1 + landing

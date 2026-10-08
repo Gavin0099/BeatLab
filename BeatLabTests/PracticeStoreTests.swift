@@ -779,10 +779,10 @@ final class PlatformJourneyTests: XCTestCase {
         XCTAssertEqual(PlatformJourneyFrame.sample(route: resumed, elapsed: 5.24, reduced: false).fall, 0)
         XCTAssertEqual(PlatformJourneyFrame.sample(route: empty, elapsed: 20, reduced: false).step, 0)
     }
-    func testCameraWaitsForLandingAndAbsoluteFrameSkipsReachSameEndpoint() throws {
+    func testCameraSharesFlightAndAbsoluteFrameSkipsReachSameEndpoint() throws {
         let route = try routeFixture(accepted: [0,1])
-        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.48, reduced: false).camera, 0, accuracy: 1e-8)
-        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.64, reduced: false).camera, 0.35, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.24, reduced: false).camera, 0.35, accuracy: 1e-8)
+        XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.48, reduced: false).camera, 0.70, accuracy: 1e-8)
         XCTAssertEqual(PlatformJourneyFrame.sample(route: route, elapsed: 5.80, reduced: false).camera, 0.70, accuracy: 1e-8)
         let all = try routeFixture(accepted: Set(0..<16))
         let skipped = PlatformJourneyFrame.sample(route: all, elapsed: 20, reduced: false)
@@ -841,6 +841,91 @@ final class PlatformJourneyTests: XCTestCase {
             XCTAssertEqual(player.position.x, try XCTUnwrap(scene.childNode(withName: "destination")).position.x, accuracy: 1e-8)
             scene.configure(EggSceneSnapshot(elapsed: 20, finishedPassed: false, theme: theme, route: try routeFixture(), platformJourney: true))
             XCTAssertTrue(try XCTUnwrap(scene.childNode(withName: "destination")).isHidden, "Only actual passed flag can show arriving at the end")
+        }
+    }
+}
+
+final class JourneyMotionRegressionTests: XCTestCase {
+    func testScreenTravelNeverSlidesBackAfterLandingOnAnyMatchedBeat() throws {
+        let all = try routeFixture(accepted: Set(0..<16))
+        var previous = 0.0
+        for tick in 0...4800 {
+            let frame = PlatformJourneyFrame.sample(route: all, elapsed: Double(tick) / 240, reduced: false)
+            let screen = frame.step - frame.camera
+            XCTAssertGreaterThanOrEqual(screen + 1e-10, previous, "Camera may not pull a grounded companion backwards")
+            XCTAssertLessThanOrEqual(screen, 1.3 + 1e-10)
+            previous = screen
+        }
+        for beat in 0..<16 {
+            let landed = PlatformJourneyFrame.sample(route: all, elapsed: Double(4 + beat) + 0.48, reduced: false)
+            let settled = PlatformJourneyFrame.sample(route: all, elapsed: Double(4 + beat) + 0.80, reduced: false)
+            XCTAssertEqual(landed.step - landed.camera, settled.step - settled.camera, accuracy: 1e-10)
+        }
+    }
+    func testFlightAndFallHaveZeroEndpointVelocityAndAcceleration() {
+        XCTAssertEqual(JourneyMotion.arc(0.5), 1)
+        XCTAssertEqual(JourneyMotion.progress(0.5), 0.5)
+        let h = 1e-5
+        for endpoint in [0.0, 1.0] {
+            let left = JourneyMotion.arc(endpoint - h), center = JourneyMotion.arc(endpoint), right = JourneyMotion.arc(endpoint + h)
+            XCTAssertLessThan(abs((right - left) / (2 * h)), 1e-6, "No sudden vertical velocity stop at touchdown")
+            XCTAssertLessThan(abs((right - 2 * center + left) / (h * h)), 0.002, "No endpoint acceleration step")
+        }
+        for invalid in [Double.nan, .infinity, -.infinity, -1, 2] { XCTAssertEqual(JourneyMotion.arc(invalid), 0) }
+    }
+    @MainActor
+    func testFlightAndMissKeepOneOpaqueRegisteredCharacterInEveryTheme() throws {
+        for theme in RunnerTheme.allCases {
+            let scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            let player = try XCTUnwrap(scene.childNode(withName: "player"))
+            let character = try XCTUnwrap(player.childNode(withName: "characterPrimary") as? SKSpriteNode)
+            for route in [try routeFixture(accepted: [0,1]), try routeFixture()] {
+                for time in stride(from: 3.9, through: 6.0, by: 1.0 / 120) {
+                    scene.configure(EggSceneSnapshot(elapsed: time, theme: theme, route: route, platformJourney: true))
+                    XCTAssertEqual(player.children.count, 1, "No second silhouette or ghost eyes in flight/recovery")
+                    XCTAssertEqual(character.alpha, 1)
+                    XCTAssertNotNil(character.texture)
+                    XCTAssertTrue(player.position.x.isFinite && player.position.y.isFinite)
+                }
+            }
+        }
+    }
+    @MainActor
+    func testRealPlatformSKViewUsesOnlyDisplayCallbacksForLiveSnapshotUpdates() async throws {
+        for theme in RunnerTheme.allCases {
+            let window = UIWindow(frame: CGRect(x: 0, y: 0, width: 400, height: 800)), controller = UIViewController()
+            let view = SKView(frame: CGRect(x: 0, y: 0, width: 400, height: 500)), scene = EggSpriteScene(size: CGSize(width: 400, height: 500))
+            window.rootViewController = controller; controller.view.addSubview(view); window.makeKeyAndVisible()
+            defer { scene.detach(); view.presentScene(nil); window.isHidden = true }
+            view.preferredFramesPerSecond = 60; view.presentScene(scene)
+            let epoch = PracticeStore.now() - 4.10
+            let targets = (0..<16).map { TimingTarget(id: $0, time: epoch + 4 + Double($0), stroke: .right) }
+            var session = try TimingSession(targets: targets); session.tap(at: epoch + 4)
+            let route = try XCTUnwrap(RunnerRoute(targets: targets, hits: session.hits, epoch: epoch, endTime: epoch + 20.18, alignment: 0))
+            let state = EggSceneSnapshot(presentationElapsed: { $0 - epoch }, theme: theme, route: route, platformJourney: true)
+            scene.configure(state)
+            let count = scene.renderCount, nodes = scene.children.count
+            for _ in 0..<12 { scene.configure(state) }
+            XCTAssertEqual(scene.renderCount, count, "Elapsed publishes cannot introduce a second live render loop")
+            try await Task.sleep(nanoseconds: 900_000_000)
+            XCTAssertGreaterThan(scene.callbackCount, 2)
+            XCTAssertGreaterThan(scene.renderCount, count)
+            XCTAssertEqual(scene.children.count, nodes)
+            scene.configure(EggSceneSnapshot(reduceMotion: true, presentationElapsed: { $0 - epoch }, theme: theme, route: route, platformJourney: true))
+            let paused = scene.callbackCount
+            try await Task.sleep(nanoseconds: 100_000_000)
+            XCTAssertEqual(scene.callbackCount, paused); XCTAssertTrue(view.isPaused)
+            XCTAssertEqual(try XCTUnwrap(scene.childNode(withName: "player")).children.count, 1)
+            // Native SpriteKit specimens for human motion/art inspection.
+            // These explicit matcher fixtures are not UI touches or phone FPS.
+            let specimenRoute = try routeFixture(accepted: [0, 1])
+            for elapsed in [4.012, 4.10, 4.252, 4.42, 4.48, 4.56, 5.252, 5.48] {
+                scene.configure(EggSceneSnapshot(elapsed: elapsed, theme: theme, route: specimenRoute, platformJourney: true))
+                let texture = try XCTUnwrap(view.texture(from: scene))
+                let attachment = XCTAttachment(image: UIImage(cgImage: texture.cgImage()))
+                attachment.name = "GAME21 native specimen \(theme.rawValue) \(elapsed)"
+                attachment.lifetime = .keepAlways; add(attachment)
+            }
         }
     }
 }

@@ -369,3 +369,9 @@ GAME-20 原生觀察修正（2026-10-08）：c1f9152 first signed candidate未�
 Source 0e83ed34efa4a0e5576eee6ff52fb0c011042e94：第一關改成實際matched橫跨分開平台、落地後camera跟進、miss可見跌落回原島、extra不前進；compact樂句/固定跳躍與停止。準備/結果三theme沿用美術，修過高scene與background stretch。95source綁定、78production signed包、91protected paths對GAME17 unchanged；同bundle/team Debug0.1.0(11) Wi-Fi install PASS，launch BLOCKED_DEVICE_LOCKED（手機鎖定，已問unlock，只重試launch）。不清學習進度。
 
 驗證：pre-layout App61/0、cat初start FAIL；fixed App5中1case/3assertions背景比例floating-round FAIL，已以1e-6獨立比例界限修test；finalApp PASS 61/0。Fixed真實no-input/16miss/0星/retry歸零/next locked流程PASS；actualtouch/wideviewport、小屏darkXXXL仍INCOMPLETE，only-owned測試停在preparing，不推定原因；robot/full10/physical timingFPS/child fun/public NOT RUN或pending。Owned narrow restoredlight/shutdown；wide保留原Booted。完整可查docs/slices/GAME-20-verification.json，不能宣稱QA全綠或上架完成，TestFlight未更新。
+
+### 2026-10-08 — Owner 拒絕 GAME20 動作，GAME21 修正
+
+Owner指出GAME20比舊跳躍更差、動作不順。Gameplay/motion acceptance REJECTED；source0e83ed3與本人安裝仍是歷史事實，不能因61App PASS稱順暢。GAME21 exact-file L2 contract先修camera落地後倒滑、sin落地速度硬停、sprite pose硬切以及live configure重複render；不換玩法/美術、不改audio/matching/score/save。Status IN_PROGRESS；同bundle個人Wi-Fi安裝授權沿用，既有UI/physical/child/public未接受。
+
+GAME21 source驗證：保持既有單一opaque角色guard；初次雙圖trial65測試中3case/6assert FAIL且native樣本實見ghostheads/limbs，已撤回且未安裝。Final65case/0fail PASS（包含4新增motion regression與三theme實際SKView），native3theme圖片無雙影。Camera flight同phase、C2起落/漏拍回復、live configure不額外render、theme一次texture預熱；既有pose素材未改，不能稱骨架動畫或商業遊戲流暢度。Status SOURCE_TESTED_OWNER_PREVIEW_PENDING，freeze/install/physical驗收仍須分開記錄。
