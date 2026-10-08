@@ -1,0 +1,3 @@
+PASS local-only build12 delivery:101 frozen source hashes; App69/Core53/capture3 and DSP468 offline matrix; Release archive + actual GUI-uploaded IPA internal-only/distribution/signature/new3assets/icon/privacy.
+Xcode uploaded15:46; Apple processed build5ba3107d-7dca-4f5c-9a19-f058b613c1d1; existing one-tester 本人試玩 正在測試; zh-Hant 已儲存. GitHub Mac job disabled on this branch; no dispatch/PR/merge.
+Device TestFlight update/owner motion, full UI, physical FPS/timing, child and public release acceptance remain pending; delivery does not establish those gates.

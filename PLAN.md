@@ -338,7 +338,7 @@ Owner 指示先切slice；本輪L0規劃文件，實作皆PLANNED。對照程式
 | GAME-18 | matched起跳／落地、extra／miss銜接與可見後果 | L1，若clock更動升L2；GAME-17＋QA-02B | PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING |
 | GAME-19 | 引導→數拍→挑戰→結果→重試，三角色整合 | L1；GAME-18＋QA-02C | PHONE_PREVIEW_INSTALLED_NATIVE_UI_PARTIAL_OWNER_PENDING |
 | QA-02 | A/B/C嵌入前片，Final原生／真機／兒童與公開缺口 | L2；不等最後才QA，不把工程PASS當owner接受 | PLANNED |
-| TF-05 | owner接受候選後的本人TestFlight交付 | L1 delivery-only；適用QA gate＋該新候選交付授權 | PLANNED |
+| TF-05 | 本人TestFlight交付，owner於新版試玩後驗收 | L1 delivery-only；本次本人alpha明確授權 | TESTFLIGHT_OWNER_TRIAL_AVAILABLE（2026-10-08） |
 
 Exact-file contracts：docs/slices/GAME-16.md、GAME-17.md、GAME-18.md、GAME-19.md、QA-02.md、TF-05.md。每片包含allowed／forbidden、依賴、失敗路徑、驗證與rollback；本輪不實作App或上傳。GAME-17–19先只改第一關60 BPM，其餘九關／非60仍用原練習且要smoke；新score／保存／教學影片／三錯結束需另切與授權。TF-04 build11仍為既有交付，G1-G4／physical／child／public gates及KidsCharacterKit延期不變。
 
@@ -393,3 +393,7 @@ GAME-22 source333012c：來源與手機候選完整性已封存，簽署/profile
 Owner 明確要求推 TestFlight 後試玩，授權 GAME-22 三角色高密度姿勢候選的 Release / internal-only 上傳、既有「本人試玩」群組與 zh-Hant 測試說明；玩法／流暢度接受仍待試玩，不將 owner acceptance 前提當成本次 delivery blocker。Status IN_PROGRESS / BLOCKED_LOGIN：fresh Xcode Apple Accounts 空白、ASC 登出，已請登入；遠端最新 build 尚未讀取，版本號不猜測、未改 build metadata、未開始上傳。先綁定101 source hashes和既有69/0工程證據，製作測試說明。保留既有 full UI / physical / child / G1–G4 / public 缺口，不增功能或 tester，不提交公開 App Store。
 
 TF-05登入續行：Xcode已恢復既有Developer Team；ASC網頁仍登出，已請owner只補網頁登入。101來源已隔離，metadata未改、archive/upload/availability未執行；當前阻擋為ASC登入。
+
+TF-05 本機建置與上傳（2026-10-08）：owner網頁登入完成並要求所有build/test在本機，fresh ASC最新11，App metadata commit b814321 僅build11→12，GitHub iOS push/PR事件移除、Mac job `if: false` 保留腳本但不配置runner。本機App69/0、Core53/0、capture3/0、DSP468離線matrix PASS；Release12 archive／actual uploaded distribution IPA／internal-only／new3dense assets／icon/privacy與101來源一致 PASS。Xcode15:46上傳成功，Apple處理中，試玩群組availability仍pending。Python YAML缺模組與隔離複本缺capture helper初次setup失敗保留，Ruby解析／補unchanged helper後final PASS；own simulator已restore Shutdown，其他sim未動。工程PASS不代表physicalFPS/timing/fullUI/child/public接受，手機TestFlight更新待owner。
+
+TF-05 本人TestFlight可下載：Apple build 5ba3107d-7dca-4f5c-9a19-f058b613c1d1（0.1.0/12）處理完成，已加入原本人試玩1位internal tester，列表「正在測試」；繁體說明「已儲存」。實際上傳IPA SHA256 adb0f9ca84a235670db0aaad7a54c164d441084f8bb6123cd8b145444a5afc40，internal-only distribution/source/icon/privacy檢查PASS。Status TESTFLIGHT_OWNER_TRIAL_AVAILABLE；手機更新／動作與physical timingFPS/child/public接受仍pending。所有本次build/tests在本機，GitHub無dispatch；workflow停用屬目前分支，未merge main。詳TF-05 verification與canonical delivery receipt。

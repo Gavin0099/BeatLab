@@ -1,3 +1,5 @@
+> **2026-10-08 本人 TestFlight 動作新版**：0.1.0（12）已上傳並完成 Apple 處理，既有「本人試玩」1位內部 tester 可下載。GAME-22 三套連續動作與101來源绑定；本機 App69/Core53/capture3、DSP468離線矩陣及Release／實際IPA檢查PASS。僅build metadata11→12，GitHub Mac job在目前分支禁用，本次未dispatch；未merge main。手機更新／流暢度、真機timing/FPS、完整UI、兒童與公開gate仍待驗收。[TF-05 evidence](slices/TF-05-verification.json)。
+
 > **2026-10-06 本人 TestFlight 更新**：0.1.0（11）已上傳、Apple 處理完成，加入既有「本人試玩」一位內部 tester 群組並顯示「正在測試」。GAME-15 e2aeec5 來源一致（僅 build metadata 改變）；實際上傳包 internal-only、distribution 簽署、icon/privacy及 archive 素材核對 PASS。手機 TestFlight 更新由 owner 執行，流暢度／實機 timing／兒童體驗與公開 gate 仍未验收。[TF-04 evidence](slices/TF-04-verification.json)。下方 TF-02／build10 為歷史基準。
 
 # BeatLab 驗收與證據

@@ -1,0 +1,2 @@
+PASS exact GUI-uploaded IPA12/distribution/internal-only/signature/new3assets/icon/privacy; archive assets and101 source hashes match; Xcode uploaded15:46, Apple processing12 observed.
+Owner-group testing availability still pending; phone update, motion acceptance, physical FPS/timing, full UI, child and public release NOT CLAIMED.

@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"from pathlib import Path\nimport json,hashlib,subprocess\np=Path('TestResults/TF-05');v=json.loads(Path('docs/slices/TF-05-verification.json').read_text()); c=json.loads((p/'source-copy.json').read_text())\nsha=lambda f:hashlib.sha256(Path(f).read_bytes()).hexdigest()\nassert v['local_only'] and v['github_mac_job_disabled'] and len(v['source_sha256'])==101\nfor f,h in v['source_sha256'].items(): assert sha(f)==sha(Path(c['root'])/f)==h\ns=json.loads((p/'native-summary.json').read_text()); assert (s['passedTests'],s['failedTests'])==(69,0)\nassert 'Executed 53 tests, with 0 failures' in (p/'core-tests.log').read_text()\nassert 'Ran 3 tests' in (p/'capture-tests-final.log').read_text() and '\\nOK\\n' in (p/'capture-tests-final.log').read_text()\nd=json.loads((p/'dsp-tests.json').read_text()); assert d['status']=='PASS' and len(d['runs'])==468 and d['physical_device_gate']=='NOT RUN'\nassert '** ARCHIVE SUCCEEDED **' in (p/'archive-isolated.log').read_text()\nsubprocess.run(['codesign','--verify','--deep','--strict',str(p/'BeatLab.xcarchive/Products/Applications/BeatLab.app')],check=True,capture_output=True)\na=json.loads((p/'archive-validation.json').read_text()); assert a['build']=='12' and a['compiled_dense_motion_assets_present'] and a['privacy_unchanged'] and a['compiled_app_icons_unchanged']\nassert 'PASS:' in (p/'local-only-workflow-final.log').read_text()\nbefore=json.loads((p/'simulator-before.json').read_text());after=json.loads((p/'simulator-after.json').read_text())\nflat=lambda x:{d['udid']:d['state'] for arr in x['devices'].values() for d in arr}\nb=flat(before);f=flat(after);own='50E92C18-D216-46B4-AB4A-9182DB9B62E6'\nassert b[own]==f[own]=='Shutdown'\nfor udid,state in b.items():\n if udid!=own:assert f[udid]==state,udid\nassert 'ModuleNotFoundError' in (p/'local-only-workflow.log').read_text()\nassert 'analyze_capture.py' in (p/'capture-tests.log').read_text()\nprint('PASS local-only: App69/Core53/capture3; DSP468 offline renderer matrix. Release12 archive,101 current/frozen sources, compiled dense3 assets/icon/privacy/signature.')\nprint('Existing Python YAML/copy-helper setup failures retained and final checks PASS; no production-code fix introduced. GitHub Mac job disabled, no GitHub dispatch. Owned simulator restored; others unchanged.')\nprint('TestFlight upload still separately verified; no physical FPS/timing, full UI, child, public readiness claims.')\n\"",
+  "exit_code": 0,
+  "started_at": "2026-10-08T07:44:31Z",
+  "finished_at": "2026-10-08T07:44:31Z",
+  "runner": "local-mac-testflight-build12",
+  "linked_commit": "b81432172268d1720748b8f013188751928ee470",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/TF-05-local-build-tests.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

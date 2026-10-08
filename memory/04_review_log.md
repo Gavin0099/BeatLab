@@ -212,3 +212,14 @@
 - Validation boundary: artifacts/evidence/test-results/TF-05-preflight.json: PASS 101 unchanged source hashes and real login blocker; prior App69/0; archive/upload/processing NOT RUN.
 - Next action: After Xcode and ASC login, read latest remote build, bump metadata only, isolated Release archive and internal-only upload, confirm Apple processing and existing 本人試玩 availability; preserve physical/UI/child/public pending gates.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:e3c0fb0b39bdc6a7220c99dfa9104ebad15c0f93df8f558cff4185d3b139aa56 -->
+### Canonical memory checkpoint — tf05-local-testflight12-20261008
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `e3c0fb0b39bdc6a7220c99dfa9104ebad15c0f93df8f558cff4185d3b139aa56`
+- Commit binding: `b81432172268d1720748b8f013188751928ee470` (bound)
+- Record: Delivered GAME-22 source333012c via internal TestFlight0.1.0(12). All build/tests ran on local Mac; disabled iOS push/PR workflow and Mac job on current branch.101 sources frozen; signed Release and actual exported uploaded IPA checked for3dense assets/icon/privacy/internal-only. Xcode uploaded15:46; Apple processed, existing 本人試玩1 tester assignment and zh-Hant saved verified. Initial local setup failures retained; final checks PASS. Owned simulator restored, others unchanged.
+- Validation boundary: artifacts/evidence/test-results/TF-05-local-build-tests.json, TF-05-uploaded-package.json, TF-05-delivery-verified.json PASS; local App69/Core53/capture3, DSP468; Release/actual IPA12/internal-only; Apple TESTING existing owner group1.
+- Next action: Owner update TestFlight0.1.0(12) and compare dinosaur/cat/robot first-level60BPM takeoff/landing/continuous jumps; physical FPS/timing, full UI, child and public release remain pending. Build/test stays local; no GitHub Mac dispatch.
+- PLAN reconciliation: `updated`

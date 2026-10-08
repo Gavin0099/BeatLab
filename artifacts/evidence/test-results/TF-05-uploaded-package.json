@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 -c \"from pathlib import Path\nimport json,hashlib,plistlib,subprocess\np=Path('TestResults/TF-05');v=json.loads(Path('docs/slices/TF-05-verification.json').read_text());a=json.loads((p/'uploaded-package-validation.json').read_text());c=json.loads((p/'source-copy.json').read_text())\nsha=lambda f:hashlib.sha256(Path(f).read_bytes()).hexdigest()\nfor f,h in v['source_sha256'].items():assert sha(f)==sha(Path(c['root'])/f)==h\nfor f,h in v['evidence_sha256'].items():assert sha(f)==h\nassert sha(v['uploaded_ipa'])==v['uploaded_ipa_sha256']\nopt=plistlib.loads((p/'Uploaded-build12/ExportOptions.plist').read_bytes());assert opt['testFlightInternalTestingOnly'] and opt['destination']=='upload'\nassert a['distribution'] and a['get_task_allow'] is False and a['build']=='12' and a['compiled_dense_motion_assets_present']\nassert a['compiled_app_icons_unchanged'] and a['privacy_unchanged']\napp=p/'uploaded-ipa-inspection/Payload/BeatLab.app';subprocess.run(['codesign','--verify','--deep','--strict',str(app)],check=True,capture_output=True)\nassert sha(app/'Assets.car')==sha(p/'BeatLab.xcarchive/Products/Applications/BeatLab.app/Assets.car')\nassert 'App upload complete' in (p/'upload-success.txt').read_text() and '0.1.0 (12) uploaded' in (p/'upload-success.txt').read_text()\nassert '0.1.0 (12)' in (p/'organizer-upload-full.txt').read_text() and 'Today at 3:46' in (p/'organizer-upload-full.txt').read_text()\nassert '\u5efa\u7f6e\u7248\u672c (12)' in (p/'asc-processing.txt').read_text() and '\u8655\u7406\u4e2d' in (p/'asc-processing.txt').read_text()\nprint('PASS exact GUI-uploaded IPA12/distribution/internal-only/signature/new3assets/icon/privacy; archive assets and101 source hashes match; Xcode uploaded15:46, Apple processing12 observed.')\nprint('Owner-group testing availability still pending; phone update, motion acceptance, physical FPS/timing, full UI, child and public release NOT CLAIMED.')\n\"",
+  "exit_code": 0,
+  "started_at": "2026-10-08T07:48:12Z",
+  "finished_at": "2026-10-08T07:48:12Z",
+  "runner": "exact-uploaded-build12-package",
+  "linked_commit": "b81432172268d1720748b8f013188751928ee470",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/TF-05-uploaded-package.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

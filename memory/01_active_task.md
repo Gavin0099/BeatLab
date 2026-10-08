@@ -66,3 +66,5 @@
 - TF-05 GAME-22本人TestFlight交付明確授權；101來源一致、測試說明已備；Xcode與ASC登入阻擋，未選build或上傳。 <!-- memory_record_projection:active-task-summary:0d880d077ba174a3947181d6fbe056d5bd5d26e3bcbe7771b3d759a416cf66ed -->
 
 - TF-05 Xcode已登入；ASC登入仍阻擋，隔離101來源已備。build未選、archive/upload未執行。 <!-- memory_record_projection:active-task-summary:c837f20bcf77ed730422b3b702d320d940975d0cc7ce1d03a8b3ee7567c32db6 -->
+
+- TF-05已交付0.1.0(12)，本人試玩1 tester正在測試；本機125 tests＋DSP468 PASS，actual IPA/source核對。手機動作/physical/UI/child/public待驗，build/test固定本機。 <!-- memory_record_projection:active-task-summary:e3c0fb0b39bdc6a7220c99dfa9104ebad15c0f93df8f558cff4185d3b139aa56 -->
