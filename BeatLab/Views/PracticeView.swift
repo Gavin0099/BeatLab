@@ -60,7 +60,8 @@ struct PracticeView: View {
                         if showingJourney { journeyPanel }
                         else { lessonPreview }
                     }
-                }.padding(20).frame(maxWidth: BeatLabStyle.maxWidth, alignment: .leading).frame(maxWidth: .infinity)
+                }.padding(20).padding(.bottom, practice.phase == .finished ? 80 : 0)
+                    .frame(maxWidth: BeatLabStyle.maxWidth, alignment: .leading).frame(maxWidth: .infinity)
             }
             .onChange(of: practice.phase) { phase in
                 if reduceMotion { proxy.scrollTo("practiceTop", anchor: .top) }

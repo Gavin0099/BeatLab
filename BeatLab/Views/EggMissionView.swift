@@ -512,7 +512,8 @@ struct EggMissionScene: View {
             HStack(spacing: 6) {
                 MissionProp(theme: theme, destination: false).frame(width: 22, height: 30)
                 Text(sceneCaption)
-                    .font(.system(.subheadline, design: .rounded).bold())
+                    .font(.system(textSize.isAccessibilitySize ? .caption : .subheadline, design: .rounded).bold())
+                    .lineLimit(1)
                 Spacer(minLength: 4)
                 MissionProp(theme: theme, destination: true).frame(width: 38, height: 30)
             }.padding(10).background(Color(red: 1, green: 0.98, blue: 0.88), in: Capsule())
@@ -1079,7 +1080,9 @@ final class EggSpriteScene: SKScene {
         let source = backdrop?.size() ?? CGSize(width: 2, height: 1)
         let scale = max((w + 24) / max(1, source.width), h / max(1, source.height))
         island.size = CGSize(width: source.width * scale, height: source.height * scale)
-        island.position = CGPoint(x: (w - island.size.width) / 2 - CGFloat(camera) * 1.5, y: (h - island.size.height) / 2)
+        let parallax = CGFloat(camera) * 1.5
+        let coveredParallax = dense == nil ? parallax : min(parallax,max(0,(island.size.width-w)/2))
+        island.position = CGPoint(x: (w - island.size.width) / 2 - coveredParallax, y: (h - island.size.height) / 2)
         floor.isHidden = true; edge.isHidden = true
         rocks.forEach { $0.isHidden = true }; rewards.forEach { $0.isHidden = true }
         pebbles.forEach { $0.isHidden = true }
@@ -1228,6 +1231,8 @@ struct EggMissionView: View {
     @EnvironmentObject private var audio: MetronomeAudio
     @Environment(\.dynamicTypeSize) private var textSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @ScaledMetric(relativeTo:.caption) private var cueLineHeight: CGFloat = 18
+    @ScaledMetric(relativeTo:.subheadline) private var cueBodyHeight: CGFloat = 44
     let accepted: Set<Int>
     let streak: Int
     let stop: () -> Void
@@ -1252,53 +1257,81 @@ struct EggMissionView: View {
         if reduceMotion, recovery.phase != .idle { return "沒跟上，聽下一拍再試！" }
         return recovery.instruction ?? "跟鼓聲，跳到亮起的小島！"
     }
+    /// Brief large-text action, with the full instruction retained for speech.
+    private var compactCue: String {
+        if cue.hasPrefix("先聽") {return cue.components(separatedBy:"，").first ?? cue}
+        if cue.hasPrefix("漂亮") {return "漂亮，再跟拍！"}
+        if cue.hasPrefix("跳過了，下一拍稍") {return "下一拍慢一點"}
+        if cue.hasPrefix("跳過了，下一拍早") {return "下一拍早一點"}
+        if cue.hasPrefix("多打") {return "多一下，先聽拍"}
+        if cue.hasPrefix("沒跟上") {return "接住你，別急"}
+        if cue.hasPrefix("接住了") {return "站穩，聽下一拍"}
+        if cue.hasPrefix("回到") {return "回來了，再跟拍"}
+        return "跟鼓聲跳！"
+    }
     var body: some View {
         GeometryReader { geometry in
+            let compact = textSize.isAccessibilitySize
             VStack(spacing: 8) {
-                ScrollView {
-                    VStack(spacing: 10) {
-                        HStack(alignment: .center) {
-                            VStack(alignment: .leading, spacing: 2) {
-                                Text("第 \(profile.number) 關 · \(profile.title)").font(.headline).accessibilityIdentifier("activeLessonNumber")
-                                Text("\(theme.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted).accessibilityIdentifier("activeCompanion")
-                            }
-                            Spacer(minLength: 6)
-                            Text("\(practice.selected?.bpm ?? profile.bpm) BPM").font(.subheadline.monospacedDigit())
+                HStack(alignment: .center) {
+                    VStack(alignment: .leading, spacing: 2) {
+                        Text(compact ? "第 \(profile.number) 關" : "第 \(profile.number) 關 · \(profile.title)")
+                            .font(compact ? .caption.bold() : .headline).lineLimit(compact ? 1 : 2)
+                            .accessibilityLabel("第 \(profile.number) 關 · \(profile.title)")
+                            .accessibilityValue("\(theme.title)陪你跟拍")
+                            .accessibilityIdentifier("activeLessonNumber")
+                        if !compact {
+                            Text("\(theme.title)陪你跟拍").font(.caption).foregroundStyle(BeatLabStyle.muted)
+                                .accessibilityIdentifier("activeCompanion")
                         }
-                        phraseRoute
-                        EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
-                            presentationElapsed: { practice.presentationElapsed(at: $0) },
-                            acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route, platformJourney: true)
-                            .frame(height: max(200, geometry.size.height - 320))
-                            .overlay(alignment: .topLeading) {
-                                HStack(spacing: 6) {
-                                    MissionProp(theme: theme, destination: false).frame(width: 22, height: 24)
-                                    Text(theme.mission).font(.caption.bold())
-                                }.padding(9).foregroundStyle(ink).background(.regularMaterial, in: Capsule()).padding(12)
-                            }
-                        Text(cue).font(.subheadline.bold()).multilineTextAlignment(.center)
-                            .fixedSize(horizontal: false, vertical: true).accessibilityIdentifier("jumpCue")
                     }
+                    Spacer(minLength: 6)
+                    Text("\(practice.selected?.bpm ?? profile.bpm) BPM").font((compact ? Font.caption : Font.subheadline).monospacedDigit()).lineLimit(1)
                 }
+                phraseRoute
+                EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
+                    presentationElapsed: { practice.presentationElapsed(at: $0) },
+                    acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route, platformJourney: true)
+                    .frame(maxWidth:.infinity,minHeight:200,maxHeight:.infinity)
+                    .layoutPriority(1)
+                    .overlay(alignment: .topLeading) {
+                        if !compact {
+                            HStack(spacing: 6) {
+                                MissionProp(theme: theme, destination: false).frame(width: 22, height: 24)
+                                Text(theme.mission).font(.caption.bold())
+                            }.padding(9).foregroundStyle(ink)
+                                .background(Color(red:1,green:0.98,blue:0.88),in:Capsule()).padding(12)
+                        }
+                    }
+                Text(compact ? compactCue : cue).font(compact ? .caption.bold() : .subheadline.bold())
+                    .multilineTextAlignment(.center).lineLimit(compact ? 1 : 2)
+                    .frame(height:compact ? cueLineHeight : cueBodyHeight)
+                    .accessibilityLabel(cue).accessibilityIdentifier("jumpCue")
                 HStack {
-                    Text("抵達 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座小島").accessibilityIdentifier("jumpMatches")
-                    Spacer(minLength: 4)
-                    Text(streak >= 2 ? "連續 \(streak) 拍！" : profile.usesBothHands ? "右左接力" : "右手跟拍")
-                }.font(.caption.bold())
+                    Text(compact ? "\(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座" : "抵達 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座小島")
+                        .accessibilityLabel("抵達 \(route?.accepted.count ?? 0) / \(route?.targets.count ?? 0) 座小島")
+                        .accessibilityIdentifier("jumpMatches")
+                    if !compact {
+                        Spacer(minLength:4)
+                        Text(streak >= 2 ? "連續 \(streak) 拍！" : profile.usesBothHands ? "右左接力" : "右手跟拍")
+                    }
+                }.font(.caption.bold()).lineLimit(1)
                 if profile.usesBothHands {
-                    HStack(spacing: 10) { handPad(.right); handPad(.left) }.frame(height: 56)
+                    HStack(spacing:10) {handPad(.right);handPad(.left)}.frame(height:56)
                 } else {
-                ZStack {
-                    RoundedRectangle(cornerRadius: 20).fill(Color(uiColor: theme.pad))
-                    Label("跟鼓聲跳", systemImage: "arrow.up.right").font(.headline.bold())
-                        .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
-                    TapPad(feedback: "跳，\(cue)") { time, accessible in practice.tap(at: time, accessibility: accessible) }
-                }.frame(height: 56)
+                    ZStack {
+                        RoundedRectangle(cornerRadius:20).fill(Color(uiColor:theme.pad))
+                        Label("跟鼓聲跳",systemImage:"arrow.up.right").font(.headline.bold())
+                            .foregroundStyle(ink).allowsHitTesting(false).accessibilityHidden(true)
+                        TapPad(feedback:"跳，\(cue)") {time,accessible in practice.tap(at:time,accessibility:accessible)}
+                    }.frame(height:56)
                 }
-                Button(action: stop) { Label("停止挑戰", systemImage: "stop.fill").font(.subheadline).frame(maxWidth: .infinity, minHeight: 44) }
-                    .accessibilityIdentifier("stopPractice")
-            }.padding(.horizontal, 12).padding(.vertical, 6)
-                .frame(maxWidth: BeatLabStyle.maxWidth).frame(maxWidth: .infinity)
+                Button(action:stop) {
+                    Label("停止挑戰",systemImage:"stop.fill").font(.subheadline).lineLimit(1)
+                        .frame(maxWidth:.infinity,minHeight:44)
+                }.accessibilityIdentifier("stopPractice")
+            }.padding(.horizontal,12).padding(.vertical,6)
+                .frame(maxWidth:BeatLabStyle.maxWidth).frame(maxWidth:.infinity,maxHeight:geometry.size.height)
         }
     }
     private func handPad(_ stroke: Stroke) -> some View {
@@ -1320,8 +1353,10 @@ struct EggMissionView: View {
         let current = route?.currentIndex(at: practice.elapsed)
         let perBeat = profile.dense ? 2 : 1, perBar = perBeat * 4
         let bar = (current ?? 0) / perBar
+        let compact = textSize.isAccessibilitySize
         return HStack(spacing: 8) {
-            Text(current == nil ? "聽 4 拍" : "\(bar + 1)/4 小節").font(.caption.bold())
+            Text(current == nil ? (compact ? "4拍" : "聽 4 拍") : (compact ? "\(bar + 1)/4" : "\(bar + 1)/4 小節"))
+                .font(.caption.bold()).lineLimit(1)
             Spacer(minLength: 2)
             ForEach(0..<4, id: \.self) { beat in
                 HStack(spacing: 2) {
@@ -1334,8 +1369,8 @@ struct EggMissionView: View {
                             Image(systemName: matched ? "checkmark.circle.fill" : expired ? "arrow.uturn.backward.circle" : "music.note")
                                 .font(.system(size: perBeat == 1 ? 23 : 15, weight: .bold))
                                 .foregroundStyle(matched ? Color(uiColor: theme.accent) : expired ? Color.orange : BeatLabStyle.ink)
-                            if profile.usesBothHands { Text(target?.stroke == .left ? "L" : "R").font(.caption2.bold()) }
-                        }.frame(width: perBeat == 1 ? 40 : 21,height:36)
+                            if profile.usesBothHands { Text(target?.stroke == .left ? "L" : "R").font(.system(size:compact ? 16 : 13,weight:.bold)) }
+                        }.frame(width: perBeat == 1 ? (compact ? 32 : 40) : (compact ? 18 : 21),height:36)
                             .background(current == index ? Color(uiColor:theme.pad) : Color.clear,in:Capsule())
                     }
                 }.accessibilityHidden(true)

@@ -1716,6 +1716,26 @@ final class DenseIslandLessonTests: XCTestCase {
         }
     }
     @MainActor
+    func testCompactFinalDenseSceneBackdropCoversWholeViewportWithoutChangingActor() throws {
+        let empty=try fixture(4);var matcher=try TimingSession(targets:empty.targets)
+        for target in empty.targets {matcher.tap(at:target.time)}
+        let route=try fixture(4,hits:matcher.hits)
+        for theme in RunnerTheme.allCases {
+            let window=UIWindow(frame:CGRect(x:0,y:0,width:375,height:667)),controller=UIViewController()
+            let view=SKView(frame:CGRect(x:0,y:0,width:375,height:200)),scene=EggSpriteScene(size:CGSize(width:375,height:200))
+            window.rootViewController=controller;controller.view.addSubview(view);window.makeKeyAndVisible();view.presentScene(scene)
+            defer {scene.detach();view.presentScene(nil);window.isHidden=true}
+            scene.configure(EggSceneSnapshot(elapsed:route.duration,theme:theme,route:route,platformJourney:true))
+            let backdrop=try XCTUnwrap(scene.childNode(withName:"backdrop")),actor=try XCTUnwrap(scene.childNode(withName:"player"))
+            XCTAssertLessThanOrEqual(backdrop.frame.minX,0);XCTAssertGreaterThanOrEqual(backdrop.frame.maxX,375-1e-6)
+            XCTAssertLessThanOrEqual(backdrop.frame.minY,0);XCTAssertGreaterThanOrEqual(backdrop.frame.maxY,200-1e-6)
+            // Reviewed GAME27 anchor:20% origin plus1.3 platforms at27% width.
+            XCTAssertEqual(actor.position.x,375*(0.20+1.3*0.27),accuracy:0.001);XCTAssertEqual(actor.position.y,200*0.31,accuracy:0.001)
+            let a=XCTAttachment(image:UIImage(cgImage:try XCTUnwrap(view.texture(from:scene)).cgImage()))
+            a.name="GAME28 compact final \(theme.rawValue)";a.lifetime = .keepAlways;add(a)
+        }
+    }
+    @MainActor
     func testDenseBaseMissionUsesOriginalClickAndSaves32ActualTargets() async throws {
         for level in [3,4] {
             let name="BeatLabTests.Dense.\(UUID().uuidString)",defaults=try XCTUnwrap(UserDefaults(suiteName:name))

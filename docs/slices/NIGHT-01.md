@@ -58,3 +58,7 @@ chapter-navigation correction; focused native + final actual UI gates will bind
 that candidate. Do not claim a full App87 suite on this post-opacity source.
 
 01:38 GAME26 final focus1/0, normal UI2/0 and largest-dark UI1/0 passed; no physical trial yet. Reachable controls do not prove good layout: actual AXXX L capture has actor below fold, dark mission caption poor contrast, result/tab overlap. Schedule independent shared responsive presentation contract; defer owner acceptance until morning.
+
+02:14 temporary local caffeinate idle-system assertion started until NIGHT01 deadline; display assertion false and persistent power settings unchanged. Exact owned PID/command in ignored TestResults/NIGHT-01/local-awake.json; end-of-work cleanup must stop only this owned assertion. GAME26/GAME27 engineering gates pushed throughd69e2a2; GAME28 responsive presentation in local validation.
+
+02:55 GAME28 responsive engineering gates passed; local build/native1/UI6, raw first failures preserved. Next GAME29 levels5/6/9 authored rest cues/path, no new modes or authority changes. No owner questions, phone/public acceptance remains pending.

@@ -123,6 +123,70 @@ final class PracticeUITests: XCTestCase {
         }
     }
     @MainActor
+    private func assertWholeGameVisible(_ app: XCUIApplication, dual: Bool) {
+        let scene=app.otherElements["eggMissionScene"].firstMatch
+        let pad=app.buttons[dual ? "practiceTapPad.right" : "practiceTapPad"],stop=app.buttons["stopPractice"]
+        XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertTrue(scene.exists)
+        let window=app.windows.firstMatch.frame
+        XCTAssertGreaterThanOrEqual(scene.frame.height,200)
+        let top=app.statusBars.firstMatch.exists ? app.statusBars.firstMatch.frame.maxY : window.minY
+        XCTAssertGreaterThanOrEqual(scene.frame.minY,top)
+        XCTAssertLessThanOrEqual(scene.frame.maxY,pad.frame.minY)
+        XCTAssertLessThanOrEqual(stop.frame.maxY,window.maxY)
+        XCTAssertGreaterThanOrEqual(pad.frame.height,44);XCTAssertGreaterThanOrEqual(stop.frame.height,44)
+        XCTAssertTrue(pad.isHittable);XCTAssertTrue(stop.isHittable)
+        if dual {
+            let left=app.buttons["practiceTapPad.left"]
+            XCTAssertTrue(left.isHittable);XCTAssertGreaterThanOrEqual(left.frame.height,44)
+            XCTAssertLessThanOrEqual(pad.frame.maxX,left.frame.minX)
+        }
+    }
+    @MainActor
+    func testFirstLargestTextShowsWholeGameSceneAndReachableControls() throws {
+        let app=freshApp(largestText:true)
+        try reveal(app.buttons["dailyPractice"],in:app);app.buttons["dailyPractice"].tap()
+        try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+        assertWholeGameVisible(app,dual:false)
+        XCTAssertEqual(app.staticTexts["activeLessonNumber"].label,"第 1 關 · 節奏跨島")
+        let initialHeight=app.otherElements["eggMissionScene"].firstMatch.frame.height
+        capture(app,"GAME28 largest first full scene and controls")
+        let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
+        XCTAssertEqual(app.otherElements["eggMissionScene"].firstMatch.frame.height,initialHeight,accuracy:0.1,"Feedback must not resize the game stage")
+        assertWholeGameVisible(app,dual:false);capture(app,"GAME28 largest first active stable stage")
+        app.buttons["stopPractice"].tap()
+    }
+    @MainActor
+    func testFourthLargestTextWholeSceneZeroResultStarsClearTabAndRetry() throws {
+        continueAfterFailure=false
+        let app=XCUIApplication();app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.LayoutFourth"
+        app.launchArguments=["-UIPreferredContentSizeCategoryName","UICTContentSizeCategoryAccessibilityXXXL"]
+        app.launch();XCTAssertTrue(app.staticTexts["3 / 10 關"].waitForExistence(timeout:5))
+        try reveal(app.buttons["dailyPractice"],in:app);app.buttons["dailyPractice"].tap()
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 4 關"))
+        try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
+        assertWholeGameVisible(app,dual:true)
+        XCTAssertEqual(app.staticTexts["activeLessonNumber"].label,"第 4 關 · 半拍左右接力")
+        capture(app,"GAME28 largest fourth full scene and controls")
+        XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:25))
+        let stars=app.otherElements["practiceStars"]
+        XCTAssertEqual(stars.label,"這次得到 0 顆星");XCTAssertFalse(app.buttons["nextLesson"].exists)
+        try reveal(stars,in:app,requiresHit:false)
+        XCTAssertLessThanOrEqual(stars.frame.maxY,app.tabBars.firstMatch.frame.minY)
+        capture(app,"GAME28 largest zero result stars clear tab")
+        try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
+        assertWholeGameVisible(app,dual:true)
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
+        app.buttons["stopPractice"].tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["journeyProgress"].label,"3 / 10 關完成")
+        try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
+        try reveal(app.buttons["journeyLesson.quarter-rest"],in:app,requiresHit:false)
+        XCTAssertFalse(app.buttons["journeyLesson.quarter-rest"].isEnabled)
+    }
+
+    @MainActor
     func testDenseLevelsActualTouchesCancelAnd32IslandRestart() throws {
         continueAfterFailure = false
         let app=XCUIApplication()
@@ -143,6 +207,7 @@ final class PracticeUITests: XCTestCase {
             if level == 4 {XCTAssertTrue(app.buttons["practiceTapPad.left"].isHittable)}
             XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
             XCTAssertTrue(app.staticTexts["activeLessonNumber"].label.hasPrefix("第 \(level) 關"))
+            let stageHeight=app.otherElements["eggMissionScene"].firstMatch.frame.height
             // Observe the real four-beat count-in; input before it must be ignored.
             let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
             XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
@@ -151,6 +216,7 @@ final class PracticeUITests: XCTestCase {
                 app.buttons["practiceTapPad.left"].tap(withNumberOfTaps:5,numberOfTouches:1)
             } else {pad.tap(withNumberOfTaps:10,numberOfTouches:1)}
             XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual UIKit input after count-in must match dense targets")
+            XCTAssertEqual(app.otherElements["eggMissionScene"].firstMatch.frame.height,stageHeight,accuracy:0.1,"Accepted/extra feedback cannot resize the stage")
             capture(app,"GAME27 level\(level) live touches")
             app.buttons["stopPractice"].tap()
             XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
