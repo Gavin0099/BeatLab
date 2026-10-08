@@ -289,3 +289,14 @@
 - Validation boundary: artifacts/evidence/test-results/PHONE-09.json
 - Next action: Owner can trial installed three-character expression candidate. First-level idle/anticipation and first-early-pose fixes remain proposed, not implemented; preserve accepted jump/fall curves. Physical FPS/input latency/first-level acceptance pending; levels2–10 deferred.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:df4ed0ba4e5b163d509b66fe49b66e8daea216c9695ab4148619acca5f7da9bf -->
+### Canonical memory checkpoint — game25-motion-install-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `df4ed0ba4e5b163d509b66fe49b66e8daea216c9695ab4148619acca5f7da9bf`
+- Commit binding: `cdc2e1e` (bound)
+- Record: GAME25 first-level inter-jump motion implemented for dinosaur/cat/robot: continuous grounded upper-body idle and actual-note anticipation, landing/recovery handoff and first valid early flight display. Original travel curves/assets/audio/input/score/save preserved. Local App81/Core53/UI1 passed with333 native specimens; signed Debug0.1.0(13) Wi-Fi installed and launched on original phone, no reset.
+- Validation boundary: artifacts/evidence/test-results/GAME-25.json
+- Next action: Owner trial of first-level land→idle→anticipation→flight. Physical FPS/timing/input latency and full first-level acceptance pending; F5 result handoff and levels2–10 deferred. No TestFlight/public upload.
+- PLAN reconciliation: `updated`

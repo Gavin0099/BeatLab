@@ -115,3 +115,15 @@ GAME-07：11 項呈現 fixtures 通過；修正後一般尺寸 2 個流程、最
 GAME-07 補驗：專用 SE 3 模擬器實際設定「減少動態效果」開啟，真實觸控命中／重新開始 1 個流程通過，截圖已檢視；設定恢復關閉。僅本次擁有的兩台模擬器恢復偏好並關機，其餘模擬器未變動。
 
 PHONE-07（2026-10-05）：來源／artifact hash、簽章、bundle/build/platform 與 owner profile coverage／有效期通過；既有 GAME-07 build 7 已原地安裝並成功啟動。沒有重建或重跑未改動測試，未刪除 learner data；安裝／啟動不等於真機遊戲體驗或 timing／release gates 通過。見 `slices/PHONE-07-verification.json`。
+
+### GAME-25 — 2026-10-09 inter-jump continuity candidate
+
+Local App81/Core53 and actual touch/stop/restart UI1 passed. Native rendering
+checks cover three characters, planted feet with changing upper-body pixels,
+first early hit, miss return, cached scene-local uniforms, Reduce Motion and
+suspended callbacks. 333 specimens include four-jump sequences, recovery and
+compact/tall/light-dark scenes; sample replay is not physical FPS measurement.
+Tested source cdc2e1e is signed Debug0.1.0(13), Wi-Fi installed and launched on
+the original paired iPhone. In-place delivery preserves the data container.
+First-level owner acceptance/physical timing remain pending; result handoff F5
+and levels2–10 deferred. See docs/slices/GAME-25-verification.json.

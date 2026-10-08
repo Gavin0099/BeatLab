@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-25/check-evidence.py",
+  "exit_code": 0,
+  "started_at": "2026-10-08T16:51:51Z",
+  "finished_at": "2026-10-08T16:51:52Z",
+  "runner": "game25-local-native-motion-and-wifi-install",
+  "linked_commit": "cdc2e1e784ad60c841d8d9bc985dd91c17062080",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-25.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

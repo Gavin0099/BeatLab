@@ -44,5 +44,5 @@ neutral. Reject foot sliding, clipped/body smearing, shader compile/missing asse
 shared uniforms leaking between scenes, active-hit suppression or failed native
 pixel evidence. Preserve attempts; no phone install before corrected candidate
 passes. Rollback only these source/test changes to9beca67; preserve data/evidence.
-Status SOURCE_NATIVE_TESTED / WIFI_INSTALL_PENDING. F5 result handoff remains separate;
+Status SOURCE_NATIVE_TESTED / INSTALLED_AND_LAUNCHED_FOR_TRIAL. F5 result handoff remains separate;
 levels2–10 deferred until first level complete.
