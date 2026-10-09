@@ -494,4 +494,8 @@ GAME30 persistent rebind complete: exact107 current/git4eb1adb/frozen inputs, ne
 
 04:33 QA-NIGHT01 clean-process fullApp113/0 and Core53/0 passed onunchanged107 source1949867. Firstattempt97/16+crash retained, stalebundleURL cause remains hypothesis. Ten-lesson UI and3surface checks next; package/install not yet executed.
 
-04:35 QA-NIGHT01A defined for companion UI harness: original10tap gesture finishes before realcount-in onfastAX and correctlygets0; bothcat/robot fail, sequentialactualtouchcasepassed. WaitexistingrealjumpCue (finite8s), no clocks/hits/production changes. Initialbundle must remain and new107 freeze/build/fullApp/UI gates bind corrected harness.
+QA-NIGHT01A defined for companion UI harness: original10tap gesture finishes before realcount-in onfastAX and correctlygets0; bothcat/robot fail, sequentialactualtouchcasepassed. WaitexistingrealjumpCue (finite8s), no clocks/hits/production changes. Initialbundle must remain and new107 freeze/build/fullApp/UI gates bind corrected harness.
+
+09:12 owner「繼續」後續行：sourcea55d1b8只修UITest真實count-in與hiddenStatusBar fallback。107 persistentQA凍結中106與GAME31相同，本機重新build-for-testing進行中；早先113/Core53不誤稱為新編譯包測試。最遲11:10後集中待確認事項，不宣稱期間持續執行時數或真機流暢度。
+
+09:25 QA-NIGHT01B defined after newcompiled a55 fullApp callbackcase fails fixed350ms pausedcheck then receives terminalcallback during80ms countcheck; laterpausedsamekeyassertionpasses. Preserve rawattempt; no provenGPU/OS cause or physicalFPS inference. Test-only finite2s observeactualpause+realcallback+unchangedstopcount assertions; allproduct/clock/save remain exact. New107 freeze/build/fullApp/UI gates next after currentnative completes.

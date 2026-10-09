@@ -2232,7 +2232,14 @@ final class JourneyResultTests: XCTestCase {
         var state=EggSceneSnapshot(elapsed:route.duration,finishedPassed:false,theme:.cat,route:route,platformJourney:true)
         scene.configure(state);let start=try XCTUnwrap(scene.resultStartHost);XCTAssertFalse(view.isPaused)
         scene.configure(state);XCTAssertEqual(scene.resultStartHost,start)
-        try await Task.sleep(nanoseconds:350_000_000);XCTAssertTrue(view.isPaused)
+        // The terminal sample needs a real display callback. A fixed350ms
+        // sleep also measures host load; observe finite stopping directly.
+        let deadline = PracticeStore.now() + 2
+        while !view.isPaused && PracticeStore.now() < deadline {
+            try await Task.sleep(nanoseconds:20_000_000)
+        }
+        XCTAssertTrue(view.isPaused, "Actual result callbacks must reach a finite stop")
+        XCTAssertGreaterThan(scene.callbackCount, 0, "A real display callback must render the terminal sample")
         let count=scene.callbackCount;try await Task.sleep(nanoseconds:80_000_000);XCTAssertEqual(scene.callbackCount,count)
         scene.configure(state);XCTAssertEqual(scene.resultStartHost,start);XCTAssertTrue(view.isPaused)
         scene.configure(EggSceneSnapshot(preparing:true,theme:.cat,platformJourney:true));XCTAssertNil(scene.resultStartHost);XCTAssertTrue(view.isPaused)
