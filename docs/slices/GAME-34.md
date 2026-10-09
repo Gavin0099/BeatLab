@@ -54,7 +54,11 @@ failed attempts; do not waive failed tests. Rollback scoped policy/UI changes to
 40b0904 while preserving existing progress and receipts. No schema migration or
 reset. No slower mode or dense-level tempo changes in this slice.
 
-Status LOCAL SOFTWARE GATES PASSED / PHONE CANDIDATE PENDING.
+Status SOURCE / LOCAL SOFTWARE / WI-FI DELIVERY COMPLETE; PHYSICAL ACCEPTANCE PENDING.
 Full Core59/App115 and fresh UI3 passed on this Mac, no failures/skips.
 Actual UI normal plus largest Light/Dark and original screenshots inspected.
-Owner phone/install/physical acceptance remain separate pending evidence.
+Source39f39d1 signed Debug0.1.0(13) installed in place through actual localNetwork
+and launched successfully. No owner reset/fixture; preserved-progress content
+was not read back. Canonical GAME34 and GAME34-phone receipts are separate.
+Physical timing/FPS/child/full Accessibility/public acceptance remains pending.
+Largest pad text horizontal compression is retained, not full typography acceptance.

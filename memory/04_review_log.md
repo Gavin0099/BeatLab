@@ -454,3 +454,14 @@
 - Validation boundary: PASS: artifacts/evidence/test-results/GAME-33.json actual localUI3 and source/geometry; PASS: artifacts/evidence/test-results/GAME-33-phone.json matching signed package and actual Wi-Fi install/launch. App113/Core53 historical not rerun for this UI source. Physical timing/FPS/child/complete Accessibility/public NOT CLAIMED; difficulty diagnosis only, no changed gates.
 - Next action: Owner trial physical left/right corrected placement; clarify whether difficulty is one-star unlock or next-level density. Proposal to separate unlock from precision-star challenge or slow dense introduction is not implemented/accepted. Define separate L2 contract for any scoring/catalog/timing change. Commit/push evidence companion on authorized branch; no TestFlight/public/PR/merge.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:507a1361949452a12fa85a0e5abb432146f62e96aa9a3c1fd43585ca09ef4ffd -->
+### Canonical memory checkpoint — GAME34-intro-one-star-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `507a1361949452a12fa85a0e5abb432146f62e96aa9a3c1fd43585ca09ef4ffd`
+- Commit binding: `39f39d199d7a701829895ef796081978f17d6475` (bound)
+- Record: GAME34 owner clarified inability to earn one-star unlock. First2 now12/16 matched,0Perfect requirement,<=4extra; original two/three-star accuracy retained via optional validated tier floor. Rows3-10/audio/input/windows/targets/schema unchanged; old best preserved, no retroactive failed score or phone fixture/reset. Source39f39d1 includes GAME33 left-on-left/right-on-right. Signed matching Debug13 installed by WiFi and launched.
+- Validation boundary: PASS artifacts/evidence/test-results/GAME-34.json and GAME-34-phone.json:107 frozen/git-bound inputs, local Core59/App115/UI3 all0fail0skip, native actual Store/finish/save/reload and failed-save retry with injected timestamps not physical. Source/profile/package verified; actual localNetwork install0 launch0. No device timing/FPS/child/public acceptance.
+- Next action: Owner retry second lesson on installed candidate. Physical timing/FPS, child experience and full Accessibility remain unaccepted; no Apple upload. Existing largest-pad text compression remains.
+- PLAN reconciliation: `updated`

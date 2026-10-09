@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-34/check-phone.py",
+  "exit_code": 0,
+  "started_at": "2026-10-09T05:39:19Z",
+  "finished_at": "2026-10-09T05:39:22Z",
+  "runner": "local-signed-intro-one-star-WiFi-delivery",
+  "linked_commit": "39f39d199d7a701829895ef796081978f17d6475",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-34-phone.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
