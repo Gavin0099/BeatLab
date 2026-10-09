@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/PHONE-10/relay-launch-result.py",
+  "exit_code": 1,
+  "started_at": "2026-10-09T04:17:32Z",
+  "finished_at": "2026-10-09T04:17:32Z",
+  "runner": "relay-observed-locked-device-launch-exit",
+  "linked_commit": "7cdac79321be65d5dc4a94b012864314866a0258",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/PHONE-10-launch-failure.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

@@ -1,0 +1,16 @@
+Relay of observed devicectl launch exit1; Wi-Fi installation exit0 is separate. Device locked; automatic launch did not succeed. No launch retry or software fix claimed.
+12:12:49  Acquired tunnel connection to device.
+12:12:49  Enabling developer disk image services.
+12:12:49  Acquired usage assertion.
+ERROR: The application failed to launch. (com.apple.dt.CoreDeviceError error 10002 (0x2712))
+       BundleIdentifier = com.gavin0099.beatlab
+       ----------------------------------------
+           The request to open "com.gavin0099.beatlab" failed. (FBSOpenApplicationServiceErrorDomain error 1 (0x01))
+           NSLocalizedFailureReason = The request was denied by service delegate (SBMainWorkspace) for reason: Locked ("Unable to launch com.gavin0099.beatlab because the device was not, or could not be, unlocked").
+           BSErrorCodeDescription = RequestDenied
+           FBSOpenApplicationRequestID = 0x3fd8
+       ----------------------------------------
+               The operation couldn’t be completed. Unable to launch com.gavin0099.beatlab because the device was not, or could not be, unlocked. (FBSOpenApplicationErrorDomain error 7 (0x07))
+               BSErrorCodeDescription = Locked
+               NSLocalizedFailureReason = Unable to launch com.gavin0099.beatlab because the device was not, or could not be, unlocked.
+

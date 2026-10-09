@@ -432,3 +432,14 @@
 - Validation boundary: FAIL artifacts/evidence/test-results/QA-NIGHT-01D-termination.json actualDten0/1 signalterm; source1ace compiledPASS, no semanticfailure/rootcause claim. Samecompiledisolatedretry PENDING; Cthree-role individualPASS/nativefocus2 and QA42App113/Core53 exactcomponents retained.
 - Next action: Complete samecompiledD actualUI8 on newlycreated ownedsimulators, inspect originals and preservefailedD, sourcebind and clean only owncreateddevices; signed Wi-Fi candidate remains gated. Owner unlock response pending afterdeadline.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:1b67cfcac9bba7848d16fbf45b09cf45ae3d5b126cba4b811287921c44f42eab -->
+### Canonical memory checkpoint — NIGHT01-final-local-and-wireless-installed-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `1b67cfcac9bba7848d16fbf45b09cf45ae3d5b126cba4b811287921c44f42eab`
+- Commit binding: `7cdac79321be65d5dc4a94b012864314866a0258` (bound)
+- Record: NIGHT01 all ten existing lesson source profiles and local engineering gates completed. Final source1ace has fresh UI8/0 plus byte-identical C role3/native2 and QA42 App113/Core53 component evidence; not a fresh final-host full113. False original-resolution crop diagnosis withdrawn and production restored. PHONE10 matching Debug13 built/signed locally, validated107 source and13 package files, and installed in-place via Wi-Fi exit0; automatic launch failed exit1 because owner iPhone locked. Initial stale-host, RPC, late cancel, simulator termination and locked-launch attempts retained. No phone fixture/reset, no Apple upload/public/PR/merge, no audio/demo/hand-detection expansion.
+- Validation boundary: PASS: artifacts/evidence/test-results/QA-NIGHT-01.json (fresh UI8 plus explicitly same-component evidence); PASS: artifacts/evidence/test-results/PHONE-10.json (package/signature/source and actual Wi-Fi install only); FAIL: artifacts/evidence/test-results/PHONE-10-launch-failure.json (observed automatic launch Locked, not fixed or retried). Prior actual native/UI failures retained; no physical/public acceptance.
+- Next action: Owner unlock and open installed 拍拍冒險; use ten-lesson trial checklist to observe normal progress, first-level movement, dense-note touch/frames/audio sync. Fine-note demonstration soundtrack and KidsCharacterKit remain separate/deferred. Commit/push final evidence companion on authorized product-alpha/ui-checkpoint. Do not infer physical timing/FPS/child/public acceptance from local PASS.
+- PLAN reconciliation: `updated`

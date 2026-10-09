@@ -1,12 +1,12 @@
 # BeatLab — iOS MVP Roadmap
 <!-- governance-baseline: overridable -->
-> **最後更新**: 2026-10-08
+> **最後更新**: 2026-10-09
 > **Owner**: BeatLab owner
 > **Freshness**: Sprint (7d)
 
 ## Current Phase
 
-目前內部試玩版為「拍拍冒險」TestFlight 0.1.0（12），Apple已處理並分發到既有「本人試玩」群組。2026-10-08 owner 回報跳躍尚可，掉落不真實且不順；GAME-23針對下墜／承接／回平台呈現修正，本機App73/Core53、三角色連續場景fixture與簽署候選通過，手機體感待驗。維持既有節拍／判分／保存、已接受跳躍與素材；尚未安裝或上傳GAME23，手機TestFlight仍是12。G1～G4、物理timing/FPS、完整UI/accessibility與兒童體驗未接受；治理runtime自動化仍是既有非阻塞debt。功能盤點與歷史切分見 [功能盤點](docs/design/FEATURE-AUDIT-20261005.md)。
+十關來源與本機整合Gate已通過，來源1acee70的「拍拍冒險」Debug 0.1.0（13）已透過Wi-Fi原地安裝；自動開啟被手機鎖定擋住。TestFlight仍是之前GAME23的0.1.0（13），本批沒有Apple上傳。GAME26–31已接入第二至第十關與共享動作／結果收尾；保留第一關素材、音訊／輸入時間軸、匹配、評分與保存。新操作驗證8項通過，加上相同元件的三角色操作3項、原生2項、App113/Core53證據，不能稱最終新編譯host完整重跑113。G1～G4、真機timing/FPS、完整Accessibility及兒童體驗仍未接受；治理runtime自動化仍是既有非阻塞debt。[十關切分](docs/slices/NIGHT-01-lesson-plan.md) · [本機驗證](docs/slices/QA-NIGHT-01-verification.json) · [手機交付](docs/slices/PHONE-10-verification.json) · [試玩清單](docs/slices/NIGHT-01-owner-trial.md)。
 
 以下為歷史迭代／拒絕結果，來源與當時交付狀態保留：
 GAME-03 跳島呈現已建置為 0.1.0（6），owner 判斷玩法不足；其後 PHONE-06 已依明確要求安裝供試玩，仍為未接受草稿。GAME-04 改以可玩「恐龍救援跑酷」概念先確認玩法，並建立 `beatlab-rhythm-game-design` 個人 skill。
@@ -513,3 +513,7 @@ QA-NIGHT01A defined for companion UI harness: original10tap gesture finishes bef
 11:26 QA-NIGHT01D defined beforetest-onlyedit: newC threeactualrole cases passed, ten-smoke failed attenthStop after~21s genuineevent versus shortlesson normalend. Actualall10headings/count-in captures retained; no productioncancel defect or resource rootcause claimed. Start/Stop smoke now genuineStop immediatelyafterStart; preparationidentity/return unchanged10progress remainrequired. Newpersistent107/UI8 with exactC three-role/nativefocus2 and QA42App113/Core53 componentbasis; phone/sourcebinding pending. C diagnostics retained; no phoneinstall.
 
 11:45 D ten-smoke initialexit65: "Test crashed with signal term.", observedprep1–7; postterminationoriginalownedprimary/narrowShutdown, pipelinehadnotcalledshutdown. Rootcause/actorunproven; samplewronglymatchedshellrejected. Same107Dimmutablelocalbuild willretryonnewuniquetask-ownedsimulators, cleanupowncreationonly; no source/window/deadlinechange or globalservice/otherprojectkill. Signedphone remainswaitingQA.
+
+12:07 QA-NIGHT01D samecompiledsource1ace unique-device retry passedfreshUI8/0 (ten-smoke1, surfaces5, primaryDarklargest1, narrowLightlargest1); actual12originalspecimens reviewed, ownedtempdeviceslight/shutdown/deleted, originalownedstatesunchanged/externaldeltas preserved.107 current/frozen/git1ace/equivalent7cdac;106unchangedQA42. App113 QA42/Core53 QA194 exact-component evidence only, Cnativefocus2 andthreeindividualrolePASS exactmethodbasis; no newhostfull113 claim. CanonicalQA-NIGHT01 checkerexit0 linked7cdac. Retain C3/1lateStop, D0/1signalterm, initialRPC/stalehost/callback failures; rootcausesunproven. NewmatchinglocalDebug13 phonebuild inprogress, installation/physical/child/public pending.
+
+12:12 PHONE10 matching source1ace /107 inputs/13 frozen package files passed local Debug13 build, signature/profile/resource/catalog checks. Fresh exact owner device localNetwork connected; actual in-place install exit0/success, automatic launch exit1/Locked. Canonical PHONE10 candidate/install PASS has this limited boundary; separate locked-launch FAIL retained. No uninstall/reset/phone fixture, no Apple upload. Retained owner progress not yet observed; physical timing/FPS/child/public pending. All ten source and applicable local engineering gates complete; branch push authorized, public/PR/merge not performed.

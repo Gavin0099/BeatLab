@@ -28,7 +28,7 @@ Decisions needing owner preference or unavailable physical evidence are logged
 below, then continue independent work. Do not wait10hours with a blocking tool or
 make a decision on owner's behalf. Completion before10hours is allowed once all
 requested work is actually finished; do not fabricate work to consume time.
-Status ACTIVE; no release/child usability/physical timing claims.
+Status SOURCE_LOCAL_GATES_PASSED / WIFI_INSTALLED / LAUNCH_BLOCKED_DEVICE_LOCKED; no release/child usability/physical timing claims.
 
 Pending decision/evidence ledger:
 - First-level F5 result handoff and child appeal remain unaccepted. Avoid
@@ -75,3 +75,17 @@ GAME30 persistent rebind complete: exact107 current/git4eb1adb/frozen inputs, ne
 04:13 GAME31 actual-result handoff locally passed native7/UI2 with108native/4UI images. Partial pass no longer implies all-note destination; finite cosmetic tail preserves end travel/feet, score/audio/input/save unchanged. Initial build and focused failures retained; numeric display guard explicitly audited. Next QA-NIGHT01 full combined local regression and frozen phone candidate. Owner timing/child/audio-cue preference still pending after11:10.
 
 Original-resolution QA correction withdrew falsecropdiagnosis andrestored42production; actualnativefailures requirecontinuedgates. Activechecks mayfinishafter11:10; ownerquestiondeferralstillends11:10, not shifted. Temporarytask-owned idleassertion mayextendonlyduringnecessarylocalbuild/test/delivery, stopatcompletion; no persistentpowersettingschange.
+
+Final same-compiled D isolated retry actual UI8/0 plus exact C role3/native2 and
+QA42 App113/Core53 component evidence passed canonical QA linked7cdac. All ten
+source profiles are implemented; no additional mode/art/audio demo/hand detection.
+Only owned created simulators were deleted; original states and external changes
+were preserved. Matching source1ace Debug13 passed local build, frozen package,
+signature/profile and resource checks, then installed successfully via Wi-Fi.
+Automatic launch failed because the iPhone was locked. No phone reset/fixture or
+Apple upload occurred; physical timing/FPS/child/public acceptance remains pending.
+Question deferral ended11:10; pending unlock request does not block source/local
+delivery completion. This report describes observed work and does not claim
+continuous execution for ten hours. Owner trial follows NIGHT-01-owner-trial.md.
+
+Finish cleanup: exact task-owned caffeinate14217 start/command matched and was stopped. No other assertion or persistent power setting was touched; receipt TestResults/NIGHT-01/local-awake-final-cleanup.json. Task completion is not a session-end lifecycle closeout.
