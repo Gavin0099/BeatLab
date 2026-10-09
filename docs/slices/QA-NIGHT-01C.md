@@ -1,0 +1,9 @@
+# QA-NIGHT-01C — 原尺寸判讀更正、撤回多餘版面改動與直接停止測試
+
+Defined before edits after GAME32 raw fullApp113 PASS/focused2 PASS and actualUI3PASS/tenSmoke1FAIL. Original-resolution Robot42 and Robotf4 PNG both have fullheading/cue/count; pixelrows y2001–2040 and2116–2148 in all3 f4 PNG are present. Earlier cropped-preview diagnosis is withdrawn, not a proven production defect. Preserve all originals, sourcef4 and failure evidence; no image modifications.
+
+Exact allowed: BeatLab/Views/EggMissionView.swift restore byte-exact42a5 source (no new layout feature); BeatLabUITests/PracticeUITests.swift tenSmoke stop block only; PLAN/docs/evidence/canonicalmemory/frozen localbuilds. Forbidden audio/Scene/motion/input/targets/score/save/catalog/art/project/metadata, phonefixtures/reset, Appleupload/PR/merge/GitHubMac.
+
+Normal tenSmoke queries absentnav/statusbar via reveal before stop, consuming~10s; eventdelivery occurs near real20s lesson end, then AX shows legitimate0/32 result insteadjourney. Timing race supported, exact event/finish order notproven. Existing viewport alreadyonscreen normalstop: assertstop.isHittable then genuine stop.tap, retaining actualheading/progress10/cancel/restart checks. Noclock/hit injection or longer lesson/deadline.
+
+New107 persistentfreeze +localbuild; nativeproduction/AppTests must byte-matchQA42 except UITestfile, allowing exact-component App113/Core53 evidence reuse with explicitsource basis. Freshcallback/highdensity focus2, actual4walkthrough/5surfaces/primary+narrowlargest1each and original-resolution image review bound newsource. Never claim freshfullApp113 on newcompiledhost from priorcomponent receipt. Sourcef4 full113 remains historical, initial111/2/crash and3/1UI remainretained. Freeze signedphone candidate only after finalgates and newmatchingbuild; previous f4 stagingpackage is superseded/uninstalled. Rollback teststop block only; restored production42 is retained. Physical/child/public acceptance pending.

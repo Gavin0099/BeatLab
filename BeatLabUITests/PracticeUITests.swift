@@ -136,7 +136,9 @@ final class PracticeUITests: XCTestCase {
             XCTAssertEqual(app.staticTexts["activeLessonNumber"].label, heading)
             capture(app, "Lesson \(index + 1) count-in smoke")
             let stop = app.buttons["stopPractice"]
-            try reveal(stop, in: app); stop.tap()
+            // The normal game already exposes Stop. Avoid unrelated sheet/nav
+            // queries consuming the real short lesson before delivering input.
+            XCTAssertTrue(stop.isHittable); stop.tap()
             XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
             XCTAssertEqual(app.staticTexts["journeyProgress"].label, "10 / 10 關完成")
             let prepare = app.buttons["prepareRecommended"]
