@@ -16,9 +16,10 @@
           "R"
         ]
       },
-      "requiredHitRate": 0.85,
-      "requiredPerfectRate": 0.55,
-      "maxExtraRate": 0.1
+      "requiredHitRate": 0.75,
+      "requiredPerfectRate": 0,
+      "maxExtraRate": 0.25,
+      "requiredTwoStarHitRate": 0.85
     },
     {
       "id": "quarter-hands",
@@ -35,9 +36,10 @@
           "L"
         ]
       },
-      "requiredHitRate": 0.85,
-      "requiredPerfectRate": 0.55,
-      "maxExtraRate": 0.1
+      "requiredHitRate": 0.75,
+      "requiredPerfectRate": 0,
+      "maxExtraRate": 0.25,
+      "requiredTwoStarHitRate": 0.85
     },
     {
       "id": "eighth",

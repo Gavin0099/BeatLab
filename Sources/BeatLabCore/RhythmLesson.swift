@@ -45,6 +45,7 @@ public struct Lesson: Codable, Equatable, Identifiable, Sendable {
     public let requiredHitRate: Double
     public let requiredPerfectRate: Double
     public let maxExtraRate: Double
+    public let requiredTwoStarHitRate: Double?
 
     public func validate() throws {
         _ = try Tempo(bpm: bpm)
@@ -53,6 +54,9 @@ public struct Lesson: Codable, Equatable, Identifiable, Sendable {
               requiredHitRate.isFinite, requiredPerfectRate.isFinite, maxExtraRate.isFinite,
               (0...1).contains(requiredHitRate), (0...1).contains(requiredPerfectRate),
               (0...1).contains(maxExtraRate) else { throw LessonError.invalidLesson }
+        if let floor = requiredTwoStarHitRate {
+            guard floor.isFinite, (requiredHitRate...1).contains(floor) else { throw LessonError.invalidLesson }
+        }
     }
 
     public func passes(_ summary: TimingSummary) -> Bool {
@@ -65,13 +69,14 @@ public struct Lesson: Codable, Equatable, Identifiable, Sendable {
         guard value >= bpm else { throw LessonError.invalidLesson }
         return Lesson(id: id, title: title, instruction: instruction, bpm: value, bars: bars,
             pattern: pattern, requiredHitRate: requiredHitRate, requiredPerfectRate: requiredPerfectRate,
-            maxExtraRate: maxExtraRate)
+            maxExtraRate: maxExtraRate, requiredTwoStarHitRate: requiredTwoStarHitRate)
     }
 
     public func stars(_ summary: TimingSummary) -> Int {
         guard passes(summary) else { return 0 }
         if summary.perfectRate >= 0.95 && summary.extraCount == 0 && summary.missedCount == 0 { return 3 }
-        if summary.perfectRate >= 0.8 && summary.extraRate <= 0.05 { return 2 }
+        if summary.hitRate >= (requiredTwoStarHitRate ?? requiredHitRate)
+            && summary.perfectRate >= 0.8 && summary.extraRate <= 0.05 { return 2 }
         return 1
     }
 }

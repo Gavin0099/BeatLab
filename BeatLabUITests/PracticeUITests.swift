@@ -372,6 +372,7 @@ final class PracticeUITests: XCTestCase {
         app.buttons["dailyPractice"].tap()
         XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
         XCTAssertEqual(app.staticTexts["preparedLessonNumber"].label,"第 2 關 · 左右輪流")
+        XCTAssertEqual(app.staticTexts["oneStarGoal"].label,"一星：跟上 12 / 16 拍，最多多按 4 次")
         capture(app,"GAME26 second preparation")
         try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
         let right=app.buttons["practiceTapPad.right"],left=app.buttons["practiceTapPad.left"]

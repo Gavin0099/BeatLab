@@ -50,3 +50,7 @@ restored Light, shutdown and deleted. Initial successful build before the shared
 test helper adjustment is retained; it is not the final test build.
 
 Delivery: matching sourceac9893c locally signed Debug0.1.0(13),107 frozen inputs and13 package files validated. Fresh owner localNetwork connected; install and launch each exit0/success. No reset/fixture/Apple upload. Owner progress after opening not yet observed. Difficulty thresholds remain unchanged; explanation in GAME-33-difficulty-analysis.md and source-bound verification in GAME-33-verification.json.
+
+Follow-up owner answer clarifies one-star unlock is the difficulty. The separate
+L2 GAME34 now handles introductory one-star policy; GAME33 remains the observed
+layout-only delivered baseline and its receipts are not relabeled as score tests.

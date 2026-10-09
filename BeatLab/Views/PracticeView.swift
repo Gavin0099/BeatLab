@@ -477,8 +477,19 @@ struct PracticeView: View {
                 Text("跟著右、左提示輪流用手；這關依拍點給星星。")
                     .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
             }
-            Text("漏拍會跌下去，再接回原來的小島。準備好，下一拍再跳；多打不會前進。")
-                .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            if lesson.requiredTwoStarHitRate != nil, lesson.requiredPerfectRate == 0 {
+                let total = lesson.pattern.steps.filter { $0 != .rest }.count * lesson.bars
+                let matched = Int(ceil(lesson.requiredHitRate * Double(total)))
+                let extras = Int(floor(lesson.maxExtraRate * Double(total)))
+                Text("一星：跟上 \(matched) / \(total) 拍，最多多按 \(extras) 次")
+                    .font(.subheadline.bold()).fixedSize(horizontal: false, vertical: true)
+                    .accessibilityIdentifier("oneStarGoal")
+                Text("二、三星再挑戰精準。")
+                    .font(.caption).foregroundStyle(BeatLabStyle.muted)
+            } else {
+                Text("漏拍會跌下去，再接回原來的小島。準備好，下一拍再跳；多打不會前進。")
+                    .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            }
             if practice.mode == .standard {
                 Stepper("挑戰速度：\(practice.practiceBPM) BPM", value: Binding(
                     get: { practice.practiceBPM }, set: { practice.setPracticeBPM($0) }

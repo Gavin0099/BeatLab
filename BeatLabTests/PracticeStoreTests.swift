@@ -5,6 +5,59 @@ import UIKit
 import BeatLabCore
 @testable import BeatLab
 
+final class IntroOneStarStoreTests: XCTestCase {
+    @MainActor
+    func testActualLateOnlyOneStarFinishesSavesAndUnlocksThirdAfterReload() async throws {
+        try await runOneStar(failSave: false)
+    }
+    @MainActor
+    func testLateOnlyOneStarFailedSaveKeepsThirdLockedUntilRetry() async throws {
+        try await runOneStar(failSave: true)
+    }
+    @MainActor
+    private func runOneStar(failSave: Bool) async throws {
+        let name = "BeatLabTests.IntroOneStar.\(UUID().uuidString)"
+        let defaults = try XCTUnwrap(UserDefaults(suiteName: name)); defer { defaults.removePersistentDomain(forName: name) }
+        let repo = ProgressRepository(defaults: defaults), catalog = try LessonCatalog.bundled().lessons
+        var first = try TimingSession(targets: catalog[0].pattern.targets(bpm: 60, bars: 4, epoch: 100))
+        for target in first.targets { first.tap(at: target.time) }
+        var saved = PracticeProgress(); saved.record(catalog[0], summary: first.summary); try repo.save(saved)
+        let original = try XCTUnwrap(defaults.data(forKey: ProgressRepository.storageKey))
+        let store = PracticeStore(repository: repo), audio = MetronomeAudio(); defer { audio.stop() }
+        store.select(catalog[1]); store.start(catalog[1], audio: audio, eggMission: true)
+        for _ in 0..<60 where store.phase == .preparing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .playing); XCTAssertTrue(store.isEggMission)
+        let route = try XCTUnwrap(store.runnerRoute)
+        // Actual store/matcher/finish/save path, injected timestamps only:
+        // reviewed 12/16 late hits(+100ms),4 duplicates; not physical timing.
+        for i in 0..<12 {
+            store.tap(at: route.targets[i].time + 0.1)
+            XCTAssertEqual(store.latestHit?.grade, .late)
+            if i == 0 {
+                for extra in 1...4 { store.tap(at: route.targets[0].time + 0.1 + Double(extra) * 0.01); XCTAssertEqual(store.latestHit?.grade, .extra) }
+            }
+        }
+        if failSave { defaults.set(Data("{\"schemaVersion\":99}".utf8), forKey: ProgressRepository.storageKey) }
+        for _ in 0..<440 where store.phase == .playing { try await Task.sleep(nanoseconds: 50_000_000) }
+        XCTAssertEqual(store.phase, .finished); XCTAssertEqual(store.stars, 1)
+        XCTAssertEqual(store.summary?.matched.count, 12); XCTAssertEqual(store.summary?.perfectRate, 0)
+        XCTAssertEqual(store.summary?.extraCount, 4); XCTAssertEqual(store.summary?.missedCount, 4)
+        XCTAssertEqual(store.runnerRoute?.accepted.count, 12, "One star cannot fabricate16 arrived islands")
+        XCTAssertFalse(audio.isPlaying)
+        if failSave {
+            XCTAssertFalse(store.resultSaved); XCTAssertTrue(store.needsSaveRetry); XCTAssertFalse(store.unlocked(catalog[2]))
+            store.retrySave(); XCTAssertFalse(store.resultSaved); XCTAssertFalse(store.unlocked(catalog[2]))
+            defaults.set(original, forKey: ProgressRepository.storageKey); store.retrySave()
+        }
+        XCTAssertTrue(store.resultSaved); XCTAssertFalse(store.needsSaveRetry)
+        let restored = PracticeStore(repository: repo)
+        XCTAssertEqual(restored.progress.results[catalog[1].id]?.stars, 1)
+        XCTAssertEqual(restored.progress.results[catalog[1].id]?.bestPerfectRate, 0)
+        XCTAssertEqual(restored.progress.results[catalog[0].id]?.stars, 3)
+        XCTAssertTrue(restored.unlocked(catalog[2])); XCTAssertFalse(restored.unlocked(catalog[3]))
+    }
+}
+
 private func routeFixture(hits: [TimingHit], alignment: Double = 0) throws -> RunnerRoute {
     // Reviewed first-beat spec: 4 count-in,16 quarter notes at60BPM,epoch100.
     try XCTUnwrap(RunnerRoute(targets: (0..<16).map { TimingTarget(id: $0, time: 104 + Double($0), stroke: .right) },
