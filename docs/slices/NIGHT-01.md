@@ -16,7 +16,7 @@ Execution order:
 - Define rest behavior separately: silence/wait cue; there is no rest target.
   Taps keep nearest-note/window authority, including legal early notes near a rest;
   extras never produce a platform. Motion cannot derive grade from gap.
-- Sixteenth/triplet/high density must have a reachable/readable input/cue and
+- Sixteenth/high density must have a reachable/readable input/cue and
   continuous handoff; do not merely enable unsupported profiles at higher rate.
 - Test catalog patterns/count-in/timestamps/extra/miss, locks/results/restart,
   native rendering and real-touch reachability for each new behavior. Reuse
@@ -73,3 +73,5 @@ that candidate. Do not claim a full App87 suite on this post-opacity source.
 GAME30 persistent rebind complete: exact107 current/git4eb1adb/frozen inputs, new local build/native9/UI3 gates; all ownedsimstates/light restored. Prior failedcanonicalreceipt and temporary retention gaps kept in TestResults/GAME-30/pre-retention-gates; original tests are observed historical attempts, final completion requires fresh canonical checker PASS. No production source delta during rebound; physical/phone pending.
 
 04:13 GAME31 actual-result handoff locally passed native7/UI2 with108native/4UI images. Partial pass no longer implies all-note destination; finite cosmetic tail preserves end travel/feet, score/audio/input/save unchanged. Initial build and focused failures retained; numeric display guard explicitly audited. Next QA-NIGHT01 full combined local regression and frozen phone candidate. Owner timing/child/audio-cue preference still pending after11:10.
+
+Original-resolution QA correction withdrew falsecropdiagnosis andrestored42production; actualnativefailures requirecontinuedgates. Activechecks mayfinishafter11:10; ownerquestiondeferralstillends11:10, not shifted. Temporarytask-owned idleassertion mayextendonlyduringnecessarylocalbuild/test/delivery, stopatcompletion; no persistentpowersettingschange.

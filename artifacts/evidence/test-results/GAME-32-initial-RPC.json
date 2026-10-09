@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/GAME-32/record-initial-failure.py",
+  "exit_code": 65,
+  "started_at": "2026-10-09T02:32:52Z",
+  "finished_at": "2026-10-09T02:32:52Z",
+  "runner": "game32-retained-failure-observation",
+  "linked_commit": "f4a499e45738d9988b14636c6332a12475ab8537",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/GAME-32-initial-RPC.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

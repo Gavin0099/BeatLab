@@ -24,3 +24,19 @@ existing Core53 samecomponent, actual4walkthrough+5surfaces andimageinspection.
 RestoreonlyownedBeatLabstates/light; preserve concurrentlyusedexternalsims.
 Rollbackthis testwaitingaddition only. Ownerphysicalacceptance remainspending.
 Status DEFINED / PREVIOUS_FULL_APP_RUNNING.
+
+Previouscompileda55 full113 finishes112pass/1fail2assertions; other112pass.
+Rawattempt and sourcefrozenA remainretained; no productpatch. Source42a5f5d
+persistent107 finalfreeze105 unchangedfromGAME31; localbuildrunning, callback
+focusandfreshfullregression required beforedelivery.
+
+09:30 finalsource42a5 localbuildPASS and actualcallbackfocus1/0PASS; callback
+specimenattachments0 (state/count assertions, no image claim). FreshfullApp now
+running onexact107finalfreeze; allproduction/corebyteexact toGAME31. No source
+or timeout adjustments based solely on PASS; retain explicit2s harnessbound.
+
+09:41 finalsource42a5 fullApp113/0 passed; prior112/1 and initial97/16 crashes
+remainretained. Core53 exactunchangedcomponentreceipt applies. Actual4UI then
+5surfaces stillpending; no phonepackagecompletion or physicalclaim yet.
+
+Final42a5 callbackfocus1/0, fullApp113/0, actual4walkthrough/5surfacecases allpassed. ProductionunchangedfromGAME31. Originalfixedsleep112/1 attemptretained. GAME32newcompositionrequiresfreshcandidategates; no deliveryclaimfromthesehistoricalPASSes.

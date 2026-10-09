@@ -388,3 +388,25 @@
 - Validation boundary: PASS artifacts/evidence/test-results/GAME-31.json native7/UI2 and107binding; full combined suite next, physical pending
 - Next action: NIGHT01 continues full combined local App/Core and ten-lesson UI walkthrough, frozen signed Wi-Fi phone candidate if available; physical/child and audio-cue preference after11:10.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:4c51dfa2fbc44cdb98d2aea348f4ca5679eb090a53e567d2555759f365eb63a8 -->
+### Canonical memory checkpoint — NIGHT01-GAME32-retained-RPC-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `4c51dfa2fbc44cdb98d2aea348f4ca5679eb090a53e567d2555759f365eb63a8`
+- Commit binding: `f4a499e45738d9988b14636c6332a12475ab8537` (bound)
+- Record: GAME32 candidate initial full local App113 observed111pass/2fail: result callback did not stop within unchanged2s harness deadline then later paused; highdensity actual finish aborted inside AppleRemoteIO/AVAudioEngine.stop RPC. Raw111/2/crash retained; exact rootcause unproven. Onlyowned simulator coldboot, same compiled107source f4a499e and deadlines; actual focused2/0 pass, fullretry in progress. No product audio/Scene changes, installation or release claim.
+- Validation boundary: FAIL artifacts/evidence/test-results/GAME-32-initial-RPC.json actual full113=111pass/2fail; standalone focused2/0 observed; final candidate pending
+- Next action: Finish unchanged-source full113 then actual11UI/PNG visibility review; freeze signed PHONE10 candidate only after gates. Preserve unresolved physical stop/timing/FPS and owner trial items.
+- PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:987b4851995eb315ac4917e29d3b92bc53b410755a06c10a2d23f1747d9a1f2d -->
+### Canonical memory checkpoint — NIGHT01-original-resolution-correction-20261009
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `987b4851995eb315ac4917e29d3b92bc53b410755a06c10a2d23f1747d9a1f2d`
+- Commit binding: `3ffbca1eaa8280f963bd29cb52458eade0e52f51` (bound)
+- Record: Withdraw cropped-preview diagnosis: original-resolution QA42 and f4 Robot PNG both show full heading/cue/count; pixel audit all3 f4 shows textrows. Restore entireEggMissionView byte-exactQA42/productionGAME31, source3ffbca1; onlyUITestvisibility/directStop differs (106/107 unchangedQA42, allnativeproduction/AppTests exact). Initialf4UI3/1 thirdStop nearrealend retained; exact event/finish order unproven. f4signedstaging was not installed and is superseded. NewfrozenC build/UI/focus pending. PriorApp113/Core53 exact-component evidence only, no freshnewhostfullsuite or product completion claim.
+- Validation boundary: PASS artifacts/evidence/test-results/QA-NIGHT-01C-component.json SOURCE BINDING ONLY; current UI/phone pending, current fullnewhostApp113 NOT RUN, prior QA42 App113/Core53 exactcomponent basis
+- Next action: Finish freshC build/focused2/actual11UI and original-resolution image review. Rebuild phone to correctedsource only after gates; preserve originalfailures/correction, no Apple/public upload.
+- PLAN reconciliation: `updated`

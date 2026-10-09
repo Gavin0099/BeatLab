@@ -1,3 +1,5 @@
+> **2026-10-09 十關來源候選，仍在本機整合驗證**：第二至第十關已按既有節奏接入跨島練習，音訊、時間匹配、評分與保存規則保留。來源3ffbca1已撤回原尺寸核對後沒有成立的版面更動，只保留測試端停止與可見性檢查；原生App113／Core53以完全相同來源的既有元件證據為基礎，不稱新編譯包已完整重跑。新的實際操作／尺寸驗證與手機交付仍待完成。初次f4回歸111／2包含音訊停止RPC中止，重啟後focused2與full113通過；根因未證明，真機仍待驗收。手機目前仍是先前第一關候選；TestFlight13仍是既有交付。下方GAME24「2–10待排」為歷史狀態。[十關切分](slices/NIGHT-01-lesson-plan.md) · [目前驗證契約](slices/QA-NIGHT-01C.md)。
+
 > **2026-10-08 第一關表情候選**：Owner已接受TestFlight13掉落動作；GAME24補三角色下墜驚訝／接住緊張／回平台放鬆。只改臉，保留已接受motion/body；本機App76/Core53與24native樣本、像素／state regression PASS。尚未安裝或上傳；TestFlight仍13，第一關完整手機驗收pending。十關為預設入口，第2–10關仍待第一關完成後排slice，不能稱十關遊戲已完成。[GAME24 evidence](slices/GAME-24-verification.json)。
 
 > **2026-10-08 掉落修正版交付**：0.1.0（13）已上傳、Apple處理完成，既有「本人試玩」可下載。本機App73/Core53及來源101、實際簽署IPA與internal-only檢查PASS。下墜加速、承接減速與托盤回平台已實作，手機更新與流暢度／physical timingFPS／public接受仍pending；所有build/tests本機，GitHub Mac未跑。[TF06 evidence](slices/TF-06-verification.json)。

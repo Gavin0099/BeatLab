@@ -31,3 +31,19 @@ Failure crop/overlap/scene<200/pad<44/stopunreachable/routeclockdelta/hash misma
 stopsdelivery; restoreonlyownedBeatLabsimstates/light, preserve otherprojectstates.
 Rollback composition priority/fixedrows/shortviewportScrollView only.
 Status DEFINED / SOURCE_PENDING; no physicalFPS/child/public acceptance claim.
+
+Source f4a499e45738d9988b14636c6332a12475ab8537 frozen persistently107inputs;104unchangedfromGAME31 (composition+twoearlierharnessfiles). EntireEggSpriteScene/motion prefix byteexact. Status SOURCE_COMPLETE / LOCAL_GATES_RUNNING.
+
+Initialfull113=111pass/2fail retained withcrash underTestResults/GAME-32/initial-RPC-attempt. Callback2s actualpause deadlinefails then80ms receivesstop; actualhighdensityfinish aborts insideAppleRemoteIO stopRPC. Exactaudio/Sceneunchanged. Shutdown/bootonlyownedprimaryand repeatfocused2/full113 onidenticalcompiledfreeze, preservingfailure; no rootcause/GPUclaim orpassingcandidateyet.
+
+10:43 identicalcompiledsource afterownedcoldboot: actualfocused2/0 andfreshfullApp113/0PASS. Initial111/2/crashretained; audioRPCrootcauseunproven and physicalstopstillpending. Actual11UI/manualvisible-rowsgates underway; no phone/overallcompletionclaim.
+
+Original-resolution correction: earlier cropped-preview diagnosis is withdrawn.
+QA42 Robot and f4 Robot original PNG both contain completeheading/cue/count;
+all3 f4 textpixel rows are present. No proven crop defect; f4compositionchange
+was reverted by3ffbca1. SourceGAME31/QA42 production retained byte-exact;
+QA01C freshbuild/nativefocus/UI/currentphonebinding underway. Historical f4
+full113/0 andinitial111/2+RPCcrash/UI3/1 remainretained, not currentcompletion.
+Current fullApp113 basis is QA42 exact-native-component; no freshfullsuite claim
+onQA01C host. Raw reduced-preview misreading was an agent error, not a proven
+renderer/OS bug. Original owner/gameplay/physical acceptance stillpending.

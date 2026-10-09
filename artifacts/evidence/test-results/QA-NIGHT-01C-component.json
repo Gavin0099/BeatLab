@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/QA-NIGHT-01C/check-component.py",
+  "exit_code": 0,
+  "started_at": "2026-10-09T03:04:03Z",
+  "finished_at": "2026-10-09T03:04:12Z",
+  "runner": "qa-night-original-resolution-correction-source-binding",
+  "linked_commit": "3ffbca1eaa8280f963bd29cb52458eade0e52f51",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/QA-NIGHT-01C-component.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

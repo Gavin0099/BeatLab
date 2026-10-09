@@ -30,3 +30,12 @@ navigation is intentionallyhidden. Exact allowedtestscope now also reveal'stop
 viewport fallback: use observedwindow.minY whenbothnav/statusbarelements absent.
 Do not modifyproductlayout or change expectedprogress. Initial failurelog/video/
 AX snapshots and5PNGs retained. Productionfirstmotion/audio/save still exact.
+
+Failurevideo inspected: cat stillshows'先聽3拍' after initialgesture. Both actual
+0matches reflect input well before the first-note matching window, not product
+matchingfailure. Original legal early window near the first note stays unchanged.
+Owner「繼續」resume; sourcecommita55d1b8 at2026-10-09T09:12:58+08:00.
+107 persistentQA freeze106 unchanged; new local build running. EarlierfullApp113
+source1949867 receipt stays archived; not claimed on newcompiled bundle yet.
+
+Final42a5 actual4walkthroughPASS: realcount-inwaiting andhiddenStatusBar fallback exercised withoutsyntheticinput. All10existinglessons prepared/started/cancelled fromisolatedDEBUGfixture, plusactual3themehits/cancel/restart. Manualimagecrops ledseparateGAME32; harnessPASSdoesnotprovevisibletext/physicaltiming.

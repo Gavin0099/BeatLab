@@ -98,3 +98,7 @@
 - NIGHT01 GAME30 persistent rebound and canonical checker passed; GAME31 next, phone and physical acceptance pending. <!-- memory_record_projection:active-task-summary:563c7dffac07d18edcac143bca6e8266d4aae6e12ec3a6e947e800aef19133cd -->
 
 - NIGHT01 GAME31 result handoff engineering gate passed; QA-NIGHT01 combined local regression and phone candidate next. <!-- memory_record_projection:active-task-summary:b8f2aef51bfe234c78d9607e48e5a9054e45c1e2a820ac4a12cd6b83237ab0de -->
+
+- NIGHT01 ten lesson source complete; GAME32 finalfull113 initial111/2 RPC/callback failures retained, standalone2pass afterownedcoldboot; fullretry/UI/phonepending; no audio/rootcause/physical/public acceptance claim. <!-- memory_record_projection:active-task-summary:4c51dfa2fbc44cdb98d2aea348f4ca5679eb090a53e567d2555759f365eb63a8 -->
+
+- NIGHT01 tenexistinglessons sourcecomplete; falsepreviewcropdiagnosis withdrawn and layout restored42. 3ffbca1 onlytestdelta; freshC build/focus/UI and newmatchingphone pending. PriorApp113/Core53 exactcomponents only; initialf4RPC111/2+UI3/1 retained, rootcause/physical/child/public pending. <!-- memory_record_projection:active-task-summary:987b4851995eb315ac4917e29d3b92bc53b410755a06c10a2d23f1747d9a1f2d -->
