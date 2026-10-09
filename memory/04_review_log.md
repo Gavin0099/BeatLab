@@ -410,3 +410,25 @@
 - Validation boundary: PASS artifacts/evidence/test-results/QA-NIGHT-01C-component.json SOURCE BINDING ONLY; current UI/phone pending, current fullnewhostApp113 NOT RUN, prior QA42 App113/Core53 exactcomponent basis
 - Next action: Finish freshC build/focused2/actual11UI and original-resolution image review. Rebuild phone to correctedsource only after gates; preserve originalfailures/correction, no Apple/public upload.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:80c771bf937fa8c6d475b09086b671c7b302a82252412aa2bbe1a0a35f4e1246 -->
+### Canonical memory checkpoint — night01-c-late-stop-d-active
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `80c771bf937fa8c6d475b09086b671c7b302a82252412aa2bbe1a0a35f4e1246`
+- Commit binding: `1acee702441d2f7e7252e4803c491f2f2ab83930` (bound)
+- Record: QA-NIGHT01C source3ff actualUI4 observed3PASS/1FAIL at tenthStop. Last realStart641.27 and Stop662.33 (~21s) exceed shortmixedlesson; AX afterfailure shows selectedMetronome, exactevent/finishorder unproven. Failedrawbundle25PNG/AX/command65 retained andcanonicalFAILreceipt linked1ace. Threeactualrole input/cancel/restart PASS remain individual evidence only. QA01D contract definedbefore test-only1ace edit: Stop immediatelyafter actualStart, preparation identity and unchanged progress retained; all production/nativeAppTests unchanged. New107 persistentfreeze localbuild ongoing; no phoneinstall/public/FPSclaim.
+- Validation boundary: FAIL artifacts/evidence/test-results/QA-NIGHT-01C-walkthrough-failure.json C fullUI4=3/1, source3ff; not D finalgate. C nativefocus2 and three-role individualPASS are exact unchanged component basis, App113 QA42/Core53 exact native component only; D UI PENDING.
+- Next action: Finish D localbuild, actual tenStartStop and surfaces/largest gates, original-resolution review and sourcebinding; then matching signed Wi-Fi candidate. Owner unlock action requested only after11:10 deadline, no phonefixtures/reset.
+- PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:6cceaaca75f3839d09ad61bd8e7888b2929af86582d55f932d416d0b0674e91f -->
+### Canonical memory checkpoint — night01-d-termination-isolated-retry
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `6cceaaca75f3839d09ad61bd8e7888b2929af86582d55f932d416d0b0674e91f`
+- Commit binding: `1acee702441d2f7e7252e4803c491f2f2ab83930` (bound)
+- Record: QA01D immutable source1ace localbuild PASS; initialtenSmoke exited65 with signalterm after observed1-7preparations, both originalownedsimsShutdown though pipeline had not calledshutdown and F6external stillBooted. Rootcause/actor unproven; no freshBeatLab crash or attributinglog. Invalid zsh sample explicitlyrejected. OriginalD0/1/7PNG/command65 retained with canonicalFAIL. Samecompiled107/57filecandidate now retries on uniquelycreated task-ownedsims AC4EC020 and711F08A0; source/deadlines/audio/save unchanged, cleanup only ownedcreations after checks. No phoneinstall.
+- Validation boundary: FAIL artifacts/evidence/test-results/QA-NIGHT-01D-termination.json actualDten0/1 signalterm; source1ace compiledPASS, no semanticfailure/rootcause claim. Samecompiledisolatedretry PENDING; Cthree-role individualPASS/nativefocus2 and QA42App113/Core53 exactcomponents retained.
+- Next action: Complete samecompiledD actualUI8 on newlycreated ownedsimulators, inspect originals and preservefailedD, sourcebind and clean only owncreateddevices; signed Wi-Fi candidate remains gated. Owner unlock response pending afterdeadline.
+- PLAN reconciliation: `updated`

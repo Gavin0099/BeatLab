@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/QA-NIGHT-01D/record-termination.py",
+  "exit_code": 65,
+  "started_at": "2026-10-09T03:45:36Z",
+  "finished_at": "2026-10-09T03:45:36Z",
+  "runner": "qa-night-original-terminated-smoke",
+  "linked_commit": "1acee702441d2f7e7252e4803c491f2f2ab83930",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/QA-NIGHT-01D-termination.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
