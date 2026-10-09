@@ -1440,7 +1440,7 @@ struct EggMissionView: View {
                     }
                 }.font(.caption.bold()).lineLimit(1)
                 if profile.usesBothHands {
-                    HStack(spacing:10) {handPad(.right);handPad(.left)}.frame(height:56)
+                    HStack(spacing:10) {handPad(.left);handPad(.right)}.frame(height:56)
                 } else {
                     ZStack {
                         RoundedRectangle(cornerRadius:20).fill(Color(uiColor:theme.pad))

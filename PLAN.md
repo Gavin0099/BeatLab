@@ -6,6 +6,8 @@
 
 ## Current Phase
 
+2026-10-09 owner真機回報第二關左右控制區顛倒，並詢問解鎖／下一關難度。GAME-33已修正左手在左、右手在右，原本反向的測試期待也已改正；本機窄螢幕一般Light、最大字級Light/Dark共3個實際流程通過，R/L音樂序列、判分與進度規則保留。手機修正版候選尚待建置。已確認前兩關一星需命中14/16、Perfect9/16、最多多按1次，第二→第三操作間隔0.923→0.5秒；難度修改先釐清卡點，尚未改門檻或節奏。[修正契約](docs/slices/GAME-33.md) · [難度診斷](docs/slices/GAME-33-difficulty-analysis.md)。
+
 十關來源與本機整合Gate已通過，來源1acee70的「拍拍冒險」Debug 0.1.0（13）已透過Wi-Fi原地安裝；自動開啟被手機鎖定擋住。TestFlight仍是之前GAME23的0.1.0（13），本批沒有Apple上傳。GAME26–31已接入第二至第十關與共享動作／結果收尾；保留第一關素材、音訊／輸入時間軸、匹配、評分與保存。新操作驗證8項通過，加上相同元件的三角色操作3項、原生2項、App113/Core53證據，不能稱最終新編譯host完整重跑113。G1～G4、真機timing/FPS、完整Accessibility及兒童體驗仍未接受；治理runtime自動化仍是既有非阻塞debt。[十關切分](docs/slices/NIGHT-01-lesson-plan.md) · [本機驗證](docs/slices/QA-NIGHT-01-verification.json) · [手機交付](docs/slices/PHONE-10-verification.json) · [試玩清單](docs/slices/NIGHT-01-owner-trial.md)。
 
 以下為歷史迭代／拒絕結果，來源與當時交付狀態保留：

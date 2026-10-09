@@ -157,7 +157,7 @@ final class PracticeUITests: XCTestCase {
         if dual {
             let left=app.buttons["practiceTapPad.left"]
             XCTAssertTrue(left.isHittable);XCTAssertGreaterThanOrEqual(left.frame.height,44)
-            XCTAssertLessThanOrEqual(pad.frame.maxX,left.frame.minX)
+            XCTAssertLessThanOrEqual(left.frame.maxX,pad.frame.minX,"Left-hand pad must be physically left of the right-hand pad")
         }
     }
     @MainActor
@@ -379,7 +379,8 @@ final class PracticeUITests: XCTestCase {
         XCTAssertEqual(app.staticTexts["activeLessonNumber"].label,"第 2 關 · 左右接力跨島")
         XCTAssertTrue(app.staticTexts["65 BPM"].exists)
         XCTAssertGreaterThanOrEqual(right.frame.height,44);XCTAssertGreaterThanOrEqual(left.frame.height,44)
-        XCTAssertLessThanOrEqual(right.frame.maxX,left.frame.minX)
+        XCTAssertLessThanOrEqual(left.frame.maxX,right.frame.minX,"Left-hand pad must be physically left of the right-hand pad")
+        XCTAssertEqual(left.label,"左手鼓墊");XCTAssertEqual(right.label,"右手鼓墊")
         let counter=app.staticTexts["jumpMatches"]
         for i in 0..<12 {
             (i%2==0 ? right : left).tap()
@@ -408,6 +409,8 @@ final class PracticeUITests: XCTestCase {
         let right=app.buttons["practiceTapPad.right"],left=app.buttons["practiceTapPad.left"],stop=app.buttons["stopPractice"]
         XCTAssertTrue(right.waitForExistence(timeout:5));XCTAssertTrue(left.isHittable);XCTAssertTrue(stop.isHittable)
         XCTAssertGreaterThanOrEqual(right.frame.height,44);XCTAssertGreaterThanOrEqual(left.frame.height,44)
+        XCTAssertLessThanOrEqual(left.frame.maxX,right.frame.minX,"Large text preserves physical left/right placement")
+        XCTAssertEqual(left.label,"左手鼓墊");XCTAssertEqual(right.label,"右手鼓墊")
         XCTAssertLessThanOrEqual(right.frame.maxY,stop.frame.minY)
         capture(app,"GAME26 largest dual-pad controls")
         XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:25))
