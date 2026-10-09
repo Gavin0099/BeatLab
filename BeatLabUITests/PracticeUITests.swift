@@ -31,6 +31,15 @@ final class PracticeUITests: XCTestCase {
         // Repeated AX queries plus a4s sleep used up the actual20s lesson.
         XCTAssertTrue(scene.exists); XCTAssertLessThan(scene.frame.maxY, pad.frame.minY)
         XCTAssertTrue(pad.isHittable)
+        // Observe the actual count-in ending; a fast AX pass must not send the
+        // entire gesture before the transport accepts practice input.
+        let cue = app.staticTexts["jumpCue"]
+        XCTAssertTrue(cue.waitForExistence(timeout: 5))
+        let ready = XCTNSPredicateExpectation(predicate: NSPredicate(format: "NOT label BEGINSWITH %@", "先聽"), object: cue)
+        guard XCTWaiter.wait(for: [ready], timeout: 8) == .completed else {
+            XCTFail("Actual companion count-in did not end")
+            return
+        }
         pad.tap(withNumberOfTaps: 10, numberOfTouches: 1)
         XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "), "Actual UIKit touches must produce a real accepted hit")
         capture(app, "\(key) actual live runner"); stop.tap()
@@ -441,7 +450,7 @@ final class PracticeUITests: XCTestCase {
         }
         let picker = app.navigationBars["選擇夥伴"]
         let inPicker = picker.exists
-        let top = inPicker ? picker.frame.maxY : app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.frame.maxY
+        let top = inPicker ? picker.frame.maxY : app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.exists ? app.statusBars.firstMatch.frame.maxY : window.frame.minY
         // A presented sheet covers the underlying tab bar; use its own viewport.
         // The SE has no bottom home-indicator inset. Do not invent a 30pt
         // exclusion zone: use the observed tab bar or actual app viewport.
