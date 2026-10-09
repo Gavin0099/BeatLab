@@ -42,6 +42,7 @@ final class PracticeUITests: XCTestCase {
         }
         pad.tap(withNumberOfTaps: 10, numberOfTouches: 1)
         XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "), "Actual UIKit touches must produce a real accepted hit")
+        assertEssentialGameRows(in: app)
         capture(app, "\(key) actual live runner"); stop.tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
@@ -50,6 +51,17 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["jumpMatches"].label, "抵達 0 / 16 座小島")
         app.buttons["stopPractice"].tap()
+    }
+    @MainActor
+    private func assertEssentialGameRows(in app: XCUIApplication) {
+        let window = app.windows.firstMatch.frame
+        let heading = app.staticTexts["activeLessonNumber"].frame
+        let count = app.staticTexts["jumpMatches"].frame
+        // Independent normal-text legibility bounds, not copied layout values.
+        XCTAssertGreaterThanOrEqual(heading.height, 16)
+        XCTAssertGreaterThanOrEqual(count.height, 10)
+        XCTAssertGreaterThanOrEqual(heading.minY, window.minY)
+        XCTAssertLessThanOrEqual(count.maxY, app.buttons["practiceTapPad"].frame.minY)
     }
     @MainActor
     func testCatCloudActualTouchCancelAndRestart() throws {
@@ -673,6 +685,7 @@ final class PracticeUITests: XCTestCase {
         }
         XCTAssertTrue(counter.exists)
         XCTAssertFalse(counter.label.hasPrefix("抵達 0 "), "Actual matched touches must clear an obstacle")
+        assertEssentialGameRows(in: app)
         capture(app, "Runner actual matched touch clearance")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))

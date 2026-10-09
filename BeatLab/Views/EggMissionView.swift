@@ -1395,6 +1395,15 @@ struct EggMissionView: View {
     var body: some View {
         GeometryReader { geometry in
             let compact = textSize.isAccessibilitySize
+            if compact && geometry.size.height < 700 {
+                ScrollView { missionContent(compact: true, scrolling: true) }
+            } else {
+                missionContent(compact: compact, scrolling: false)
+                    .frame(maxWidth: .infinity, maxHeight: geometry.size.height)
+            }
+        }
+    }
+    private func missionContent(compact: Bool, scrolling: Bool) -> some View {
             VStack(spacing: 8) {
                 HStack(alignment: .center) {
                     VStack(alignment: .leading, spacing: 2) {
@@ -1410,13 +1419,13 @@ struct EggMissionView: View {
                     }
                     Spacer(minLength: 6)
                     Text("\(practice.selected?.bpm ?? profile.bpm) BPM").font((compact ? Font.caption : Font.subheadline).monospacedDigit()).lineLimit(1)
-                }
+                }.fixedSize(horizontal: false, vertical: true)
                 phraseRoute
                 EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: route?.accepted ?? [],
                     presentationElapsed: { practice.presentationElapsed(at: $0) },
                     acceptedAction: route?.latestAccepted, latestAction: practice.latestHit, route: route, platformJourney: true)
-                    .frame(maxWidth:.infinity,minHeight:200,maxHeight:.infinity)
-                    .layoutPriority(1)
+                    .frame(maxWidth:.infinity,minHeight:200,maxHeight:scrolling ? 200 : .infinity)
+                    .layoutPriority(-1)
                     .overlay(alignment: .topLeading) {
                         if !compact {
                             HStack(spacing: 6) {
@@ -1439,6 +1448,7 @@ struct EggMissionView: View {
                         Text(streak >= 2 ? "連續 \(streak) 拍！" : profile.usesBothHands ? "右左接力" : "右手跟拍")
                     }
                 }.font(.caption.bold()).lineLimit(1)
+                    .fixedSize(horizontal: false, vertical: true)
                 if profile.usesBothHands {
                     HStack(spacing:10) {handPad(.right);handPad(.left)}.frame(height:56)
                 } else {
@@ -1454,8 +1464,7 @@ struct EggMissionView: View {
                         .frame(maxWidth:.infinity,minHeight:44)
                 }.accessibilityIdentifier("stopPractice")
             }.padding(.horizontal,12).padding(.vertical,6)
-                .frame(maxWidth:BeatLabStyle.maxWidth).frame(maxWidth:.infinity,maxHeight:geometry.size.height)
-        }
+                .frame(maxWidth:BeatLabStyle.maxWidth).frame(maxWidth:.infinity)
     }
     private func handPad(_ stroke: Stroke) -> some View {
         let right = stroke == .right

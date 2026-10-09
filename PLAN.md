@@ -499,3 +499,5 @@ QA-NIGHT01A defined for companion UI harness: original10tap gesture finishes bef
 09:12 owner「繼續」後續行：sourcea55d1b8只修UITest真實count-in與hiddenStatusBar fallback。107 persistentQA凍結中106與GAME31相同，本機重新build-for-testing進行中；早先113/Core53不誤稱為新編譯包測試。最遲11:10後集中待確認事項，不宣稱期間持續執行時數或真機流暢度。
 
 09:25 QA-NIGHT01B defined after newcompiled a55 fullApp callbackcase fails fixed350ms pausedcheck then receives terminalcallback during80ms countcheck; laterpausedsamekeyassertionpasses. Preserve rawattempt; no provenGPU/OS cause or physicalFPS inference. Test-only finite2s observeactualpause+realcallback+unchangedstopcount assertions; allproduct/clock/save remain exact. New107 freeze/build/fullApp/UI gates next after currentnative completes.
+
+10:00 GAME32 defined beforeedit: QA42a5 App113/actual4walkthrough pass, but25PNGmanualreview identifies croppedfirstheading/invisiblecount in actualrobot/dinosaur shots. Essentialrowsfixedverticalsize+Scenepriority−1; largestshortviewport wholeScrollView200scene, no physics/audio/input/score/save change. Actual3theme rowvisibility regressions +tenlesson/surfaces +primary/narrowlargest gates requiredbeforephonecandidate.
