@@ -517,6 +517,13 @@ final class PracticeUITests: XCTestCase {
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
         XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
+        app.tabBars.buttons["首頁"].tap()
+        try reveal(app.buttons["dailyPractice"],in:app); app.buttons["dailyPractice"].tap()
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
+        XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 1 關 ·"),"Home must open its actual recommended lesson, never retain the locked trial selection")
+        try reveal(app.buttons["startLesson"],in:app); app.buttons["startLesson"].tap()
+        XCTAssertTrue(app.buttons["practiceTapPad"].waitForExistence(timeout:5))
+        app.buttons["stopPractice"].tap()
     }
 
     @MainActor

@@ -13,7 +13,10 @@ struct RootView: View {
     var body: some View {
         TabView(selection: $selectedTab) {
             NavigationStack {
-                HomeView(openMetronome: { selectedTab = .metronome }, openPractice: { preparationRequest += 1; selectedTab = .practice })
+                HomeView(openMetronome: { selectedTab = .metronome }, openPractice: {
+                    if let lesson = practice.recommended { practice.select(lesson) }
+                    preparationRequest += 1; selectedTab = .practice
+                })
             }
             .tabItem { Label("首頁", systemImage: "house.fill") }
             .tag(AppTab.home)

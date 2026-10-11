@@ -35,3 +35,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 未接受之前不取代正式旅程；不要回退或清空owner已保存進度。
 
 Owner已選A預設；B仍DEBUG比較。此次正式旅程UI導入是local/device candidate，待QA真機與兒童接受，並非提前接受產品gate。Allowed PracticeStore.swift僅選定presentation狀態/全螢幕route，不改目標/判分/save；PracticeComparisonView.swift承載共用遊玩容器。
+
+整合界線补充（本次編輯前）：allowed RootView.swift僅首頁「今日挑戰」入口選擇已保存progress.recommended後再開準備；禁止改星星/保存/target。現有入口只切tab，DEBUG比較退出後可能保留locked trial selected而打開錯關；回歸從B退出→首頁今日挑戰→原推荐關準備/正常開始，鎖定不改。回退只撤首頁routing，不清進度。
