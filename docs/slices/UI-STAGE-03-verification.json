@@ -1,0 +1,295 @@
+{
+  "slice": "UI-STAGE-03",
+  "date": "2026-10-11",
+  "risk": "L2 UI integration; audio/input/scoring authority unchanged",
+  "status": "SOURCE_LOCAL_CANDIDATE; owner and physical-device acceptance pending",
+  "baseline": "cd7872b",
+  "source_binding": {
+    "source_manifest": "source-manifest-5.json",
+    "inputs": 118,
+    "root_matches_frozen_inputs": true,
+    "sha256": "8d2e3b7ffdc479c7f71fea9580e37f5aabee2f6e4f43bdf5952f564841f9eced"
+  },
+  "build": {
+    "source_manifest": 5,
+    "configuration": "Debug simulator, local Mac",
+    "exit_code": 0,
+    "command_ref": "TestResults/UI-STAGE-03/build-5-command.json"
+  },
+  "runs": [
+    {
+      "name": "native-final",
+      "manifest": 4,
+      "total": 13,
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "local_mac": true,
+      "command_ref": "TestResults/UI-STAGE-03/native-final-command.json",
+      "raw_result": "TestResults/UI-STAGE-03/native-final.xcresult",
+      "summary_ref": "TestResults/UI-STAGE-03/native-final-summary.log",
+      "scope": "RhythmPrototypeTests only"
+    },
+    {
+      "name": "ui-final",
+      "manifest": 5,
+      "total": 3,
+      "passed": 3,
+      "failed": 0,
+      "skipped": 0,
+      "local_mac": true,
+      "command_ref": "TestResults/UI-STAGE-03/ui-final-command.json",
+      "raw_result": "TestResults/UI-STAGE-03/ui-final.xcresult",
+      "summary_ref": "TestResults/UI-STAGE-03/ui-final-summary.log",
+      "scope": "3 focused UI flows"
+    },
+    {
+      "name": "ui-dark-final",
+      "manifest": 5,
+      "total": 1,
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "local_mac": true,
+      "command_ref": "TestResults/UI-STAGE-03/ui-dark-final-command.json",
+      "raw_result": "TestResults/UI-STAGE-03/ui-dark-final.xcresult",
+      "summary_ref": "TestResults/UI-STAGE-03/ui-dark-final-summary.log",
+      "scope": "one repeated maximum-text flow, not a fourth unique UI case"
+    }
+  ],
+  "native_component_binding": {
+    "native_test_manifest": "source-manifest-4.json",
+    "latest_ui_manifest": "source-manifest-5.json",
+    "only_changes": [
+      "BeatLab/Views/DrummerStageView.swift",
+      "BeatLab/Views/PracticeComparisonView.swift"
+    ],
+    "scene_store_test_inputs_identical": true,
+    "not_claimed": "full new-host App suite rerun; UI checks must use freshly compiled source5"
+  },
+  "chart": {
+    "lesson": "eighth, third lesson",
+    "bpm": 60,
+    "count_in_seconds": 4,
+    "play_seconds": 16,
+    "tail_seconds": 0.18,
+    "targets": 32,
+    "strokes": "all R from original catalog",
+    "first_relative_target": 4,
+    "last_relative_target": 19.5
+  },
+  "failure_evidence": [
+    {
+      "run": "scene-tests-1",
+      "executed": 0,
+      "exit_code": 0,
+      "claim": "wrong test-class filter; never counted as a pass"
+    },
+    {
+      "run": "ui-1",
+      "executed": 3,
+      "passed": 2,
+      "failed": 1,
+      "exit_code": 65,
+      "cause": "automation requested pause after 20.18-second trial had finished; corrected test sequencing, not chart duration or match window",
+      "additional_visual_findings": "BPM and feedback ellipsized at maximum text, fixed in source5 and rechecked with final screenshots"
+    },
+    {
+      "operation": "first ui-1 attachment export",
+      "claim": "attempted before xcode finalized Info.plist; tool exit64, later finalized bundle export succeeded; no corrupted-result claim"
+    }
+  ],
+  "inspection": {
+    "viewed_pngs": [
+      "TestResults/UI-STAGE-03/native-final-pngs/0E6B07A0-ECE9-4972-9078-8587A35B8393.png",
+      "TestResults/UI-STAGE-03/native-final-pngs/58044B41-D7BE-4766-BB66-534805E36D4A.png",
+      "TestResults/UI-STAGE-03/ui-final-pngs/12228CCB-F2C4-407C-B401-89EA1086719D.png",
+      "TestResults/UI-STAGE-03/ui-final-pngs/10D137F4-C763-410C-9BFC-67593420CAC9.png",
+      "TestResults/UI-STAGE-03/ui-final-pngs/C77A6296-A201-4A98-B5A0-91292BD95E98.png",
+      "TestResults/UI-STAGE-03/ui-dark-final-pngs/CE90099C-9AEC-4916-9866-A9603F7876C2.png"
+    ],
+    "observed": "normal gameplay actual positive hit; zero-input result0/32 and0stars; narrow maximum-text BPM/cue fully displayed in Light/Dark",
+    "limits": "static visual review, not child usability or full accessibility audit"
+  },
+  "preservation": {
+    "old_installed_version": "0.1.0(14), owner visual rejection remains recorded",
+    "source5_phone_install": "NOT RUN",
+    "source5_testflight_or_public": "NOT RUN",
+    "phone_data_reset": "NOT RUN",
+    "simulator": "existing dedicated SE 52C92F83-56BB-4DC9-9331-3556F124FF2F; original Booted/Light, remains Booted and Light restored",
+    "compiled_host": "simulator-only Debug; not a signed physical-phone candidate"
+  },
+  "not_claimed": [
+    "full App suite rerun",
+    "fresh Core suite rerun",
+    "60 FPS measured",
+    "hardware timing/latency or audio/visual synchronization accepted",
+    "child enjoyment/replay intent",
+    "owner accepted visuals",
+    "actual OS Reduce Motion/VoiceOver audit",
+    "ten-lesson replacement",
+    "release readiness"
+  ],
+  "artifacts": [
+    {
+      "path": "TestResults/UI-STAGE-03/source-manifest-4.json",
+      "sha256": "8df91d509c2ad6800538d51d32aeb94f366d95476338c955227cf6eca88a5372"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/source-manifest-5.json",
+      "sha256": "8d2e3b7ffdc479c7f71fea9580e37f5aabee2f6e4f43bdf5952f564841f9eced"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-component-binding.json",
+      "sha256": "3029c198cfe439b9cc76dccac93bc0c0adb800e499cd85f95e7d861746e54fc7"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/root-source-binding.json",
+      "sha256": "73f727cb897c5a4bae9d9a57c3e5135da1c89a5e7972344b49f489d1dcae17ee"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/authority-source-check.json",
+      "sha256": "1f01b5528c129d7e067222b11f3f579d79b5f95b1d5a63d628a4a666a0d2ad78"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/build-5-command.json",
+      "sha256": "034350f5ed11afc5ba57e899544b4c08350397da6db68e6561f0b77d14600a39"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/build-5.log",
+      "sha256": "c2c0ec62808887e1f53098e05d1d7732fd5875d38f7a30f5e777ae9331ecc347"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-final-command.json",
+      "sha256": "16e23ecd9143f6a1e035f5113ce4cb5e196fbe5cf487b76797f6f03b1c1993f9"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-final.log",
+      "sha256": "32fa199b60e8ea6de1413d82132112986f6d4f518ae0b24e3dcc7c48f9ee310c"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-final-summary.log",
+      "sha256": "59c753c32bf9dc35a8eaa05113ea4a95bb59c37bcd9adb0453ff72f361bb23d6"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final-command.json",
+      "sha256": "2ed34c667f0fa1a733a38f5bffd9ca68047117cc91494f002eeb9f0984950c40"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final.log",
+      "sha256": "95f9d3b7bd33f691eb093c64f40f25eab13c7395bb5c4b2209c86e091feab39b"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final-summary.log",
+      "sha256": "19cdf4ffc6985913946fb2bda29df721ea87b6494b8b5bcd8875c1e017bd19a6"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-dark-final-command.json",
+      "sha256": "644c68a59607b6d13c78adb650e4d20fd31d4f9e1d7a684e5e3fd06c99cd2e35"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-dark-final.log",
+      "sha256": "5466e1bb8436b4f7ea675bee7fe3ee73041bf241422a090546aeb13c79179f0e"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-dark-final-summary.log",
+      "sha256": "55031988e5e65c24ba82d0d0e89f99c75e68af0d550d06381c478779f95740e7"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-1-command.json",
+      "sha256": "1b0798a277d2cdd12e38343ed7d7e3225f7cf6b99553ad0dcdab8a01bf90db50"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-1.log",
+      "sha256": "980b68add3beb7fccc72628cb8291c8b541aed1530f66ee73c757ecc6dcb1b3f"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-1-summary.log",
+      "sha256": "4a1f38860a71f1607876f9b32fd8c7825d3b50e69a30e0c0ff9c9320d6cd81ea"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/scene-tests-1-command.json",
+      "sha256": "9ce7c429b2f147940a0eeacfce30b47b6e16b33515acd5af02a603ae4fe4518c"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/scene-tests-1.log",
+      "sha256": "62fd63e3b43282eb7838b05f7e3c604d40e8c734208da2c63974d1a15519fc1b"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/scene-tests-1-summary.log",
+      "sha256": "45ae9250e17670f65f02b4e74d82d319bbb7286855bfdb8cea4e8597b5a92986"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-final-pngs/0E6B07A0-ECE9-4972-9078-8587A35B8393.png",
+      "sha256": "500682b0bac735ab49b81ca183d98fbd4cc9589f00600066a6c60ba2db9f1fe5"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-final-pngs/58044B41-D7BE-4766-BB66-534805E36D4A.png",
+      "sha256": "de012fd3bbf97d6304bf27987e7ca209c6e45ab85cd71b10fc6b51d6f595241c"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final-pngs/12228CCB-F2C4-407C-B401-89EA1086719D.png",
+      "sha256": "8860525a7c609eded591e66001218b88a943f8b44037b3834d3d9014c3c8a203"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final-pngs/10D137F4-C763-410C-9BFC-67593420CAC9.png",
+      "sha256": "b0890799c7c7baf2bef038bdde8b1de46aac12a0e027d9431eeb32585ab384c5"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final-pngs/C77A6296-A201-4A98-B5A0-91292BD95E98.png",
+      "sha256": "c4101097fc831f43c4623bfa21c54c77d3fa423c3e5eb359df80b5c70991a9de"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-dark-final-pngs/CE90099C-9AEC-4916-9866-A9603F7876C2.png",
+      "sha256": "c34f560b978538874a710a94911c70ccfa692c2b1a79167c5f5678968c6f916e"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/native-final-pngs/manifest.json",
+      "sha256": "35702a866271f74fc3ea7c96f62ff1756ab1f82e83fcfc2fc1fb534def72ec45"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final-pngs/manifest.json",
+      "sha256": "d3c118e2de5798d6bdea299802a950f773c49e73e142c0f533764b2589660bff"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-dark-final-pngs/manifest.json",
+      "sha256": "c65c324adc32469ceaf53db188a28845e18b895aef4c8e9bd085dedacef6a8de"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-first-attachments/manifest.json",
+      "sha256": "a2d54ee5dc2ad1cbe696f884a423c6d7a1ecd610c69cadaa753d7e4aeb3cacf1"
+    }
+  ],
+  "raw_bundle_hashes": [
+    {
+      "raw_result": "TestResults/UI-STAGE-03/native-final.xcresult",
+      "file_count": 62,
+      "hash_inventory": "TestResults/UI-STAGE-03/native-final-bundle-hashes.json",
+      "sha256": "35bb0eef0eceacef24965c8a9d94e67b323ed5069bb422d693af933af67343b0"
+    },
+    {
+      "raw_result": "TestResults/UI-STAGE-03/ui-final.xcresult",
+      "file_count": 50,
+      "hash_inventory": "TestResults/UI-STAGE-03/ui-final-bundle-hashes.json",
+      "sha256": "7e24fb09d97378e28bda44671e1a7a8f8617360464f929f28420baf41bc7e704"
+    },
+    {
+      "raw_result": "TestResults/UI-STAGE-03/ui-dark-final.xcresult",
+      "file_count": 34,
+      "hash_inventory": "TestResults/UI-STAGE-03/ui-dark-final-bundle-hashes.json",
+      "sha256": "45268b0d93eb1bf33dfbd8edb7b17afb654f6929ef955526eafd4ac93fb87bed"
+    },
+    {
+      "raw_result": "TestResults/UI-STAGE-03/ui-1.xcresult",
+      "file_count": 1156,
+      "hash_inventory": "TestResults/UI-STAGE-03/ui-1-bundle-hashes.json",
+      "sha256": "67b4656fbe63ee01bf5f01150761ee69ead908269507e4e34f221bee72fec499"
+    },
+    {
+      "raw_result": "TestResults/UI-STAGE-03/scene-tests-1.xcresult",
+      "file_count": 28,
+      "hash_inventory": "TestResults/UI-STAGE-03/scene-tests-1-bundle-hashes.json",
+      "sha256": "8ac4b578cbbf59d001135e5c72cfc63473e285df169d72904424738d68bbfa8c"
+    }
+  ]
+}

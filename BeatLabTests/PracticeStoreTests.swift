@@ -2469,7 +2469,7 @@ final class RhythmPrototypeTests: XCTestCase {
         let original=try XCTUnwrap(defaults.data(forKey:ProgressRepository.storageKey))
         let store=PracticeStore(repository:repository), audio=MetronomeAudio(); defer { audio.stop() }
         let lesson=store.lessons[1]
-        for variant in RhythmPresentation.allCases {
+        for variant in [RhythmPresentation.falling, .runner] {
             store.startComparison(lesson,presentation:variant,audio:audio)
             for _ in 0..<80 where store.phase == .preparing { try await Task.sleep(nanoseconds:25_000_000) }
             XCTAssertEqual(store.phase,.playing); XCTAssertTrue(store.isComparison)
@@ -2541,4 +2541,103 @@ final class RhythmPrototypeTests: XCTestCase {
         XCTAssertEqual(store.phase,.idle); XCTAssertFalse(audio.isPlaying)
         XCTAssertNil(defaults.data(forKey:ProgressRepository.storageKey))
     }
+    @MainActor
+    func testDrummerNotesPreviewAtRealFixedStrikeAndExpireWithoutScoring() throws {
+        let targets=[TimingTarget(id:0,time:104,stroke:.right),TimingTarget(id:1,time:104.5,stroke:.left)]
+        let state=RhythmGameSnapshot(targets:targets,hits:[],epoch:100,duration:20.18,alignment:0.2,bpm:60,subdivisions:2)
+        var now=2.2
+        let scene=DrummerRhythmScene(size:CGSize(width:320,height:420))
+        scene.snapshot={state};scene.elapsed={now};scene.didMove(to:SKView());scene.update(0)
+        let cue=try XCTUnwrap(scene.childNode(withName:"note.0"))
+        XCTAssertEqual(cue.position.x,240,accuracy:0.0001);XCTAssertEqual(cue.position.y,278,accuracy:0.0001)
+        now=4.2;scene.update(3);XCTAssertEqual(cue.position.y,66,accuracy:0.0001)
+        now=4.379;scene.update(4);XCTAssertFalse(cue.isHidden);XCTAssertEqual(cue.position.y,66,accuracy:0.0001)
+        now=4.381;scene.update(5);XCTAssertTrue(cue.isHidden)
+        scene.size=CGSize(width:360,height:500);now=4.2;scene.update(6)
+        let resized=try XCTUnwrap(scene.childNode(withName:"note.0"))
+        XCTAssertEqual(resized.position.x,270,accuracy:0.0001);XCTAssertEqual(resized.position.y,66,accuracy:0.0001)
+        now = .nan;scene.update(7);XCTAssertEqual(resized.position.y,66,accuracy:0.0001)
+        XCTAssertTrue(state.hits.isEmpty,"Scene updates cannot submit scores")
+    }
+    @MainActor
+    func testDrummerRealMatchDrivesReboundExtraDoesNotAdvanceAndPauseFreezesPose() throws {
+        let targets=[TimingTarget(id:0,time:104,stroke:.right),TimingTarget(id:1,time:104.5,stroke:.left)]
+        var session=try TimingSession(targets:targets)
+        var now=4.15
+        let scene=DrummerRhythmScene(size:CGSize(width:320,height:420))
+        scene.snapshot={RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:20.18,alignment:0,bpm:60,subdivisions:2)}
+        scene.elapsed={now};scene.didMove(to:SKView());scene.update(0)
+        let right=try XCTUnwrap(scene.childNode(withName:"stick.right")),left=try XCTUnwrap(scene.childNode(withName:"stick.left"))
+        let rest=right.zRotation
+        session.tap(at:104.1);scene.update(1)
+        XCTAssertNotEqual(right.zRotation,rest);XCTAssertEqual(left.zRotation,0.35,accuracy:0.0001)
+        let rebound=right.zRotation
+        session.tap(at:104.101);scene.update(2)
+        XCTAssertEqual(right.zRotation,rebound,accuracy:0.0001)
+        XCTAssertEqual(session.summary.matched.count,1);XCTAssertEqual(session.summary.extraCount,1)
+        scene.update(99999);XCTAssertEqual(right.zRotation,rebound,accuracy:0.0001,"Wall-clock frames cannot move a frozen musical pose")
+        let halo=try XCTUnwrap(scene.childNode(withName:"strike.right"))
+        now=4.22;scene.update(3);let beforeRelease=halo.xScale
+        now=4.23;scene.update(4);let atRelease=halo.xScale
+        now=4.24;scene.update(5)
+        XCTAssertLessThan(abs(atRelease-beforeRelease),0.03)
+        XCTAssertLessThan(abs(halo.xScale-atRelease),0.03,"Releasing the pad must not abruptly reset its ring size")
+        scene.reduced=true;scene.update(100000);XCTAssertEqual(right.zRotation,rest,accuracy:0.0001)
+        scene.reduced=false;now=4.9;scene.update(100001);XCTAssertEqual(right.zRotation,rest,accuracy:0.0001)
+        let actor=try XCTUnwrap(scene.childNode(withName:"drummer"));XCTAssertEqual(actor.xScale,1,accuracy:0.0001)
+    }
+    @MainActor
+    func testDrummerNativeRenderingSpecimensAndReducedActorLayout() throws {
+        let lesson=try LessonCatalog.bundled().lessons[2],targets=try lesson.pattern.targets(bpm:60,bars:4,epoch:100)
+        var session=try TimingSession(targets:targets);session.tap(at:104)
+        for appearance in [UIUserInterfaceStyle.light,.dark] {
+            let traits=UITraitCollection(userInterfaceStyle:appearance)
+            traits.performAsCurrent {
+                for height:CGFloat in [340,520] {
+                    let scene=DrummerRhythmScene(size:CGSize(width:320,height:height)),view=SKView(frame:CGRect(x:0,y:0,width:320,height:height))
+                    scene.snapshot={RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:20.18,alignment:0,bpm:60,subdivisions:2)};scene.elapsed={4.1}
+                    view.presentScene(scene);scene.update(0)
+                    XCTAssertEqual(scene.children.filter{$0.name?.hasPrefix("note.")==true}.count,32)
+                    let texture=view.texture(from:scene)
+                    XCTAssertNotNil(texture)
+                    if let texture { let attachment=XCTAttachment(image:UIImage(cgImage:texture.cgImage()));attachment.name="Drummer native \(height) \(appearance.rawValue)";attachment.lifetime = .keepAlways;add(attachment) }
+                    scene.showActor=false;scene.reduced=true;scene.update(1)
+                    XCTAssertNil(scene.childNode(withName:"drummer"));XCTAssertNotNil(scene.childNode(withName:"note.0"))
+                }
+            }
+        }
+    }
+    @MainActor
+    func testDrummerTrialRejectsOtherLessonsUsesOriginalThirdChartAndNeverSaves() async throws {
+        #if DEBUG
+        let name="BeatLabTests.Drummer.\(UUID().uuidString)",defaults=try XCTUnwrap(UserDefaults(suiteName:name))
+        defer{defaults.removePersistentDomain(forName:name)}
+        let repository=ProgressRepository(defaults:defaults);try repository.save(PracticeProgress())
+        let original=defaults.data(forKey:ProgressRepository.storageKey),store=PracticeStore(repository:repository),audio=MetronomeAudio();defer{audio.stop()}
+        store.startComparison(store.lessons[1],presentation:.drummer,audio:audio)
+        XCTAssertEqual(store.phase,.idle);XCTAssertFalse(audio.isPlaying)
+        let lesson=store.lessons[2]
+        for successful in [false,true] {
+            store.startComparison(lesson,presentation:.drummer,audio:audio)
+            for _ in 0..<100 where store.phase == .preparing {try await Task.sleep(nanoseconds:25_000_000)}
+            XCTAssertEqual(store.phase,.playing);XCTAssertTrue(store.isComparison)
+            let state=try XCTUnwrap(store.gameSnapshot)
+            XCTAssertEqual(state.targets.count,32);XCTAssertEqual(state.duration,20.18,accuracy:0.0001)
+            XCTAssertEqual(state.targets.first!.time-state.epoch,4,accuracy:0.0001)
+            XCTAssertEqual(state.targets.last!.time-state.epoch,19.5,accuracy:0.0001)
+            XCTAssertTrue(state.targets.allSatisfy{$0.stroke == .right},"Reviewed lesson03 fixture is right-hand eighths, not a new alternating chart")
+            XCTAssertEqual(state.targets,try lesson.pattern.targets(bpm:60,bars:4,epoch:state.epoch))
+            if successful {for target in state.targets{store.tap(at:target.time,stroke:target.stroke)}}
+            for _ in 0..<900 where store.phase == .playing {try await Task.sleep(nanoseconds:25_000_000)}
+            XCTAssertEqual(store.phase,.finished);XCTAssertEqual(store.stars,successful ? 3 : 0)
+            XCTAssertFalse(store.resultSaved);XCTAssertFalse(store.needsSaveRetry)
+            XCTAssertEqual(defaults.data(forKey:ProgressRepository.storageKey),original)
+            XCTAssertFalse(store.unlocked(lesson))
+        }
+        store.startComparison(lesson,presentation:.drummer,audio:audio)
+        store.cancel(audio:audio);XCTAssertEqual(store.phase,.idle)
+        XCTAssertEqual(defaults.data(forKey:ProgressRepository.storageKey),original)
+        #endif
+    }
+
 }

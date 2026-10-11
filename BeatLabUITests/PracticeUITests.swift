@@ -858,4 +858,52 @@ final class PracticeUITests: XCTestCase {
         app.buttons["stopPractice"].tap()
     }
 
+    @MainActor
+    func testDrummerActualInputPauseRetryAndIsolatedZeroResult() throws {
+        let app=freshApp();try openDrummerTrial(in:app)
+        let right=app.buttons["practiceTapPad.right"],left=app.buttons["practiceTapPad.left"]
+        XCTAssertTrue(right.waitForExistence(timeout:5))
+        app.buttons["pausePractice"].tap()
+        XCTAssertTrue(app.buttons["restartPractice"].waitForExistence(timeout:5));capture(app,"Drummer paused before expiry")
+        app.buttons["restartPractice"].tap();XCTAssertTrue(right.waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 32")
+        XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:26))
+        XCTAssertEqual(app.otherElements["practiceStars"].label,"這次得到 0 顆星")
+        XCTAssertFalse(app.buttons["nextLesson"].exists);capture(app,"Drummer zero-input real result")
+        try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
+        XCTAssertTrue(right.waitForExistence(timeout:5));XCTAssertTrue(left.isHittable)
+        XCTAssertLessThan(left.frame.maxX,right.frame.minX+1);XCTAssertGreaterThanOrEqual(right.frame.height,44)
+        let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
+        let matches=app.staticTexts["jumpMatches"]
+        for _ in 0..<12 {
+            guard right.exists else { break }
+            right.tap()
+            if matches.exists, matches.label.range(of:"命中 [1-9][0-9]* / 32",options:.regularExpression) != nil { break }
+        }
+        XCTAssertTrue(matches.exists,"An expired field cannot count as evidence of a successful touch")
+        XCTAssertNotNil(matches.label.range(of:"命中 [1-9][0-9]* / 32",options:.regularExpression))
+        capture(app,"Drummer actual individual touch and judged feedback")
+        app.buttons["stopPractice"].tap();XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["journeyProgress"].label,"0 / 10 關完成")
+        XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
+    }
+    @MainActor
+    func testDrummerMaximumTextControlsAndNoWriteOnExit() throws {
+        let app=freshApp(largestText:true);try openDrummerTrial(in:app)
+        let left=app.buttons["practiceTapPad.left"],right=app.buttons["practiceTapPad.right"]
+        XCTAssertTrue(left.waitForExistence(timeout:5));XCTAssertTrue(right.isHittable)
+        XCTAssertLessThanOrEqual(right.frame.maxY,app.windows.firstMatch.frame.maxY)
+        XCTAssertGreaterThanOrEqual(right.frame.height,44);capture(app,"Drummer maximum text live")
+        app.buttons["pausePractice"].tap();try reveal(app.buttons["resumePractice"],in:app)
+        app.buttons["resumePractice"].tap();XCTAssertTrue(right.waitForExistence(timeout:5))
+        app.buttons["stopPractice"].tap();XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["journeyProgress"].label,"0 / 10 關完成")
+    }
+    @MainActor
+    private func openDrummerTrial(in app:XCUIApplication) throws {
+        try selectTab("練習",in:app);app.buttons["practiceSettings"].tap()
+        let trial=app.buttons["comparison.eighth.drummer"];try reveal(trial,in:app);trial.tap()
+    }
+
 }

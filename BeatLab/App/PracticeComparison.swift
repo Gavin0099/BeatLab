@@ -1,8 +1,10 @@
 import Foundation
 import BeatLabCore
 
-enum RhythmPresentation: String, CaseIterable { case falling, runner
-    var title: String { self == .falling ? "雙軌節奏" : "節奏跑酷" }
+enum RhythmPresentation: String, CaseIterable { case falling, runner, drummer
+    var title: String {
+        switch self { case .falling: return "雙軌節奏"; case .runner: return "節奏跑酷"; case .drummer: return "恐龍鼓手" }
+    }
 }
 
 /// Only projects already-authored targets and actual matcher results.

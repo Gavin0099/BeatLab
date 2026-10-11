@@ -5,6 +5,10 @@
 	};
 	objectVersion = 56;
 	objects = {
+		B10300000000000000000003 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/DrummerStageView.swift; sourceTree = SOURCE_ROOT; };
+		B10300000000000000000004 = { isa = PBXBuildFile; fileRef = B10300000000000000000003; };
+		B10300000000000000000001 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/DrummerRhythmScene.swift; sourceTree = SOURCE_ROOT; };
+		B10300000000000000000002 = { isa = PBXBuildFile; fileRef = B10300000000000000000001; };
 		1DF87C67EA7924AF4FF7ECC9 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/App/PracticeComparison.swift; sourceTree = SOURCE_ROOT; };
 		DB672E357303031A3D901F1F = { isa = PBXBuildFile; fileRef = 1DF87C67EA7924AF4FF7ECC9; };
 		D83E28C6CFA70F8D0A1AAE5F = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/App/PracticeTransportProjection.swift; sourceTree = SOURCE_ROOT; };
@@ -318,6 +322,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B10300000000000000000002,
+				B10300000000000000000004,
 				DB672E357303031A3D901F1F,
 				CC59984E09105603E5DFA59B,
 				6BF06FA256475FA2A8E49011,
@@ -727,6 +733,8 @@
 		BF61121A5CB6C5C34F7E02C7 = {
 			isa = PBXGroup;
 			children = (
+				B10300000000000000000001,
+				B10300000000000000000003,
 				1DF87C67EA7924AF4FF7ECC9,
 				D83E28C6CFA70F8D0A1AAE5F,
 				8315F98738B78144386891E2,

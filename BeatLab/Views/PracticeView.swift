@@ -365,10 +365,22 @@ struct PracticeView: View {
                     #if DEBUG
                     BLCard {
                         VStack(alignment: .leading, spacing: 12) {
+                            Text("恐龍鼓手 · 20 秒試玩").font(.headline)
+                            Text("第三關原譜：右手連續八分音符。音符抵達鼓面就敲，恐龍陪你演奏；只判時機，不判實際手別。試玩不保存進度。").font(.subheadline)
+                            if let lesson = practice.lessons.dropFirst(2).first {
+                                Button("試玩鼓手舞台") {
+                                    showSettings = false; showingJourney = false
+                                    practice.startComparison(lesson, presentation: .drummer, audio: audio)
+                                }.buttonStyle(BLPrimaryButtonStyle()).accessibilityIdentifier("comparison.eighth.drummer")
+                            }
+                        }
+                    }
+                    BLCard {
+                        VStack(alignment: .leading, spacing: 12) {
                             Text("操作比較 · 不影響進度").font(.headline)
                             Text("第二關四分拍、第三關八分拍；同節奏、聲音與判分，L/R先只判時機。").font(.subheadline)
                             ForEach(practice.lessons.dropFirst().prefix(2)) { lesson in
-                                ForEach(RhythmPresentation.allCases, id: \.self) { variant in
+                                ForEach([RhythmPresentation.falling, .runner], id: \.self) { variant in
                                     Button("\(lesson.shortTitle) · \(variant.title)") {
                                         showSettings = false; showingJourney = false
                                         practice.startComparison(lesson, presentation: variant, audio: audio)
@@ -805,12 +817,10 @@ struct PracticeView: View {
         Group {
             if practice.isCalibrating { legacyResultPanel(summary) }
             else {
-                GameResultView(celebration: AnyView(EggMissionScene(theme: missionTheme, elapsed: practice.elapsed,
-                        accepted: practice.gameSnapshot?.accepted ?? [], finishedPassed: practice.stars > 0,
-                        route: practice.gameRoute, platformJourney: true).frame(height: 200)), title: practice.isComparison ? "這段節奏完成了" : practice.stars > 0 ? "節奏挑戰成功！" : "再聽一次，再試一次！",
+                GameResultView(celebration: gameCelebration, title: practice.isComparison ? "這段節奏完成了" : practice.stars > 0 ? "節奏挑戰成功！" : "再聽一次，再試一次！",
                     summary: summary, stars: practice.stars, best: practice.progress.results[practice.selected?.id ?? ""]?.stars ?? 0,
                     comparison: practice.isComparison, saved: practice.resultSaved, saveFailed: practice.needsSaveRetry,
-                    advice: practice.isComparison ? "試試另一種操作，看看哪個更容易跟拍。" : resultAdvice(summary),
+                    advice: practice.presentation == .drummer ? "再演奏一次，或回練習設定比較同一關的跑酷版。" : practice.isComparison ? "試試另一種操作，看看哪個更容易跟拍。" : resultAdvice(summary),
                     retry: { if let lesson = practice.selected { restartGame(lesson) } },
                     next: gameNextAction, retrySave: { practice.retrySave() }, discard: { confirmDiscard = true },
                     journey: {
@@ -821,6 +831,18 @@ struct PracticeView: View {
                 if practice.mode == .standard { technicalSummary(summary) }
             }
         }
+    }
+    private var gameCelebration: AnyView {
+        if practice.presentation == .drummer {
+            return AnyView(HStack(spacing: 16) {
+                Image("HomeDinosaur").resizable().scaledToFit().frame(width: 96, height: 112).accessibilityHidden(true)
+                Text(practice.stars > 0 ? "小島聽見你的節奏了！" : "恐龍陪你，再聽一次。")
+                    .font(.headline).fixedSize(horizontal: false, vertical: true)
+            }.frame(maxWidth: .infinity).padding(.vertical, 12))
+        }
+        return AnyView(EggMissionScene(theme: missionTheme, elapsed: practice.elapsed,
+            accepted: practice.gameSnapshot?.accepted ?? [], finishedPassed: practice.stars > 0,
+            route: practice.gameRoute, platformJourney: true).frame(height: 200))
     }
     private var gameNextAction: (() -> Void)? {
         #if DEBUG

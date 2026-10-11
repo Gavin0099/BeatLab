@@ -39,15 +39,24 @@ struct PracticeComparisonView: View {
         GeometryReader { geometry in
             if let lesson = practice.selected {
                 VStack(spacing: 10) {
+                    if practice.presentation == .drummer {
+                        DrummerHUD(lesson: lesson, snapshot: practice.gameSnapshot, elapsed: practice.elapsed,
+                                   pause: { practice.pause(audio: audio) }, exit: exit)
+                    } else {
                     GameHUD(lesson: lesson, number: (practice.lessons.firstIndex { $0.id == lesson.id } ?? 0) + 1,
                             snapshot: practice.gameSnapshot, elapsed: practice.elapsed, comparison: practice.isComparison,
                             pause: { practice.pause(audio: audio) }, exit: exit)
+                    }
+                    if practice.presentation == .drummer {
+                        DrummerStageView().frame(maxWidth: .infinity, maxHeight: .infinity)
+                    } else {
                     stage.frame(maxWidth: .infinity, maxHeight: .infinity).accessibilityElement(children: .contain).accessibilityIdentifier("rhythmGameStage")
                     Text(feedback).font(textSize.isAccessibilitySize ? .subheadline.bold() : .headline)
                         .multilineTextAlignment(.center).lineLimit(2).frame(maxWidth: .infinity).frame(height: feedbackHeight)
                         .accessibilityIdentifier("jumpCue")
                     HStack(spacing: 12) { pad(.left, lesson: lesson); pad(.right, lesson: lesson) }
                         .frame(height: textSize.isAccessibilitySize ? 116 : 92)
+                    }
                 }.padding(.horizontal, 16).padding(.vertical, 8)
                     .frame(maxWidth: 760).frame(maxWidth: .infinity)
                     .background(BeatLabStyle.canvas)

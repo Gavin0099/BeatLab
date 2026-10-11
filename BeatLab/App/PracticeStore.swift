@@ -121,6 +121,7 @@ final class PracticeStore: ObservableObject {
     #if DEBUG
     func startComparison(_ lesson: Lesson, presentation: RhythmPresentation, audio: MetronomeAudio) {
         guard canPractice, !isActive, !needsSaveRetry, lessons.dropFirst().prefix(2).contains(where: { $0.id == lesson.id }) else { return }
+        guard presentation != .drummer || lesson.id == lessons.dropFirst(2).first?.id else { return }
         selected = lesson; practiceBPM = lesson.bpm; self.presentation = presentation
         isComparison = true; isCalibrating = false; isEggMission = IslandLesson.profile(lesson) != nil
         begin(audio: audio, bpm: lesson.bpm)
