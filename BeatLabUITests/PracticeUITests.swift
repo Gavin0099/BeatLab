@@ -583,12 +583,20 @@ final class PracticeUITests: XCTestCase {
             for _ in 0..<24 {
                 XCTAssertTrue(course.exists, "Course sheet must remain presented while scrolling")
                 let frame = element.exists ? element.frame : .zero
-                if element.exists && frame.minY >= top && frame.maxY <= bottom && (!requiresHit || element.isHittable) { return }
-                // A held drag of only a few points can activate a lesson row.
-                // Use a scroll gesture and verify the sheet and exact selection.
-                if element.exists && frame.midY < (top + bottom) / 2 { scroll.swipeDown(velocity: .slow) }
-                else { scroll.swipeUp(velocity: .slow) }
+                let visibleHeight = max(0, min(bottom, frame.maxY) - max(top, frame.minY))
+                if element.exists && frame.midY >= top + 22 && frame.midY <= bottom - 22 && visibleHeight >= 44 && (!requiresHit || element.isHittable) { return }
+                // A full-height fling can oscillate past a short row. Move a
+                // bounded distance with no held press, retaining a44pt visible
+                // activation area and asserting the exact prepared lesson.
+                let middle = (top + bottom) / 2
+                let shift = element.exists ? min(160, max(-160, middle - frame.midY)) : -160
+                let origin = scroll.coordinate(withNormalizedOffset: .zero)
+                let localMiddle = middle - scroll.frame.minY
+                origin.withOffset(CGVector(dx: scroll.frame.width * 0.9, dy: localMiddle - shift / 2))
+                    .press(forDuration: 0, thenDragTo: origin.withOffset(CGVector(dx: scroll.frame.width * 0.9, dy: localMiddle + shift / 2)), withVelocity: .slow, thenHoldForDuration: 0)
             }
+            capture(app, "Course visibility failure \(element.identifier)")
+            print("COURSE_AX_DIAGNOSTIC", element.debugDescription, scroll.frame)
             throw NSError(domain: "PracticeUIVisibility", code: 2, userInfo: [NSLocalizedDescriptionKey: "Course row not visible: \(element.identifier)"])
         }
         let picker = app.navigationBars["選擇夥伴"]
