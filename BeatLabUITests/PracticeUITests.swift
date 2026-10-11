@@ -449,7 +449,14 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(right.waitForExistence(timeout:5))
         let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
         XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
-        right.tap(withNumberOfTaps:8,numberOfTouches:1)
+        // A rapid multi-tap batch may fit entirely between legal windows.
+        // Send real individual touches and observe actual matcher output;
+        // no score injection, clock override or wider window is involved.
+        for _ in 0..<12 {
+            right.tap()
+            if !app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 ") { break }
+        }
+        capture(app, "A actual individual touch judgment")
         XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "))
         app.buttons["pausePractice"].tap()
         XCTAssertTrue(app.buttons["restartPractice"].waitForExistence(timeout:5))
