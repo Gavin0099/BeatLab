@@ -1,3 +1,5 @@
+> **2026-10-11 操作與遊戲UI新切片已定義，尚未實作**：原型共同基準、舞台HUD、穩定鼓聲、A/B操作、逐片本機/真機QA、選關/準備、結果、真暫停及新包交付均有獨立契約。下面歷史tests/install不驗證新原型；原凍結手機包留存缺口仍FAIL，不以新包覆寫舊manifest。所有App／真機／兒童gates仍按各片實跑記錄。[切片總表](slices/RHYTHM-PLAY-01.md) · [原包留存缺口](slices/QA-RETENTION-01-verification.json)。
+
 > **2026-10-09 前兩關一星門檻調整，本機回歸通過**：Owner釐清困難為拿不到一星解鎖；GAME34改為16拍至少命中12拍、最多多按4次，取消一星Perfect要求。二／三星原精準度、第三至十關、匹配窗口與音訊／輸入／保存schema不變；舊成績不回算。來源39f39d1完整本機Core59/App115與UI3通過，含保存失敗／重試、零輸入仍鎖定；一般與最大字級Light/Dark核對，最大字級鼓墊文字仍有橫向壓縮，完整Accessibility未接受。matching簽署Debug13已透過Wi-Fi原地安裝並成功開啟；Apple未上傳，真機timing/FPS／兒童接受仍pending。[當次證據](slices/GAME-34-verification.json)。
 
 > **2026-10-09 左右控制區修正已安裝／開啟**：上一版把右手鼓墊放左側，測試也誤把反向空間順序當成正確。GAME33改為左手L在左、右手R在右，保留原有R/L拍點及時間匹配／評分／進度；窄螢幕一般Light、最大字級Light/Dark共3個實際流程通過。來源ac9893c的本機簽署Debug13已透過Wi-Fi原地安裝並成功開啟；TestFlight13仍是GAME23。難度診斷確認前兩關一星至少14次命中／9次Perfect／至多1次多按，第二→第三間隔0.923→0.5秒；這是GAME33當時診斷；owner後續釐清卡點為一星解鎖，前兩關門檻已由上方GAME34調整，關卡速度未改。真機timing/FPS、兒童和完整Accessibility未接受。[修正與交付](slices/GAME-33-verification.json) · [難度診斷](slices/GAME-33-difficulty-analysis.md)。
