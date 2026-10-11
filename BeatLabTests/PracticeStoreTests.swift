@@ -2418,6 +2418,42 @@ final class RhythmPrototypeTests: XCTestCase {
         for target in targets { shifted.tap(at:target.time+0.3) }
         XCTAssertEqual(shifted.summary.matched.count,0); XCTAssertEqual(lesson.stars(shifted.summary),0)
     }
+    func testReviewedTempoOffsetAndSeededSpamMatrixKeepsRealStars() throws {
+        let catalog = try LessonCatalog.bundled().lessons
+        for base in catalog.prefix(2) {
+            for bpm in [base.bpm, 90] {
+                let lesson = try base.atTempo(bpm)
+                let targets = try lesson.pattern.targets(bpm: bpm, bars: 4, epoch: 100)
+                for alignment in [-0.1, 0, 0.1] {
+                    var finite = try TimingSession(targets: targets, calibrationOffset: alignment)
+                    // Independent fixture: fourteen late strokes and two duplicates.
+                    // Neither timing-window nor production-star formula is copied.
+                    for (index, target) in targets.prefix(14).enumerated() {
+                        finite.tap(at: target.time + alignment + 0.1)
+                        if index < 2 { finite.tap(at: target.time + alignment + 0.101) }
+                    }
+                    XCTAssertEqual(finite.summary.matched.count, 14)
+                    XCTAssertEqual(finite.summary.extraCount, 2)
+                    XCTAssertEqual(finite.summary.perfectRate, 0)
+                    XCTAssertEqual(lesson.stars(finite.summary), 1)
+                    for seed in [UInt64(7), UInt64(20261011)] {
+                        var state = seed
+                        var time = targets[0].time + alignment - 0.15
+                        var random = try TimingSession(targets: targets, calibrationOffset: alignment)
+                        for _ in 0..<400 {
+                            state = state &* 6364136223846793005 &+ 1
+                            time += 0.005 + Double((state >> 32) % 41) / 1000
+                            random.tap(at: time)
+                        }
+                        XCTAssertEqual(random.summary.matched.count + random.summary.extraCount, 400)
+                        XCTAssertLessThanOrEqual(random.summary.matched.count, 16)
+                        XCTAssertGreaterThanOrEqual(random.summary.extraCount, 384)
+                        XCTAssertEqual(lesson.stars(random.summary), 0)
+                    }
+                }
+            }
+        }
+    }
     @MainActor
     func testComparisonDoesNotWriteProgressOnSuccessFailureOrCancel() async throws {
         #if DEBUG
