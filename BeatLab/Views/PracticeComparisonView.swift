@@ -21,10 +21,12 @@ struct PracticeComparisonView: View {
         if let lesson = practice.selected, practice.elapsed < 4 * 60 / Double(lesson.bpm), !practice.isResuming {
             return "先聽 \(min(4,max(1,4-Int(practice.elapsed * Double(lesson.bpm)/60)))) 拍，準備敲"
         }
-        if let snapshot = practice.gameSnapshot,
-           let missedTarget = snapshot.targets.last(where: { snapshot.missed(at: practice.elapsed).contains($0.id) }),
-           missedTarget.time + snapshot.alignment + TimingSession.matchingWindow > (practice.latestHit?.inputTime ?? 0) {
-            return "漏了一拍，接著下一拍"
+        if let snapshot = practice.gameSnapshot {
+            let missed = snapshot.missed(at: practice.elapsed)
+            if let missedTarget = snapshot.targets.last(where: { missed.contains($0.id) }),
+               missedTarget.time + snapshot.alignment + TimingSession.matchingWindow > (practice.latestHit?.inputTime ?? 0) {
+                return "漏了一拍，接著下一拍"
+            }
         }
         if let hit = practice.latestHit {
             return hit.grade == .perfect ? "Perfect · 剛剛好！" : hit.grade == .early ? "早了一點，再跟上" : hit.grade == .late ? "晚了一點，再跟上" : "多打一下，聽下一拍"

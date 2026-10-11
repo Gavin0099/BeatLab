@@ -29,7 +29,8 @@ struct RhythmGameSnapshot {
     }
     func missed(at elapsed: Double) -> Set<Int> {
         guard elapsed.isFinite else { return [] }
-        return Set(targets.filter { $0.time + alignment + TimingSession.matchingWindow + 1e-10 < epoch + elapsed && !accepted.contains($0.id) }.map(\.id))
+        let played = accepted
+        return Set(targets.filter { $0.time + alignment + TimingSession.matchingWindow + 1e-10 < epoch + elapsed && !played.contains($0.id) }.map(\.id))
     }
     func distance(_ target: TimingTarget, elapsed: Double) -> Double? {
         guard elapsed.isFinite, bpm > 0 else { return nil }

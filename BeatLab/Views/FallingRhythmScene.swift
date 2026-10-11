@@ -58,9 +58,10 @@ class FallingRhythmScene: SKScene {
         line.path = path
         left.position = CGPoint(x: size.width * 0.25, y: 12); right.position = CGPoint(x: size.width * 0.75, y: 12)
         let missed = value.missed(at: now)
+        let accepted = value.accepted
         for target in value.targets {
             guard let distance = value.distance(target, elapsed: now), let node = notes[target.id] else { continue }
-            node.isHidden = distance > 1 + 1e-10 || value.accepted.contains(target.id) || missed.contains(target.id)
+            node.isHidden = distance > 1 + 1e-10 || accepted.contains(target.id) || missed.contains(target.id)
             let visualDistance = reduced ? (max(0,distance) * 4).rounded(.up) / 4 : max(0,distance)
             if horizontal { node.position = CGPoint(x: hitX + CGFloat(visualDistance) * (size.width - hitX - 36), y: target.stroke == .left ? size.height * 0.35 : size.height * 0.70) }
             else { node.position = CGPoint(x: size.width * (target.stroke == .left ? 0.25 : 0.75), y: hitY + CGFloat(visualDistance) * travel) }
