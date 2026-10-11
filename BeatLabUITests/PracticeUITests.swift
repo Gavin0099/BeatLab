@@ -740,7 +740,7 @@ final class PracticeUITests: XCTestCase {
         let cue = app.staticTexts["jumpCue"]
         let stop = app.buttons["stopPractice"]
         let appFrame = app.windows.firstMatch.frame
-        let navigationBottom = app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.frame.maxY
+        let navigationBottom = app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.exists ? app.statusBars.firstMatch.frame.maxY : appFrame.minY
         let viewport = CGRect(x: 0, y: navigationBottom, width: appFrame.width, height: appFrame.maxY - navigationBottom)
         let cueFrame = cue.frame, padFrame = pad.frame, stopFrame = stop.frame
         for (name, frame) in [("cue", cueFrame), ("pad", padFrame), ("stop", stopFrame)] {
