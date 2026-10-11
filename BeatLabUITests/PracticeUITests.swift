@@ -482,6 +482,21 @@ final class PracticeUITests: XCTestCase {
         app.buttons["stopPractice"].tap()
     }
     @MainActor
+    func testNewPausedBackgroundCancelsAndKeepsProgressLocked() throws {
+        let app=freshApp()
+        app.tabBars.buttons["練習"].tap(); try openFirstCompanionLesson(in:app)
+        try reveal(app.buttons["startLesson"],in:app); app.buttons["startLesson"].tap()
+        XCTAssertTrue(app.buttons["pausePractice"].waitForExistence(timeout:5)); app.buttons["pausePractice"].tap()
+        XCTAssertTrue(app.buttons["resumePractice"].waitForExistence(timeout:5))
+        XCUIDevice.shared.press(.home)
+        app.activate()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["journeyProgress"].label,"0 / 10 關完成")
+        XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
+        XCTAssertFalse(app.buttons["resumePractice"].exists)
+        capture(app,"new actual OS background cancels paused session")
+    }
+    @MainActor
     func testNewRunnerComparisonActualInputAndIsolatedExit() throws {
         let app=freshApp()
         app.tabBars.buttons["練習"].tap()
