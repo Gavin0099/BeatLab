@@ -37,3 +37,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 未接受之前不取代正式旅程；不要回退或清空owner已保存進度。
 
 整合allowed PracticeComparisonView.swift（共用容器）與PracticeComparison.swift（read-only HUD model）；PracticeStore.swift僅press展示與read-only session snapshot，涉及clock實作屬PLAY/CONTROL的L2界線。
+
+最大Accessibility字級隱去非必要角色景觀、將空間給軌道與鼓墊；命中/連擊分兩行，回饋列依字級預留固定雙行高度，grade變化不得移動鼓墊。一般字級保留角色既有動作。

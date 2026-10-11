@@ -10,6 +10,7 @@ struct PracticeComparisonView: View {
     @Environment(\.dynamicTypeSize) private var textSize
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @Environment(\.scenePhase) private var appPhase
+    @ScaledMetric(relativeTo: .headline) private var feedbackHeight: CGFloat = 44
     @State private var falling = FallingRhythmScene(size: CGSize(width: 340, height: 300))
     @State private var runner = RunnerRhythmScene(size: CGSize(width: 340, height: 180))
     @State private var pressed: Stroke?
@@ -43,7 +44,7 @@ struct PracticeComparisonView: View {
                             pause: { practice.pause(audio: audio) }, exit: exit)
                     stage.frame(maxWidth: .infinity, maxHeight: .infinity).accessibilityIdentifier("rhythmGameStage")
                     Text(feedback).font(textSize.isAccessibilitySize ? .subheadline.bold() : .headline)
-                        .multilineTextAlignment(.center).lineLimit(2).frame(maxWidth: .infinity, minHeight: 44)
+                        .multilineTextAlignment(.center).lineLimit(2).frame(maxWidth: .infinity).frame(height: feedbackHeight)
                         .accessibilityIdentifier("jumpCue")
                     HStack(spacing: 12) { pad(.left, lesson: lesson); pad(.right, lesson: lesson) }
                         .frame(height: textSize.isAccessibilitySize ? 116 : 92)
@@ -81,14 +82,16 @@ struct PracticeComparisonView: View {
     private var stage: some View {
         GeometryReader { g in
             VStack(spacing: 0) {
+                if !textSize.isAccessibilitySize {
                 EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: practice.gameSnapshot?.accepted ?? [],
                                 presentationElapsed: { practice.presentationElapsed(at: $0) },
                                 acceptedAction: practice.gameRoute?.latestAccepted, latestAction: practice.latestHit,
                                 route: practice.gameRoute, platformJourney: true)
                     .frame(height: 220)
-                    .scaleEffect(min(1, max(0.4, g.size.height * (practice.presentation == .falling ? 0.36 : 0.62) / 220)))
+                    .scaleEffect(min(1, max(0.1, g.size.height * (practice.presentation == .falling ? 0.36 : 0.62) / 220)))
                     .frame(height: g.size.height * (practice.presentation == .falling ? 0.36 : 0.62))
                     .clipped().accessibilityIdentifier("eggMissionScene")
+                }
                 SpriteView(scene: scene, preferredFramesPerSecond: 60, options: [.allowsTransparency])
                     .background(BeatLabStyle.accentSoft.opacity(0.6))
                     .accessibilityElement(children: .ignore)
@@ -109,7 +112,7 @@ struct PracticeComparisonView: View {
             RoundedRectangle(cornerRadius: 24).stroke(pressed == stroke ? BeatLabStyle.accent : .clear, lineWidth: 4)
             VStack(spacing: 2) {
                 Text(stroke == .left ? "左手" : "右手").font(.headline)
-                Text(stroke == .left ? "L" : "R").font(.system(.title2, design: .rounded).bold())
+                Text(stroke == .left ? "L" : "R").font(.system(.headline, design: .rounded).bold())
             }.foregroundStyle(BeatLabStyle.ink).allowsHitTesting(false).accessibilityHidden(true)
             TapPad(feedback: feedback, label: stroke == .left ? "左手 L 跟拍區" : "右手 R 跟拍區", identifier: identifier) { time, accessibility in
                 practice.tap(at: time, accessibility: accessibility, stroke: stroke)

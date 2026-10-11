@@ -26,12 +26,16 @@ struct GameHUD: View {
             }
             ProgressView(value: min(1, max(0, elapsed / max(snapshot?.duration ?? 1, 1))))
                 .tint(BeatLabStyle.accent).accessibilityLabel("練習進度")
-            HStack(spacing: 10) {
-                Text("命中 \(snapshot?.accepted.count ?? 0) / \(snapshot?.targets.count ?? 0)")
-                    .accessibilityIdentifier("jumpMatches")
-                Spacer(minLength: 0)
-                Text("精準連擊 \(snapshot?.perfectStreak ?? 0)")
-            }.font(.caption.bold()).monospacedDigit()
+            Group {
+                if textSize.isAccessibilitySize { VStack(alignment: .leading, spacing: 2) { stats }.frame(maxWidth: .infinity, alignment: .leading) }
+                else { HStack(spacing: 10) { stats } }
+            }.font(.caption.bold()).monospacedDigit().lineLimit(1)
         }.foregroundStyle(BeatLabStyle.ink)
+    }
+    @ViewBuilder private var stats: some View {
+        Text("命中 \(snapshot?.accepted.count ?? 0) / \(snapshot?.targets.count ?? 0)")
+            .frame(maxWidth: .infinity, alignment: .leading).accessibilityIdentifier("jumpMatches")
+        Text("精準連擊 \(snapshot?.perfectStreak ?? 0)")
+            .frame(maxWidth: .infinity, alignment: textSize.isAccessibilitySize ? .leading : .trailing)
     }
 }
