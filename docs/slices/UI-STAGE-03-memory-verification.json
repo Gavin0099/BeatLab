@@ -1,0 +1,42 @@
+{
+  "slice": "UI-STAGE-03",
+  "source_commit": "cc6f5e7c80fe424d3f208ea704600370fe923ac9",
+  "canonical_writer": "governance_tools.memory_record",
+  "surfaces": [
+    "daily",
+    "review-log",
+    "active-task-summary"
+  ],
+  "memory_check_and_run_guard": {
+    "exit_code": 0,
+    "guard_ran": true,
+    "completion_claim_allowed": true,
+    "current_diff_b0_blocker_count": 0,
+    "repo_state_b0_blocker_count": 0
+  },
+  "warnings_retained": {
+    "canonical_writer_path": "NOT FOUND",
+    "authority_guard_path": "NOT FOUND",
+    "missing_canonical_memory": 1,
+    "test_evidence_provenance_not_found": 2
+  },
+  "boundary": "Guard allows task closeout but is not evidence of full governance adoption, hardware timing, usability or release readiness. Source_local_candidate does not accept G1-G4. Task work complete for defined candidate; no session-end closeout claim.",
+  "evidence_refs": [
+    {
+      "path": "TestResults/UI-STAGE-03/memory-writer-command.json",
+      "sha256": "24cbd6460eb833790d79c0f16ae46d72a29c819445daf172d28f71c29ab2e58f"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/memory-writer.log",
+      "sha256": "ea8e7e7272a1bd8608b0be9063fbfd250dc5b6371f55e93d8f5501aad8bcd9a5"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/memory-guard-command.json",
+      "sha256": "af48523856e499b2bbb186ca1b863002ac059a8a3435b6a5f631b3a62410add3"
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/memory-guard.log",
+      "sha256": "3d3fc5ba6fd1097acb1e9b86a99d7889f1df216290d87b47208b773a516fe572"
+    }
+  ]
+}

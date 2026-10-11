@@ -118,3 +118,5 @@
 - RHYTHM-PLAY-01十片規格已切分；App未實作。先共同基準→舞台HUD/演奏鼓聲→A/B原型，正式旅程待比較選定；逐片QA，新簽署包交付另跑，timing/FPS/兒童未接受，原PhoneFrozen缺包FAIL。 <!-- memory_record_projection:active-task-summary:6e153d81745806f00fe760853bdac38f719ce60dc943095bc9affa751408890a -->
 
 - RHYTHM-PLAY來源5580a14與產品相同簽署Debug14已Wi-Fi安裝/開啟；八功能片、本機QA/交付PASS，真機timing/FPS/兒童/完整AX與G1-G4未接受；A預設/B比較隔離，Apple未上傳。 <!-- memory_record_projection:active-task-summary:031c6c9e11c77a2d2d878158de43892c08611ca62bb7fa60a614776a9057a26e -->
+
+- UI-STAGE-03 native third-lesson drummer SOURCE_LOCAL_CANDIDATE cc6f5e7; focused local checks and PNG review pass; owner/hardware/child/fullAX pending, not installed or uploaded. <!-- memory_record_projection:active-task-summary:ad8410f781c2394418721b11dfa0176714aa668d2e36b7ee62d0150add8d0e26 -->

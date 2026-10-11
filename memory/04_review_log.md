@@ -498,3 +498,14 @@
 - Validation boundary: PASS: artifacts/evidence/test-results/RHYTHM-PLAY-BATCH.json; local Core59/native126/10uniqueUI(composed9unchanged+affectedSEtouch),iPad2/Dark2/SEtouch1=15passedexecutions; Debug/Release/signed14 plus Wi-Fi install/launch PASS. NOT RUN physical timing/FPS,child,fullVO/systemReduceMotion. Earlier failed attempts retained.
 - Next action: Owner試玩首頁雙軌及練習設定同2/3關跑酷比較；保留資料；另取得physical audio/touch/resume與長幀分布、兒童A/B及完整VoiceOver/系統Reduce Motion證據。G1-G4與public接受仍pending；歷史13原包缺失FAIL不由新14替代。
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:ad8410f781c2394418721b11dfa0176714aa668d2e36b7ee62d0150add8d0e26 -->
+### Canonical memory checkpoint — UI-STAGE-03-20261011
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `ad8410f781c2394418721b11dfa0176714aa668d2e36b7ee62d0150add8d0e26`
+- Commit binding: `cc6f5e7` (bound)
+- Record: Implemented DEBUG third-lesson20.18-second dinosaur drummer trial after owner rejected installed14 and static proposal. Native SpriteKit notes strike integrated drum surfaces; actual matches drive stick rebound and lamps. Original third chart32 allR preserved; no timing, score, unlock or phone-data changes.
+- Validation boundary: docs/slices/UI-STAGE-03-verification.json: local source5 Debug buildPASS; source4 focused native13PASS bound unchanged scene/store/test inputs to source5 HUD fixes; source5 UI3PASS and Dark1 repeatPASS. Actual positive touch/zero-input0stars/isolated persistence, failed wrong-filter0 and initialUI2pass1fail preserved. Not fullApp/Core rerun or physical acceptance.
+- Next action: Compare this native trial with same-chart runner on physical phone before choosing a direction. Owner visual/play acceptance, hardware timing/FPS, children and fullAX remain pending. No new install, TestFlight or public upload in this slice.
+- PLAN reconciliation: `updated`
