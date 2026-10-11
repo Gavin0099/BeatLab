@@ -2359,6 +2359,8 @@ final class RhythmPrototypeTests: XCTestCase {
         session.tap(at:104.2)
         let hit=RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:8.18,alignment:0.2,bpm:60)
         XCTAssertEqual(hit.accepted,[0]); XCTAssertEqual(hit.perfectStreak,1)
+        XCTAssertEqual(hit.perfectStreak(at:5),1,"Authored rest never ends a streak")
+        XCTAssertEqual(hit.perfectStreak(at:6.381),0,"Real miss after the last Perfect resets live feedback without another touch")
         XCTAssertTrue(hit.missed(at:5).isEmpty)
         session.tap(at:104.2)
         XCTAssertEqual(RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:8.18,alignment:0.2,bpm:60).perfectStreak,0)

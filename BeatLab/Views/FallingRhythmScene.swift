@@ -33,7 +33,7 @@ class FallingRhythmScene: SKScene {
             notes.values.forEach { $0.removeFromParent() }; notes = [:]; targetIDs = ids; strokes = value.targets.map(\.stroke); geometrySize = .zero
             for target in value.targets {
                 let node = SKShapeNode(rectOf: CGSize(width: 66, height: 32), cornerRadius: 12)
-                node.name = "note.\(target.id)"; node.lineWidth = 2; node.strokeColor = UIColor(named: "Ink") ?? .darkGray
+                node.name = "note.\(target.id)"; node.zPosition = 2; node.lineWidth = 2; node.strokeColor = UIColor(named: "Ink") ?? .darkGray
                 node.fillColor = UIColor(named: target.stroke == .left ? "HomeHero" : "Success") ?? .systemGreen
                 let label = SKLabelNode(text: target.stroke == .left ? "L" : "R")
                 label.fontName = "Arial-BoldMT"; label.fontSize = 21; label.fontColor = target.stroke == .left ? UIColor(named: "Ink")?.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)) : UIColor(named: "OnAccent")

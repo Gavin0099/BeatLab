@@ -38,7 +38,7 @@ struct GameHUD: View {
                 if textSize.isAccessibilitySize {
                     Text("命中 \(snapshot?.accepted.count ?? 0) / \(snapshot?.targets.count ?? 0)")
                         .frame(maxWidth: .infinity, alignment: .leading)
-                        .accessibilityValue("精準連擊 \(snapshot?.perfectStreak ?? 0)")
+                        .accessibilityValue("精準連擊 \(snapshot?.perfectStreak(at: elapsed) ?? 0)")
                         .accessibilityIdentifier("jumpMatches")
                 }
                 else { HStack(spacing: 10) { stats } }
@@ -48,7 +48,7 @@ struct GameHUD: View {
     @ViewBuilder private var stats: some View {
         Text("命中 \(snapshot?.accepted.count ?? 0) / \(snapshot?.targets.count ?? 0)")
             .frame(maxWidth: .infinity, alignment: .leading).accessibilityIdentifier("jumpMatches")
-        Text("精準連擊 \(snapshot?.perfectStreak ?? 0)")
+        Text("精準連擊 \(snapshot?.perfectStreak(at: elapsed) ?? 0)")
             .frame(maxWidth: .infinity, alignment: textSize.isAccessibilitySize ? .leading : .trailing)
     }
 }

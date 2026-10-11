@@ -27,6 +27,15 @@ struct RhythmGameSnapshot {
         }
         return streak
     }
+    func perfectStreak(at elapsed: Double) -> Int {
+        let streak = perfectStreak
+        guard streak > 0, let lastID = hits.last?.targetID,
+              let index = targets.firstIndex(where: { $0.id == lastID }) else { return 0 }
+        let expired = missed(at: elapsed)
+        // A real missed target ends the displayed streak immediately; rests
+        // have no target and therefore never reset it. Scoring is untouched.
+        return targets.suffix(from: index + 1).contains(where: { expired.contains($0.id) }) ? 0 : streak
+    }
     func missed(at elapsed: Double) -> Set<Int> {
         guard elapsed.isFinite else { return [] }
         let played = accepted
