@@ -2382,7 +2382,9 @@ final class RhythmPrototypeTests: XCTestCase {
         XCTAssertTrue(snapshot.hits.isEmpty,"Drawing cannot submit misses or hits")
         let b=RunnerRhythmScene(size:CGSize(width:320,height:200))
         b.snapshot={snapshot};b.elapsed={4.2};b.didMove(to:SKView());b.update(0)
-        XCTAssertEqual(try XCTUnwrap(b.childNode(withName:"note.0")).position.x,70.4,accuracy:1e-9)
+        // SpriteKit stores node coordinates as Float32 internally. This is a
+        // subpixel display bound, never a relaxation of timing tolerances.
+        XCTAssertEqual(try XCTUnwrap(b.childNode(withName:"note.0")).position.x,70.4,accuracy:0.0001)
     }
     func testPauseProjectionIndependentMidBeatOracleAndInvalidCountIn() throws {
         let p=try XCTUnwrap(PracticeTransportProjection(logicalEpoch:100,frozenElapsed:4.75,countInEpoch:200,countInDuration:4))
@@ -2484,6 +2486,25 @@ final class RhythmPrototypeTests: XCTestCase {
         store.cancel(audio:audio)
         XCTAssertEqual(defaults.data(forKey:ProgressRepository.storageKey),original)
         #endif
+    }
+    @MainActor
+    func testPausedRouteAndMediaResetDiscardSessionWithoutUnlocking() async throws {
+        let name="BeatLabTests.PausedEnvironment.\(UUID().uuidString)"
+        let defaults=try XCTUnwrap(UserDefaults(suiteName:name)); defer { defaults.removePersistentDomain(forName:name) }
+        let store=PracticeStore(repository:ProgressRepository(defaults:defaults)),audio=MetronomeAudio(); defer { audio.stop() }
+        for note in [AVAudioSession.routeChangeNotification, AVAudioSession.mediaServicesWereResetNotification] {
+            store.start(store.lessons[0],audio:audio,eggMission:true)
+            for _ in 0..<80 where store.phase == .preparing { try await Task.sleep(nanoseconds:25_000_000) }
+            XCTAssertEqual(store.phase,.playing)
+            store.pause(audio:audio); XCTAssertEqual(store.phase,.paused)
+            NotificationCenter.default.post(name:note,object:nil)
+            for _ in 0..<40 where store.phase == .paused { try await Task.sleep(nanoseconds:25_000_000) }
+            XCTAssertEqual(store.phase,.idle)
+            XCTAssertFalse(audio.isPlaying); XCTAssertNil(store.gameSnapshot)
+            XCTAssertNil(defaults.data(forKey:ProgressRepository.storageKey))
+            XCTAssertFalse(store.unlocked(store.lessons[1]))
+            store.resume(audio:audio); XCTAssertEqual(store.phase,.idle)
+        }
     }
     @MainActor
     func testPausePreservesTargetsHitsAndRejectsPausedAndResumeCountInTaps() async throws {

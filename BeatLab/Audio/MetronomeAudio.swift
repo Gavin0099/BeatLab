@@ -389,7 +389,9 @@ final class MetronomeAudio: ObservableObject {
             voiceGeneration += 1; preparation?.cancel(); countVoice.cancel(); preparingVoice = false
             if !isPlaying { try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation) }
         }
-        guard isPlaying else { return }
+        // A paused practice still owns a live graph/kernel. An environment
+        // change invalidates it even though it is not currently rendering.
+        guard isPlaying || pausedKernel != nil else { return }
         if note.name == Notification.Name.AVAudioEngineConfigurationChange,
            let changed = note.object as? AVAudioEngine, changed !== engine { return }
         if note.name == AVAudioSession.interruptionNotification,

@@ -41,3 +41,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 獨立oracle：60BPM/rate48000，pause cursor228000即4.75秒；resume audible count-in epoch200，四拍後204秒對應原4.75，下一拍原5.0對應204.25。原logical epoch100，原target105在raw204.25映射105；已判target不重判。65BPM count-in以sample count round(4*60/65*rate)量化、誤差僅定義sample rounding非實測精度。count-in輸入忽略；frozen timeline待resume crossing才前進。中斷/route/background取消，不自動恢復。
 
 另外allowed BeatLab/App/BeatLabApp.swift僅active-session configuration guard；PracticeComparisonView.swift僅pause UI/scenePhase安全退出。新kernel bridge屬MetronomeAudio.swift內、只限practice resume，不改BLDSP transport，因此本片不需改DSP/Core matcher。
+
+實測回歸發現paused graph的背景handler原先只看isPlaying，paused時被早退。修正為仍持有pausedKernel就處理真實route/media/background中斷，保留category-change/其他engine/ended interruption过滤；Store由status取消且不保存。新增實際paused route/media reset及原背景回歸。
