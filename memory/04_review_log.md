@@ -487,3 +487,14 @@
 - Validation boundary: PASS: artifacts/evidence/test-results/RHYTHM-PLAY-01.json (10 slice contracts, 48 local links, DAG and scope, 107 unchanged source inputs). App build/test, install, physical timing/FPS, children NOT RUN; UI NOT IMPLEMENTED.
 - Next action: 依PLAY-01建立DEBUG共同基準，再導入UI-GAME-01和SOUND-01與A原型；每片本機驗證後才建新包。真機timing/FPS、兒童A/B與owner正式操作選擇另驗，不上傳Apple。原PhoneFrozen缺包FAIL仍保留。
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:031c6c9e11c77a2d2d878158de43892c08611ca62bb7fa60a614776a9057a26e -->
+### Canonical memory checkpoint — RHYTHM-PLAY-BATCH-20261011
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `031c6c9e11c77a2d2d878158de43892c08611ca62bb7fa60a614776a9057a26e`
+- Commit binding: `5580a14078c5d725594158b216ecd1697b89521e` (bound)
+- Record: 完成RHYTHM-PLAY八個功能片與本機候選QA：雙軌預設、DEBUG跑酷比較隔離、固定判定線/兩拍預告、即時同鼓聲、精準連擊、準備/結果與真暫停四拍續玩；修正paused graph背景停止。Debug0.1.0(14)已Wi-Fi原地安裝並成功開啟；十片狀態/來源/初次失敗/簽署凍結包證據已更新。QA真機/兒童/完整Accessibility未接受，不上傳Apple。
+- Validation boundary: PASS: artifacts/evidence/test-results/RHYTHM-PLAY-BATCH.json; local Core59/native126/10uniqueUI(composed9unchanged+affectedSEtouch),iPad2/Dark2/SEtouch1=15passedexecutions; Debug/Release/signed14 plus Wi-Fi install/launch PASS. NOT RUN physical timing/FPS,child,fullVO/systemReduceMotion. Earlier failed attempts retained.
+- Next action: Owner試玩首頁雙軌及練習設定同2/3關跑酷比較；保留資料；另取得physical audio/touch/resume與長幀分布、兒童A/B及完整VoiceOver/系統Reduce Motion證據。G1-G4與public接受仍pending；歷史13原包缺失FAIL不由新14替代。
+- PLAN reconciliation: `updated`

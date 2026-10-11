@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/RHYTHM-PLAY-BATCH/check-batch.py",
+  "exit_code": 0,
+  "started_at": "2026-10-11T13:06:23Z",
+  "finished_at": "2026-10-11T13:06:26Z",
+  "runner": "local-rhythm-prototypes-game-UI-resume-and-WiFi-candidate-validation",
+  "linked_commit": "5580a14078c5d725594158b216ecd1697b89521e",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/RHYTHM-PLAY-BATCH.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

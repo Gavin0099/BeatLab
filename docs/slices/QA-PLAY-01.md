@@ -1,6 +1,6 @@
 # QA-PLAY-01 — 逐片本機與真機A/B驗收
 
-Status: IMPLEMENTING / APP_UI_CHECKS_PENDING。Risk: L2。Dependencies: PLAY-01、UI-GAME-01、SOUND-01；A或B各自來源。
+Status: LOCAL CANDIDATE PASS / DEVICE_CHILD_ACCESSIBILITY PENDING。Risk: L2。Dependencies: PLAY-01、UI-GAME-01、SOUND-01；A或B各自來源。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
 此批已進入實作/驗證；以當次原始輸出為準，不沿用歷史PASS。
 
@@ -47,3 +47,11 @@ First implicated rerun reveals transition race: after selected companion tap, un
 Second implicated rerun: course swipe oscillates above/below quarter-rest row; helper must choose a real hittable row whose activation center and at least44pt are inside the observed viewport, then assert exact prepared lesson. Use bounded no-hold native drag toward observed center instead of full-height flings; no score/time injection or production layout change. Preserve second rerun raw failures/crash and repeat all current UI cases.
 
 iPad corrected-tab run enters A successfully but an8-tap batch yields zero actual matches. Batch duration cannot guarantee any input in the legal window; do not infer a clock defect or silently force success. Replace positive-input batch with up to12 genuine individual pad taps, checking the observable matched count after each; assert nonzero and retain raw result/capture on failure. Negative spam/extra/window tests remain unchanged. Only affected UI input case requires a fresh SE rerun; unaffected9 final SE cases remain exact-byte test-function evidence.
+
+## 此批真實證據（2026-10-11）
+
+2026-10-11：八個功能slice已實作並通過本機候選檢查；QA本機部分通過，真機/兒童/完整Accessibility仍未接受；已原地安裝並成功開啟。A雙軌為正式旅程預設，B跑酷在DEBUG練習設定的「操作比較」保留，使用原2/3關同譜、同聲音與判分且不保存試玩成績。版本0.1.0（14），驗證來源5580a14；簽署包來源96ad73a，所有product/native-test inputs SHA256相同，最後變動僅UITest。此批沒有Apple上傳/PR/merge，TestFlight仍為GAME23舊13。
+
+驗證：Core59、原生App126；10個不同UI流程，以9個未改動case＋最終SE觸控重跑組合。通過執行15次＝完整SE10次＋iPad一般/最大字級2次＋Dark一般/最大字級2次＋最終SE觸控1次，包含重複；不稱15個不同case。Debug/Release與簽署iphoneos建置皆在本機Mac。 實際原始結果、初次失敗、來源與候選包雜湊見 [本批驗證](RHYTHM-PLAY-BATCH-verification.json)。前兩關門檻、後八關譜與評分、手機資料schema不變。
+
+注意：本機與安裝結果不證明physical timing/FPS、兒童吸引力、完整VoiceOver或系統Reduce Motion；G1–G4仍未接受。

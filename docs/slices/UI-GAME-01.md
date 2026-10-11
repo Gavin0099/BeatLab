@@ -1,6 +1,6 @@
 # UI-GAME-01 — 全螢幕舞台與遊戲HUD
 
-Status: IMPLEMENTED / LOCAL_VALIDATION_PENDING。Risk: L1。Dependencies: PLAY-01。
+Status: IMPLEMENTED / LOCAL CANDIDATE PASS / DEVICE ACCEPTANCE PENDING。Risk: L1。Dependencies: PLAY-01。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
 本批source已實作，尚待當次本機回歸及適用真機gate；以下是實作界線。
 
@@ -47,3 +47,11 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 UI回歸發現外層stage identifier需明確AX contain分組，避免覆蓋內層SpriteView標籤。修正為stage容器保留各子元件；測試用任意實際AX角色搜尋固定identifier並驗44pt與鼓墊上方bounds，不假定SKView一定分類Other，失敗保留真實AX tree。
 
 - Actual SE maximum-text screenshot showed the adjacent lesson number and BPM could read as 160 BPM. The existing compact lesson number now has its own soft badge, separating it from the independently rendered 60 BPM without shrinking text or changing timing. Repeat screenshot gate required.
+
+## 此批真實證據（2026-10-11）
+
+2026-10-11：八個功能slice已實作並通過本機候選檢查；QA本機部分通過，真機/兒童/完整Accessibility仍未接受；已原地安裝並成功開啟。A雙軌為正式旅程預設，B跑酷在DEBUG練習設定的「操作比較」保留，使用原2/3關同譜、同聲音與判分且不保存試玩成績。版本0.1.0（14），驗證來源5580a14；簽署包來源96ad73a，所有product/native-test inputs SHA256相同，最後變動僅UITest。此批沒有Apple上傳/PR/merge，TestFlight仍為GAME23舊13。
+
+驗證：Core59、原生App126；10個不同UI流程，以9個未改動case＋最終SE觸控重跑組合。通過執行15次＝完整SE10次＋iPad一般/最大字級2次＋Dark一般/最大字級2次＋最終SE觸控1次，包含重複；不稱15個不同case。Debug/Release與簽署iphoneos建置皆在本機Mac。 實際原始結果、初次失敗、來源與候選包雜湊見 [本批驗證](RHYTHM-PLAY-BATCH-verification.json)。前兩關門檻、後八關譜與評分、手機資料schema不變。
+
+注意：本機與安裝結果不證明physical timing/FPS、兒童吸引力、完整VoiceOver或系統Reduce Motion；G1–G4仍未接受。

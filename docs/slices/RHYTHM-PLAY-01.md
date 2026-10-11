@@ -106,3 +106,21 @@ Status：source實作已接入A為預設，B比較入口隔離；完整本機與
 ## 2026-10-11 實作批次授權
 
 Owner授權全部十片做完再Wi-Fi安裝，並明確選A雙軌為預設、保留B比較入口。App source可依各片界線順序實作並在本機測試；UI-JOURNEY先接入A作本機/手機候選，真機與兒童gate仍未接受，安裝只交測不等於public接受。QA在每片執行，批次完整回歸後才交手機。PLAY/UI/SOUND/CONTROL共用store所需整合在此批次內，不增加譜、星星規則或資料schema。所有發布界線維持。
+
+## 本批目前狀態與試玩（2026-10-11）
+
+2026-10-11：八個功能slice已實作並通過本機候選檢查；QA本機部分通過，真機/兒童/完整Accessibility仍未接受；已原地安裝並成功開啟。A雙軌為正式旅程預設，B跑酷在DEBUG練習設定的「操作比較」保留，使用原2/3關同譜、同聲音與判分且不保存試玩成績。版本0.1.0（14），驗證來源5580a14；簽署包來源96ad73a，所有product/native-test inputs SHA256相同，最後變動僅UITest。此批沒有Apple上傳/PR/merge，TestFlight仍為GAME23舊13。
+
+驗證：Core59、原生App126；10個不同UI流程，以9個未改動case＋最終SE觸控重跑組合。通過執行15次＝完整SE10次＋iPad一般/最大字級2次＋Dark一般/最大字級2次＋最終SE觸控1次，包含重複；不稱15個不同case。Debug/Release與簽署iphoneos建置皆在本機Mac。 [完整索引](RHYTHM-PLAY-BATCH-verification.json)。初次原生2個failure、UI查詢/捲動/選單transition、iPad原tab與快速batch失敗皆保留；不稱每次嘗試都全綠。
+
+| 範圍 | 狀態 |
+|---|---|
+| PLAY/UI/SOUND/CONTROL八個功能片 | source實作及本機候選PASS，產品接受pending |
+| QA-PLAY-01 | 本機PASS；真機timing/FPS、兒童、完整VO/Reduce Motion未跑 |
+| DELIVERY-PLAY-01 | 已原地安裝並成功開啟 |
+
+手機試玩先從首頁「開始冒險」進入原有推薦關；音符到黃色判定線時敲固定鼓墊，左L、右R。敲擊都有鼓聲，但目前只判時機，L/R不辨識身體手別也不新增按錯側扣分。HUD可暫停，續玩先聽四拍；重開清掉當次嘗試，退出回旅程，已保存成績保留。
+
+B比較入口：練習→右上設定→「操作比較 · 不影響進度」，同一關分別選雙軌節奏/節奏跑酷。先用第二關四分拍，再比較第三關八分拍；準備／結果停留另計，两段播放約38.82秒。比較不改正式鎖定或成績；不要將此DEBUG入口當成已發布TestFlight內容。
+
+待取得手機原始影音/觸控/長幀資料及試玩觀察再接受；安裝不把QA標DONE。KidsCharacterKit仍延後，沒有新增角色、關卡或經濟系統。

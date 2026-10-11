@@ -1,3 +1,6 @@
+> **RHYTHM-PLAY本機候選（2026-10-11）**：2026-10-11：八個功能slice已實作並通過本機候選檢查；QA本機部分通過，真機/兒童/完整Accessibility仍未接受；已原地安裝並成功開啟。A雙軌為正式旅程預設，B跑酷在DEBUG練習設定的「操作比較」保留，使用原2/3關同譜、同聲音與判分且不保存試玩成績。版本0.1.0（14），驗證來源5580a14；簽署包來源96ad73a，所有product/native-test inputs SHA256相同，最後變動僅UITest。此批沒有Apple上傳/PR/merge，TestFlight仍為GAME23舊13。
+> 驗證：Core59、原生App126；10個不同UI流程，以9個未改動case＋最終SE觸控重跑組合。通過執行15次＝完整SE10次＋iPad一般/最大字級2次＋Dark一般/最大字級2次＋最終SE觸控1次，包含重複；不稱15個不同case。Debug/Release與簽署iphoneos建置皆在本機Mac。 [精確来源、失敗保留與交付](slices/RHYTHM-PLAY-BATCH-verification.json)。真機timing/FPS、兒童、完整VoiceOver與系統Reduce Motion仍NOT RUN；Mac鎖定擋住native UI存取，未以程式flag冒充系统流程。下方同批「驗證中」是歷史紀錄。
+
 > **RHYTHM-PLAY批次實作驗證中**：Owner已選A雙軌預設/B比較，要求十片完成後Wi-Fi交付。source已接入新HUD/鼓聲/軌道/準備/結果/真暫停，當次完整App/UI回歸及簽署交付尚待完成；真機timing/FPS和兒童接受不由本機結果代替。下面規格與歷史記錄仍保留。
 
 > **2026-10-11 操作與遊戲UI新切片已定義，尚未實作**：原型共同基準、舞台HUD、穩定鼓聲、A/B操作、逐片本機/真機QA、選關/準備、結果、真暫停及新包交付均有獨立契約。下面歷史tests/install不驗證新原型；原凍結手機包留存缺口仍FAIL，不以新包覆寫舊manifest。所有App／真機／兒童gates仍按各片實跑記錄。[切片總表](slices/RHYTHM-PLAY-01.md) · [原包留存缺口](slices/QA-RETENTION-01-verification.json)。

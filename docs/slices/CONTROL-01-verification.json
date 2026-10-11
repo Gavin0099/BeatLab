@@ -1,0 +1,28 @@
+{
+  "slice": "CONTROL-01",
+  "source_commit": "5580a14078c5d725594158b216ecd1697b89521e",
+  "implementation": "COMPLETE",
+  "status": "IMPLEMENTED / LOCAL CANDIDATE PASS / DEVICE ACCEPTANCE PENDING",
+  "local_candidate": "PASS",
+  "batch_evidence": "docs/slices/RHYTHM-PLAY-BATCH-verification.json",
+  "batch_evidence_sha256": "9e6189f01492609086f6fe877e6101b2ec6e4f1b9b744b828334bf733c2e5860",
+  "checks": "Core59、原生App126；10個不同UI流程，以9個未改動case＋最終SE觸控重跑組合。通過執行15次＝完整SE10次＋iPad一般/最大字級2次＋Dark一般/最大字級2次＋最終SE觸控1次，包含重複；不稱15個不同case。Debug/Release與簽署iphoneos建置皆在本機Mac。",
+  "delivery": "refer to DELIVERY-PLAY-01",
+  "remaining_gates": {
+    "physical_audio_onset_touch_and_resume_phase": "NOT RUN",
+    "physical_FPS_long_frame_tail": "NOT RUN",
+    "child_AB_usability": "NOT RUN",
+    "full_VoiceOver_workflow": "NOT RUN: Mac locked during CUA access",
+    "system_Reduce_Motion_workflow": "NOT RUN: Mac locked during CUA access"
+  },
+  "not_claimed": [
+    "product release readiness",
+    "G1/G2/G3/G4 acceptance",
+    "children prefer A",
+    "actual device millisecond precision",
+    "physical60FPS",
+    "TestFlight/public upload",
+    "PR/merge",
+    "recovery of missing historical build13 bytes"
+  ]
+}

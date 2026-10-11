@@ -6,6 +6,10 @@
 
 ## Current Phase
 
+2026-10-11：八個功能slice已實作並通過本機候選檢查；QA本機部分通過，真機/兒童/完整Accessibility仍未接受；已原地安裝並成功開啟。A雙軌為正式旅程預設，B跑酷在DEBUG練習設定的「操作比較」保留，使用原2/3關同譜、同聲音與判分且不保存試玩成績。版本0.1.0（14），驗證來源5580a14；簽署包來源96ad73a，所有product/native-test inputs SHA256相同，最後變動僅UITest。此批沒有Apple上傳/PR/merge，TestFlight仍為GAME23舊13。
+
+驗證：Core59、原生App126；10個不同UI流程，以9個未改動case＋最終SE觸控重跑組合。通過執行15次＝完整SE10次＋iPad一般/最大字級2次＋Dark一般/最大字級2次＋最終SE觸控1次，包含重複；不稱15個不同case。Debug/Release與簽署iphoneos建置皆在本機Mac。 [切片／試玩入口](docs/slices/RHYTHM-PLAY-01.md) · [原始證據索引](docs/slices/RHYTHM-PLAY-BATCH-verification.json)。下方「驗證進行中」是此批先前狀態，最新以上段為準。
+
 2026-10-11 owner授權十片全部實作後Wi-Fi安裝，且選定A雙軌預設/B比較。RHYTHM-PLAY-01 source已整合，批次本機回歸/新14包Wi-Fi交付進行中；QA本機與真機/兒童gate分列，不上傳Apple。下方規格階段敘述是歷史記錄，不是當前App狀態。
 
 2026-10-11 owner要求先切新的演奏操作slice，並導入完整節奏遊戲UI。RHYTHM-PLAY-01已定義十片：共同A/B基準→舞台HUD→穩定鼓聲→A雙軌→B跑酷→逐片QA→選關/準備→結果→真暫停→新包Wi-Fi交付。每片有allowed/forbidden、依賴、failure、checks、rollback；目前DEFINED/NOT IMPLEMENTED，不代表UI或prototype已落地。比較沿用原2/3關約38.82秒譜、同音訊/判分、正式進度隔離；新正式旅程操作待owner比較選定。保持十關/素材/評分，不加長按/滑動/雙音/商城/排行榜；KidsCharacterKit延後，Apple上傳另行指示。[新切分](docs/slices/RHYTHM-PLAY-01.md)。
