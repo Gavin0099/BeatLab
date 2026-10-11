@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/QA-RETENTION-01/check-retention.py",
+  "exit_code": 1,
+  "started_at": "2026-10-11T03:12:45Z",
+  "finished_at": "2026-10-11T03:12:47Z",
+  "runner": "read-only-historical-source-test-delivery-and-package-retention-audit",
+  "linked_commit": "8203e4aaf012fc2225d942b3b4edf46f06c41d23",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/QA-RETENTION-01.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}

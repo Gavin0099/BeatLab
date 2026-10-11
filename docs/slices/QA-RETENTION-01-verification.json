@@ -1,0 +1,121 @@
+{
+  "audited_at_utc": "2026-10-11T03:12:47.454452+00:00",
+  "audit_only": true,
+  "new_build_test_install_upload": false,
+  "source_commit": "39f39d199d7a701829895ef796081978f17d6475",
+  "source_inputs": 107,
+  "source_issues": [],
+  "NIGHT_slices": {
+    "GAME-26": {
+      "artifact_count": 30,
+      "issues": [],
+      "retained_receipt_exit_code": 0
+    },
+    "GAME-27": {
+      "artifact_count": 34,
+      "issues": [],
+      "retained_receipt_exit_code": 0
+    },
+    "GAME-28": {
+      "artifact_count": 34,
+      "issues": [],
+      "retained_receipt_exit_code": 0
+    },
+    "GAME-29": {
+      "artifact_count": 15,
+      "issues": [],
+      "retained_receipt_exit_code": 0
+    },
+    "GAME-30": {
+      "artifact_count": 33,
+      "issues": [],
+      "retained_receipt_exit_code": 0
+    },
+    "GAME-31": {
+      "artifact_count": 28,
+      "issues": [],
+      "retained_receipt_exit_code": 0
+    }
+  },
+  "retained_Core59_pass": true,
+  "retained_native_tests": {
+    "app": {
+      "passed": 115,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Passed",
+      "command_exit_code": 0,
+      "local_mac": true,
+      "expected_count": 115
+    },
+    "ui": {
+      "passed": 2,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Passed",
+      "command_exit_code": 0,
+      "local_mac": true,
+      "expected_count": 2
+    },
+    "dark": {
+      "passed": 1,
+      "failed": 0,
+      "skipped": 0,
+      "result": "Passed",
+      "command_exit_code": 0,
+      "local_mac": true,
+      "expected_count": 1
+    }
+  },
+  "branch_HEAD": "8203e4aaf012fc2225d942b3b4edf46f06c41d23",
+  "remote_exit_code": 0,
+  "remote_HEAD": "8203e4aaf012fc2225d942b3b4edf46f06c41d23",
+  "historical_20261009_delivery": {
+    "install": {
+      "exit_code": 0,
+      "outcome": "success",
+      "finished_epoch": 1791524335.67824
+    },
+    "launch": {
+      "exit_code": 0,
+      "outcome": "success",
+      "finished_epoch": 1791524336.1516778
+    }
+  },
+  "present_phone_state": "NOT CHECKED",
+  "frozen_candidate_exists": false,
+  "original_package_file_count": 13,
+  "missing_package_files": [
+    "AppIcon60x60@2x.png",
+    "AppIcon76x76@2x~ipad.png",
+    "Assets.car",
+    "BeatLab",
+    "BeatLab.debug.dylib",
+    "BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "Info.plist",
+    "PkgInfo",
+    "PrivacyInfo.xcprivacy",
+    "_CodeSignature/CodeResources",
+    "__preview.dylib",
+    "embedded.mobileprovision"
+  ],
+  "changed_package_files": [],
+  "additional_package_files": [],
+  "original_output_exists": false,
+  "GAME33_frozen_candidate_exists": false,
+  "deletion_cause": "NOT ESTABLISHED",
+  "claim_boundary": "Past observed build/tests/install/launch retained; original signed package bytes unavailable for present revalidation. No present phone timing/FPS/child/public acceptance.",
+  "source_test_delivery_log_checks_passed": true,
+  "package_retention_passed": false,
+  "result": "PARTIAL_PACKAGE_RETENTION_FAILED",
+  "raw_ref": "TestResults/QA-RETENTION-01/audit.json",
+  "canonical_receipt": "artifacts/evidence/test-results/QA-RETENTION-01.json",
+  "memory_guard": {
+    "exit_code": 0,
+    "current_diff_blockers": 0,
+    "repo_state_blockers": 0,
+    "historical_warnings": "root writer/guard not found,missing canonical1,provenance not found2; existing debt, no runtime claim",
+    "log": "TestResults/QA-RETENTION-01/memory-guard.log"
+  }
+}

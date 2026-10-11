@@ -1,10 +1,12 @@
 # BeatLab — iOS MVP Roadmap
 <!-- governance-baseline: overridable -->
-> **最後更新**: 2026-10-09
+> **最後更新**: 2026-10-11
 > **Owner**: BeatLab owner
 > **Freshness**: Sprint (7d)
 
 ## Current Phase
+
+2026-10-11 heartbeat證據核對：來源107／NIGHT六片174個artifact hashes與既有Core59/App115/UI3結果一致，分支與遠端同為8203e4a；本次未重新build/test/install。發現GAME34原凍結簽署App及原PhoneProducts輸出已不在，GAME33凍結App也不在；manifest與10月9日Wi-Fi安裝／開啟成功紀錄仍保留。原因未確立，不能再次驗證原安裝包bytes；留存檢查明確失敗，不覆寫舊manifest／receipt、不把新編譯當原包。這不撤銷當時觀察到的安裝成功，也不證明目前手機狀態或timing/FPS接受。[留存核對](docs/slices/QA-RETENTION-01-verification.json)。
 
 Owner已釐清卡點為「拿不到一星解鎖」。GAME-34調整前兩關一星：16拍至少命中12拍、最多多按4次，不要求Perfect；二／三星精準門檻保留，第三至十關及音訊／匹配窗口／保存schema不變。本機Core59/App115/實際UI3已通過，含保存失敗／重試；來源39f39d1的matching簽署Debug13已透過Wi-Fi原地安裝並成功開啟，未上傳Apple；真機timing/FPS／兒童接受仍pending。[評分切片](docs/slices/GAME-34.md)。
 
