@@ -33,3 +33,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 
 測試可分片回退但保留失敗來源／原始輸出；不回退已有手機進度。
 未接受之前不取代正式旅程；不要回退或清空owner已保存進度。
+
+舊UI regression也需跟隨已核准的新UI契約：live固定鼓墊/判定線取代舊拍格、暫停/退出移至HUD、最大字級不要求装飾角色。更新舊測試的元件/幾何/文字檢查，不刪除判分/保存/觸控/重試/鎖定回歸，也不將未執行歷史case算PASS；native component可與UITest-only change做exact-byte equivalence，但最終UI與候選仍bind新source。
