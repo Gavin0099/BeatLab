@@ -6,7 +6,7 @@ import Darwin
 
 @MainActor
 final class PracticeStore: ObservableObject {
-    enum Phase: Equatable { case idle, preparing, playing, finished }
+    enum Phase: Equatable { case idle, preparing, playing, paused, finished }
     @Published private(set) var lessons: [Lesson] = []
     @Published private(set) var progress: PracticeProgress
     @Published private(set) var notice: String?
@@ -23,6 +23,15 @@ final class PracticeStore: ObservableObject {
     @Published private(set) var calibrationSaved = false
     @Published private(set) var needsSaveRetry = false
     @Published private(set) var isEggMission = false
+    @Published private(set) var isComparison = false
+    @Published var presentation: RhythmPresentation = .falling
+    @Published private(set) var pressedStroke: Stroke?
+    @Published private(set) var pressSerial = 0
+    @Published private(set) var isResuming = false
+    private var audioObservation: AnyCancellable?
+    private var projection: PracticeTransportProjection?
+    private var frozenElapsed: Double?
+    var isActive: Bool { phase == .playing || phase == .preparing || phase == .paused }
     private let repository: ProgressRepository
     private var writable = true
     private var session: TimingSession?
@@ -72,17 +81,17 @@ final class PracticeStore: ObservableObject {
     func unlocked(_ lesson: Lesson) -> Bool { progress.isUnlocked(lesson.id, in: lessons) }
 
     func select(_ lesson: Lesson) {
-        guard phase != .playing && phase != .preparing, !needsSaveRetry, unlocked(lesson) else { return }
-        selected = lesson; summary = nil; latestHit = nil; stars = 0; isCalibrating = false; isEggMission = false; phase = .idle
+        guard !isActive, !needsSaveRetry, unlocked(lesson) else { return }
+        isComparison = false; presentation = .falling; selected = lesson; summary = nil; latestHit = nil; stars = 0; isCalibrating = false; isEggMission = false; phase = .idle
         practiceBPM = lesson.bpm
     }
     func setPracticeBPM(_ value: Int) {
-        guard phase != .playing && phase != .preparing else { return }
+        guard !isActive else { return }
         practiceBPM = min(240, max(selected?.bpm ?? recommended?.bpm ?? 60, value))
     }
     func setMode(_ value: InterfaceMode) { var next = progress; next.mode = value; save(next) }
     func resetProgress() {
-        guard phase != .playing && phase != .preparing else { return }
+        guard !isActive else { return }
         repository.reset(); writable = true; progress = .init(); notice = nil
         pendingProgress = nil; needsSaveRetry = false; resultSaved = false; calibrationSaved = false
     }
@@ -101,20 +110,30 @@ final class PracticeStore: ObservableObject {
     }
 
     func start(_ lesson: Lesson, audio: MetronomeAudio, eggMission: Bool = false) {
-        guard canPractice, unlocked(lesson), !needsSaveRetry, phase != .playing && phase != .preparing else { return }
+        guard canPractice, unlocked(lesson), !needsSaveRetry, !isActive else { return }
         do { selected = try lesson.atTempo(max(lesson.bpm, practiceBPM)) }
         catch { notice = "練習速度無法使用。"; return }
+        isComparison = false; presentation = .falling
         isCalibrating = false
         isEggMission = eggMission && selected.flatMap(IslandLesson.profile) != nil
         begin(audio: audio, bpm: selected!.bpm)
     }
+    #if DEBUG
+    func startComparison(_ lesson: Lesson, presentation: RhythmPresentation, audio: MetronomeAudio) {
+        guard canPractice, !isActive, !needsSaveRetry, lessons.dropFirst().prefix(2).contains(where: { $0.id == lesson.id }) else { return }
+        selected = lesson; practiceBPM = lesson.bpm; self.presentation = presentation
+        isComparison = true; isCalibrating = false; isEggMission = IslandLesson.profile(lesson) != nil
+        begin(audio: audio, bpm: lesson.bpm)
+    }
+    #endif
     func startCalibration(audio: MetronomeAudio) {
-        guard writable, !needsSaveRetry, phase != .playing && phase != .preparing else { return }
+        guard writable, !needsSaveRetry, !isActive else { return }
         guard audio.supportsCalibration else { notice = "校正請使用內建喇叭或有線耳機。"; return }
-        isCalibrating = true; selected = nil; isEggMission = false
+        isComparison = false; isCalibrating = true; selected = nil; isEggMission = false
         begin(audio: audio, bpm: 60)
     }
     private func begin(audio: MetronomeAudio, bpm: Int) {
+        projection = nil; frozenElapsed = nil; isResuming = false; pressedStroke = nil; pressSerial = 0
         feedbackAudio = nil
         generation += 1; task?.cancel()
         let token = generation
@@ -128,6 +147,10 @@ final class PracticeStore: ObservableObject {
         summary = nil; latestHit = nil; stars = 0; session = nil; elapsed = 0; calibrated = false
         resultSaved = false; calibrationSaved = false; pendingProgress = nil; needsSaveRetry = false; notice = nil
         phase = .preparing
+        audioObservation = audio.$status.dropFirst().sink { [weak self, weak audio] message in
+            guard let self, let audio, self.phase == .paused, message != nil else { return }
+            self.cancel(audio: audio, message: "音訊已中斷，請重新開始。")
+        }
         audio.start(configuration: configuration, practiceFeedback: !isCalibrating, eggMission: isEggMission && selected.flatMap(IslandLesson.profile) == .first)
         task = Task { [weak self, weak audio] in
             guard let self, let audio else { return }
@@ -156,29 +179,83 @@ final class PracticeStore: ObservableObject {
                 feedbackAudio = isCalibrating ? nil : audio
                 phase = .playing
             } catch { cancel(audio: audio, message: "練習資料無法使用。"); return }
-            while !Task.isCancelled, token == generation, phase == .playing {
-                guard audio.isPlaying else { cancel(audio: audio, message: "播放已中斷，這次練習不計成績。"); return }
-                let time = Self.now()
-                elapsed = max(0, time - epoch)
-                if time >= endTime { finish(audio: audio); return }
-                try? await Task.sleep(nanoseconds: 30_000_000)
-            }
+            await watch(audio: audio, token: token)
+
         }
     }
-    func tap(at time: Double, accessibility: Bool = false) {
-        guard phase == .playing, time >= epoch + (isCalibrating ? 4 : 4 * 60 / Double(selected?.bpm ?? 60))
-                - TimingSession.matchingWindow, time <= endTime else { return }
-        if accessibility { calibrated = false }
-        latestHit = session?.tap(at: time)
-        // Submit only after the existing matcher produced the actual grade.
-        // This effect never provides the cue or changes the timestamp/score.
-        if !isCalibrating, let hit = latestHit { feedbackAudio?.playPracticeFeedback(hit.grade) }
+    private func watch(audio: MetronomeAudio, token: Int) async {
+        while !Task.isCancelled, token == generation, phase == .playing {
+            guard audio.isPlaying else { cancel(audio: audio, message: "播放已中斷，這次練習不計成績。"); return }
+            let host = Self.now()
+            let time = projection?.logicalTime(at: host) ?? (projection == nil ? host : epoch + elapsed)
+            elapsed = presentationElapsed(at: host)
+            if let projection, host >= projection.resumeHost { isResuming = false }
+            if time >= endTime { finish(audio: audio); return }
+            try? await Task.sleep(nanoseconds: 30_000_000)
+        }
     }
+    func tap(at host: Double, accessibility: Bool = false, stroke: Stroke? = nil) {
+        guard host.isFinite, phase == .playing, !isResuming || projection?.logicalTime(at: host) != nil else { return }
+        let time: Double
+        if let projection { guard let logical = projection.logicalTime(at: host) else { return }; time = logical }
+        else { time = host }
+        guard time >= epoch + (isCalibrating ? 4 : 4 * 60 / Double(selected?.bpm ?? 60)) - TimingSession.matchingWindow,
+              time <= endTime else { return }
+        if accessibility { calibrated = false }
+        guard let hit = session?.tap(at: time) else { return }
+        pressedStroke = stroke; pressSerial += 1; latestHit = hit
+        if !isCalibrating { feedbackAudio?.playPracticeFeedback(hit.grade) }
+    }
+    func pause(audio: MetronomeAudio) {
+        guard phase == .playing, !isCalibrating,
+              let position = audio.pausePractice() else { return }
+        generation += 1; task?.cancel(); task = nil
+        frozenElapsed = min(position, endTime - epoch); elapsed = frozenElapsed!
+        feedbackAudio = nil; phase = .paused; isResuming = false
+    }
+    func resume(audio: MetronomeAudio) {
+        guard phase == .paused, let frozenElapsed, let lesson = selected,
+              audio.routeIdentity == calibrationRoute, audio.sampleRate == calibrationRate,
+              let countInDuration = audio.resumePractice(bpm: lesson.bpm) else {
+            if phase == .paused { cancel(audio: audio, message: "無法續玩，請重新開始。") }; return
+        }
+        generation += 1; let token = generation
+        phase = .preparing; isResuming = true
+        task = Task { [weak self, weak audio] in
+            guard let self, let audio else { return }
+            let deadline = Self.now() + 2
+            var anchor: Double?
+            while !Task.isCancelled, token == generation, audio.isPlaying, Self.now() < deadline {
+                if let value = audio.audibleEpoch() { anchor = value; break }
+                try? await Task.sleep(nanoseconds: 20_000_000)
+            }
+            guard !Task.isCancelled, token == generation else { return }
+            guard let anchor, let mapping = PracticeTransportProjection(logicalEpoch: epoch, frozenElapsed: frozenElapsed,
+                    countInEpoch: anchor, countInDuration: countInDuration), audio.isPlaying else {
+                cancel(audio: audio, message: "未能續玩，請重新開始。"); return
+            }
+            projection = mapping; self.frozenElapsed = nil; feedbackAudio = audio; phase = .playing
+            await watch(audio: audio, token: token)
+        }
+    }
+    var resumeCountdown: Int? {
+        guard isResuming, let projection else { return nil }
+        let remaining = projection.resumeHost - Self.now()
+        return remaining > 0 ? min(4, max(1, Int(ceil(remaining * Double(selected?.bpm ?? 60) / 60)))) : nil
+    }
+    var gameSnapshot: RhythmGameSnapshot? {
+        guard let session, let selected, isActive || phase == .finished else { return nil }
+        return RhythmGameSnapshot(targets: session.targets, hits: session.hits, epoch: epoch,
+                                  duration: endTime - epoch, alignment: session.calibrationOffset, bpm: selected.bpm)
+    }
+    var liveSummary: TimingSummary? { session?.summary }
     func cancel(audio: MetronomeAudio, message: String? = nil) {
+        audioObservation = nil
+        projection = nil; frozenElapsed = nil; isResuming = false
         feedbackAudio = nil
         generation += 1; task?.cancel(); task = nil
         audio.stop(); restoreOptions(audio)
-        session = nil; phase = .idle; summary = nil; notice = message; isEggMission = false
+        session = nil; phase = .idle; summary = nil; notice = message; isEggMission = false; isComparison = false; presentation = .falling
     }
     private func finish(audio: MetronomeAudio) {
         feedbackAudio = nil
@@ -197,6 +274,7 @@ final class PracticeStore: ObservableObject {
             } catch { notice = "這次跟拍不夠穩定，校正未保存。準備好後再試一次。" }
         } else if let selected {
             stars = selected.stars(session.summary)
+            if isComparison { resultSaved = false; needsSaveRetry = false; notice = "比較試玩不保存星星或解鎖。"; return }
             var next = progress; next.record(selected, summary: session.summary)
             resultSaved = save(next)
             if !resultSaved { pendingProgress = next; needsSaveRetry = true }
@@ -218,7 +296,7 @@ final class PracticeStore: ObservableObject {
 
     /// Snapshot of the actual native session; presentation cannot publish scores.
     var runnerRoute: RunnerRoute? {
-        guard isEggMission, let session, phase == .playing || phase == .finished else { return nil }
+        guard isEggMission, let session, phase == .playing || phase == .paused || phase == .finished else { return nil }
         return RunnerRoute(targets: session.targets, hits: session.hits, epoch: epoch,
                            endTime: endTime, alignment: session.calibrationOffset)
     }
@@ -227,6 +305,6 @@ final class PracticeStore: ObservableObject {
     /// callbacks cannot advance matching, finish a lesson or publish state.
     func presentationElapsed(at hostTime: Double) -> Double {
         guard phase == .playing, hostTime.isFinite, epoch.isFinite else { return elapsed }
-        return min(max(0, hostTime - epoch), max(0, endTime - epoch))
+        return min(projection?.elapsed(at: hostTime) ?? max(0, hostTime - epoch), max(0, endTime - epoch))
     }
 }

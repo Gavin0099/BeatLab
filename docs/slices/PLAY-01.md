@@ -1,8 +1,8 @@
 # PLAY-01 — A/B共同基準與隔離
 
-Status: DEFINED / NOT IMPLEMENTED。Risk: L2。Dependencies: GAME-34、QA-RETENTION-01來源基準。
+Status: IMPLEMENTED / LOCAL_VALIDATION_PENDING。Risk: L2。Dependencies: GAME-34、QA-RETENTION-01來源基準。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
-本次只寫規格；以下allowed是未來本片實作界線，並非source已改。
+本批source已實作，尚待當次本機回歸及適用真機gate；以下是實作界線。
 
 ## 行為與UI
 

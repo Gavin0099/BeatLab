@@ -5,6 +5,20 @@
 	};
 	objectVersion = 56;
 	objects = {
+		1DF87C67EA7924AF4FF7ECC9 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/App/PracticeComparison.swift; sourceTree = SOURCE_ROOT; };
+		DB672E357303031A3D901F1F = { isa = PBXBuildFile; fileRef = 1DF87C67EA7924AF4FF7ECC9; };
+		D83E28C6CFA70F8D0A1AAE5F = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/App/PracticeTransportProjection.swift; sourceTree = SOURCE_ROOT; };
+		CC59984E09105603E5DFA59B = { isa = PBXBuildFile; fileRef = D83E28C6CFA70F8D0A1AAE5F; };
+		8315F98738B78144386891E2 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/GameHUD.swift; sourceTree = SOURCE_ROOT; };
+		6BF06FA256475FA2A8E49011 = { isa = PBXBuildFile; fileRef = 8315F98738B78144386891E2; };
+		954B17AD32E8E82470707814 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/PracticeComparisonView.swift; sourceTree = SOURCE_ROOT; };
+		F029CFA9F22BC5C80591046B = { isa = PBXBuildFile; fileRef = 954B17AD32E8E82470707814; };
+		127A1DB5CAC7035169AF06DB = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/FallingRhythmScene.swift; sourceTree = SOURCE_ROOT; };
+		5FF21747B2C4EBA387CA53D1 = { isa = PBXBuildFile; fileRef = 127A1DB5CAC7035169AF06DB; };
+		ABB0AB777D24C2BA3978B8F2 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/RunnerRhythmScene.swift; sourceTree = SOURCE_ROOT; };
+		C0AD2B43FE216D16FC5968C3 = { isa = PBXBuildFile; fileRef = ABB0AB777D24C2BA3978B8F2; };
+		63EE150D72B5F979843AB592 = { isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeatLab/Views/GameResultView.swift; sourceTree = SOURCE_ROOT; };
+		3349070C4307AB04A495D94E = { isa = PBXBuildFile; fileRef = 63EE150D72B5F979843AB592; };
 		AB10AB10AB10AB10AB100001 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.swift;
@@ -304,6 +318,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DB672E357303031A3D901F1F,
+				CC59984E09105603E5DFA59B,
+				6BF06FA256475FA2A8E49011,
+				F029CFA9F22BC5C80591046B,
+				5FF21747B2C4EBA387CA53D1,
+				C0AD2B43FE216D16FC5968C3,
+				3349070C4307AB04A495D94E,
 				AB10AB10AB10AB10AB100003,
 				AB10AB10AB10AB10AB100004,
 				27040D02FA2705CC36E15A6C,
@@ -370,7 +391,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				INFOPLIST_KEY_CFBundleDisplayName = "拍拍冒險";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -402,7 +423,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 0.1.0;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				INFOPLIST_KEY_CFBundleDisplayName = "拍拍冒險";
 				INFOPLIST_KEY_ITSAppUsesNonExemptEncryption = NO;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
@@ -706,6 +727,13 @@
 		BF61121A5CB6C5C34F7E02C7 = {
 			isa = PBXGroup;
 			children = (
+				1DF87C67EA7924AF4FF7ECC9,
+				D83E28C6CFA70F8D0A1AAE5F,
+				8315F98738B78144386891E2,
+				954B17AD32E8E82470707814,
+				127A1DB5CAC7035169AF06DB,
+				ABB0AB777D24C2BA3978B8F2,
+				63EE150D72B5F979843AB592,
 				54AA34C71344DDCA02498FDF,
 				3B24DCDDAAA745BF0BD22165,
 				37548BB6C55A36A94CA3CF1E,

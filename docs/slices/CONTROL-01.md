@@ -1,8 +1,8 @@
 # CONTROL-01 — 真正的暫停與續玩
 
-Status: DEFINED / NOT IMPLEMENTED。Risk: L2。Dependencies: PLAY-01與選定UI；實作前需再核對DSP pause/phase契約。
+Status: IMPLEMENTED / LOCAL_VALIDATION_PENDING。Risk: L2。Dependencies: PLAY-01與選定UI；實作前需再核對DSP pause/phase契約。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
-本次只寫規格；以下allowed是未來本片實作界線，並非source已改。
+本批source已實作，尚待當次本機回歸及適用真機gate；以下是實作界線。
 
 ## 行為與UI
 
@@ -33,3 +33,11 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 
 回原取消／重開／退出功能，隱藏pause/resume；不reset進度。
 未接受之前不取代正式旅程；不要回退或清空owner已保存進度。
+
+## 實作前phase oracle與界線補充
+
+停止graph後讀最後完整BLClock，凍結於(renderStartFrame+frameCount)/sampleRate的rendered位置；此位置可能比手指可見時間早/晚一個buffer及輸出延遲，不能宣稱硬體精準。原RenderKernel保留，resume音訊callback先render四拍臨時count-in kernel，sample邊界之後render原kernel，不跳cursor、不重設音色/原bed。聲音排程不靠UI Timer；兩段buffer在callback分割，原host stamp依frame偏移轉換。
+
+獨立oracle：60BPM/rate48000，pause cursor228000即4.75秒；resume audible count-in epoch200，四拍後204秒對應原4.75，下一拍原5.0對應204.25。原logical epoch100，原target105在raw204.25映射105；已判target不重判。65BPM count-in以sample count round(4*60/65*rate)量化、誤差僅定義sample rounding非實測精度。count-in輸入忽略；frozen timeline待resume crossing才前進。中斷/route/background取消，不自動恢復。
+
+另外allowed BeatLab/App/BeatLabApp.swift僅active-session configuration guard；PracticeComparisonView.swift僅pause UI/scenePhase安全退出。新kernel bridge屬MetronomeAudio.swift內、只限practice resume，不改BLDSP transport，因此本片不需改DSP/Core matcher。

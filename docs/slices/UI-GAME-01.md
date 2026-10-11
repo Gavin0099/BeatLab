@@ -1,8 +1,8 @@
 # UI-GAME-01 — 全螢幕舞台與遊戲HUD
 
-Status: DEFINED / NOT IMPLEMENTED。Risk: L1。Dependencies: PLAY-01。
+Status: IMPLEMENTED / LOCAL_VALIDATION_PENDING。Risk: L1。Dependencies: PLAY-01。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
-本次只寫規格；以下allowed是未來本片實作界線，並非source已改。
+本批source已實作，尚待當次本機回歸及適用真機gate；以下是實作界線。
 
 ## 行為與UI
 
@@ -35,3 +35,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 
 回退新HUD／容器、恢复原tab visibility，音訊與保存不動。
 未接受之前不取代正式旅程；不要回退或清空owner已保存進度。
+
+整合allowed PracticeComparisonView.swift（共用容器）與PracticeComparison.swift（read-only HUD model）；PracticeStore.swift僅press展示與read-only session snapshot，涉及clock實作屬PLAY/CONTROL的L2界線。

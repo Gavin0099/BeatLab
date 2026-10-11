@@ -1,8 +1,8 @@
 # DELIVERY-PLAY-01 — 新原型簽署包與Wi-Fi交付
 
-Status: DEFINED / NOT IMPLEMENTED。Risk: L1。Dependencies: 每個當次candidate本機gates；真正pause另需CONTROL gate。
+Status: PREPARING / NOT INSTALLED。Risk: L1。Dependencies: 每個當次candidate本機gates；真正pause另需CONTROL gate。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
-本次只寫規格；以下allowed是未來本片實作界線，並非source已改。
+此批已進入實作/驗證；以當次原始輸出為準，不沿用歷史PASS。
 
 ## 行為與UI
 

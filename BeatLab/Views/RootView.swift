@@ -25,13 +25,13 @@ struct RootView: View {
             .tag(AppTab.metronome)
 
             NavigationStack { PracticeView(preparationRequest: preparationRequest) }
-                .toolbar(practice.phase == .playing || practice.phase == .preparing || practice.needsSaveRetry ? .hidden : .visible, for: .tabBar)
+                .toolbar(practice.isActive || practice.needsSaveRetry ? .hidden : .visible, for: .tabBar)
                 .tabItem { Label("練習", systemImage: "hand.tap.fill") }
                 .tag(AppTab.practice)
         }
         .tint(BeatLabStyle.accent)
         .onChange(of: selectedTab) { tab in
-            if tab != .practice && (practice.phase == .playing || practice.phase == .preparing) {
+            if tab != .practice && practice.isActive {
                 practice.cancel(audio: audio, message: "這次練習已停止，沒有計入成績。回來可重新開始。")
             }
         }

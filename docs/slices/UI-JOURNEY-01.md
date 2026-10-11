@@ -1,8 +1,8 @@
 # UI-JOURNEY-01 — 選關與準備頁產品化
 
-Status: DEFINED / NOT IMPLEMENTED。Risk: L1。Dependencies: QA-PLAY-01本機及適用真機gate；owner選定A/B。
+Status: IMPLEMENTED / LOCAL_VALIDATION_PENDING。Risk: L1。Dependencies: QA-PLAY-01本機及適用真機gate；owner選定A/B。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
-本次只寫規格；以下allowed是未來本片實作界線，並非source已改。
+本批source已實作，尚待當次本機回歸及適用真機gate；以下是實作界線。
 
 ## 行為與UI
 
@@ -33,3 +33,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 
 還原原journey/preparation路由，保留正式progress；A/B比較入口仍隔離。
 未接受之前不取代正式旅程；不要回退或清空owner已保存進度。
+
+Owner已選A預設；B仍DEBUG比較。此次正式旅程UI導入是local/device candidate，待QA真機與兒童接受，並非提前接受產品gate。Allowed PracticeStore.swift僅選定presentation狀態/全螢幕route，不改目標/判分/save；PracticeComparisonView.swift承載共用遊玩容器。

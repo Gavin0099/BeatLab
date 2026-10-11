@@ -41,7 +41,7 @@ final class PracticeUITests: XCTestCase {
             return
         }
         pad.tap(withNumberOfTaps: 10, numberOfTouches: 1)
-        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "), "Actual UIKit touches must produce a real accepted hit")
+        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "), "Actual UIKit touches must produce a real accepted hit")
         assertEssentialGameRows(in: app)
         capture(app, "\(key) actual live runner"); stop.tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
@@ -49,7 +49,7 @@ final class PracticeUITests: XCTestCase {
         try openFirstCompanionLesson(in: app)
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
-        XCTAssertEqual(app.staticTexts["jumpMatches"].label, "抵達 0 / 16 座小島")
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label, "命中 0 / 16")
         app.buttons["stopPractice"].tap()
     }
     @MainActor
@@ -77,12 +77,12 @@ final class PracticeUITests: XCTestCase {
             let app = freshApp(); try openCompanion(key, in: app)
             try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
             XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout: 30))
-            XCTAssertEqual(app.staticTexts["practiceSummary"].label, key == "cat" ? "魚包裹接住了，再試一次！" : "能源接住了，再試一次！")
+            XCTAssertEqual(app.staticTexts["practiceSummary"].label, "再聽一次，再試一次！")
             XCTAssertEqual(app.otherElements["practiceStars"].label, "這次得到 0 顆星")
             XCTAssertFalse(app.buttons["nextLesson"].exists); capture(app, "\(key) actual failure")
             try reveal(app.buttons["retryLesson"], in: app); app.buttons["retryLesson"].tap()
             XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout: 5))
-            XCTAssertEqual(app.staticTexts["jumpMatches"].label, "抵達 0 / 16 座小島")
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label, "命中 0 / 16")
             app.buttons["stopPractice"].tap()
             XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
             XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
@@ -143,7 +143,7 @@ final class PracticeUITests: XCTestCase {
     }
     @MainActor
     private func assertWholeGameVisible(_ app: XCUIApplication, dual: Bool) {
-        let scene=app.otherElements["eggMissionScene"].firstMatch
+        let scene=app.otherElements["rhythmGameStage"].firstMatch
         let pad=app.buttons[dual ? "practiceTapPad.right" : "practiceTapPad"],stop=app.buttons["stopPractice"]
         XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertTrue(scene.exists)
         let window=app.windows.firstMatch.frame
@@ -196,7 +196,7 @@ final class PracticeUITests: XCTestCase {
         capture(app,"GAME28 largest zero result stars clear tab")
         try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
         assertWholeGameVisible(app,dual:true)
-        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 32")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label,"3 / 10 關完成")
@@ -221,18 +221,18 @@ final class PracticeUITests: XCTestCase {
             let lane=app.otherElements["rhythmLane"].firstMatch,window=app.windows.firstMatch.frame
             XCTAssertGreaterThanOrEqual(lane.frame.minX,window.minX);XCTAssertLessThanOrEqual(lane.frame.maxX,window.maxX)
             XCTAssertEqual(lane.label,"每拍四格的四個拍點")
-            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / \(total) 座小島")
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / \(total)")
             let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
             XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
             let pad=app.buttons[level == 7 ? "practiceTapPad" : "practiceTapPad.right"],height=app.otherElements["eggMissionScene"].firstMatch.frame.height
             if level == 7{pad.tap(withNumberOfTaps:10,numberOfTouches:1)}else{pad.tap(withNumberOfTaps:5,numberOfTouches:1);app.buttons["practiceTapPad.left"].tap(withNumberOfTaps:5,numberOfTouches:1)}
-            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "))
+            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "))
             XCTAssertEqual(app.otherElements["eggMissionScene"].firstMatch.frame.height,height,accuracy:0.1)
             capture(app,"GAME30 level\(level) actual touches")
             app.buttons["stopPractice"].tap();XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["journeyProgress"].label,"9 / 10 關完成")
             try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
             try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
-            XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / \(total) 座小島")
+            XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / \(total)")
             app.buttons["stopPractice"].tap()
         }
     }
@@ -256,7 +256,7 @@ final class PracticeUITests: XCTestCase {
         XCTAssertLessThanOrEqual(app.otherElements["practiceStars"].frame.maxY,app.tabBars.firstMatch.frame.minY)
         capture(app,"GAME30 largest mixed zero result")
         try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
-        assertWholeGameVisible(app,dual:true);XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 40 座小島")
+        assertWholeGameVisible(app,dual:true);XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 40")
         app.buttons["stopPractice"].tap();XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["journeyProgress"].label,"9 / 10 關完成")
     }
 
@@ -274,18 +274,18 @@ final class PracticeUITests: XCTestCase {
             try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
             assertWholeGameVisible(app,dual:level != 5)
             let pad=app.buttons[level == 5 ? "practiceTapPad" : "practiceTapPad.right"]
-            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / \(total) 座小島")
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / \(total)")
             let resting=XCTNSPredicateExpectation(predicate:NSPredicate(format:"value CONTAINS %@","休息"),object:app.otherElements["rhythmLane"])
             XCTAssertEqual(XCTWaiter.wait(for:[resting],timeout:10),.completed,"Observe actual musical rest, no injected clock")
             capture(app,"GAME29 level\(level) actual rest cell")
             pad.tap(withNumberOfTaps:10,numberOfTouches:1)
-            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual post-count-in touches must match at least one authored note")
+            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "),"Actual post-count-in touches must match at least one authored note")
             capture(app,"GAME29 level\(level) actual touch")
             app.buttons["stopPractice"].tap()
             XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["journeyProgress"].label,"8 / 10 關完成")
             try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
             try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
-            XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / \(total) 座小島")
+            XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / \(total)")
             app.buttons["stopPractice"].tap()
         }
         try reveal(app.buttons["journeyLesson.mixed"],in:app,requiresHit:false);XCTAssertFalse(app.buttons["journeyLesson.mixed"].isEnabled)
@@ -302,7 +302,7 @@ final class PracticeUITests: XCTestCase {
         XCTAssertEqual(app.otherElements["practiceStars"].label,"這次得到 0 顆星");XCTAssertFalse(app.buttons["nextLesson"].exists)
         capture(app,"GAME29 ninth zero result")
         try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
-        assertWholeGameVisible(app,dual:true);XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 16 座小島")
+        assertWholeGameVisible(app,dual:true);XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 16")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5));XCTAssertEqual(app.staticTexts["journeyProgress"].label,"8 / 10 關完成")
     }
@@ -326,7 +326,7 @@ final class PracticeUITests: XCTestCase {
             let pad=app.buttons[level == 3 ? "practiceTapPad" : "practiceTapPad.right"]
             XCTAssertTrue(pad.waitForExistence(timeout:5));XCTAssertGreaterThanOrEqual(pad.frame.height,44)
             if level == 4 {XCTAssertTrue(app.buttons["practiceTapPad.left"].isHittable)}
-            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 32")
             XCTAssertTrue(app.staticTexts["activeLessonNumber"].label.hasPrefix("第 \(level) 關"))
             let stageHeight=app.otherElements["eggMissionScene"].firstMatch.frame.height
             // Observe the real four-beat count-in; input before it must be ignored.
@@ -336,7 +336,7 @@ final class PracticeUITests: XCTestCase {
                 pad.tap(withNumberOfTaps:5,numberOfTouches:1)
                 app.buttons["practiceTapPad.left"].tap(withNumberOfTaps:5,numberOfTouches:1)
             } else {pad.tap(withNumberOfTaps:10,numberOfTouches:1)}
-            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("抵達 0 "),"Actual UIKit input after count-in must match dense targets")
+            XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "),"Actual UIKit input after count-in must match dense targets")
             XCTAssertEqual(app.otherElements["eggMissionScene"].firstMatch.frame.height,stageHeight,accuracy:0.1,"Accepted/extra feedback cannot resize the stage")
             capture(app,"GAME27 level\(level) live touches")
             app.buttons["stopPractice"].tap()
@@ -347,7 +347,7 @@ final class PracticeUITests: XCTestCase {
             try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
             try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
             XCTAssertTrue(pad.waitForExistence(timeout:5))
-            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 32 座小島")
+            XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 32")
             app.buttons["stopPractice"].tap()
         }
     }
@@ -385,9 +385,9 @@ final class PracticeUITests: XCTestCase {
         let counter=app.staticTexts["jumpMatches"]
         for i in 0..<12 {
             (i%2==0 ? right : left).tap()
-            if i>2 && !counter.label.hasPrefix("抵達 0 ") {break}
+            if i>2 && !counter.label.hasPrefix("命中 0 ") {break}
         }
-        XCTAssertFalse(counter.label.hasPrefix("抵達 0 "),"Actual UIKit dual-pad touches must be matched")
+        XCTAssertFalse(counter.label.hasPrefix("命中 0 "),"Actual UIKit dual-pad touches must be matched")
         capture(app,"GAME26 actual dual-pad live game")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
@@ -398,7 +398,7 @@ final class PracticeUITests: XCTestCase {
         try reveal(app.buttons["journeyChapter.0"],in:app);app.buttons["journeyChapter.0"].tap()
         try reveal(app.buttons["journeyLesson.quarter-hands"],in:app);app.buttons["journeyLesson.quarter-hands"].tap()
         try reveal(app.buttons["startLesson"],in:app);app.buttons["startLesson"].tap()
-        XCTAssertTrue(counter.waitForExistence(timeout:5));XCTAssertEqual(counter.label,"抵達 0 / 16 座小島")
+        XCTAssertTrue(counter.waitForExistence(timeout:5));XCTAssertEqual(counter.label,"命中 0 / 16")
         app.buttons["stopPractice"].tap()
     }
     @MainActor
@@ -419,11 +419,81 @@ final class PracticeUITests: XCTestCase {
         XCTAssertFalse(app.buttons["nextLesson"].exists);capture(app,"GAME26 actual zero-input failure")
         try reveal(app.buttons["retryLesson"],in:app);app.buttons["retryLesson"].tap()
         XCTAssertTrue(right.waitForExistence(timeout:5));XCTAssertTrue(left.exists)
-        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"抵達 0 / 16 座小島")
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 16")
         stop.tap();XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
         try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
         try reveal(app.buttons["journeyLesson.eighth"],in:app,requiresHit:false)
         XCTAssertFalse(app.buttons["journeyLesson.eighth"].isEnabled)
+    }
+
+    @MainActor
+    func testNewDualLaneActualTouchesPauseResumeRestartAndExit() throws {
+        let app = freshApp()
+        app.tabBars.buttons["練習"].tap()
+        try openFirstCompanionLesson(in: app)
+        try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
+        let right=app.buttons["practiceTapPad"],left=app.buttons["practiceTapPad.left"]
+        XCTAssertTrue(right.waitForExistence(timeout:5)); XCTAssertTrue(left.isHittable)
+        XCTAssertLessThan(left.frame.maxX,right.frame.minX)
+        XCTAssertGreaterThanOrEqual(left.frame.height,44); XCTAssertGreaterThanOrEqual(right.frame.width,44)
+        XCTAssertTrue(app.otherElements["rhythmPlayfield"].exists)
+        capture(app,"new A fixed lanes and pads")
+        app.buttons["pausePractice"].tap()
+        XCTAssertTrue(app.buttons["resumePractice"].waitForExistence(timeout:5))
+        app.buttons["resumePractice"].tap()
+        XCTAssertTrue(right.waitForExistence(timeout:5))
+        let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
+        right.tap(withNumberOfTaps:8,numberOfTouches:1)
+        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "))
+        app.buttons["pausePractice"].tap()
+        XCTAssertTrue(app.buttons["restartPractice"].waitForExistence(timeout:5))
+        capture(app,"new pause controls")
+        app.buttons["restartPractice"].tap()
+        XCTAssertTrue(app.staticTexts["jumpMatches"].waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 16")
+        app.buttons["stopPractice"].tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
+    }
+    @MainActor
+    func testNewLargestTextAResultRetryAndLocks() throws {
+        let app=freshApp(largestText:true)
+        app.tabBars.buttons["練習"].tap(); try openFirstCompanionLesson(in:app)
+        capture(app,"new preparation maximum text")
+        try reveal(app.buttons["startLesson"],in:app); app.buttons["startLesson"].tap()
+        let left=app.buttons["practiceTapPad.left"],right=app.buttons["practiceTapPad"]
+        XCTAssertTrue(right.waitForExistence(timeout:5)); XCTAssertTrue(left.isHittable)
+        XCTAssertLessThanOrEqual(left.frame.maxY,app.windows.firstMatch.frame.maxY)
+        XCTAssertGreaterThanOrEqual(left.frame.height,44)
+        capture(app,"new A maximum text live")
+        XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout:30))
+        XCTAssertEqual(app.otherElements["practiceStars"].label,"這次得到 0 顆星")
+        XCTAssertFalse(app.buttons["nextLesson"].exists)
+        try reveal(app.buttons["retryLesson"],in:app); capture(app,"new zero result maximum text")
+        app.buttons["retryLesson"].tap()
+        XCTAssertTrue(right.waitForExistence(timeout:5))
+        XCTAssertEqual(app.staticTexts["jumpMatches"].label,"命中 0 / 16")
+        app.buttons["stopPractice"].tap()
+    }
+    @MainActor
+    func testNewRunnerComparisonActualInputAndIsolatedExit() throws {
+        let app=freshApp()
+        app.tabBars.buttons["練習"].tap()
+        app.buttons["practiceSettings"].tap()
+        let comparison=app.buttons["comparison.quarter-hands.runner"]
+        try reveal(comparison,in:app); comparison.tap()
+        let right=app.buttons["practiceTapPad.right"]
+        XCTAssertTrue(right.waitForExistence(timeout:5))
+        XCTAssertTrue(app.otherElements["rhythmPlayfield"].exists)
+        let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
+        XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
+        right.tap(withNumberOfTaps:8,numberOfTouches:1)
+        capture(app,"new B time based approach")
+        XCTAssertFalse(app.staticTexts["jumpMatches"].label.hasPrefix("命中 0 "))
+        app.buttons["stopPractice"].tap()
+        XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
+        XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
     }
 
     @MainActor
@@ -590,14 +660,14 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(app.staticTexts["把恐龍蛋帶回家"].exists)
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(app.staticTexts["practiceSummary"].waitForExistence(timeout: 30))
-        XCTAssertEqual(app.staticTexts["practiceSummary"].label, "蛋接住了，再試一次！")
+        XCTAssertEqual(app.staticTexts["practiceSummary"].label, "再聽一次，再試一次！")
         XCTAssertEqual(app.otherElements["practiceStars"].label, "這次得到 0 顆星")
         XCTAssertFalse(app.buttons["nextLesson"].exists)
         XCTAssertTrue(app.staticTexts["漏拍 16 下 · 多打 0 下"].exists)
         capture(app, "Native actual no-input result")
         try reveal(app.buttons["retryLesson"], in: app); app.buttons["retryLesson"].tap()
         let counter = app.staticTexts["jumpMatches"]
-        XCTAssertTrue(counter.waitForExistence(timeout: 5)); XCTAssertEqual(counter.label, "抵達 0 / 16 座小島")
+        XCTAssertTrue(counter.waitForExistence(timeout: 5)); XCTAssertEqual(counter.label, "命中 0 / 16")
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         // Reopen the preparation; failed/retried/cancelled runs keep next locked.
@@ -682,11 +752,11 @@ final class PracticeUITests: XCTestCase {
         // Real UI touches, no injected TimingHit or fake clock. This proves
         // visual clearance can follow actual matching, not timing precision.
         for _ in 0..<10 {
-            if counter.exists && !counter.label.hasPrefix("抵達 0 ") { break }
+            if counter.exists && !counter.label.hasPrefix("命中 0 ") { break }
             pad.tap()
         }
         XCTAssertTrue(counter.exists)
-        XCTAssertFalse(counter.label.hasPrefix("抵達 0 "), "Actual matched touches must clear an obstacle")
+        XCTAssertFalse(counter.label.hasPrefix("命中 0 "), "Actual matched touches must clear an obstacle")
         assertEssentialGameRows(in: app)
         capture(app, "Runner actual matched touch clearance")
         app.buttons["stopPractice"].tap()
@@ -695,7 +765,7 @@ final class PracticeUITests: XCTestCase {
         try reveal(first, in: app); first.tap()
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         XCTAssertTrue(counter.waitForExistence(timeout: 5))
-        XCTAssertEqual(counter.label, "抵達 0 / 16 座小島")
+        XCTAssertEqual(counter.label, "命中 0 / 16")
         app.buttons["stopPractice"].tap()
     }
 

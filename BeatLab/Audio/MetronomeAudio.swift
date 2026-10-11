@@ -7,13 +7,33 @@ import Darwin
 import BeatLabCore
 import BeatLabDSP
 
-private final class RenderKernel: @unchecked Sendable {
+final class RenderKernel: @unchecked Sendable {
     let pointer: OpaquePointer
     init?(rate: UInt32, settings: BLSettings) {
         guard let pointer = BLDSPCreate(rate, settings) else { return nil }
         self.pointer = pointer
     }
     deinit { BLDSPDestroy(pointer) }
+}
+
+/// One render thread owns this state. Four beats are rendered in samples,
+/// then the original kernel resumes at its unchanged next frame.
+final class PracticeResumeBridge: @unchecked Sendable {
+    let original: RenderKernel
+    let countIn: RenderKernel
+    var remaining: UInt32
+    let ticksPerFrame: Double
+    init(original: RenderKernel, countIn: RenderKernel, frames: UInt32, rate: Double) {
+        self.original = original; self.countIn = countIn; remaining = frames; ticksPerFrame = Double(AVAudioTime.hostTime(forSeconds: 1)) / rate
+    }
+    func render(_ output: UnsafeMutablePointer<Float>, count: UInt32, host: UInt64) {
+        let prefix = min(count, remaining)
+        if prefix > 0 { BLDSPRender(countIn.pointer, output, prefix, host); remaining -= prefix }
+        if prefix < count {
+            let tailHost = host + UInt64((Double(prefix) * ticksPerFrame).rounded())
+            BLDSPRender(original.pointer, output.advanced(by: Int(prefix)), count - prefix, tailHost)
+        }
+    }
 }
 
 /// A bounded input-feedback voice. Musical cues and judgments remain elsewhere.
@@ -27,10 +47,8 @@ final class PracticeFeedbackVoice {
     init?(graph: AVAudioEngine, sampleRate: Double, gain: Float) {
         guard sampleRate.isFinite, (8_000...192_000).contains(sampleRate),
               let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1),
-              let perfect = Self.makeBuffer(grade: .perfect, sampleRate: sampleRate),
-              let matched = Self.makeBuffer(grade: .early, sampleRate: sampleRate),
-              let extra = Self.makeBuffer(grade: .extra, sampleRate: sampleRate) else { return nil }
-        buffers = [.perfect: perfect, .early: matched, .late: matched, .extra: extra]
+              let perfect = Self.makeBuffer(grade: .perfect, sampleRate: sampleRate) else { return nil }
+        buffers = [.perfect: perfect, .early: perfect, .late: perfect, .extra: perfect]
         self.gain = gain.isFinite ? min(1, max(0, gain)) : 0
         self.graph = graph
         graph.attach(node)
@@ -42,7 +60,7 @@ final class PracticeFeedbackVoice {
     static func makeBuffer(grade: TimingGrade, sampleRate: Double) -> AVAudioPCMBuffer? {
         guard sampleRate.isFinite, (8_000...192_000).contains(sampleRate),
               let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1) else { return nil }
-        let duration = grade == .perfect ? 0.040 : grade == .extra ? 0.030 : 0.024
+        let duration = 0.040
         let count = Int(sampleRate * duration)
         guard let buffer = AVAudioPCMBuffer(pcmFormat: format, frameCapacity: AVAudioFrameCount(count)),
               let samples = buffer.floatChannelData?.pointee else { return nil }
@@ -50,12 +68,8 @@ final class PracticeFeedbackVoice {
         for index in 0..<count {
             let time = Double(index) / sampleRate
             let taper = pow(sin(.pi * Double(index) / Double(count - 1)), 2)
-            let wave: Double
-            switch grade {
-            case .perfect: wave = 0.07 * (sin(2 * .pi * 880 * time) + sin(2 * .pi * 1320 * time))
-            case .early, .late: wave = 0.06 * sin(2 * .pi * 660 * time)
-            case .extra: wave = 0.055 * sin(2 * .pi * 220 * time)
-            }
+            // Same authored percussion sample for every valid press/hand/grade.
+            let wave = 0.20 * exp(-time * 95) * sin(2 * .pi * (180 * time + 10 * (1 - exp(-time * 35))))
             samples[index] = index == 0 || index == count - 1 ? 0 : Float(taper * wave)
         }
         return buffer
@@ -109,6 +123,8 @@ final class MetronomeAudio: ObservableObject {
     private var engine: AVAudioEngine?
     private var source: AVAudioSourceNode?
     private var feedbackVoice: PracticeFeedbackVoice?
+    private var practicePlaybackKernel: RenderKernel?
+    private var pausedKernel: RenderKernel?
     private var kernel: RenderKernel?
     private var observers: [NSObjectProtocol] = []
     private var latencyEstimate: Double = 0
@@ -157,6 +173,7 @@ final class MetronomeAudio: ObservableObject {
                 throw AudioFailure.unsupportedRoute
             }
             kernel = owner
+            practicePlaybackKernel = practiceFeedback ? owner : nil
             if eggMission, practiceFeedback, sound == .click, gapBars == 0, ladderBars == 0,
                configuration.tempo.bpm == 60, configuration.timeSignature == .fourFour,
                configuration.subdivision == .quarter,
@@ -214,11 +231,50 @@ final class MetronomeAudio: ObservableObject {
         source = nil
         engine = nil
         // The callback retains RenderKernel, so an in-flight callback never sees freed state.
-        kernel = nil
+        kernel = nil; practicePlaybackKernel = nil; pausedKernel = nil
         practiceGrooveAvailable = false
         isPlaying = false
         status = reason
         try? AVAudioSession.sharedInstance().setActive(false, options: .notifyOthersOnDeactivation)
+    }
+
+    /// Freeze at the next frame after the last rendered buffer, not an invented
+    /// sub-buffer touch time. No future cue is rendered while paused.
+    func pausePractice() -> Double? {
+        guard isPlaying, let owner = practicePlaybackKernel, let graph = engine else { return nil }
+        graph.pause(); feedbackVoice?.node.stop()
+        var clock = BLClock()
+        guard BLDSPReadClock(owner.pointer, &clock), clock.sampleRate > 0 else {
+            do { try graph.start() } catch { stop(reason: "未能暫停，請重新開始。") }
+            return nil
+        }
+        pausedKernel = owner; isPlaying = false
+        return Double(clock.renderStartFrame + Int64(clock.frameCount)) / Double(clock.sampleRate)
+    }
+    func resumePractice(bpm: Int) -> Double? {
+        guard !isPlaying, let original = pausedKernel,
+              let tempo = try? Tempo(bpm: bpm),
+              let config = try? MetronomeConfiguration(tempo: tempo, timeSignature: .fourFour, subdivision: .quarter, accentEnabled: true),
+              let countIn = RenderKernel(rate: UInt32(sampleRate), settings: Self.settings(config)),
+              let format = AVAudioFormat(standardFormatWithSampleRate: sampleRate, channels: 1) else { return nil }
+        let frames = UInt32((4 * 60 / Double(bpm) * sampleRate).rounded())
+        let bridge = PracticeResumeBridge(original: original, countIn: countIn, frames: frames, rate: sampleRate)
+        BLDSPSetGain(countIn.pointer, volume)
+        engine?.stop(); feedbackVoice?.detach()
+        if let source { engine?.detach(source) }
+        let graph = AVAudioEngine()
+        let node = AVAudioSourceNode(format: format) { silence, stamp, count, list in
+            let buffers = UnsafeMutableAudioBufferListPointer(list)
+            guard buffers.count == 1, let data = buffers[0].mData else { silence.pointee = true; return noErr }
+            bridge.render(data.assumingMemoryBound(to: Float.self), count: count, host: stamp.pointee.mHostTime)
+            silence.pointee = false; return noErr
+        }
+        engine = graph; source = node; kernel = countIn; practicePlaybackKernel = original
+        graph.attach(node); graph.connect(node, to: graph.mainMixerNode, format: format)
+        feedbackVoice = PracticeFeedbackVoice(graph: graph, sampleRate: sampleRate, gain: volume)
+        graph.prepare()
+        do { try graph.start(); pausedKernel = nil; isPlaying = true; status = nil; return Double(frames) / sampleRate }
+        catch { stop(reason: "未能續玩，請重新開始。"); return nil }
     }
 
     func request(_ configuration: MetronomeConfiguration) {
@@ -293,6 +349,7 @@ final class MetronomeAudio: ObservableObject {
     func setGain(_ value: Float) {
         volume = min(1, max(0, value))
         if let kernel { BLDSPSetGain(kernel.pointer, volume) }
+        if let practicePlaybackKernel { BLDSPSetGain(practicePlaybackKernel.pointer, volume) }
         feedbackVoice?.setGain(volume)
     }
 

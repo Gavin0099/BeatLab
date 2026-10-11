@@ -224,3 +224,43 @@ final class MetronomeAudioTests: XCTestCase {
         }
     }
 }
+
+
+final class RhythmAudioResumeTests: XCTestCase {
+    @MainActor
+    func testSamePercussionForAllJudgmentsAndLRTimingMeaning() throws {
+        for rate in [8000.0,44100,48000,96000] {
+            let reference=try XCTUnwrap(PracticeFeedbackVoice.makeBuffer(grade:.perfect,sampleRate:rate))
+            let pcm=Array(UnsafeBufferPointer(start:reference.floatChannelData!.pointee,count:Int(reference.frameLength)))
+            for grade in [TimingGrade.early,.late,.extra] {
+                let buffer=try XCTUnwrap(PracticeFeedbackVoice.makeBuffer(grade:grade,sampleRate:rate))
+                XCTAssertEqual(Array(UnsafeBufferPointer(start:buffer.floatChannelData!.pointee,count:Int(buffer.frameLength))),pcm)
+            }
+        }
+    }
+    func testActualPCMResumeIsBitEqualToUninterruptedTailAcrossBufferSplit() throws {
+        // Independent specification:60BPM,48kHz,pause4.75s,count-in4s.
+        let settings=BLSettings(bpm:60,meter:2,subdivision:0,accent:1,beatPattern:0,timbre:0)
+        let original=try XCTUnwrap(RenderKernel(rate:48000,settings:settings))
+        let reference=try XCTUnwrap(RenderKernel(rate:48000,settings:settings))
+        let countIn=try XCTUnwrap(RenderKernel(rate:48000,settings:settings))
+        var prefix=[Float](repeating:0,count:228000)
+        BLDSPRender(original.pointer,&prefix,228000,100)
+        BLDSPRender(reference.pointer,&prefix,228000,100)
+        var expected=[Float](repeating:0,count:96000)
+        BLDSPRender(reference.pointer,&expected,96000,200)
+        let bridge=PracticeResumeBridge(original:original,countIn:countIn,frames:192000,rate:48000)
+        var played=[Float](repeating:0,count:288000)
+        // Deliberately crosses the count-in boundary inside a render buffer.
+        played.withUnsafeMutableBufferPointer { p in
+            bridge.render(p.baseAddress!,count:191997,host:300)
+            bridge.render(p.baseAddress!.advanced(by:191997),count:96003,host:400)
+        }
+        XCTAssertEqual(Array(played[192000...]),expected)
+        XCTAssertEqual(bridge.remaining,0)
+        XCTAssertTrue(expected[12000..<12480].contains { abs($0)>0.01 },"First remaining beat at5.0s is0.25s after frozen4.75")
+        XCTAssertTrue(expected[0..<11000].allSatisfy { abs($0)<0.001 })
+        var clock=BLClock(); XCTAssertTrue(BLDSPReadClock(original.pointer,&clock))
+        XCTAssertEqual(clock.renderStartFrame,228000); XCTAssertEqual(clock.frameCount,96000)
+    }
+}

@@ -25,14 +25,11 @@ struct PracticeView: View {
 
     private var phaseContent: some View {
         Group {
-        if practice.phase == .playing && !practice.isCalibrating, let lesson = practice.selected {
-            if practice.isEggMission {
-                EggMissionView(accepted: jump.accepted, streak: reward.perfectStreak, stop: {
-                    practice.cancel(audio: audio, message: "這次挑戰已停止，沒有計入成績。"); showingJourney = true
-                }, theme: missionTheme)
-            } else {
-            runnerChallenge(lesson)
-            }
+        if (practice.phase == .playing || practice.phase == .paused || (practice.phase == .preparing && practice.isResuming)) && !practice.isCalibrating, let lesson = practice.selected {
+            PracticeComparisonView(theme: missionTheme, exit: {
+                practice.cancel(audio: audio, message: "這次挑戰已停止，沒有計入成績。"); showingJourney = true
+            })
+
         } else {
         ScrollViewReader { proxy in
             ScrollView {
@@ -45,6 +42,8 @@ struct PracticeView: View {
                         }
                     }
                     switch practice.phase {
+                    case .paused:
+                        EmptyView()
                     case .preparing:
                         BLCard {
                             VStack(spacing: 20) {
@@ -92,7 +91,7 @@ struct PracticeView: View {
             }
         }
         .navigationTitle("練習").navigationBarTitleDisplayMode(.inline)
-        .toolbar(practice.phase == .playing && practice.isEggMission ? .hidden : .visible, for: .navigationBar)
+        .toolbar(practice.isActive && !practice.isCalibrating ? .hidden : .visible, for: .navigationBar)
         .sheet(isPresented: $showLessons) { lessonBrowser }
         .sheet(isPresented: $showSettings) { practiceSettings }
         .sheet(isPresented: $showCompanions) { companionPicker }
@@ -363,6 +362,22 @@ struct PracticeView: View {
                         }
                     }
                     if practice.mode == .standard { calibrationPanel }
+                    #if DEBUG
+                    BLCard {
+                        VStack(alignment: .leading, spacing: 12) {
+                            Text("操作比較 · 不影響進度").font(.headline)
+                            Text("第二關四分拍、第三關八分拍；同節奏、聲音與判分，L/R先只判時機。").font(.subheadline)
+                            ForEach(practice.lessons.dropFirst().prefix(2)) { lesson in
+                                ForEach(RhythmPresentation.allCases, id: \.self) { variant in
+                                    Button("\(lesson.shortTitle) · \(variant.title)") {
+                                        showSettings = false; showingJourney = false
+                                        practice.startComparison(lesson, presentation: variant, audio: audio)
+                                    }.buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("comparison.\(lesson.id).\(variant.rawValue)")
+                                }
+                            }
+                        }
+                    }
+                    #endif
                     DisclosureGroup("目前自由節拍器設定") {
                         ConfigurationSummary(configuration: store.configuration).padding(.top, 12)
                     }.foregroundStyle(BeatLabStyle.muted)
@@ -379,7 +394,7 @@ struct PracticeView: View {
                 .frame(minHeight: 44).accessibilityIdentifier("backToJourney")
             if let lesson = practice.selected ?? practice.recommended {
                 if missionEligible(lesson) {
-                    missionPreparation(lesson)
+                    gamePreparation(lesson)
                 } else {
                 BLCard {
                     VStack(alignment: .leading, spacing: 18) {
@@ -423,6 +438,38 @@ struct PracticeView: View {
     private func startLesson(_ lesson: Lesson) {
         practice.start(lesson, audio: audio, eggMission: missionEligible(lesson))
     }
+    private func gamePreparation(_ lesson: Lesson) -> some View {
+        let count = lesson.pattern.steps.filter { $0 != .rest }.count * lesson.bars
+        return VStack(alignment: .leading, spacing: 16) {
+            Text("第 \(lessonNumber(lesson)) 關 · \(lesson.shortTitle)").font(.headline)
+                .accessibilityIdentifier("preparedLessonNumber")
+            Text(missionTheme.mission).font(.system(.title, design: .rounded).bold())
+            EggMissionScene(theme: missionTheme, elapsed: 0, preparing: true, platformJourney: true)
+                .frame(height: 170).clipped()
+            Text("音符到黃線，就敲一下").font(.title2.bold())
+            Text("左邊用左手、右邊用右手。先聽四拍再開始；— 是休息。目前依時機給星星，鼓墊與手別是練習指引。")
+                .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+            HStack {
+                BLPill(title: "\(lesson.bpm) BPM", symbol: "metronome")
+                BLPill(title: "\(lesson.bars) 小節")
+            }
+            LazyVGrid(columns: [GridItem(.adaptive(minimum: 95))], spacing: 8) {
+                ForEach(0..<4, id: \.self) { beat in
+                    VStack(spacing: 6) {
+                        Text("第 \(beat + 1) 拍").font(.caption.bold())
+                        Text(lesson.pattern.steps[(beat * lesson.pattern.stepsPerBeat)..<((beat + 1) * lesson.pattern.stepsPerBeat)]
+                            .map { $0 == .rest ? "—" : $0 == .left ? "L" : "R" }.joined(separator: " "))
+                            .font(.headline).fixedSize(horizontal: false, vertical: true)
+                    }.padding(12).frame(maxWidth: .infinity).background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 16))
+                }
+            }.accessibilityLabel("一小節節奏預覽")
+            Text("一星：至少跟上 \(Int(ceil(Double(count) * lesson.requiredHitRate))) / \(count) 拍；精準命中至少 \(Int(ceil(Double(count) * lesson.requiredPerfectRate))) 拍；多打最多 \(Int(floor(Double(count) * lesson.maxExtraRate))) 次。")
+                .font(.subheadline).accessibilityIdentifier("oneStarCriteria")
+            Button { startLesson(lesson) } label: { Label("開始挑戰", systemImage: "play.fill") }
+                .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice).accessibilityIdentifier("startLesson")
+        }
+    }
+
     private func missionPreparation(_ lesson: Lesson) -> some View {
         let profile = IslandLesson.profile(lesson) ?? .first
         let seconds = Int(ceil(Double(4 + lesson.bars * 4) * 60 / Double(lesson.bpm)))
@@ -750,6 +797,43 @@ struct PracticeView: View {
         }
     }
     private func resultPanel(_ summary: TimingSummary) -> some View {
+        Group {
+            if practice.isCalibrating { legacyResultPanel(summary) }
+            else {
+                GameResultView(celebration: AnyView(EggMissionScene(theme: missionTheme, elapsed: practice.elapsed,
+                        accepted: practice.gameSnapshot?.accepted ?? [], finishedPassed: practice.stars > 0,
+                        route: practice.runnerRoute, platformJourney: true).frame(height: 200)), title: practice.isComparison ? "這段節奏完成了" : practice.stars > 0 ? "節奏挑戰成功！" : "再聽一次，再試一次！",
+                    summary: summary, stars: practice.stars, best: practice.progress.results[practice.selected?.id ?? ""]?.stars ?? 0,
+                    comparison: practice.isComparison, saved: practice.resultSaved, saveFailed: practice.needsSaveRetry,
+                    advice: practice.isComparison ? "試試另一種操作，看看哪個更容易跟拍。" : resultAdvice(summary),
+                    retry: { if let lesson = practice.selected { restartGame(lesson) } },
+                    next: gameNextAction, retrySave: { practice.retrySave() }, discard: { confirmDiscard = true },
+                    journey: {
+                        if practice.isComparison { practice.cancel(audio: audio); if let lesson = practice.recommended { practice.select(lesson) } }
+                        else if let lesson = practice.selected ?? practice.recommended { practice.select(lesson) }
+                        showingJourney = true
+                    })
+                if practice.mode == .standard { technicalSummary(summary) }
+            }
+        }
+    }
+    private var gameNextAction: (() -> Void)? {
+        #if DEBUG
+        if practice.isComparison, practice.selected?.id == practice.lessons.dropFirst().first?.id,
+           let next = practice.lessons.dropFirst(2).first {
+            return { practice.startComparison(next, presentation: practice.presentation, audio: audio) }
+        }
+        #endif
+        guard !practice.isComparison, practice.resultSaved, let next = nextLesson else { return nil }
+        return { openPreparation(next) }
+    }
+    private func restartGame(_ lesson: Lesson) {
+        #if DEBUG
+        if practice.isComparison { practice.startComparison(lesson, presentation: practice.presentation, audio: audio); return }
+        #endif
+        startLesson(lesson)
+    }
+    private func legacyResultPanel(_ summary: TimingSummary) -> some View {
         VStack(alignment: .leading, spacing: 20) {
             BLCard {
                 VStack(spacing: 20) {

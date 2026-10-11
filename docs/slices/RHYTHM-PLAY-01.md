@@ -1,7 +1,7 @@
 # RHYTHM-PLAY-01 — 演奏手感與完整遊戲 UI
 
 2026-10-11 owner要求先切slice，並把主流節奏遊戲的UI納入下一輪導入。
-本文件是L0規格切分；下列App切片僅DEFINED，尚未實作或驗收。
+本文件最初為L0切分；owner後續授權十片實作，source已接入A預設與B比较、本機回歸及交付進行中，尚未驗收。
 依據目前程式及已保存beatlab-rhythm-game-design參考，不以市場研究代替真機證據。
 
 本次規格編輯allowed：本總表與下列逐片md、PLAN.md、docs/verification.md、
@@ -101,5 +101,8 @@ DELIVERY可在A本機gate通過後先執行一次，再交B，使用不同candid
 - [A Dance of Fire and Ice開發者](https://fizzd.itch.io/a-dance-of-fire-and-ice)：
   單鍵與道路節奏、offset；簡單操作也能支持節奏深度。
 
-Status：規格已切分；所有App slices DEFINED / NOT IMPLEMENTED。這份計畫不證明
-新UI、可玩原型、音訊或暫停已完成，也不代表已選定A為正式替代版。
+Status：source實作已接入A為預設，B比較入口隔離；完整本機與真機gate尚待當次證據。規格不代替已測結果，選A是owner決定，不證明兒童接受或發行準備完成。
+
+## 2026-10-11 實作批次授權
+
+Owner授權全部十片做完再Wi-Fi安裝，並明確選A雙軌為預設、保留B比較入口。App source可依各片界線順序實作並在本機測試；UI-JOURNEY先接入A作本機/手機候選，真機與兒童gate仍未接受，安裝只交測不等於public接受。QA在每片執行，批次完整回歸後才交手機。PLAY/UI/SOUND/CONTROL共用store所需整合在此批次內，不增加譜、星星規則或資料schema。所有發布界線維持。

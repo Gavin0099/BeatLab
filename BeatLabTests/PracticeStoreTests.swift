@@ -2323,3 +2323,140 @@ final class JourneyResultTests: XCTestCase {
         }
     }
 }
+
+
+final class RhythmPrototypeTests: XCTestCase {
+    func testReviewedQuarterAndEighthFixturesHaveSameJudgmentInBothPresentations() throws {
+        let lessons = try LessonCatalog.bundled().lessons
+        for (index, count, spacing) in [(1,16,60.0/65),(2,32,0.5)] {
+            let lesson = lessons[index]
+            let targets = try lesson.pattern.targets(bpm: lesson.bpm, bars: 4, epoch: 100)
+            XCTAssertEqual(targets.count, count)
+            XCTAssertEqual(targets.first!.time, 100+4*60/Double(lesson.bpm), accuracy: 1e-9)
+            for pair in zip(targets,targets.dropFirst()) { XCTAssertEqual(pair.1.time-pair.0.time,spacing,accuracy:1e-9) }
+            var a = try TimingSession(targets: targets), b = try TimingSession(targets: targets)
+            for target in targets {
+                a.tap(at:target.time+0.1); b.tap(at:target.time+0.1)
+            }
+            XCTAssertEqual(a.summary,b.summary); XCTAssertEqual(a.summary.matched.count,count)
+            XCTAssertEqual(a.summary.perfectRate,0)
+        }
+    }
+    func testFixedCenterLeadCalibrationRestsAndMissWindowAreReadOnly() throws {
+        let targets=[TimingTarget(id:0,time:104,stroke:.right),TimingTarget(id:2,time:106,stroke:.left)]
+        let value=RhythmGameSnapshot(targets:targets,hits:[],epoch:100,duration:8.18,alignment:0.2,bpm:60)
+        XCTAssertEqual(try XCTUnwrap(value.distance(targets[0],elapsed:2.2)),1,accuracy:1e-9)
+        XCTAssertEqual(try XCTUnwrap(value.distance(targets[0],elapsed:4.2)),0,accuracy:1e-9)
+        XCTAssertTrue(value.missed(at:4.379).isEmpty)
+        XCTAssertEqual(value.missed(at:4.381),[0])
+        XCTAssertEqual(value.missed(at:6.381),[0,2])
+        XCTAssertNil(value.distance(targets[0],elapsed:.nan))
+        XCTAssertTrue(value.missed(at:.infinity).isEmpty)
+        // Empty rest at id1 never becomes a note or a missed target.
+        XCTAssertFalse(value.missed(at:7).contains(1))
+        var session=try TimingSession(targets:targets,calibrationOffset:0.2)
+        session.tap(at:104.2)
+        let hit=RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:8.18,alignment:0.2,bpm:60)
+        XCTAssertEqual(hit.accepted,[0]); XCTAssertEqual(hit.perfectStreak,1)
+        XCTAssertTrue(hit.missed(at:5).isEmpty)
+        session.tap(at:104.2)
+        XCTAssertEqual(RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:8.18,alignment:0.2,bpm:60).perfectStreak,0)
+    }
+    func testPauseProjectionIndependentMidBeatOracleAndInvalidCountIn() throws {
+        let p=try XCTUnwrap(PracticeTransportProjection(logicalEpoch:100,frozenElapsed:4.75,countInEpoch:200,countInDuration:4))
+        XCTAssertNil(p.logicalTime(at:203.999)); XCTAssertEqual(p.elapsed(at:201),4.75)
+        XCTAssertEqual(try XCTUnwrap(p.logicalTime(at:204)),104.75)
+        XCTAssertEqual(try XCTUnwrap(p.logicalTime(at:204.25)),105)
+        XCTAssertEqual(p.elapsed(at:204.25),5)
+        XCTAssertNil(p.logicalTime(at:.nan))
+        XCTAssertNil(PracticeTransportProjection(logicalEpoch:100,frozenElapsed:-1,countInEpoch:200,countInDuration:4))
+        XCTAssertNil(PracticeTransportProjection(logicalEpoch:100,frozenElapsed:1,countInEpoch:200,countInDuration:0))
+        let targets=[TimingTarget(id:0,time:104,stroke:.right),TimingTarget(id:1,time:105,stroke:.left)]
+        var session=try TimingSession(targets:targets)
+        session.tap(at:104)
+        session.tap(at:try XCTUnwrap(p.logicalTime(at:204.25)))
+        XCTAssertEqual(session.summary.matched.count,2); XCTAssertEqual(session.summary.perfectRate,1)
+        session.tap(at:try XCTUnwrap(p.logicalTime(at:204.25)))
+        XCTAssertEqual(session.summary.extraCount,1)
+    }
+    func testSpamRateMatrixCannotEarnIntroStarWhileFiniteAccurateTapsCan() throws {
+        let lesson=try LessonCatalog.bundled().lessons[0]
+        let targets=(0..<16).map { TimingTarget(id:$0,time:104+Double($0),stroke:.right) }
+        for rate in [2,4,8,16,32] {
+            var session=try TimingSession(targets:targets)
+            for i in 0..<(16*rate) { session.tap(at:104+Double(i)/Double(rate)) }
+            XCTAssertEqual(session.summary.matched.count,16)
+            XCTAssertEqual(session.summary.extraCount,16*rate-16)
+            XCTAssertEqual(lesson.stars(session.summary),0)
+        }
+        var accurate=try TimingSession(targets:targets)
+        for target in targets.prefix(12) { accurate.tap(at:target.time+0.1) }
+        XCTAssertEqual(lesson.stars(accurate.summary),1,"Twelve valid late strokes are legitimate entry-level success")
+        var shifted=try TimingSession(targets:targets)
+        for target in targets { shifted.tap(at:target.time+0.3) }
+        XCTAssertEqual(shifted.summary.matched.count,0); XCTAssertEqual(lesson.stars(shifted.summary),0)
+    }
+    @MainActor
+    func testComparisonDoesNotWriteProgressOnSuccessFailureOrCancel() async throws {
+        #if DEBUG
+        let name="BeatLabTests.Comparison.\(UUID().uuidString)"
+        let defaults=try XCTUnwrap(UserDefaults(suiteName:name)); defer { defaults.removePersistentDomain(forName:name) }
+        let repository=ProgressRepository(defaults:defaults)
+        try repository.save(PracticeProgress())
+        let original=try XCTUnwrap(defaults.data(forKey:ProgressRepository.storageKey))
+        let store=PracticeStore(repository:repository), audio=MetronomeAudio(); defer { audio.stop() }
+        let lesson=store.lessons[1]
+        for variant in RhythmPresentation.allCases {
+            store.startComparison(lesson,presentation:variant,audio:audio)
+            for _ in 0..<80 where store.phase == .preparing { try await Task.sleep(nanoseconds:25_000_000) }
+            XCTAssertEqual(store.phase,.playing); XCTAssertTrue(store.isComparison)
+            let snapshot=try XCTUnwrap(store.gameSnapshot)
+            for target in snapshot.targets { store.tap(at:target.time,stroke:target.stroke) }
+            XCTAssertEqual(store.liveSummary?.matched.count,16)
+            for _ in 0..<820 where store.phase == .playing { try await Task.sleep(nanoseconds:25_000_000) }
+            XCTAssertEqual(store.phase,.finished); XCTAssertEqual(store.stars,3); XCTAssertFalse(store.resultSaved)
+            XCTAssertEqual(defaults.data(forKey:ProgressRepository.storageKey),original)
+            XCTAssertFalse(store.unlocked(lesson)); XCTAssertFalse(store.unlocked(store.lessons[2]))
+        }
+        store.startComparison(lesson,presentation:.falling,audio:audio)
+        for _ in 0..<80 where store.phase == .preparing { try await Task.sleep(nanoseconds:25_000_000) }
+        XCTAssertEqual(store.pressSerial,0)
+        store.tap(at:.nan); store.tap(at:0)
+        XCTAssertEqual(store.pressSerial,0)
+        store.cancel(audio:audio)
+        XCTAssertEqual(defaults.data(forKey:ProgressRepository.storageKey),original)
+        #endif
+    }
+    @MainActor
+    func testPausePreservesTargetsHitsAndRejectsPausedAndResumeCountInTaps() async throws {
+        let name="BeatLabTests.Resume.\(UUID().uuidString)"
+        let defaults=try XCTUnwrap(UserDefaults(suiteName:name)); defer { defaults.removePersistentDomain(forName:name) }
+        let store=PracticeStore(repository:ProgressRepository(defaults:defaults)),audio=MetronomeAudio(); defer { audio.stop() }
+        store.start(store.lessons[0],audio:audio,eggMission:true)
+        for _ in 0..<80 where store.phase == .preparing { try await Task.sleep(nanoseconds:25_000_000) }
+        let before=try XCTUnwrap(store.gameSnapshot)
+        store.tap(at:before.targets[0].time,stroke:.right)
+        store.pause(audio:audio)
+        XCTAssertEqual(store.phase,.paused); XCTAssertFalse(audio.isPlaying)
+        let frozen=store.elapsed
+        try await Task.sleep(nanoseconds:200_000_000)
+        XCTAssertEqual(store.presentationElapsed(at:PracticeStore.now()+100),frozen)
+        store.tap(at:before.targets[1].time)
+        XCTAssertEqual(store.liveSummary?.matched.count,1)
+        store.resume(audio:audio)
+        for _ in 0..<80 where store.phase == .preparing { try await Task.sleep(nanoseconds:25_000_000) }
+        XCTAssertEqual(store.phase,.playing)
+        store.tap(at:PracticeStore.now())
+        XCTAssertEqual(store.liveSummary?.hits.count,1)
+        XCTAssertEqual(store.gameSnapshot?.targets,before.targets)
+        store.pause(audio:audio)
+        XCTAssertEqual(store.phase,.paused,"Resume count-in can be paused without judging future notes")
+        XCTAssertEqual(store.liveSummary?.hits.count,1)
+        NotificationCenter.default.post(name:UIApplication.didEnterBackgroundNotification,object:nil)
+        try await Task.sleep(nanoseconds:100_000_000)
+        XCTAssertEqual(store.phase,.idle,"Paused interruption must cancel even without a view")
+        store.cancel(audio:audio)
+        XCTAssertEqual(store.phase,.idle); XCTAssertFalse(audio.isPlaying)
+        XCTAssertNil(defaults.data(forKey:ProgressRepository.storageKey))
+    }
+}

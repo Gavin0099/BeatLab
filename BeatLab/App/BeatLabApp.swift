@@ -35,7 +35,7 @@ struct BeatLabApp: App {
                 .environmentObject(audio)
                 .environmentObject(practice)
                 .onChange(of: store.configuration) {
-                    if practice.phase != .playing && practice.phase != .preparing { audio.request($0) }
+                    if !practice.isActive { audio.request($0) }
                 }
                 .onChange(of: practice.mode) { mode in
                     if mode == .beginner { audio.setGap(0); audio.setLadder(0) }

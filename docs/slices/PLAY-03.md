@@ -1,8 +1,8 @@
 # PLAY-03 — 方案B時間驅動跑酷
 
-Status: DEFINED / NOT IMPLEMENTED。Risk: L2。Dependencies: PLAY-02本機gate通過。
+Status: IMPLEMENTED / LOCAL_VALIDATION_PENDING。Risk: L2。Dependencies: PLAY-02本機gate通過。
 總契約：[RHYTHM-PLAY-01](RHYTHM-PLAY-01.md)；本機與真機/兒童gate分開。
-本次只寫規格；以下allowed是未來本片實作界線，並非source已改。
+本批source已實作，尚待當次本機回歸及適用真機gate；以下是實作界線。
 
 ## 行為與UI
 
