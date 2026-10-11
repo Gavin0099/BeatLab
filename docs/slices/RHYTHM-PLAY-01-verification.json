@@ -1,0 +1,88 @@
+{
+  "checked_at_utc": "2026-10-11T10:40:06.107240+00:00",
+  "planning_only": true,
+  "slices": 10,
+  "contract_files": 13,
+  "local_links_checked": 48,
+  "dependency_graph": {
+    "PLAY-01": [],
+    "UI-GAME-01": [
+      "PLAY-01"
+    ],
+    "SOUND-01": [
+      "PLAY-01"
+    ],
+    "PLAY-02": [
+      "UI-GAME-01",
+      "SOUND-01"
+    ],
+    "PLAY-03": [
+      "PLAY-02"
+    ],
+    "QA-PLAY-01": [
+      "PLAY-02",
+      "PLAY-03"
+    ],
+    "UI-JOURNEY-01": [
+      "QA-PLAY-01"
+    ],
+    "UI-RESULT-01": [
+      "UI-JOURNEY-01"
+    ],
+    "CONTROL-01": [
+      "UI-JOURNEY-01"
+    ],
+    "DELIVERY-PLAY-01": [
+      "PLAY-02"
+    ]
+  },
+  "dependency_note": "QA-A/B embedded; final QA follows both; delivery repeats per candidate after each local gate; owner A/B choice and applicable physical gates precede journey promotion.",
+  "baseline_commit": "fbc674dfc9a7f4fb28621795081eb46f0c7c606e",
+  "linked_plan_commit": "b2918b13777723257a4a567b75e3054e44dcf0e3",
+  "source_commit": "39f39d199d7a701829895ef796081978f17d6475",
+  "unchanged_source_inputs": 107,
+  "source_issues": [],
+  "plan_sha256": {
+    "docs/slices/RHYTHM-PLAY-01.md": "928df09598c2ef1f8f745c03ee44c6087280d968ddf3ce8350be00ca302a2dec",
+    "docs/slices/PLAY-01.md": "c403631b74987fced19db24f5267ee884295da74117e23660a9eec1c3abbdde2",
+    "docs/slices/UI-GAME-01.md": "04d99a98b095c405dd3f2047d62db7ba66f03bece1c813912d47c93e34ca4577",
+    "docs/slices/SOUND-01.md": "59ee0b9eb11391d9e0cf6ad7426d3695b50cd0e411b5586014e98031c25dae4f",
+    "docs/slices/PLAY-02.md": "d49112e4142eb141fa52da729c45e601088ed8cf2453227fc82e348b77f5e6fa",
+    "docs/slices/PLAY-03.md": "e3a19d56eb6d526ee5aed397e29315c8821ed017b297e42d637bf9c4790f9678",
+    "docs/slices/QA-PLAY-01.md": "84822fdadff845d2ca6ae71d06bdb0be8d3ad0d01b0a53051eaf8d577766fd28",
+    "docs/slices/UI-JOURNEY-01.md": "3d434c8d1582a8545eaa96bc45ae50a154618e96dd8d8861af5049bbd30ee1cf",
+    "docs/slices/UI-RESULT-01.md": "2e930cd6dea3882a5c24e24910515db2e30034d7d695d3ba9e09c9171fb0cf89",
+    "docs/slices/CONTROL-01.md": "97d994f65d5860d0c07b1505e53a3330680b9d8e7ae814d5d49f11e8070becc7",
+    "docs/slices/DELIVERY-PLAY-01.md": "2b80f4ef298101d5265d9a294b7aa6cf26fd2ddbeebabd1dd5f5f3e67e225944",
+    "PLAN.md": "b1d33adc7901a39157029c949135e6c4c1f3a7e8622c61e0f0e42941f6e1ebba",
+    "docs/verification.md": "b9f9cf350feead326f022276ceb6fda4cc8d97193dacc1d6c282e9772699e36d"
+  },
+  "checker_sha256": "c80fa5f0d6abf1a5a834b02b355e3bfcff77ae209e9ccf6bf721829040861a1d",
+  "diff_check_exit_code": 0,
+  "issues": [],
+  "result": "PASS",
+  "App_build_tests": "NOT RUN (specifications only)",
+  "device_install": "NOT RUN",
+  "physical_timing_FPS": "NOT RUN",
+  "child_AB": "NOT RUN",
+  "UI_implementation": "NOT IMPLEMENTED",
+  "Apple_upload": "NOT RUN",
+  "claim_boundary": "Static contract/link/scope/source-hash checks only; not design usability, App behavior, physical timing/FPS, child acceptance or release validation. Old missing package retention remains FAIL.",
+  "canonical_receipt": "artifacts/evidence/test-results/RHYTHM-PLAY-01.json",
+  "raw_ref": "TestResults/RHYTHM-PLAY-01/plan-check.json",
+  "memory_guard": {
+    "exit_code": 0,
+    "current_diff_blockers": 0,
+    "repo_state_blockers": 0,
+    "historical_warnings": "root writer/guard not found, missing canonical1, provenance not found2; existing debt, no runtime integration claim",
+    "log": "TestResults/RHYTHM-PLAY-01/memory-guard.log"
+  },
+  "evidence_sha256": {
+    "TestResults/RHYTHM-PLAY-01/check-plan.py": "c80fa5f0d6abf1a5a834b02b355e3bfcff77ae209e9ccf6bf721829040861a1d",
+    "TestResults/RHYTHM-PLAY-01/plan-check.json": "d49c06508209b4b719d49d458d42f54e4b8f75a5672540fac0afdf643c7c2df4",
+    "TestResults/RHYTHM-PLAY-01/memory-writer.log": "90d691d39e2da3fa3d5fc785a94f8b2092726469f4c27882786c96229f5a738a",
+    "TestResults/RHYTHM-PLAY-01/memory-guard.log": "3d3fc5ba6fd1097acb1e9b86a99d7889f1df216290d87b47208b773a516fe572",
+    "artifacts/evidence/test-results/RHYTHM-PLAY-01.json": "b0557f8fe7be07a9705ed48a10cd37ba3d704ee18058dedc8ddb2f75eb31051e",
+    "artifacts/evidence/test-results/RHYTHM-PLAY-01.txt": "f2e6d8fa8e6121244142885536a8470fb0a299155efe4efe58687b155876b016"
+  }
+}

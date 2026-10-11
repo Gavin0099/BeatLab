@@ -476,3 +476,14 @@
 - Validation boundary: FAIL: artifacts/evidence/test-results/QA-RETENTION-01.json exit_code=1 because original signed13-file package missing. Source107 and NIGHT174 hashes plus retained Core59/App115/UI3 and historical delivery logs match; no new App test run or present phone acceptance.
 - Next action: Owner trial remains pending: new second-level unlock, third-level density and optional half/sixteenth audio demonstration. Physical timing/FPS/child/full Accessibility unaccepted; KidsCharacterKit remains deferred. Future phone candidate must be newly built and labeled rather than claiming original bytes recovered.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:6e153d81745806f00fe760853bdac38f719ce60dc943095bc9affa751408890a -->
+### Canonical memory checkpoint — RHYTHM-PLAY-01-plan-20261011
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `6e153d81745806f00fe760853bdac38f719ce60dc943095bc9affa751408890a`
+- Commit binding: `b2918b13777723257a4a567b75e3054e44dcf0e3` (bound)
+- Record: Owner要求先切slice並納入主流遊戲UI：RHYTHM-PLAY-01已定義10片，包含隔離A/B基準、全螢幕HUD/倒數/固定鼓墊、同鼓演奏聲、雙軌A/時間跑酷B、逐片QA、選關準備/結果/真正pause及新包Wi-Fi交付。只改規格與PLAN，App尚未實作；同原2/3關約38.82秒、同targets/audio/scoring，正式進度隔離，正式操作待owner A/B選定。
+- Validation boundary: PASS: artifacts/evidence/test-results/RHYTHM-PLAY-01.json (10 slice contracts, 48 local links, DAG and scope, 107 unchanged source inputs). App build/test, install, physical timing/FPS, children NOT RUN; UI NOT IMPLEMENTED.
+- Next action: 依PLAY-01建立DEBUG共同基準，再導入UI-GAME-01和SOUND-01與A原型；每片本機驗證後才建新包。真機timing/FPS、兒童A/B與owner正式操作選擇另驗，不上傳Apple。原PhoneFrozen缺包FAIL仍保留。
+- PLAN reconciliation: `updated`

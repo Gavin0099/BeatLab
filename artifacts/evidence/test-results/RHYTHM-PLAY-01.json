@@ -1,0 +1,17 @@
+{
+  "receipt_schema": "test_evidence_receipt.v0.1",
+  "status": "report_only",
+  "command": "python3 TestResults/RHYTHM-PLAY-01/check-plan.py",
+  "exit_code": 0,
+  "started_at": "2026-10-11T10:40:05Z",
+  "finished_at": "2026-10-11T10:40:06Z",
+  "runner": "local-gameplay-and-UI-slice-contract-check",
+  "linked_commit": "b2918b13777723257a4a567b75e3054e44dcf0e3",
+  "output_artifacts": [
+    "artifacts/evidence/test-results/RHYTHM-PLAY-01.txt"
+  ],
+  "cannot_claim": [
+    "semantic correctness of the tested behavior",
+    "receipt authenticity: every field is fabricatable by a direct writer"
+  ]
+}
