@@ -13,6 +13,7 @@ struct RhythmGameSnapshot {
     let duration: Double
     let alignment: Double
     let bpm: Int
+    var subdivisions: Int = 1
     var accepted: Set<Int> { Set(hits.compactMap(\.targetID)) }
     var perfectStreak: Int {
         var streak = 0
@@ -28,7 +29,7 @@ struct RhythmGameSnapshot {
     }
     func missed(at elapsed: Double) -> Set<Int> {
         guard elapsed.isFinite else { return [] }
-        return Set(targets.filter { $0.time + alignment + TimingSession.matchingWindow < epoch + elapsed && !accepted.contains($0.id) }.map(\.id))
+        return Set(targets.filter { $0.time + alignment + TimingSession.matchingWindow + 1e-10 < epoch + elapsed && !accepted.contains($0.id) }.map(\.id))
     }
     func distance(_ target: TimingTarget, elapsed: Double) -> Double? {
         guard elapsed.isFinite, bpm > 0 else { return nil }

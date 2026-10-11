@@ -450,7 +450,7 @@ struct PracticeView: View {
             Text("左邊用左手、右邊用右手。先聽四拍再開始；— 是休息。目前依時機給星星，鼓墊與手別是練習指引。")
                 .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
             HStack {
-                BLPill(title: "\(lesson.bpm) BPM", symbol: "metronome")
+                BLPill(title: "\(max(lesson.bpm, practice.practiceBPM)) BPM", symbol: "metronome")
                 BLPill(title: "\(lesson.bars) 小節")
             }
             LazyVGrid(columns: [GridItem(.adaptive(minimum: 95))], spacing: 8) {
@@ -465,6 +465,11 @@ struct PracticeView: View {
             }.accessibilityLabel("一小節節奏預覽")
             Text("一星：至少跟上 \(Int(ceil(Double(count) * lesson.requiredHitRate))) / \(count) 拍；精準命中至少 \(Int(ceil(Double(count) * lesson.requiredPerfectRate))) 拍；多打最多 \(Int(floor(Double(count) * lesson.maxExtraRate))) 次。")
                 .font(.subheadline).accessibilityIdentifier("oneStarCriteria")
+            if practice.mode == .standard {
+                Stepper("挑戰速度：\(max(lesson.bpm, practice.practiceBPM)) BPM", value: Binding(
+                    get: { max(lesson.bpm, practice.practiceBPM) }, set: { practice.setPracticeBPM($0) }
+                ), in: lesson.bpm...240, step: 5)
+            }
             Button { startLesson(lesson) } label: { Label("開始挑戰", systemImage: "play.fill") }
                 .buttonStyle(BLPrimaryButtonStyle()).disabled(!practice.canPractice).accessibilityIdentifier("startLesson")
         }
@@ -802,7 +807,7 @@ struct PracticeView: View {
             else {
                 GameResultView(celebration: AnyView(EggMissionScene(theme: missionTheme, elapsed: practice.elapsed,
                         accepted: practice.gameSnapshot?.accepted ?? [], finishedPassed: practice.stars > 0,
-                        route: practice.runnerRoute, platformJourney: true).frame(height: 200)), title: practice.isComparison ? "這段節奏完成了" : practice.stars > 0 ? "節奏挑戰成功！" : "再聽一次，再試一次！",
+                        route: practice.gameRoute, platformJourney: true).frame(height: 200)), title: practice.isComparison ? "這段節奏完成了" : practice.stars > 0 ? "節奏挑戰成功！" : "再聽一次，再試一次！",
                     summary: summary, stars: practice.stars, best: practice.progress.results[practice.selected?.id ?? ""]?.stars ?? 0,
                     comparison: practice.isComparison, saved: practice.resultSaved, saveFailed: practice.needsSaveRetry,
                     advice: practice.isComparison ? "試試另一種操作，看看哪個更容易跟拍。" : resultAdvice(summary),

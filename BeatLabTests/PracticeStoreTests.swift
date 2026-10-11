@@ -2362,6 +2362,28 @@ final class RhythmPrototypeTests: XCTestCase {
         session.tap(at:104.2)
         XCTAssertEqual(RhythmGameSnapshot(targets:targets,hits:session.hits,epoch:100,duration:8.18,alignment:0.2,bpm:60).perfectStreak,0)
     }
+    @MainActor
+    func testActualSceneCoordinatesRemainAtFixedLineUntilRealWindowExpires() throws {
+        let targets=[TimingTarget(id:0,time:104,stroke:.right),TimingTarget(id:1,time:105,stroke:.left)]
+        let snapshot=RhythmGameSnapshot(targets:targets,hits:[],epoch:100,duration:8.18,alignment:0.2,bpm:60)
+        var elapsed=2.2
+        let scene=FallingRhythmScene(size:CGSize(width:320,height:300))
+        scene.snapshot={snapshot};scene.elapsed={elapsed}
+        scene.didMove(to:SKView());scene.update(0)
+        let note=try XCTUnwrap(scene.childNode(withName:"note.0"))
+        XCTAssertFalse(note.isHidden);XCTAssertEqual(note.position.x,240,accuracy:1e-9)
+        XCTAssertEqual(note.position.y,268,accuracy:1e-9)
+        elapsed=4.2;scene.update(1)
+        XCTAssertEqual(note.position.y,46,accuracy:1e-9)
+        elapsed=4.37;scene.update(2)
+        XCTAssertFalse(note.isHidden);XCTAssertEqual(note.position.y,46,accuracy:1e-9)
+        elapsed=4.381;scene.update(3)
+        XCTAssertTrue(note.isHidden)
+        XCTAssertTrue(snapshot.hits.isEmpty,"Drawing cannot submit misses or hits")
+        let b=RunnerRhythmScene(size:CGSize(width:320,height:200))
+        b.snapshot={snapshot};b.elapsed={4.2};b.didMove(to:SKView());b.update(0)
+        XCTAssertEqual(try XCTUnwrap(b.childNode(withName:"note.0")).position.x,70.4,accuracy:1e-9)
+    }
     func testPauseProjectionIndependentMidBeatOracleAndInvalidCountIn() throws {
         let p=try XCTUnwrap(PracticeTransportProjection(logicalEpoch:100,frozenElapsed:4.75,countInEpoch:200,countInDuration:4))
         XCTAssertNil(p.logicalTime(at:203.999)); XCTAssertEqual(p.elapsed(at:201),4.75)

@@ -246,7 +246,12 @@ final class PracticeStore: ObservableObject {
     var gameSnapshot: RhythmGameSnapshot? {
         guard let session, let selected, isActive || phase == .finished else { return nil }
         return RhythmGameSnapshot(targets: session.targets, hits: session.hits, epoch: epoch,
-                                  duration: endTime - epoch, alignment: session.calibrationOffset, bpm: selected.bpm)
+                                  duration: endTime - epoch, alignment: session.calibrationOffset, bpm: selected.bpm, subdivisions: selected.pattern.stepsPerBeat)
+    }
+    var gameRoute: RunnerRoute? {
+        guard let value = gameSnapshot else { return nil }
+        return RunnerRoute(targets: value.targets, hits: value.hits, epoch: value.epoch,
+                           endTime: value.epoch + value.duration, alignment: value.alignment)
     }
     var liveSummary: TimingSummary? { session?.summary }
     func cancel(audio: MetronomeAudio, message: String? = nil) {

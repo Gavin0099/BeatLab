@@ -81,8 +81,8 @@ struct PracticeComparisonView: View {
             VStack(spacing: 0) {
                 EggMissionScene(theme: theme, elapsed: practice.elapsed, accepted: practice.gameSnapshot?.accepted ?? [],
                                 presentationElapsed: { practice.presentationElapsed(at: $0) },
-                                acceptedAction: practice.runnerRoute?.latestAccepted, latestAction: practice.latestHit,
-                                route: practice.runnerRoute, platformJourney: true)
+                                acceptedAction: practice.gameRoute?.latestAccepted, latestAction: practice.latestHit,
+                                route: practice.gameRoute, platformJourney: true)
                     .frame(height: 220)
                     .scaleEffect(min(1, max(0.4, g.size.height * (practice.presentation == .falling ? 0.36 : 0.62) / 220)))
                     .frame(height: g.size.height * (practice.presentation == .falling ? 0.36 : 0.62))
@@ -100,7 +100,7 @@ struct PracticeComparisonView: View {
         }
     }
     private func pad(_ stroke: Stroke, lesson: Lesson) -> some View {
-        let both = IslandLesson.profile(lesson)?.usesBothHands == true
+        let both = lesson.pattern.steps.contains(.left)
         let identifier = stroke == .left ? "practiceTapPad.left" : both ? "practiceTapPad.right" : "practiceTapPad"
         return ZStack {
             RoundedRectangle(cornerRadius: 24).fill(stroke == .left ? BeatLabStyle.rewardSoft : BeatLabStyle.reward)

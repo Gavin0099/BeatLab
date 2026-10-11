@@ -21,7 +21,7 @@ class FallingRhythmScene: SKScene {
         if line.parent == nil {
             line.strokeColor = UIColor(named: "Reward") ?? .systemYellow; line.lineWidth = 5; addChild(line)
             for label in [left, right] { label.fontName = "Arial-BoldMT"; label.fontSize = 16; label.fontColor = UIColor(named: "Ink"); addChild(label) }
-            for _ in 0..<5 { let grid = SKShapeNode(); grid.strokeColor = (UIColor(named: "Separator") ?? .gray).withAlphaComponent(0.6); grid.lineWidth = 1; addChild(grid); grids.append(grid) }
+            for _ in 0..<10 { let grid = SKShapeNode(); grid.strokeColor = (UIColor(named: "Separator") ?? .gray).withAlphaComponent(0.6); grid.lineWidth = 1; addChild(grid); grids.append(grid) }
         }
     }
     override func update(_ currentTime: TimeInterval) {
@@ -31,7 +31,7 @@ class FallingRhythmScene: SKScene {
             notes.values.forEach { $0.removeFromParent() }; notes = [:]; targetIDs = ids; strokes = value.targets.map(\.stroke); geometrySize = .zero
             for target in value.targets {
                 let node = SKShapeNode(rectOf: CGSize(width: 66, height: 32), cornerRadius: 12)
-                node.lineWidth = 2; node.strokeColor = UIColor(named: "Ink") ?? .darkGray
+                node.name = "note.\(target.id)"; node.lineWidth = 2; node.strokeColor = UIColor(named: "Ink") ?? .darkGray
                 node.fillColor = UIColor(named: target.stroke == .left ? "Reward" : "Success") ?? .systemGreen
                 let label = SKLabelNode(text: target.stroke == .left ? "L" : "R")
                 label.fontName = "Arial-BoldMT"; label.fontSize = 21; label.fontColor = target.stroke == .left ? UIColor(named: "Ink") : .white
@@ -60,21 +60,24 @@ class FallingRhythmScene: SKScene {
         let missed = value.missed(at: now)
         for target in value.targets {
             guard let distance = value.distance(target, elapsed: now), let node = notes[target.id] else { continue }
-            node.isHidden = distance > 1 || distance < -0.23 || value.accepted.contains(target.id) || missed.contains(target.id)
-            let visualDistance = reduced ? (distance * 4).rounded(.up) / 4 : distance
+            node.isHidden = distance > 1 + 1e-10 || value.accepted.contains(target.id) || missed.contains(target.id)
+            let visualDistance = reduced ? (max(0,distance) * 4).rounded(.up) / 4 : max(0,distance)
             if horizontal { node.position = CGPoint(x: hitX + CGFloat(visualDistance) * (size.width - hitX - 36), y: target.stroke == .left ? size.height * 0.35 : size.height * 0.70) }
             else { node.position = CGPoint(x: size.width * (target.stroke == .left ? 0.25 : 0.75), y: hitY + CGFloat(visualDistance) * travel) }
             if reduced { node.alpha = distance < 0.10 ? 1 : 0.65 } else { node.alpha = 1 }
         }
         let beat = 60 / Double(value.bpm)
-        let phase = reduced ? 0 : now / beat - floor(now / beat)
+        let divisions = min(4, max(1, value.subdivisions))
+        let aligned = (now - value.alignment) / beat * Double(divisions)
+        let phase = reduced ? 0 : aligned - floor(aligned)
         for (index, grid) in grids.enumerated() {
+            grid.isHidden = index > 2 * divisions + 1
             let p = CGMutablePath()
             if horizontal {
-                let x = hitX + CGFloat((Double(index) - phase) / 2) * (size.width - hitX - 36)
+                let x = hitX + CGFloat((Double(index) - phase) / Double(2 * divisions)) * (size.width - hitX - 36)
                 p.move(to: CGPoint(x: x, y: 26)); p.addLine(to: CGPoint(x: x, y: size.height - 25))
             } else {
-                let y = hitY + CGFloat((Double(index) - phase) / 2) * travel
+                let y = hitY + CGFloat((Double(index) - phase) / Double(2 * divisions)) * travel
                 p.move(to: CGPoint(x: 16, y: y)); p.addLine(to: CGPoint(x: size.width - 16, y: y))
             }
             grid.path = p; grid.zPosition = -1
