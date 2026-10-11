@@ -1,4 +1,5 @@
 import SwiftUI
+import UIKit
 import BeatLabCore
 
 enum BeatLabStyle {
@@ -14,6 +15,9 @@ enum BeatLabStyle {
     static let successSoft = Color("SuccessSoft")
     static let reward = Color("Reward")
     static let rewardSoft = Color("RewardSoft")
+    // HomeHero stays bright in both appearances; its text must stay dark too.
+    static let rhythmYellow = Color("HomeHero")
+    static let rhythmOnYellow = Color(uiColor: UIColor(named: "Ink")?.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)) ?? .black)
     static let maxWidth: CGFloat = 680
     static let minimumTarget: CGFloat = 44
 

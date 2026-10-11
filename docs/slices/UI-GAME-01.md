@@ -39,3 +39,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 整合allowed PracticeComparisonView.swift（共用容器）與PracticeComparison.swift（read-only HUD model）；PracticeStore.swift僅press展示與read-only session snapshot，涉及clock實作屬PLAY/CONTROL的L2界線。
 
 最大Accessibility字級隱去非必要角色景觀、將空間給軌道與鼓墊；命中/連擊分兩行，回饋列依字級預留固定雙行高度，grade變化不得移動鼓墊。一般字級保留角色既有動作。
+
+色彩檢查補充：Reward是文字用棕色token，亮色判定線與L音符改用首頁HomeHero暖黃；亮黃前景固定取light Ink，綠/mint前景用OnAccent，避免深色白字落在亮mint/黃底。最大字級HUD保留關號/BPM/命中，精準連擊以AX value保留；鼓墊一行L/R標籤，暫停選單可捲動，隱去軌道上的裝飾badge。

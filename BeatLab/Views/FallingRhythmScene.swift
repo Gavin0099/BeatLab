@@ -13,13 +13,15 @@ class FallingRhythmScene: SKScene {
     private var strokes: [Stroke] = []
     private var geometrySize = CGSize.zero
     private let line = SKShapeNode()
+    private let lineOutline = SKShapeNode()
     private var grids: [SKShapeNode] = []
     private let left = SKLabelNode(text: "左 L")
     private let right = SKLabelNode(text: "右 R")
     override func didMove(to view: SKView) {
         backgroundColor = .clear
         if line.parent == nil {
-            line.strokeColor = UIColor(named: "Reward") ?? .systemYellow; line.lineWidth = 5; addChild(line)
+            lineOutline.strokeColor = UIColor(named: "Ink") ?? .darkGray; lineOutline.lineWidth = 9; addChild(lineOutline)
+            line.strokeColor = UIColor(named: "HomeHero") ?? .systemYellow; line.lineWidth = 5; line.zPosition = 1; addChild(line)
             for label in [left, right] { label.fontName = "Arial-BoldMT"; label.fontSize = 16; label.fontColor = UIColor(named: "Ink"); addChild(label) }
             for _ in 0..<10 { let grid = SKShapeNode(); grid.strokeColor = (UIColor(named: "Separator") ?? .gray).withAlphaComponent(0.6); grid.lineWidth = 1; addChild(grid); grids.append(grid) }
         }
@@ -32,9 +34,9 @@ class FallingRhythmScene: SKScene {
             for target in value.targets {
                 let node = SKShapeNode(rectOf: CGSize(width: 66, height: 32), cornerRadius: 12)
                 node.name = "note.\(target.id)"; node.lineWidth = 2; node.strokeColor = UIColor(named: "Ink") ?? .darkGray
-                node.fillColor = UIColor(named: target.stroke == .left ? "Reward" : "Success") ?? .systemGreen
+                node.fillColor = UIColor(named: target.stroke == .left ? "HomeHero" : "Success") ?? .systemGreen
                 let label = SKLabelNode(text: target.stroke == .left ? "L" : "R")
-                label.fontName = "Arial-BoldMT"; label.fontSize = 21; label.fontColor = target.stroke == .left ? UIColor(named: "Ink") : .white
+                label.fontName = "Arial-BoldMT"; label.fontSize = 21; label.fontColor = target.stroke == .left ? UIColor(named: "Ink")?.resolvedColor(with: UITraitCollection(userInterfaceStyle: .light)) : UIColor(named: "OnAccent")
                 label.verticalAlignmentMode = .center; node.addChild(label); notes[target.id] = node; addChild(node)
             }
         }
@@ -55,7 +57,7 @@ class FallingRhythmScene: SKScene {
         let path = CGMutablePath()
         if horizontal { path.move(to: CGPoint(x: hitX, y: 20)); path.addLine(to: CGPoint(x: hitX, y: size.height - 25)) }
         else { path.move(to: CGPoint(x: 16, y: hitY)); path.addLine(to: CGPoint(x: size.width - 16, y: hitY)) }
-        line.path = path
+        line.path = path; lineOutline.path = path
         left.position = CGPoint(x: size.width * 0.25, y: 12); right.position = CGPoint(x: size.width * 0.75, y: 12)
         let missed = value.missed(at: now)
         let accepted = value.accepted

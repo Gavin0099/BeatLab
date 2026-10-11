@@ -24,7 +24,7 @@ struct GameResultView: View {
             HStack(spacing: 12) {
                 ForEach(0..<3, id: \.self) { index in
                     Image(systemName: index < stars ? "star.fill" : "star")
-                        .font(.largeTitle).foregroundStyle(index < stars ? BeatLabStyle.reward : BeatLabStyle.muted)
+                        .font(.largeTitle).foregroundStyle(index < stars ? BeatLabStyle.rhythmYellow : BeatLabStyle.muted)
                 }
             }.accessibilityElement(children: .ignore).accessibilityLabel("這次得到 \(stars) 顆星")
                 .accessibilityIdentifier("practiceStars")

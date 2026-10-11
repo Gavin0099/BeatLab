@@ -99,8 +99,8 @@ struct PracticeComparisonView: View {
                     .accessibilityIdentifier("rhythmPlayfield")
             }.clipShape(RoundedRectangle(cornerRadius: 24))
                 .overlay(alignment: .topLeading) {
-                    Text(practice.presentation.title).font(.caption.bold()).padding(8)
-                        .background(BeatLabStyle.rewardSoft, in: Capsule()).padding(8)
+                    if !textSize.isAccessibilitySize { Text(practice.presentation.title).font(.caption.bold()).padding(8)
+                        .background(BeatLabStyle.rewardSoft, in: Capsule()).padding(8) }
                 }
         }
     }
@@ -108,12 +108,16 @@ struct PracticeComparisonView: View {
         let both = lesson.pattern.steps.contains(.left)
         let identifier = stroke == .left ? "practiceTapPad.left" : both ? "practiceTapPad.right" : "practiceTapPad"
         return ZStack {
-            RoundedRectangle(cornerRadius: 24).fill(stroke == .left ? BeatLabStyle.rewardSoft : BeatLabStyle.reward)
+            RoundedRectangle(cornerRadius: 24).fill(stroke == .left ? BeatLabStyle.rhythmYellow : BeatLabStyle.accent)
             RoundedRectangle(cornerRadius: 24).stroke(pressed == stroke ? BeatLabStyle.accent : .clear, lineWidth: 4)
             VStack(spacing: 2) {
-                Text(stroke == .left ? "左手" : "右手").font(.headline)
-                Text(stroke == .left ? "L" : "R").font(.system(.headline, design: .rounded).bold())
-            }.foregroundStyle(BeatLabStyle.ink).allowsHitTesting(false).accessibilityHidden(true)
+                if textSize.isAccessibilitySize {
+                    Text(stroke == .left ? "左 L" : "右 R").font(.headline)
+                } else {
+                    Text(stroke == .left ? "左手" : "右手").font(.headline)
+                    Text(stroke == .left ? "L" : "R").font(.system(.headline, design: .rounded).bold())
+                }
+            }.foregroundStyle(stroke == .left ? BeatLabStyle.rhythmOnYellow : BeatLabStyle.onAccent).allowsHitTesting(false).accessibilityHidden(true)
             TapPad(feedback: feedback, label: stroke == .left ? "左手 L 跟拍區" : "右手 R 跟拍區", identifier: identifier) { time, accessibility in
                 practice.tap(at: time, accessibility: accessibility, stroke: stroke)
             }
@@ -122,6 +126,7 @@ struct PracticeComparisonView: View {
     private var pausePanel: some View {
         ZStack {
             BeatLabStyle.canvas.opacity(0.97).ignoresSafeArea()
+            ScrollView {
             VStack(spacing: 16) {
                 Text("休息一下").font(.title.bold())
                 Text("已打過的拍點會保留。先聽四拍，再接著敲。").multilineTextAlignment(.center)
@@ -136,7 +141,8 @@ struct PracticeComparisonView: View {
                     practice.start(lesson, audio: audio, eggMission: true)
                 }.buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("restartPractice")
                 Button("退出", action: exit).frame(minHeight: 44).accessibilityIdentifier("exitPausedPractice")
-            }.padding(24).frame(maxWidth: 480)
+            }.padding(24).frame(maxWidth: 480).frame(maxWidth: .infinity)
+            }
         }.accessibilityIdentifier("practicePaused")
     }
 }

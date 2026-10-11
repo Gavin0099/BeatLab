@@ -13,10 +13,16 @@ struct GameHUD: View {
     var body: some View {
         VStack(spacing: 8) {
             HStack(alignment: .top, spacing: 8) {
+                if textSize.isAccessibilitySize {
+                    Text("\(number)").font(.headline).accessibilityLabel("第 \(number) 關")
+                        .accessibilityIdentifier("activeLessonNumber")
+                    Text("\(lesson.bpm) BPM").font(.subheadline.bold()).monospacedDigit().lineLimit(1)
+                } else {
                 VStack(alignment: .leading, spacing: 2) {
                     Text(textSize.isAccessibilitySize ? "第 \(number) 關" : "第 \(number) 關 · \(comparison ? "比較試玩" : "節奏冒險")")
                         .font(.headline).accessibilityIdentifier("activeLessonNumber")
                     Text("\(lesson.bpm) BPM").font(.subheadline.bold()).monospacedDigit()
+                }
                 }
                 Spacer(minLength: 0)
                 Button(action: pause) { Image(systemName: "pause.fill").frame(width: 44, height: 44) }
@@ -27,7 +33,12 @@ struct GameHUD: View {
             ProgressView(value: min(1, max(0, elapsed / max(snapshot?.duration ?? 1, 1))))
                 .tint(BeatLabStyle.accent).accessibilityLabel("練習進度")
             Group {
-                if textSize.isAccessibilitySize { VStack(alignment: .leading, spacing: 2) { stats }.frame(maxWidth: .infinity, alignment: .leading) }
+                if textSize.isAccessibilitySize {
+                    Text("命中 \(snapshot?.accepted.count ?? 0) / \(snapshot?.targets.count ?? 0)")
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .accessibilityValue("精準連擊 \(snapshot?.perfectStreak ?? 0)")
+                        .accessibilityIdentifier("jumpMatches")
+                }
                 else { HStack(spacing: 10) { stats } }
             }.font(.caption.bold()).monospacedDigit().lineLimit(1)
         }.foregroundStyle(BeatLabStyle.ink)
