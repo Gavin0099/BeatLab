@@ -571,8 +571,22 @@ final class PracticeUITests: XCTestCase {
             throw NSError(domain: "PracticeUIVisibility", code: 2, userInfo: [NSLocalizedDescriptionKey: "Course row not visible: \(element.identifier)"])
         }
         let picker = app.navigationBars["選擇夥伴"]
-        let inPicker = picker.exists
-        let top = inPicker ? picker.frame.maxY : app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.exists ? app.statusBars.firstMatch.frame.maxY : window.frame.minY
+        if picker.exists {
+            let scroll = app.scrollViews.firstMatch
+            let top = picker.frame.maxY, bottom = window.frame.maxY
+            for _ in 0..<24 {
+                XCTAssertTrue(picker.exists, "Companion picker must remain open while revealing a row")
+                let frame = element.exists ? element.frame : .zero
+                if element.exists && frame.minY >= top && frame.maxY <= bottom && (!requiresHit || element.isHittable) { return }
+                // A held coordinate drag can select a plain button instead of
+                // revealing it. Use the actual scroll view's scrolling gesture.
+                if element.exists && frame.midY < (top + bottom) / 2 { scroll.swipeDown(velocity: .slow) }
+                else { scroll.swipeUp(velocity: .slow) }
+            }
+            throw NSError(domain: "PracticeUIVisibility", code: 4, userInfo: [NSLocalizedDescriptionKey: "Companion row not visible: \(element.identifier)"])
+        }
+        let inPicker = false
+        let top = app.navigationBars.firstMatch.exists ? app.navigationBars.firstMatch.frame.maxY : app.statusBars.firstMatch.exists ? app.statusBars.firstMatch.frame.maxY : window.frame.minY
         // A presented sheet covers the underlying tab bar; use its own viewport.
         // The SE has no bottom home-indicator inset. Do not invent a 30pt
         // exclusion zone: use the observed tab bar or actual app viewport.
