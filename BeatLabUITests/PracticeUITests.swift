@@ -436,7 +436,11 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(right.waitForExistence(timeout:5)); XCTAssertTrue(left.isHittable)
         XCTAssertLessThan(left.frame.maxX,right.frame.minX)
         XCTAssertGreaterThanOrEqual(left.frame.height,44); XCTAssertGreaterThanOrEqual(right.frame.width,44)
-        XCTAssertTrue(app.otherElements["rhythmPlayfield"].exists)
+        let field = app.descendants(matching: .any).matching(identifier: "rhythmPlayfield").firstMatch
+        if !field.exists { print("RHYTHM_PLAYFIELD_AX_DIAGNOSTIC",app.debugDescription) }
+        XCTAssertTrue(field.exists)
+        XCTAssertGreaterThanOrEqual(field.frame.height,44)
+        XCTAssertLessThanOrEqual(field.frame.maxY,right.frame.minY)
         capture(app,"new A fixed lanes and pads")
         app.buttons["pausePractice"].tap()
         XCTAssertTrue(app.buttons["resumePractice"].waitForExistence(timeout:5))
@@ -508,7 +512,11 @@ final class PracticeUITests: XCTestCase {
         try reveal(comparison,in:app); comparison.tap()
         let right=app.buttons["practiceTapPad.right"]
         XCTAssertTrue(right.waitForExistence(timeout:5))
-        XCTAssertTrue(app.otherElements["rhythmPlayfield"].exists)
+        let field = app.descendants(matching: .any).matching(identifier: "rhythmPlayfield").firstMatch
+        if !field.exists { print("RHYTHM_PLAYFIELD_AX_DIAGNOSTIC",app.debugDescription) }
+        XCTAssertTrue(field.exists)
+        XCTAssertGreaterThanOrEqual(field.frame.height,44)
+        XCTAssertLessThanOrEqual(field.frame.maxY,right.frame.minY)
         let ready=XCTNSPredicateExpectation(predicate:NSPredicate(format:"NOT label BEGINSWITH %@","先聽"),object:app.staticTexts["jumpCue"])
         XCTAssertEqual(XCTWaiter.wait(for:[ready],timeout:8),.completed)
         right.tap(withNumberOfTaps:8,numberOfTouches:1)

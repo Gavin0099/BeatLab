@@ -42,7 +42,7 @@ struct PracticeComparisonView: View {
                     GameHUD(lesson: lesson, number: (practice.lessons.firstIndex { $0.id == lesson.id } ?? 0) + 1,
                             snapshot: practice.gameSnapshot, elapsed: practice.elapsed, comparison: practice.isComparison,
                             pause: { practice.pause(audio: audio) }, exit: exit)
-                    stage.frame(maxWidth: .infinity, maxHeight: .infinity).accessibilityIdentifier("rhythmGameStage")
+                    stage.frame(maxWidth: .infinity, maxHeight: .infinity).accessibilityElement(children: .contain).accessibilityIdentifier("rhythmGameStage")
                     Text(feedback).font(textSize.isAccessibilitySize ? .subheadline.bold() : .headline)
                         .multilineTextAlignment(.center).lineLimit(2).frame(maxWidth: .infinity).frame(height: feedbackHeight)
                         .accessibilityIdentifier("jumpCue")

@@ -43,3 +43,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 色彩檢查補充：Reward是文字用棕色token，亮色判定線與L音符改用首頁HomeHero暖黃；亮黃前景固定取light Ink，綠/mint前景用OnAccent，避免深色白字落在亮mint/黃底。最大字級HUD保留關號/BPM/命中，精準連擊以AX value保留；鼓墊一行L/R標籤，暫停選單可捲動，隱去軌道上的裝飾badge。
 
 連擊為read-only展示：最後Perfect之後有真實target窗口逾期，立即顯示0；休止不重設，不更改summary/star。音符zPosition位於黃線上方，線不得遮住到線音符的L/R文字。獨立fixture驗休止保留與miss歸零。
+
+UI回歸發現外層stage identifier需明確AX contain分組，避免覆蓋內層SpriteView標籤。修正為stage容器保留各子元件；測試用任意實際AX角色搜尋固定identifier並驗44pt與鼓墊上方bounds，不假定SKView一定分類Other，失敗保留真實AX tree。
