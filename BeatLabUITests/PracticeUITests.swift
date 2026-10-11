@@ -14,10 +14,11 @@ final class PracticeUITests: XCTestCase {
     }
     @MainActor
     private func openCompanion(_ key: String, in app: XCUIApplication) throws {
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         try reveal(app.buttons["chooseCompanion"], in: app); app.buttons["chooseCompanion"].tap()
         XCTAssertTrue(app.navigationBars["選擇夥伴"].waitForExistence(timeout: 5))
         try reveal(app.buttons["companion.\(key)"], in: app); app.buttons["companion.\(key)"].tap()
+        try waitForCompanionDismissal(in: app)
         try openFirstCompanionLesson(in: app)
     }
     @MainActor
@@ -210,7 +211,7 @@ final class PracticeUITests: XCTestCase {
         continueAfterFailure=false
         let app=XCUIApplication();app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.HighLevels"
         app.launch();XCTAssertTrue(app.staticTexts["9 / 10 關"].waitForExistence(timeout:5))
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         for (level,id,total) in [(7,"sixteenth",64),(8,"sixteenth-hands",64),(10,"mixed",40)] {
             try reveal(app.buttons["journeyChapter.2"],in:app);app.buttons["journeyChapter.2"].tap()
             try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
@@ -265,7 +266,7 @@ final class PracticeUITests: XCTestCase {
         continueAfterFailure=false
         let app=XCUIApplication();app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.RestLevels"
         app.launch();XCTAssertTrue(app.staticTexts["8 / 10 關"].waitForExistence(timeout:5))
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         for (level,id,total,chapter) in [(5,"quarter-rest",8,1),(6,"eighth-rest",20,1),(9,"offbeat",16,2)] {
             try reveal(app.buttons["journeyChapter.\(chapter)"],in:app);app.buttons["journeyChapter.\(chapter)"].tap()
             try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
@@ -315,7 +316,7 @@ final class PracticeUITests: XCTestCase {
         app.launchEnvironment["BEATLAB_UI_TEST_SUITE"]="BeatLabUITests.DenseLevels"
         app.launch()
         XCTAssertTrue(app.staticTexts["3 / 10 關"].waitForExistence(timeout:5))
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         for (level,id) in [(3,"eighth"),(4,"eighth-hands")] {
             try reveal(app.buttons["journeyChapter.1"],in:app);app.buttons["journeyChapter.1"].tap()
             try reveal(app.buttons["journeyLesson.\(id)"],in:app);app.buttons["journeyLesson.\(id)"].tap()
@@ -429,7 +430,7 @@ final class PracticeUITests: XCTestCase {
     @MainActor
     func testNewDualLaneActualTouchesPauseResumeRestartAndExit() throws {
         let app = freshApp()
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         try openFirstCompanionLesson(in: app)
         try reveal(app.buttons["startLesson"], in: app); app.buttons["startLesson"].tap()
         let right=app.buttons["practiceTapPad"],left=app.buttons["practiceTapPad.left"]
@@ -463,7 +464,7 @@ final class PracticeUITests: XCTestCase {
     @MainActor
     func testNewLargestTextAResultRetryAndLocks() throws {
         let app=freshApp(largestText:true)
-        app.tabBars.buttons["練習"].tap(); try openFirstCompanionLesson(in:app)
+        try selectTab("練習", in: app); try openFirstCompanionLesson(in:app)
         capture(app,"new preparation maximum text")
         try reveal(app.buttons["startLesson"],in:app); app.buttons["startLesson"].tap()
         let left=app.buttons["practiceTapPad.left"],right=app.buttons["practiceTapPad"]
@@ -488,7 +489,7 @@ final class PracticeUITests: XCTestCase {
     @MainActor
     func testNewPausedBackgroundCancelsAndKeepsProgressLocked() throws {
         let app=freshApp()
-        app.tabBars.buttons["練習"].tap(); try openFirstCompanionLesson(in:app)
+        try selectTab("練習", in: app); try openFirstCompanionLesson(in:app)
         try reveal(app.buttons["startLesson"],in:app); app.buttons["startLesson"].tap()
         XCTAssertTrue(app.buttons["pausePractice"].waitForExistence(timeout:5)); app.buttons["pausePractice"].tap()
         XCTAssertTrue(app.buttons["resumePractice"].waitForExistence(timeout:5))
@@ -506,7 +507,7 @@ final class PracticeUITests: XCTestCase {
     @MainActor
     func testNewRunnerComparisonActualInputAndIsolatedExit() throws {
         let app=freshApp()
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         app.buttons["practiceSettings"].tap()
         let comparison=app.buttons["comparison.quarter-hands.runner"]
         try reveal(comparison,in:app); comparison.tap()
@@ -525,7 +526,7 @@ final class PracticeUITests: XCTestCase {
         app.buttons["stopPractice"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout:5))
         XCTAssertFalse(app.buttons["journeyLesson.quarter-hands"].isEnabled)
-        app.tabBars.buttons["首頁"].tap()
+        try selectTab("首頁", in: app)
         try reveal(app.buttons["dailyPractice"],in:app); app.buttons["dailyPractice"].tap()
         XCTAssertTrue(app.staticTexts["preparedLessonNumber"].waitForExistence(timeout:5))
         XCTAssertTrue(app.staticTexts["preparedLessonNumber"].label.hasPrefix("第 1 關 ·"),"Home must open its actual recommended lesson, never retain the locked trial selection")
@@ -534,6 +535,26 @@ final class PracticeUITests: XCTestCase {
         app.buttons["stopPractice"].tap()
     }
 
+    @MainActor
+    private func waitForCompanionDismissal(in app: XCUIApplication) throws {
+        let gone = XCTNSPredicateExpectation(predicate: NSPredicate(format: "exists == false"), object: app.navigationBars["選擇夥伴"])
+        guard XCTWaiter.wait(for: [gone], timeout: 5) == .completed else {
+            throw NSError(domain: "PracticeUITransition", code: 1, userInfo: [NSLocalizedDescriptionKey: "Companion sheet did not actually dismiss"])
+        }
+    }
+    @MainActor
+    private func selectTab(_ title: String, in app: XCUIApplication) throws {
+        let button = app.buttons[title]
+        if button.exists && button.isHittable { button.tap(); return }
+        // iPadOS18 floating tabs are exported as Other, unlike iPhone TabBar.
+        // Resolve the actual visible label/geometry rather than assume a type.
+        let item = app.descendants(matching: .any).matching(NSPredicate(format: "label == %@", title)).firstMatch
+        guard item.waitForExistence(timeout: 5), item.isHittable else {
+            print("TAB_AX_DIAGNOSTIC", app.debugDescription)
+            throw NSError(domain: "PracticeUITab", code: 1, userInfo: [NSLocalizedDescriptionKey: "Visible tab missing: \(title)"])
+        }
+        item.tap()
+    }
     @MainActor
     private func freshApp(largestText: Bool = false) -> XCUIApplication {
         continueAfterFailure = false
@@ -651,7 +672,7 @@ final class PracticeUITests: XCTestCase {
     @MainActor
     func testJourneyChaptersLocksSettingsAndHomePreparation() async throws {
         let app = freshApp()
-        app.tabBars.buttons["練習"].tap()
+        try selectTab("練習", in: app)
         XCTAssertTrue(app.staticTexts["journeyProgress"].waitForExistence(timeout: 5))
         XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
         capture(app, "Native rhythm journey map")
@@ -660,6 +681,7 @@ final class PracticeUITests: XCTestCase {
             try reveal(app.buttons["chooseCompanion"], in: app); app.buttons["chooseCompanion"].tap()
             XCTAssertTrue(app.navigationBars["選擇夥伴"].waitForExistence(timeout: 5))
             try reveal(app.buttons["companion.\(key)"], in: app); capture(app, "Companion picker \(key)"); app.buttons["companion.\(key)"].tap()
+            try waitForCompanionDismissal(in: app)
             XCTAssertTrue(app.staticTexts["adventureCompanion"].waitForExistence(timeout: 5))
             XCTAssertEqual(app.staticTexts["adventureCompanion"].label, "\(title)準備好了！")
             XCTAssertEqual(app.staticTexts["journeyProgress"].label, "0 / 10 關完成")
@@ -691,7 +713,7 @@ final class PracticeUITests: XCTestCase {
         XCTAssertTrue(app.steppers.firstMatch.exists, "Standard mode retains adjustable challenge BPM")
         try reveal(app.buttons["backToJourney"], in: app); app.buttons["backToJourney"].tap()
         XCTAssertTrue(app.staticTexts["journeyProgress"].exists)
-        app.tabBars.buttons["首頁"].tap()
+        try selectTab("首頁", in: app)
         try reveal(app.buttons["dailyPractice"], in: app); app.buttons["dailyPractice"].tap()
         XCTAssertTrue(app.buttons["startLesson"].waitForExistence(timeout: 5))
         XCTAssertFalse(app.staticTexts["journeyProgress"].exists, "Home must open selected preparation rather than remain on the map")
