@@ -45,3 +45,5 @@ UI片皆檢視原尺寸PNG，大小字/Light/Dark/Reduce Motion/VoiceOver按改�
 連擊為read-only展示：最後Perfect之後有真實target窗口逾期，立即顯示0；休止不重設，不更改summary/star。音符zPosition位於黃線上方，線不得遮住到線音符的L/R文字。獨立fixture驗休止保留與miss歸零。
 
 UI回歸發現外層stage identifier需明確AX contain分組，避免覆蓋內層SpriteView標籤。修正為stage容器保留各子元件；測試用任意實際AX角色搜尋固定identifier並驗44pt與鼓墊上方bounds，不假定SKView一定分類Other，失敗保留真實AX tree。
+
+- Actual SE maximum-text screenshot showed the adjacent lesson number and BPM could read as 160 BPM. The existing compact lesson number now has its own soft badge, separating it from the independently rendered 60 BPM without shrinking text or changing timing. Repeat screenshot gate required.

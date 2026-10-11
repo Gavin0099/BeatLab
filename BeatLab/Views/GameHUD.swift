@@ -14,7 +14,9 @@ struct GameHUD: View {
         VStack(spacing: 8) {
             HStack(alignment: .top, spacing: 8) {
                 if textSize.isAccessibilitySize {
-                    Text("\(number)").font(.headline).accessibilityLabel("第 \(number) 關")
+                    Text("\(number)").font(.headline).padding(.horizontal, 8)
+                        .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 12))
+                        .accessibilityLabel("第 \(number) 關")
                         .accessibilityIdentifier("activeLessonNumber")
                     Text("\(lesson.bpm) BPM").font(.subheadline.bold()).monospacedDigit().lineLimit(1)
                 } else {
