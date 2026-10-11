@@ -558,7 +558,7 @@ final class PracticeUITests: XCTestCase {
         if course.exists {
             let scroll = app.scrollViews.firstMatch
             let top = course.frame.maxY
-            let bottom = window.frame.maxY - 30
+            let bottom = window.frame.maxY
             for _ in 0..<24 {
                 XCTAssertTrue(course.exists, "Course sheet must remain presented while scrolling")
                 let frame = element.exists ? element.frame : .zero
