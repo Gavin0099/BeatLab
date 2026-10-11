@@ -1,0 +1,164 @@
+{
+  "slice": "UI-STAGE-02",
+  "date": "2026-10-11",
+  "risk": "L0",
+  "owner_design_result": {
+    "candidate": "0.1.0(14)",
+    "status": "OWNER_VISUAL_REJECTED",
+    "reported": "這樣是主流的遊戲畫面嗎 感覺很粗操",
+    "source": "owner screenshot 442CECE8-F457-49B6-8C1F-C3C10418C94D"
+  },
+  "proposal": "two alternative static layouts plus finite silent stroke feedback; no timing judgement",
+  "native_changed": false,
+  "installed_new_candidate": false,
+  "prior_install_launch_receipts": "unchanged PASS; does not establish visual acceptance",
+  "browser": {
+    "runtime": "local headless Google Chrome via bundled Playwright; fresh isolated temporary profile",
+    "variants": [
+      "森林舞台",
+      "鼓手舞台"
+    ],
+    "checks": [
+      {
+        "scheme": "light",
+        "overflow": false,
+        "assets": true,
+        "pads": [
+          {
+            "height": 100,
+            "width": 146
+          },
+          {
+            "height": 100,
+            "width": 146
+          }
+        ],
+        "errors": [],
+        "viewport_width": 390,
+        "product_width": 338
+      },
+      {
+        "scheme": "dark",
+        "overflow": false,
+        "assets": true,
+        "pads": [
+          {
+            "height": 100,
+            "width": 146
+          },
+          {
+            "height": 100,
+            "width": 146
+          }
+        ],
+        "errors": [],
+        "viewport_width": 390,
+        "product_width": 338
+      },
+      {
+        "scheme": "light",
+        "overflow": false,
+        "assets": true,
+        "pads": [
+          {
+            "height": 100,
+            "width": 111
+          },
+          {
+            "height": 100,
+            "width": 111
+          }
+        ],
+        "errors": [],
+        "viewport_width": 320,
+        "product_width": 268
+      },
+      {
+        "scheme": "dark",
+        "overflow": false,
+        "assets": true,
+        "pads": [
+          {
+            "height": 100,
+            "width": 111
+          },
+          {
+            "height": 100,
+            "width": 111
+          }
+        ],
+        "errors": [],
+        "viewport_width": 320,
+        "product_width": 268
+      }
+    ],
+    "manually_reviewed_final": [
+      "forest-320-light.png",
+      "studio-320-dark.png"
+    ],
+    "earlier_attempts": [
+      "bundled Playwright default Chromium missing; selected already installed Chrome",
+      "initial design had hit prompt and last note overlap; changed transient prompt and lifted last note/line before final browser run"
+    ]
+  },
+  "claims_excluded": [
+    "market parity",
+    "child appeal",
+    "native accessibility",
+    "physical timing/FPS",
+    "real rhythm scoring",
+    "owner visual acceptance"
+  ],
+  "artifact_files": [
+    {
+      "path": "TestResults/UI-STAGE-02/beatlab-integrated-stage.html",
+      "sha256": "88c42974941b09d2021c2e7d2d7d75a39efee372676dba643133af9b6e308651",
+      "bytes": 104171
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/preview-check.json",
+      "sha256": "9c0ba76c0c5e56eaff396ae7236734d1f811779b93e551db79f8e939f87c63bf",
+      "bytes": 1204
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/forest-320-light.png",
+      "sha256": "ca9c2907213404200efa2e9adeefe23c4ab7a55e240669b05db43c9bf4ae1d2a",
+      "bytes": 91506
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/forest-320-dark.png",
+      "sha256": "342980d5fc8ebcae5c194e066c14db4bcccbcbf8192196a62df24505d8802bda",
+      "bytes": 90259
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/forest-390-light.png",
+      "sha256": "90c852dba1cf249a8479af170cbb8c1bc391ae34347db401899a30200cb589b2",
+      "bytes": 110601
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/forest-390-dark.png",
+      "sha256": "daa0de5e58758e516f25d1b42a92ddb7bd6b47c957d8fb9128dcf7c7c5c554c5",
+      "bytes": 108285
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/studio-320-light.png",
+      "sha256": "88ef6a6ecebd2f91496296574c09ff429aa5444f59ec4115e7b0155f3d38bdbf",
+      "bytes": 61458
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/studio-320-dark.png",
+      "sha256": "ed701f0d804687c8b77e1358390b66f44268a7e1dff13d2bde0eaeb1fc303077",
+      "bytes": 62063
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/studio-390-light.png",
+      "sha256": "3b22658dbe6be61c9f589d2170b71c6d9c17d03fef0d3de74a1d806c8f2b4e54",
+      "bytes": 62715
+    },
+    {
+      "path": "TestResults/UI-STAGE-02/studio-390-dark.png",
+      "sha256": "770e200f2d0cb398dc135ed3ceac35c44bccfa82134918274e09b45ed238baf5",
+      "bytes": 63400
+    }
+  ]
+}
