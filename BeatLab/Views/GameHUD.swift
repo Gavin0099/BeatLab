@@ -25,10 +25,12 @@ struct GameHUD: View {
                 }
                 }
                 Spacer(minLength: 0)
-                Button(action: pause) { Image(systemName: "pause.fill").frame(width: 44, height: 44) }
+                Button(action: pause) { Image(systemName: "pause.fill").font(.system(size: 20, weight: .bold)).frame(width: 44, height: 44) }
                     .accessibilityLabel("暫停").accessibilityIdentifier("pausePractice")
-                Button("退出", action: exit).font(.subheadline.bold()).frame(minWidth: 44, minHeight: 44)
-                    .accessibilityIdentifier("stopPractice")
+                Button(action: exit) {
+                    if textSize.isAccessibilitySize { Image(systemName: "xmark").font(.system(size: 20, weight: .bold)).frame(width: 44, height: 44) }
+                    else { Text("退出").font(.subheadline.bold()).frame(minWidth: 44, minHeight: 44) }
+                }.accessibilityLabel("退出").accessibilityIdentifier("stopPractice")
             }
             ProgressView(value: min(1, max(0, elapsed / max(snapshot?.duration ?? 1, 1))))
                 .tint(BeatLabStyle.accent).accessibilityLabel("練習進度")
