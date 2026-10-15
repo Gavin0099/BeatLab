@@ -1,0 +1,66 @@
+{
+  "slice": "QA-RETENTION-02",
+  "audited_at_utc": "2026-10-15T03:14:02.500534+00:00",
+  "risk": "L0 read-only audit and status reconciliation",
+  "result": "FAIL_ORIGINAL_EVIDENCE_RETENTION",
+  "cause": "NOT ESTABLISHED",
+  "original_TestResults_exists": false,
+  "night": {
+    "indexed": 174,
+    "missing": 168,
+    "retained_matching": 6
+  },
+  "drummer": {
+    "indexed_artifacts": 32,
+    "missing_artifacts": 32,
+    "raw_bundles_missing": 5,
+    "historical_raw_file_count": 1330,
+    "raw_file_hash_revalidation": "NOT POSSIBLE: inventories missing",
+    "frozen118_input_rebinding": "NOT POSSIBLE: source manifest missing"
+  },
+  "phone14": {
+    "package_files_missing": 13,
+    "zip_missing": true,
+    "install_launch_raw_receipts_missing": 4,
+    "committed_summary": "historical install and launch success retained",
+    "present_phone_state": "NOT CHECKED"
+  },
+  "source": {
+    "product_and_tests_match_committed_cc6f5e7": true,
+    "head_before_audit": "435e0ec7928f110614d41c16824f84e8f969a091",
+    "remote_before_audit_matches": true,
+    "all_product_edits_this_slice": "NONE"
+  },
+  "not_changed": [
+    "App/Core/audio/input/scoring/persistence/assets",
+    "old receipt or manifest",
+    "governance framework pin",
+    "owner phone data"
+  ],
+  "not_run": [
+    "new build or iOS tests",
+    "install or launch",
+    "TestFlight/public upload",
+    "phone timing/FPS/children/fullAX acceptance"
+  ],
+  "claim_boundary": "Historical observed passes/install are not withdrawn. Original raw evidence/package retention now fails; summaries are not a present rerun or original-byte validation. New rebuilding cannot recover original evidence. Task is audit complete with failed retention, not product accepted.",
+  "recovery": "Owner backup or original moved directory is needed to revalidate original bytes; asked for location. No deletion cause inferred. New candidate build/test would require separately scoped validation and new receipt identity.",
+  "evidence_refs": [
+    {
+      "path": "artifacts/evidence/retention/20261015/audit.py",
+      "sha256": "ce513be035dfa711b5e620067f318d1b9680a40b331db9cd51b0b62ce502778e"
+    },
+    {
+      "path": "artifacts/evidence/retention/20261015/audit.json",
+      "sha256": "e284b7c2f4339a15c41d485c50578b1e962c79ed0418582ae68795a93e5ba9d4"
+    },
+    {
+      "path": "artifacts/evidence/retention/20261015/audit.log",
+      "sha256": "116e72602f163fa6c817a9b574a54fe1774f818838e9832bcca2c6258ac52ec2"
+    },
+    {
+      "path": "artifacts/evidence/retention/20261015/audit-command.json",
+      "sha256": "4b31c2e851d777e594aff095c759b1d5df8e4ed0647961a9728ec3e07b52aabd"
+    }
+  ]
+}

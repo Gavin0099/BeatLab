@@ -1,0 +1,1332 @@
+{
+  "checked_at_utc": "2026-10-15T03:14:02.500534+00:00",
+  "audit_only": true,
+  "new_build_test_install_upload": false,
+  "original_TestResults_exists": false,
+  "bounded_alternate_locations": [
+    {
+      "path": "/Users/pc49-58/Desktop/BeatLab/TestResults",
+      "exists": false
+    },
+    {
+      "path": "/Users/pc49-58/.Trash/TestResults",
+      "exists": false
+    },
+    {
+      "path": "/Users/pc49-58/Desktop/TestResults",
+      "exists": false
+    }
+  ],
+  "cause": "NOT ESTABLISHED; no deletion action performed by this audit",
+  "latest_prior_observation": "2026-10-14 turn reported retained evidence matching; prior ignored audit now absent",
+  "night_artifact_retention": {
+    "GAME-26": {
+      "expected_files": 30,
+      "issues": [
+        {
+          "path": "TestResults/GAME-26/full-suite-pass-to-final-delta.json",
+          "issue": "missing",
+          "expected_sha256": "2fa04bda94369a859992dab49881d8dbf8c1e74e2b7c9528e1d85e1a9958c807"
+        },
+        {
+          "path": "TestResults/GAME-26/core-command.json",
+          "issue": "missing",
+          "expected_sha256": "6edc807d7be31c0ae40340375cff9c1261a95a973529017dce254a03e9b1f6e1"
+        },
+        {
+          "path": "TestResults/GAME-26/large-command.json",
+          "issue": "missing",
+          "expected_sha256": "a64311dfd7365c04b7d8c20271db8a7116ac878294a2a9cf22057e362316a1cf"
+        },
+        {
+          "path": "TestResults/GAME-26/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "b2665217b71b57709d11efacad86f61df62298df999f0663cf76c6d253957bae"
+        },
+        {
+          "path": "TestResults/GAME-26/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "2bf9e6edfc1d5c954c81bcf2ea713dbe3869069c4d0f5aded1e680c4fb29c6dc"
+        },
+        {
+          "path": "TestResults/GAME-26/focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "3e0371fdfce19694503e2ef1107014c8b8ca557cf2f25e2fc8c05deb9d17e98c"
+        },
+        {
+          "path": "TestResults/GAME-26/app-command.json",
+          "issue": "missing",
+          "expected_sha256": "989dd50dec0964e33cfa6d95017aa2a552ed5d68f8bf40fad7b333a268aa1429"
+        },
+        {
+          "path": "TestResults/GAME-26/first-touch-command.json",
+          "issue": "missing",
+          "expected_sha256": "77f3ef966282b964bfcde61c7633844eedd6f84592950808c3eb9bb4924d986c"
+        },
+        {
+          "path": "TestResults/GAME-26/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "c27c2d14087d4682135a6f6454a9062f2a3b7d3f88d551e94a320e9490027e95"
+        },
+        {
+          "path": "TestResults/GAME-26/simulator-before.json",
+          "issue": "missing",
+          "expected_sha256": "9fdb6acb8094b5bb577b1137d5d3f6d7c35ab4b6809bd351bf1f6a0d2ceca640"
+        },
+        {
+          "path": "TestResults/GAME-26/native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "78e5692802a5bb41cbd931f90f873af05f19266b13de431e9ece4ecf3fbd288d"
+        },
+        {
+          "path": "TestResults/GAME-26/simulator-after.json",
+          "issue": "missing",
+          "expected_sha256": "16dc45344ae92ec5f628342dbee3ab367084e38c505b40f44901828d1325a6e0"
+        },
+        {
+          "path": "TestResults/GAME-26/first-native-summary.json",
+          "issue": "missing",
+          "expected_sha256": "14e26759cb1260d23596f4ffa9706ed2639bd033673066f29b4d4e57116c535f"
+        },
+        {
+          "path": "TestResults/GAME-26/ui-fixture.json",
+          "issue": "missing",
+          "expected_sha256": "44e8c20d833bc89ade975828c60ea214c280b8e684e40c4ecc8e2e2b699ffbdb"
+        },
+        {
+          "path": "TestResults/GAME-26/native-large-summary.json",
+          "issue": "missing",
+          "expected_sha256": "91fdafd5a070c98fba4d6d5d8521b4543ed54d4121f2c530960dcc1751319284"
+        },
+        {
+          "path": "TestResults/GAME-26/first-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "992fa5f4f78bf5251b63901ede4fb40469113562cb15894a47a86f1b04ba974b"
+        },
+        {
+          "path": "TestResults/GAME-26/first-native-touch-summary.json",
+          "issue": "missing",
+          "expected_sha256": "7cc51d8ecef3b896be1811e65a00ceeb488aee95ddd2c8da5487bf8c2f706dcc"
+        },
+        {
+          "path": "TestResults/GAME-26/native-touch-summary.json",
+          "issue": "missing",
+          "expected_sha256": "3e47a289c47f2b3e3a492550ceac1114bd00bfadb1f6b8f5489c12d07dc1dcc3"
+        },
+        {
+          "path": "TestResults/GAME-26/first-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "d49f73541779730cf0205c3270535a3d43d3ad7ebea8f697b83cce94f96ba539"
+        },
+        {
+          "path": "TestResults/GAME-26/native-summary.json",
+          "issue": "missing",
+          "expected_sha256": "5737f5fa91c682af66b7f5e3172c8c07ffb1c91bbf910411bf9cb1c13b8408f6"
+        },
+        {
+          "path": "TestResults/GAME-26/full-suite-pass-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "99ec264a470c7e9ccdb1304dd910a93894a71260cc6115b6951116d1b574d5f5"
+        },
+        {
+          "path": "TestResults/GAME-26/first-source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "3277dd9beef36e1cb3fafea1e90706f2af968b621e1e7f35e139227717e14796"
+        },
+        {
+          "path": "TestResults/GAME-26/full-suite-pass-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "0851c8bf6f17fba2cbd96897025b8d33b55aaf791bce2125dcf00af01f25fa08"
+        },
+        {
+          "path": "TestResults/GAME-26/first-app-command.json",
+          "issue": "missing",
+          "expected_sha256": "fe6f72076ffea2d56a986ad85278afecd89a68a61405bea6656e64b00d5adaca"
+        },
+        {
+          "path": "TestResults/GAME-26/full-suite-pass-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "089a924b5185a4e1a5e495b1f338e3b71d3d369cbcf02d92526e7f1bba91c726"
+        },
+        {
+          "path": "TestResults/GAME-26/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "769f3f8bd6717701923536619ee5af86ba937814140eead364e075714851c2fb"
+        },
+        {
+          "path": "TestResults/GAME-26/touch-command.json",
+          "issue": "missing",
+          "expected_sha256": "35366f7766bcfcd6a0f81a57f9ba6153232fac2c232ee1905cadc013ef5ef701"
+        },
+        {
+          "path": "TestResults/GAME-26/first-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "255d4cf2056db4b0c3c4d6e77eef7e1bf363214adc46763dacf5ba651571755c"
+        },
+        {
+          "path": "TestResults/GAME-26/check-evidence.py",
+          "issue": "missing",
+          "expected_sha256": "84a373a6d3149abe89734696a95003f84adbd3dd60e8976bd3036fd801026a64"
+        }
+      ]
+    },
+    "GAME-27": {
+      "expected_files": 34,
+      "issues": [
+        {
+          "path": "TestResults/GAME-27/pre-ui-fix-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "f2f7fc1683a6bc940384d348db1d95ddc4eeacff1540b99aaff26976f6db04c2"
+        },
+        {
+          "path": "TestResults/GAME-27/count-in-attempt-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "26f14b289220640041a84df814d080e58f26f276d6deb817579f8b94f3270a79"
+        },
+        {
+          "path": "TestResults/GAME-27/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "052ae5cd3d40dbe4f5e661fc2a9400c234da9816c4d143f63f68cafd096f0cd0"
+        },
+        {
+          "path": "TestResults/GAME-27/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "80c3dd2309055eee95d0bbc8d12d207e288ee9a6da867cc9df1d716a07285ee3"
+        },
+        {
+          "path": "TestResults/GAME-27/focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "1a9a953b44067d5ebdda108afa341e28fa78d2d9dab55bcffa3796fe7cebee58"
+        },
+        {
+          "path": "TestResults/GAME-27/app-command.json",
+          "issue": "missing",
+          "expected_sha256": "e8428343f816688fe92e96afc642adeb0951b3d59e0f3482a398b8034ae6c0aa"
+        },
+        {
+          "path": "TestResults/GAME-27/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "1b3ca2cbc8e115c04cb63f32eb7ee820f623a5bba6cab57b3b7a68e1b8bbad9c"
+        },
+        {
+          "path": "TestResults/GAME-27/simulator-before.json",
+          "issue": "missing",
+          "expected_sha256": "3775f5207899905580f7ef3ac43f485bb7d611e92e2d384f4cc5e0b3f11295c2"
+        },
+        {
+          "path": "TestResults/GAME-27/count-in-attempt-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "2d4485990ede800ffaa683b5d09d7e1f322c7a2be8334828ed29d3413b35586e"
+        },
+        {
+          "path": "TestResults/GAME-27/native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "e44de39f89c7b78ded818e5283679e68f4606a7ec8dcb872cb6290e1980029c8"
+        },
+        {
+          "path": "TestResults/GAME-27/pre-ui-fix-touch-command.json",
+          "issue": "missing",
+          "expected_sha256": "4be077a1345cd4a41b6e55ac7ffeb5015214113c6922111c8b68b89cd2068cea"
+        },
+        {
+          "path": "TestResults/GAME-27/second-native-touch-summary.json",
+          "issue": "missing",
+          "expected_sha256": "1a96510fc12e9543fac33d41b7fbbd18656eb8bca972198c8f77c00547ee5488"
+        },
+        {
+          "path": "TestResults/GAME-27/simulator-after.json",
+          "issue": "missing",
+          "expected_sha256": "0a68e1dc4772cb85be2c45f79dc3d7126f5e5e3e5043a5c2318687dcc59ba64e"
+        },
+        {
+          "path": "TestResults/GAME-27/first-evidence-receipt.json",
+          "issue": "missing",
+          "expected_sha256": "d5f2f188b4a72eae505fb65df806fd9afa9b52843c8ccd2cc9fe5d1e918970fd"
+        },
+        {
+          "path": "TestResults/GAME-27/ui-fixture.json",
+          "issue": "missing",
+          "expected_sha256": "867aadbe876d752703e048eb947abf4eaf0962a27b1bd87df8c609d6fd443c83"
+        },
+        {
+          "path": "TestResults/GAME-27/count-in-attempt-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "7af634fa5907e1f30fcaa1857a59a093d3379d5a3d1be5e79aa5a198f7fe0f0e"
+        },
+        {
+          "path": "TestResults/GAME-27/initial-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "09237470847170e700a5181dda95e3f6ba4faf18ade7f6720481cedccd136efa"
+        },
+        {
+          "path": "TestResults/GAME-27/first-native-touch-summary.json",
+          "issue": "missing",
+          "expected_sha256": "2d38c27bc51ac1a6214f20f9387560dc64fa29db5a8e8ca849e2283dc06aa10f"
+        },
+        {
+          "path": "TestResults/GAME-27/native-touch-summary.json",
+          "issue": "missing",
+          "expected_sha256": "7cd4c2e924ec3e0a0fc89e13f433fee5390229d6c04f3c98160b87a54124e334"
+        },
+        {
+          "path": "TestResults/GAME-27/pre-ui-fix-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "4df87fcaff78a2a77c286bc8b8bf03c2de35e50fec749fd3f368ed3d271a2166"
+        },
+        {
+          "path": "TestResults/GAME-27/initial-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "f4a4e448675180c8b548b7b41de513e9ef677acebf7050b76144636656ac91fc"
+        },
+        {
+          "path": "TestResults/GAME-27/full-suite-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "a96e0e108049e43800ead2e87214da6d1bd05ca3d635b7cd81d9cbbcc334018b"
+        },
+        {
+          "path": "TestResults/GAME-27/native-summary.json",
+          "issue": "missing",
+          "expected_sha256": "1d2ab5a555676753e43d17120e0d1ca67fc3f725405a44ead9cdb134d461105d"
+        },
+        {
+          "path": "TestResults/GAME-27/full-suite-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "026dd34a1d2afde621cf71d506cc77b58d2f07ab4af18d0d42425271be575e04"
+        },
+        {
+          "path": "TestResults/GAME-27/overlap-command.json",
+          "issue": "missing",
+          "expected_sha256": "c7750bf136d3f7fc11e57a34b56b71958d7ce6dfa76bef979433d84492c93b95"
+        },
+        {
+          "path": "TestResults/GAME-27/count-in-attempt-touch-command.json",
+          "issue": "missing",
+          "expected_sha256": "4390ee871554a4d92e7cb5002011748fe2f12ed9855d329bee6eefe9237c8254"
+        },
+        {
+          "path": "TestResults/GAME-27/native-overlap-summary.json",
+          "issue": "missing",
+          "expected_sha256": "20a96a86a5ecebd4673dded806a43ac21e1cd0dbf94059f5efa080668c5d10ef"
+        },
+        {
+          "path": "TestResults/GAME-27/pre-ui-fix-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "911111d175c465d3495c9e5470b7e5196d566742da0ebf96e52692edcc275adf"
+        },
+        {
+          "path": "TestResults/GAME-27/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "11e9aa10ac30164339655ab07f5d9f766333591decd46622d36f135c63dddaa8"
+        },
+        {
+          "path": "TestResults/GAME-27/touch-command.json",
+          "issue": "missing",
+          "expected_sha256": "89e54d054181aab0f17fd2155f5f6a310971666f79054af86a7a91580c6c8e8e"
+        },
+        {
+          "path": "TestResults/GAME-27/full-suite-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "2414cfc55d5a4ba96ce2389e7a28b77158200360f2aebd6b22e2106359e3a068"
+        },
+        {
+          "path": "TestResults/GAME-27/initial-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "a6bfe6934e3553055f9fc723ab33734646596960b055f9a0e4a31b2f5bd2bd7f"
+        },
+        {
+          "path": "TestResults/GAME-27/check-evidence.py",
+          "issue": "missing",
+          "expected_sha256": "6e9e6c4ed8679e417b612b1bc57d980eb96ed98119acbdb15949214b660238dc"
+        }
+      ]
+    },
+    "GAME-28": {
+      "expected_files": 34,
+      "issues": [
+        {
+          "path": "TestResults/GAME-28/pre-caption-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "2f0088a89f1dc1c3905e6db5a052544d1521c6aa7fce3eb1dca83ffd2934647d"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-large-narrow-light-command.json",
+          "issue": "missing",
+          "expected_sha256": "833f8da909c4cb196936f6589a9af26ee053da2f759a87ef814b8aafc6c760ca"
+        },
+        {
+          "path": "TestResults/GAME-28/large-primary-dark-command.json",
+          "issue": "missing",
+          "expected_sha256": "843ba4f915e0a2727f86d490a9d49418db497ea768efb0050cfeb00aff7ea6da"
+        },
+        {
+          "path": "TestResults/GAME-28/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "23dc94133c229f386070ec9045c2db780e78318cf48de9f1deacbb22ea122d0f"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-touch-primary-dark-command.json",
+          "issue": "missing",
+          "expected_sha256": "d6b09305b9db70ed09ec6844ed2828fa9806be614f2565ef9b24ad0fe27b2e77"
+        },
+        {
+          "path": "TestResults/GAME-28/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "ed5bc7c88d0e09f3b404587b4d723feb3cf596feb9748179ca32ebd0f5c4fef6"
+        },
+        {
+          "path": "TestResults/GAME-28/focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "6b865e333e679e4c5fe190a5b83dc8f758d8c777a32865e1fd8d031df511bf4e"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-native-large-narrow-light-summary.json",
+          "issue": "missing",
+          "expected_sha256": "1af74ec717730a2d5d8e5197bb11e881d2e353dbf91734d7b4c6db74b6121d3a"
+        },
+        {
+          "path": "TestResults/GAME-28/native-large-primary-dark-summary.json",
+          "issue": "missing",
+          "expected_sha256": "8d36633a21af930873ebe6bc065706061d4f026bb4c2ffa032dc904f4977a98b"
+        },
+        {
+          "path": "TestResults/GAME-28/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "e8de5442a906c9420d37b13d21ebdb299ff2fdc684ee332d43f8d9ff5db12b8e"
+        },
+        {
+          "path": "TestResults/GAME-28/simulator-before.json",
+          "issue": "missing",
+          "expected_sha256": "b75ae223f0fa9b39fb5d0d3346a867ba639990d4f799d496b36397a4c08c23f0"
+        },
+        {
+          "path": "TestResults/GAME-28/native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "178c453a5b8a5ffd0de7c66adee516e220b88f9af1ed895bcfbf6d9c1203edeb"
+        },
+        {
+          "path": "TestResults/GAME-28/simulator-after.json",
+          "issue": "missing",
+          "expected_sha256": "b64203a5cafa6d2339300f40a20c552ad7e0808b3c9f203184df2c3c44262d67"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-narrow-legacy.json",
+          "issue": "missing",
+          "expected_sha256": "7861ca2b21e62bbeaf4f29de2bbceec21b80a31e0a0bbc586e4053f178de7f63"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "0c79599d5beb1c5bc9b039bedca46e3dcf5eb24ca4c33d3c35bf981b9671cc17"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "9c8583914bfd6b82834b1f384744005617fa8092c0f5dc27d48ba3c68fdab7e6"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-native-touch-primary-dark-summary.json",
+          "issue": "missing",
+          "expected_sha256": "9b20df6745a10ab830a9f056bf2953ada4a9677424fafc080e17927cd420985b"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "9356e8c4631d8d6ee0f59a446924a2b04ef2dfa42ee4fe00d1a17feba8d402b6"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "53524dfea6df7d7090b616ad86cf8bb67066a1ca2a6df0fc7e28e50a288618d9"
+        },
+        {
+          "path": "TestResults/GAME-28/large-narrow-light-command.json",
+          "issue": "missing",
+          "expected_sha256": "21f5a57b45ebde8d46781b6bd7e073e7afb3a2d0d2ac16b5b1618769833a0c31"
+        },
+        {
+          "path": "TestResults/GAME-28/pre-caption-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "8a2e67f032ffdd844299cc42aae5edd6fffe6b7fa4225187b69a3ff582d7e804"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "137d1761febd48ff82deb7ee4aa272c0a39cb8500418f957db1b91febd58fb2c"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "5dded6de9a361fd400d5b2516e29443ee9bcac9b93146aeb0572c4058c4154d7"
+        },
+        {
+          "path": "TestResults/GAME-28/touch-primary-dark-command.json",
+          "issue": "missing",
+          "expected_sha256": "d5992d10a2aaab252e3e5c9768f3663a93bf80593c7734f78867bf0ddac54863"
+        },
+        {
+          "path": "TestResults/GAME-28/ui-fixtures.json",
+          "issue": "missing",
+          "expected_sha256": "392435af92741c7e030c157d9f5ff869c3e84a3e37636f1f3442cbea5d0b6164"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-native-large-narrow-light-summary.json",
+          "issue": "missing",
+          "expected_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+        },
+        {
+          "path": "TestResults/GAME-28/native-large-narrow-light-summary.json",
+          "issue": "missing",
+          "expected_sha256": "a192a5de33b146282947ed4e17bdcfd114294c9d9e2d7f096409de42ffce4afe"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-large-narrow-light-command.json",
+          "issue": "missing",
+          "expected_sha256": "e01030c2a59d5a0e69ce1cad9b723ec6618e89cb41b27cc4ac2ec5ed0c218973"
+        },
+        {
+          "path": "TestResults/GAME-28/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "5cafd9779019584cc5e0d8d3d3d905eb92e8f534d94349e9e421e9e06e9bf246"
+        },
+        {
+          "path": "TestResults/GAME-28/native-touch-primary-dark-summary.json",
+          "issue": "missing",
+          "expected_sha256": "fcff0c57448c38f31b7d6c8c3cea43b403b6c27fb220b591b7cea0779f3a436a"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "78feb0d20eb092c7903fede6b1335af0b20961cf242ad6d4c2b3040b4d7d7da5"
+        },
+        {
+          "path": "TestResults/GAME-28/initial-native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "50acf3baf48d31639a4bd8f48786b69266c5d0ad62c9513b0b2347bc3fb6ce64"
+        },
+        {
+          "path": "TestResults/GAME-28/check-evidence.py",
+          "issue": "missing",
+          "expected_sha256": "103c218d4bf758d02ab01431ca0a8f4affb4e6b7de301ec2ad392d88338ef932"
+        }
+      ]
+    },
+    "GAME-29": {
+      "expected_files": 15,
+      "issues": [
+        {
+          "path": "TestResults/GAME-29/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "48b93b9689c47e7fc9ffffa4a959dbb08bd83ea9459543fed57c42862ec4ecae"
+        },
+        {
+          "path": "TestResults/GAME-29/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "a66fc0d735c85ba23c67a826c37afeac2b0841e017fa06b1ab5b04bed5ae14ac"
+        },
+        {
+          "path": "TestResults/GAME-29/native-app-summary.json",
+          "issue": "missing",
+          "expected_sha256": "584cd01c09609ddecc127b6eaff1280a58c8edf0244e8b6c09c504bb7e3a25a3"
+        },
+        {
+          "path": "TestResults/GAME-29/app-command.json",
+          "issue": "missing",
+          "expected_sha256": "5f5b7177d5c080c386af28755bb728a60054606a120432fcf7393b16ebdf4113"
+        },
+        {
+          "path": "TestResults/GAME-29/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "6de41f6f63f7826385c180981b0631ec9deb9882c36688174821ec61dd4198d2"
+        },
+        {
+          "path": "TestResults/GAME-29/ui-fixture-payload.json",
+          "issue": "missing",
+          "expected_sha256": "b71071b88d0e834dfc2127a1c3dd3b9b66fc13c3887f37fff70a912743a6f33f"
+        },
+        {
+          "path": "TestResults/GAME-29/simulator-before.json",
+          "issue": "missing",
+          "expected_sha256": "f9df4d69a93cb99f335e422a421d2f81d2127ea063aa4acebacf8a10645c49e8"
+        },
+        {
+          "path": "TestResults/GAME-29/simulator-after.json",
+          "issue": "missing",
+          "expected_sha256": "fe3246a4f3ee077101b8c477519de050fda1d55c3637adca4eeaa4c966d325f8"
+        },
+        {
+          "path": "TestResults/GAME-29/ui-fixture.json",
+          "issue": "missing",
+          "expected_sha256": "522e9947cf4360a98d2fa80fe8ce8c93f685a66364adeffa67f8bc053f9dcb72"
+        },
+        {
+          "path": "TestResults/GAME-29/native-touch-summary.json",
+          "issue": "missing",
+          "expected_sha256": "2f7a0d368677871504078629d35b132184341687864eae30a3245619c35103b4"
+        },
+        {
+          "path": "TestResults/GAME-29/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "f47b42de6a54f5c0cd4d60879b6508720e071e0494f4290e3709dc0df5f4913f"
+        },
+        {
+          "path": "TestResults/GAME-29/touch-command.json",
+          "issue": "missing",
+          "expected_sha256": "43148ecda3245a1f25bb75511bc91a4bebbbdc3a8cbdea3f1b5f1dfb4490cb22"
+        },
+        {
+          "path": "TestResults/GAME-29/check-evidence.py",
+          "issue": "missing",
+          "expected_sha256": "82a253f66125fae84b466db9d46b0102be1e31a6fec2249cfb683884c683619b"
+        },
+        {
+          "path": "TestResults/GAME-29/seed-ui.py",
+          "issue": "missing",
+          "expected_sha256": "3181f84916b40e72fe2eaf2da106dd38d8f6b1d6a93100340da6729f98975dc9"
+        }
+      ]
+    },
+    "GAME-30": {
+      "expected_files": 33,
+      "issues": [
+        {
+          "path": "TestResults/GAME-30/initial-source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "855ad2a3a97aa8c08ae206ec3501f0725747ef3b78a087d2b0b87a2305b34c35"
+        },
+        {
+          "path": "TestResults/GAME-30/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "bbf43be9b4d5bd47fdd2e7b36a8c1d88a86def53e92af7011bdeed535bb5935e"
+        },
+        {
+          "path": "TestResults/GAME-30/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "45d99344c758e6ecefbe5c133512f09ad011dd2e6a0f9b71482cfe193134c249"
+        },
+        {
+          "path": "TestResults/GAME-30/focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "2ee8f5f880690e1188162ae41e8122fde89fdd6a409dd605219a9f69b63b966b"
+        },
+        {
+          "path": "TestResults/GAME-30/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "4895f480683f1c6f5830243db3e79188fea6fd24e9b19f7af0d3e2f0cd20ffb6"
+        },
+        {
+          "path": "TestResults/GAME-30/ui-fixture-payload.json",
+          "issue": "missing",
+          "expected_sha256": "cb65a30fbc43efe1d73528cb9c7a4b61e5f2184c9c189673e7d4e03f62927e41"
+        },
+        {
+          "path": "TestResults/GAME-30/simulator-before.json",
+          "issue": "missing",
+          "expected_sha256": "337e6aac42ec337111c9f820e39b2c560729ce406af53dce48344b13968b8f25"
+        },
+        {
+          "path": "TestResults/GAME-30/native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "33d278fe849314090a1bbc2cddd3d0daa51aad3ef9ee9a4131de647d94f3d9b7"
+        },
+        {
+          "path": "TestResults/GAME-30/simulator-after.json",
+          "issue": "missing",
+          "expected_sha256": "1d4b218e51d8aa8e28ed959d75e4131982e8cec232cf4bd4d02adcbdc53741aa"
+        },
+        {
+          "path": "TestResults/GAME-30/initial-source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "4c1826f5baf8dbe51e13fb6845e5fc59ce50162b1a50bb793f3ec5c2c8a353f6"
+        },
+        {
+          "path": "TestResults/GAME-30/large-narrow-light-command.json",
+          "issue": "missing",
+          "expected_sha256": "a6b0e36c884b5ca6b4de2ef114816667468acea7c550231fe6c4a93bec64fe68"
+        },
+        {
+          "path": "TestResults/GAME-30/initial-retention-gap.json",
+          "issue": "missing",
+          "expected_sha256": "67e2e2b22fd633e95d1b9c40c46b4cc6b798354444cf8f884b6f67e4aee77533"
+        },
+        {
+          "path": "TestResults/GAME-30/initial-source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "4ac490130e4475fa7606e8e5f747febede56eabe814a15d0d67cc96b0a4e96cb"
+        },
+        {
+          "path": "TestResults/GAME-30/initial-focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "aca240fd2ee41c7c740bf641e8e946b50f38a9ee3c0ba147cd8d3c7915231212"
+        },
+        {
+          "path": "TestResults/GAME-30/touch-primary-dark-command.json",
+          "issue": "missing",
+          "expected_sha256": "467f30c3fdb9d675fe1c3d8b35bf8bfe2715c5ee3e33752e09a2f36fe336aed6"
+        },
+        {
+          "path": "TestResults/GAME-30/missing-frozen-inputs.json",
+          "issue": "missing",
+          "expected_sha256": "cb70e19916c21b4d2ea7ddf57f9cb7784a2bec383a98f79ec0c8c24b134575bc"
+        },
+        {
+          "path": "TestResults/GAME-30/ui-fixtures.json",
+          "issue": "missing",
+          "expected_sha256": "618daad4b0a34e1fe26d6d07d2e4f76e59fa51c58a624590f59b48ef333056eb"
+        },
+        {
+          "path": "TestResults/GAME-30/native-large-narrow-light-summary.json",
+          "issue": "missing",
+          "expected_sha256": "efdcf3d3e062bd695618ccf4f375211475bf352b5067bf6428821ad6740e6480"
+        },
+        {
+          "path": "TestResults/GAME-30/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "66a52d874c65245c693e388e4f902224e3ab9f662c48a1c3e6c6de8784a197c9"
+        },
+        {
+          "path": "TestResults/GAME-30/native-touch-primary-dark-summary.json",
+          "issue": "missing",
+          "expected_sha256": "6750454759b0a708ed3d5dbaa3fb8be8d4148a04a905338b4669ca61a07c25f4"
+        },
+        {
+          "path": "TestResults/GAME-30/initial-build-command.json",
+          "issue": "missing",
+          "expected_sha256": "eccc2e2c7bae5101146d5021cbeb6583e3d943ef6f0dcd325b77871baf05c3f3"
+        },
+        {
+          "path": "TestResults/GAME-30/initial-native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "f87c65c4a61fd99e3226d51375cec7556910a26fb035a26427171bb2c03df57c"
+        },
+        {
+          "path": "TestResults/GAME-30/primary-appearance-before-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-30/primary-appearance-after-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-30/narrow-appearance-after-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-30/narrow-appearance-before-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-30/pre-retention-gates/GAME-30.json",
+          "issue": "missing",
+          "expected_sha256": "18b5a9c740b9ef729650015d5298d358a08f4f9d4298282ee0eda05c6e9fd4d1"
+        },
+        {
+          "path": "TestResults/GAME-30/pre-retention-gates/GAME-30.txt",
+          "issue": "missing",
+          "expected_sha256": "b6da32f31f92b86e0e03ef8dbac29bfd8e9271679337e8bbfd2b921995ae38a8"
+        },
+        {
+          "path": "TestResults/GAME-30/pre-retention-gates/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "0d1d5c6ea2c5e1c16a2245a46c741802473661b63f9fd24902e2689b7044d80f"
+        },
+        {
+          "path": "TestResults/GAME-30/pre-retention-gates/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "ef4ed89e48cc92b3cdbca557bfef2668bdf41cc5cd7041960ba77abd1e6cb882"
+        },
+        {
+          "path": "TestResults/GAME-30/check-evidence.py",
+          "issue": "missing",
+          "expected_sha256": "92ea3b1e9a5b713ec3b6dd98630d37466b407345212de0329dbae95b76682ec8"
+        },
+        {
+          "path": "TestResults/GAME-30/seed-ui.py",
+          "issue": "missing",
+          "expected_sha256": "dfe64a6e9399bcbcd7eabb74b955c8028d9aebe96d2a93b49060496afd3062aa"
+        }
+      ]
+    },
+    "GAME-31": {
+      "expected_files": 28,
+      "issues": [
+        {
+          "path": "TestResults/GAME-31/source-audit.json",
+          "issue": "missing",
+          "expected_sha256": "e93948784aa0fd8246146b740738f844e7f94bcc98333c63a97e979295922a46"
+        },
+        {
+          "path": "TestResults/GAME-31/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "65c5862105f23010da887dcc733b65f0752e58d4017517673230b1bd4429be6a"
+        },
+        {
+          "path": "TestResults/GAME-31/focus-command.json",
+          "issue": "missing",
+          "expected_sha256": "da1d98d20dab5c03eee418693181f57283b520e8ecaad486396623f965661b2d"
+        },
+        {
+          "path": "TestResults/GAME-31/touch-narrow-light-command.json",
+          "issue": "missing",
+          "expected_sha256": "492f08d3dbc3ca3a43d02537e4a5239a62ffc8f1f224509119f078011b30b574"
+        },
+        {
+          "path": "TestResults/GAME-31/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "61890390d66b6a167932764c99ec319babc04177ac7f2c1329f9cfa4dc9a5378"
+        },
+        {
+          "path": "TestResults/GAME-31/source-relocations.json",
+          "issue": "missing",
+          "expected_sha256": "2395a6017907fa01977c3a4d11a52d98e42803b6ddebf1457346e2dfbf0c48dc"
+        },
+        {
+          "path": "TestResults/GAME-31/ui-fixture-payload.json",
+          "issue": "missing",
+          "expected_sha256": "cb65a30fbc43efe1d73528cb9c7a4b61e5f2184c9c189673e7d4e03f62927e41"
+        },
+        {
+          "path": "TestResults/GAME-31/simulator-before.json",
+          "issue": "missing",
+          "expected_sha256": "1d4b218e51d8aa8e28ed959d75e4131982e8cec232cf4bd4d02adcbdc53741aa"
+        },
+        {
+          "path": "TestResults/GAME-31/native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "2d1bbc25afedae1ff44dca13bfb47706b65cbe29fa641bddbbc063c05821ace5"
+        },
+        {
+          "path": "TestResults/GAME-31/simulator-after.json",
+          "issue": "missing",
+          "expected_sha256": "6f1d2440629c9c5381d7daff31146cb0a221a22dfe37c40cddeeaab0bb502992"
+        },
+        {
+          "path": "TestResults/GAME-31/native-touch-narrow-light-summary.json",
+          "issue": "missing",
+          "expected_sha256": "0a713319151849f694020a9b5c3b5cb85174e1f865f08fc3687fc50fd219a080"
+        },
+        {
+          "path": "TestResults/GAME-31/touch-primary-dark-command.json",
+          "issue": "missing",
+          "expected_sha256": "aa15770c874a622696bd2dd554dc573daa43eb9bc004f7e2258e4cedb95cdea1"
+        },
+        {
+          "path": "TestResults/GAME-31/simulator-baseline-provenance.json",
+          "issue": "missing",
+          "expected_sha256": "565ec1e5d80c2716c66a2783635d2d71e3ae6cbe2c52fb5a1754779be1e05367"
+        },
+        {
+          "path": "TestResults/GAME-31/ui-fixtures.json",
+          "issue": "missing",
+          "expected_sha256": "61930a88d008194a42ce1fb8267be331b1103a1dbca2c9e642de6550345799fa"
+        },
+        {
+          "path": "TestResults/GAME-31/simulator-before-native-retry.json",
+          "issue": "missing",
+          "expected_sha256": "3ead82dfaff1ed4532d34ffee651943c68d0bab1f532c7625910fcbe8f6412b3"
+        },
+        {
+          "path": "TestResults/GAME-31/source-copy.json",
+          "issue": "missing",
+          "expected_sha256": "fd6df22c50f7503bdfd9ec37f0ea2879930467833b1655fab6e15f29f043fcce"
+        },
+        {
+          "path": "TestResults/GAME-31/native-touch-primary-dark-summary.json",
+          "issue": "missing",
+          "expected_sha256": "9d8cb4992d9d58daf9a382e1a2f7a8f5780e5c853070387c848204c8230bb3b4"
+        },
+        {
+          "path": "TestResults/GAME-31/primary-appearance-before-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-31/primary-appearance-after-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-31/narrow-appearance-after-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-31/narrow-appearance-before-booted.txt",
+          "issue": "missing",
+          "expected_sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+        },
+        {
+          "path": "TestResults/GAME-31/check-evidence.py",
+          "issue": "missing",
+          "expected_sha256": "7b85c8e1e66b3835c602141455d8ad3268aa56b7bc66d40970c677bff763bc8e"
+        },
+        {
+          "path": "TestResults/GAME-31/seed-ui.py",
+          "issue": "missing",
+          "expected_sha256": "4b1d56b12eeaa1b2ffb50d9ff2ca2643346eb7853a975d49e26765c3a88e40ee"
+        },
+        {
+          "path": "TestResults/GAME-31/initial-build-failure/build-command.json",
+          "issue": "missing",
+          "expected_sha256": "d056fb8cdaafdea66a8091015feecdc07793ed5059496228f752351e9fefb374"
+        },
+        {
+          "path": "TestResults/GAME-31/initial-build-failure/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "1511311ca23e0fdc0ed4106b5f8364a1d4fe0bb89199015fee581b20c49fe8bb"
+        },
+        {
+          "path": "TestResults/GAME-31/initial-focus-failure/native-focus-summary.json",
+          "issue": "missing",
+          "expected_sha256": "fc9e9c4b8f745b3e76d2544415bbc1c8745821c86201a6cdbf2903dd90f1012b"
+        },
+        {
+          "path": "TestResults/GAME-31/initial-focus-failure/source-hashes.json",
+          "issue": "missing",
+          "expected_sha256": "2f9fc9b53d6beb4122e95786153cead101fb756819c946d84eedde3b6fae918f"
+        }
+      ]
+    }
+  },
+  "drummer_artifact_retention": {
+    "expected_files": 32,
+    "issues": [
+      {
+        "path": "TestResults/UI-STAGE-03/source-manifest-4.json",
+        "issue": "missing",
+        "expected_sha256": "8df91d509c2ad6800538d51d32aeb94f366d95476338c955227cf6eca88a5372"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/source-manifest-5.json",
+        "issue": "missing",
+        "expected_sha256": "8d2e3b7ffdc479c7f71fea9580e37f5aabee2f6e4f43bdf5952f564841f9eced"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-component-binding.json",
+        "issue": "missing",
+        "expected_sha256": "3029c198cfe439b9cc76dccac93bc0c0adb800e499cd85f95e7d861746e54fc7"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/root-source-binding.json",
+        "issue": "missing",
+        "expected_sha256": "73f727cb897c5a4bae9d9a57c3e5135da1c89a5e7972344b49f489d1dcae17ee"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/authority-source-check.json",
+        "issue": "missing",
+        "expected_sha256": "1f01b5528c129d7e067222b11f3f579d79b5f95b1d5a63d628a4a666a0d2ad78"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/build-5-command.json",
+        "issue": "missing",
+        "expected_sha256": "034350f5ed11afc5ba57e899544b4c08350397da6db68e6561f0b77d14600a39"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/build-5.log",
+        "issue": "missing",
+        "expected_sha256": "c2c0ec62808887e1f53098e05d1d7732fd5875d38f7a30f5e777ae9331ecc347"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-final-command.json",
+        "issue": "missing",
+        "expected_sha256": "16e23ecd9143f6a1e035f5113ce4cb5e196fbe5cf487b76797f6f03b1c1993f9"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-final.log",
+        "issue": "missing",
+        "expected_sha256": "32fa199b60e8ea6de1413d82132112986f6d4f518ae0b24e3dcc7c48f9ee310c"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-final-summary.log",
+        "issue": "missing",
+        "expected_sha256": "59c753c32bf9dc35a8eaa05113ea4a95bb59c37bcd9adb0453ff72f361bb23d6"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final-command.json",
+        "issue": "missing",
+        "expected_sha256": "2ed34c667f0fa1a733a38f5bffd9ca68047117cc91494f002eeb9f0984950c40"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final.log",
+        "issue": "missing",
+        "expected_sha256": "95f9d3b7bd33f691eb093c64f40f25eab13c7395bb5c4b2209c86e091feab39b"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final-summary.log",
+        "issue": "missing",
+        "expected_sha256": "19cdf4ffc6985913946fb2bda29df721ea87b6494b8b5bcd8875c1e017bd19a6"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-dark-final-command.json",
+        "issue": "missing",
+        "expected_sha256": "644c68a59607b6d13c78adb650e4d20fd31d4f9e1d7a684e5e3fd06c99cd2e35"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-dark-final.log",
+        "issue": "missing",
+        "expected_sha256": "5466e1bb8436b4f7ea675bee7fe3ee73041bf241422a090546aeb13c79179f0e"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-dark-final-summary.log",
+        "issue": "missing",
+        "expected_sha256": "55031988e5e65c24ba82d0d0e89f99c75e68af0d550d06381c478779f95740e7"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-1-command.json",
+        "issue": "missing",
+        "expected_sha256": "1b0798a277d2cdd12e38343ed7d7e3225f7cf6b99553ad0dcdab8a01bf90db50"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-1.log",
+        "issue": "missing",
+        "expected_sha256": "980b68add3beb7fccc72628cb8291c8b541aed1530f66ee73c757ecc6dcb1b3f"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-1-summary.log",
+        "issue": "missing",
+        "expected_sha256": "4a1f38860a71f1607876f9b32fd8c7825d3b50e69a30e0c0ff9c9320d6cd81ea"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/scene-tests-1-command.json",
+        "issue": "missing",
+        "expected_sha256": "9ce7c429b2f147940a0eeacfce30b47b6e16b33515acd5af02a603ae4fe4518c"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/scene-tests-1.log",
+        "issue": "missing",
+        "expected_sha256": "62fd63e3b43282eb7838b05f7e3c604d40e8c734208da2c63974d1a15519fc1b"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/scene-tests-1-summary.log",
+        "issue": "missing",
+        "expected_sha256": "45ae9250e17670f65f02b4e74d82d319bbb7286855bfdb8cea4e8597b5a92986"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-final-pngs/0E6B07A0-ECE9-4972-9078-8587A35B8393.png",
+        "issue": "missing",
+        "expected_sha256": "500682b0bac735ab49b81ca183d98fbd4cc9589f00600066a6c60ba2db9f1fe5"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-final-pngs/58044B41-D7BE-4766-BB66-534805E36D4A.png",
+        "issue": "missing",
+        "expected_sha256": "de012fd3bbf97d6304bf27987e7ca209c6e45ab85cd71b10fc6b51d6f595241c"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final-pngs/12228CCB-F2C4-407C-B401-89EA1086719D.png",
+        "issue": "missing",
+        "expected_sha256": "8860525a7c609eded591e66001218b88a943f8b44037b3834d3d9014c3c8a203"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final-pngs/10D137F4-C763-410C-9BFC-67593420CAC9.png",
+        "issue": "missing",
+        "expected_sha256": "b0890799c7c7baf2bef038bdde8b1de46aac12a0e027d9431eeb32585ab384c5"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final-pngs/C77A6296-A201-4A98-B5A0-91292BD95E98.png",
+        "issue": "missing",
+        "expected_sha256": "c4101097fc831f43c4623bfa21c54c77d3fa423c3e5eb359df80b5c70991a9de"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-dark-final-pngs/CE90099C-9AEC-4916-9866-A9603F7876C2.png",
+        "issue": "missing",
+        "expected_sha256": "c34f560b978538874a710a94911c70ccfa692c2b1a79167c5f5678968c6f916e"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/native-final-pngs/manifest.json",
+        "issue": "missing",
+        "expected_sha256": "35702a866271f74fc3ea7c96f62ff1756ab1f82e83fcfc2fc1fb534def72ec45"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-final-pngs/manifest.json",
+        "issue": "missing",
+        "expected_sha256": "d3c118e2de5798d6bdea299802a950f773c49e73e142c0f533764b2589660bff"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-dark-final-pngs/manifest.json",
+        "issue": "missing",
+        "expected_sha256": "c65c324adc32469ceaf53db188a28845e18b895aef4c8e9bd085dedacef6a8de"
+      },
+      {
+        "path": "TestResults/UI-STAGE-03/ui-first-attachments/manifest.json",
+        "issue": "missing",
+        "expected_sha256": "a2d54ee5dc2ad1cbe696f884a423c6d7a1ecd610c69cadaa753d7e4aeb3cacf1"
+      }
+    ]
+  },
+  "drummer_raw_bundles": [
+    {
+      "path": "TestResults/UI-STAGE-03/native-final.xcresult",
+      "exists": false,
+      "historical_file_count": 62,
+      "inventory": {
+        "expected_files": 1,
+        "issues": [
+          {
+            "path": "TestResults/UI-STAGE-03/native-final-bundle-hashes.json",
+            "issue": "missing",
+            "expected_sha256": "35bb0eef0eceacef24965c8a9d94e67b323ed5069bb422d693af933af67343b0"
+          }
+        ]
+      },
+      "original_file_hashes_revalidated": false
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-final.xcresult",
+      "exists": false,
+      "historical_file_count": 50,
+      "inventory": {
+        "expected_files": 1,
+        "issues": [
+          {
+            "path": "TestResults/UI-STAGE-03/ui-final-bundle-hashes.json",
+            "issue": "missing",
+            "expected_sha256": "7e24fb09d97378e28bda44671e1a7a8f8617360464f929f28420baf41bc7e704"
+          }
+        ]
+      },
+      "original_file_hashes_revalidated": false
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-dark-final.xcresult",
+      "exists": false,
+      "historical_file_count": 34,
+      "inventory": {
+        "expected_files": 1,
+        "issues": [
+          {
+            "path": "TestResults/UI-STAGE-03/ui-dark-final-bundle-hashes.json",
+            "issue": "missing",
+            "expected_sha256": "45268b0d93eb1bf33dfbd8edb7b17afb654f6929ef955526eafd4ac93fb87bed"
+          }
+        ]
+      },
+      "original_file_hashes_revalidated": false
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/ui-1.xcresult",
+      "exists": false,
+      "historical_file_count": 1156,
+      "inventory": {
+        "expected_files": 1,
+        "issues": [
+          {
+            "path": "TestResults/UI-STAGE-03/ui-1-bundle-hashes.json",
+            "issue": "missing",
+            "expected_sha256": "67b4656fbe63ee01bf5f01150761ee69ead908269507e4e34f221bee72fec499"
+          }
+        ]
+      },
+      "original_file_hashes_revalidated": false
+    },
+    {
+      "path": "TestResults/UI-STAGE-03/scene-tests-1.xcresult",
+      "exists": false,
+      "historical_file_count": 28,
+      "inventory": {
+        "expected_files": 1,
+        "issues": [
+          {
+            "path": "TestResults/UI-STAGE-03/scene-tests-1-bundle-hashes.json",
+            "issue": "missing",
+            "expected_sha256": "8ac4b578cbbf59d001135e5c72cfc63473e285df169d72904424738d68bbfa8c"
+          }
+        ]
+      },
+      "original_file_hashes_revalidated": false
+    }
+  ],
+  "drummer_source118_manifest": "MISSING; cannot repeat frozen118-input hash binding",
+  "tracked_source_vs_cc6f5e7": {
+    "command": [
+      "git",
+      "diff",
+      "--exit-code",
+      "cc6f5e7",
+      "--",
+      "BeatLab",
+      "BeatLabTests",
+      "BeatLabUITests",
+      "Sources",
+      "Tests",
+      "BeatLab.xcodeproj",
+      "Package.swift"
+    ],
+    "exit_code": 0,
+    "stdout": "",
+    "stderr": ""
+  },
+  "head_at_start": {
+    "command": [
+      "git",
+      "rev-parse",
+      "HEAD"
+    ],
+    "exit_code": 0,
+    "stdout": "435e0ec7928f110614d41c16824f84e8f969a091\n",
+    "stderr": ""
+  },
+  "remote_at_start": {
+    "command": [
+      "git",
+      "ls-remote",
+      "origin",
+      "refs/heads/product-alpha/ui-checkpoint"
+    ],
+    "exit_code": 0,
+    "stdout": "435e0ec7928f110614d41c16824f84e8f969a091\trefs/heads/product-alpha/ui-checkpoint\n",
+    "stderr": ""
+  },
+  "tracked_summary_records": [
+    {
+      "path": "docs/slices/NIGHT-01.md",
+      "exists": true,
+      "sha256": "605829d29788071887a6f29f08ae17b3361a7912202e26c400a9eb6b99ec39b7"
+    },
+    {
+      "path": "docs/slices/QA-NIGHT-01-verification.json",
+      "exists": true,
+      "sha256": "b01e3f6eb6382c8ba81ead02fc61cc0c12c750392b9a2113e50b8d61f2504c3d"
+    },
+    {
+      "path": "docs/slices/PHONE-10-verification.json",
+      "exists": true,
+      "sha256": "ef0a7092ce293aa8f1c5c92bbb74f7b47549d8701c6ccd68ef47f78075837c73"
+    },
+    {
+      "path": "docs/slices/GAME-33-verification.json",
+      "exists": true,
+      "sha256": "fea55e647d47f07d1b0899c97723927be0e7d1eeef6b0262c542407194abab3b"
+    },
+    {
+      "path": "docs/slices/GAME-34-verification.json",
+      "exists": true,
+      "sha256": "1a9969544a80f9977e851dbe8831176018befee526c568f8ac32017da8f344f5"
+    },
+    {
+      "path": "docs/slices/RHYTHM-PLAY-BATCH-verification.json",
+      "exists": true,
+      "sha256": "9e6189f01492609086f6fe877e6101b2ec6e4f1b9b744b828334bf733c2e5860"
+    },
+    {
+      "path": "docs/slices/UI-STAGE-03-verification.json",
+      "exists": true,
+      "sha256": "1942144e37d2038944feca6af9c45a43bb9e7f6b1cb108e41989c1d04d86746d"
+    }
+  ],
+  "phone14_package": {
+    "expected_files": 13,
+    "issues": [
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/BeatLab.debug.dylib",
+        "issue": "missing",
+        "expected_sha256": "b838bdf3b460ee571baf99505c1699060fd33d9d58956188339a7e2778e1cca6"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/AppIcon60x60@2x.png",
+        "issue": "missing",
+        "expected_sha256": "6728db4681d2d751ed7916209f8053019e3145ff196ea0481d11dde4a25690dc"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/__preview.dylib",
+        "issue": "missing",
+        "expected_sha256": "d4d8d401b129e1c83b456ed2aba17555110ad5a0ee73b3230e9e4e6d71bb308b"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/Assets.car",
+        "issue": "missing",
+        "expected_sha256": "ea1962b479c15c5a5375108b69e7afeda68932ca4a57288a64e423e6718d03b9"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/AppIcon76x76@2x~ipad.png",
+        "issue": "missing",
+        "expected_sha256": "632c86674893e5bfa8978ce2d8569ace0cbf4a0932473598fdb91dc4c19eb575"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/PrivacyInfo.xcprivacy",
+        "issue": "missing",
+        "expected_sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/embedded.mobileprovision",
+        "issue": "missing",
+        "expected_sha256": "b8ebbc925d2da17851cdba3250a6c271269ad0952c783803a5fc3a45fed8f418"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/BeatLab",
+        "issue": "missing",
+        "expected_sha256": "d72386680854fe4bfca57401578a49b45de5cf5d3f8fa82190f1125dce6a5171"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/Info.plist",
+        "issue": "missing",
+        "expected_sha256": "3635e1e2389c3ef0c4d7efb368d283f8272d7f3e6d332472179d90a0edb92552"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/PkgInfo",
+        "issue": "missing",
+        "expected_sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/BeatLabCore_BeatLabCore.bundle/lessons.json",
+        "issue": "missing",
+        "expected_sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/BeatLabCore_BeatLabCore.bundle/Info.plist",
+        "issue": "missing",
+        "expected_sha256": "881c40c918200516449edfe7a240cd813faccd18fbb936459acbd917987b0098"
+      },
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/PhoneFinalFrozen/BeatLab.app/_CodeSignature/CodeResources",
+        "issue": "missing",
+        "expected_sha256": "7962f7cde4ea14cb93a5e3cd73273639dbd6e7c7ad2af69d019c4e979e8a6924"
+      }
+    ]
+  },
+  "phone14_archive": {
+    "expected_files": 1,
+    "issues": [
+      {
+        "path": "/Users/pc49-58/Desktop/BeatLab/TestResults/RHYTHM-PLAY-BATCH/BeatLab-0.1.0-14-96ad73a.zip",
+        "issue": "missing",
+        "expected_sha256": "464657168af7cc90dc20ebeb87144669e801e37b3014896c964b08138516c72f"
+      }
+    ]
+  },
+  "phone14_install_launch_raw_receipts": [
+    {
+      "path": "TestResults/RHYTHM-PLAY-BATCH/install.json",
+      "exists": false
+    },
+    {
+      "path": "TestResults/RHYTHM-PLAY-BATCH/launch.json",
+      "exists": false
+    },
+    {
+      "path": "TestResults/RHYTHM-PLAY-BATCH/install-command.json",
+      "exists": false
+    },
+    {
+      "path": "TestResults/RHYTHM-PLAY-BATCH/launch-command.json",
+      "exists": false
+    }
+  ],
+  "historical_observations": {
+    "phone14": "Committed summary records historical Wi-Fi install/launch success; current raw receipts missing",
+    "drummer": "Committed summary records native13/UI3 and Dark1 repeat passing; raw results now missing"
+  },
+  "present_phone_state": "NOT CHECKED",
+  "not_claimed": [
+    "retention PASS",
+    "fresh iOS tests",
+    "byte-identical original package recovery",
+    "physical timing/FPS",
+    "child/fullAX acceptance",
+    "release readiness"
+  ],
+  "result": "FAIL_ORIGINAL_EVIDENCE_RETENTION",
+  "audit_exit_code": 1
+}

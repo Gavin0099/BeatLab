@@ -1,10 +1,12 @@
 # BeatLab — iOS MVP Roadmap
 <!-- governance-baseline: overridable -->
-> **最後更新**: 2026-10-11
+> **最後更新**: 2026-10-15
 > **Owner**: BeatLab owner
 > **Freshness**: Sprint (7d)
 
 ## Current Phase
+
+2026-10-15 heartbeat發現新的證據留存缺口：原TestResults根目錄目前不存在，原因未確立；昨日核對結果是當時觀察，不能沿用為今日留存PASS。NIGHT174個索引中168個檔缺失（其餘6個tracked檔hash符合）；鼓手版32個artifact／5個raw結果與inventory／118-input manifest、14版13檔簽署包／ZIP及安裝開啟原始receipt均缺失。已提交來源與摘要仍保留；產品／測試來源與cc6f5e7無差異，audit開始local/remote同435e0ec。歷史PASS與安裝成功不撤銷，但目前不能重驗原始bytes，不把摘要當重跑；本輪沒有build/test/install/upload，未建立新TestResults遮蔽缺失。已詢問owner原備份／搬移位置，真機timing/FPS/兒童/完整AX仍待驗收。[新留存稽核](docs/slices/QA-RETENTION-02.md) · [缺失清單／證據](docs/slices/QA-RETENTION-02-verification.json)。以下先前的來源／工程狀態保留為歷史，原始留存以本段為準。
 
 2026-10-11 owner要求停止静態微調，以第三關做20–30秒真正可玩片段，探索恐龍擊鼓比跑酷更自然的方向。UI-STAGE-03已定義DEBUG第三關鼓手舞台：原60BPM/32targets/約20.18秒、真音訊/輸入/匹配、隔離試玩進度，正式十關及原A/B保留；狀態SOURCE_LOCAL_CANDIDATE：本機Debug build、focused原生13項與UI3項通過（Dark1項重跑）；source4原生組件綁定source5 HUD修正。未新安裝/上傳，owner視覺/玩法、真機timing/FPS/兒童與完整AX仍待驗收。[垂直切片](docs/slices/UI-STAGE-03.md)。
 

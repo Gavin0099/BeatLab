@@ -1,0 +1,11 @@
+{
+  "command": [
+    "python3",
+    "artifacts/evidence/retention/20261015/audit.py"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 1,
+  "started_at": 1792034041.722134,
+  "finished_at": 1792034042.513772,
+  "local_mac": true
+}
