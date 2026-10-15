@@ -1,0 +1,35 @@
+{
+  "slice": "QA-RETENTION-02",
+  "audit_commit": "d601089",
+  "writer": "governance_tools.memory_record",
+  "memory_check_and_run_guard_exit": 0,
+  "guard_ran": true,
+  "completion_claim_allowed": true,
+  "current_diff_blockers": 0,
+  "repo_state_blockers": 0,
+  "retained_warnings": {
+    "canonical_writer_path": "NOT FOUND",
+    "authority_guard_path": "NOT FOUND",
+    "missing_canonical_memory": 1,
+    "test_evidence_provenance_not_found": 2
+  },
+  "claim_boundary": "Guard permits completion of this audit recording only. Original evidence retention remains failed; no governance full adoption, original-byte recovery, fresh iOS validation, phone or release acceptance. Task completion is not session end.",
+  "evidence_refs": [
+    {
+      "path": "artifacts/evidence/retention/20261015/memory-writer-command.json",
+      "sha256": "9ee4e644801780891cf6b2e75f3ce3d500a573ffe3a819160fa2e3fafc3b57a0"
+    },
+    {
+      "path": "artifacts/evidence/retention/20261015/memory-writer.log",
+      "sha256": "44e3283255ca203c4d54208d6844e3b237718a68d5103f5a64e8fe1499656794"
+    },
+    {
+      "path": "artifacts/evidence/retention/20261015/memory-guard-command.json",
+      "sha256": "13061ad2f44975698b750e8e2ce47ebf1292cc13e22b734964e76dd9cd0c411b"
+    },
+    {
+      "path": "artifacts/evidence/retention/20261015/memory-guard.log",
+      "sha256": "447426b386330a7f317818fed7b773477e62600d2daa2dfee6cca1564d729beb"
+    }
+  ]
+}

@@ -120,3 +120,5 @@
 - RHYTHM-PLAY來源5580a14與產品相同簽署Debug14已Wi-Fi安裝/開啟；八功能片、本機QA/交付PASS，真機timing/FPS/兒童/完整AX與G1-G4未接受；A預設/B比較隔離，Apple未上傳。 <!-- memory_record_projection:active-task-summary:031c6c9e11c77a2d2d878158de43892c08611ca62bb7fa60a614776a9057a26e -->
 
 - UI-STAGE-03 native third-lesson drummer SOURCE_LOCAL_CANDIDATE cc6f5e7; focused local checks and PNG review pass; owner/hardware/child/fullAX pending, not installed or uploaded. <!-- memory_record_projection:active-task-summary:ad8410f781c2394418721b11dfa0176714aa668d2e36b7ee62d0150add8d0e26 -->
+
+- QA-RETENTION-02 audit complete with FAILED original evidence retention; TestResults absent, source/history retained; need original backup and later drummer phone trial. <!-- memory_record_projection:active-task-summary:fa9a01182c6d15ef25ed768235cc4d4dc08931f4802525301a85f430c941f948 -->

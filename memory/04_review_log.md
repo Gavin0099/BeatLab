@@ -509,3 +509,14 @@
 - Validation boundary: docs/slices/UI-STAGE-03-verification.json: local source5 Debug buildPASS; source4 focused native13PASS bound unchanged scene/store/test inputs to source5 HUD fixes; source5 UI3PASS and Dark1 repeatPASS. Actual positive touch/zero-input0stars/isolated persistence, failed wrong-filter0 and initialUI2pass1fail preserved. Not fullApp/Core rerun or physical acceptance.
 - Next action: Compare this native trial with same-chart runner on physical phone before choosing a direction. Owner visual/play acceptance, hardware timing/FPS, children and fullAX remain pending. No new install, TestFlight or public upload in this slice.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:fa9a01182c6d15ef25ed768235cc4d4dc08931f4802525301a85f430c941f948 -->
+### Canonical memory checkpoint — QA-RETENTION-02-20261015
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `fa9a01182c6d15ef25ed768235cc4d4dc08931f4802525301a85f430c941f948`
+- Commit binding: `d601089` (bound)
+- Record: Read-only heartbeat audit discovered original TestResults root absent. NIGHT174 indexed files:168missing,6tracked hashes match; drummer32 artifacts,5raw bundles/inventories and118-input manifest missing; phone14 signed13 files,ZIP and raw delivery receipts missing. Cause unknown. Tracked product/tests equal cc6f5e7 and historical summaries remain; no old receipt overwritten, no product changes or build/test/install/upload. PLAN updated.
+- Validation boundary: artifacts/evidence/retention/20261015/audit-command.json: observed retention audit exit1 FAIL, docs/slices/QA-RETENTION-02-verification.json lists scope and hashes. Product git diff against cc6f5e7 exit0; no fresh iOS tests or original package validation claimed.
+- Next action: Owner original backup/moved-directory location required to recover and rehash original evidence; question sent. New compilation cannot recreate original bytes. Drummer phone trial, owner mode choice and physical timing/FPS/children/fullAX remain pending.
+- PLAN reconciliation: `updated`
