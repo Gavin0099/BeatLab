@@ -1,0 +1,35 @@
+{
+  "slice": "QA-REVALIDATE-01",
+  "validation_commit": "aa5eb34",
+  "canonical_writer": "governance_tools.memory_record",
+  "memory_workflow_check_run_guard_exit": 0,
+  "guard_ran": true,
+  "completion_claim_allowed": true,
+  "current_diff_blockers": 0,
+  "repo_state_blockers": 0,
+  "warnings_retained": {
+    "canonical_writer_path": "NOT FOUND",
+    "authority_guard_path": "NOT FOUND",
+    "missing_canonical_memory": 1,
+    "test_evidence_provenance_not_found": 2
+  },
+  "boundary": "Memory recording does not restore old raw bytes, complete governance adoption, or accept physical/owner/child/fullAX/release gates. This is task completion, not session end.",
+  "evidence_refs": [
+    {
+      "path": "artifacts/evidence/revalidation/20261016/memory-writer-command.json",
+      "sha256": "49837077b641cfa18ec32ee07eda08377c81a6b78702b04b8c1565d52a2674b5"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/memory-writer.log",
+      "sha256": "5a1860beb48bf5ecf068bb21f55f29a8a8f58c2d91a8e29d068a919a95cf00a0"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/memory-guard-command.json",
+      "sha256": "cd75ee552bd26a0ecb37d8469b9fc124169bea116a65cf41496b41f2ce84a2ac"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/memory-guard.log",
+      "sha256": "5f522048309538417bef833834de828f06e630c469c9a24f9570919d85c3c36b"
+    }
+  ]
+}

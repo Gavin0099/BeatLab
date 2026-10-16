@@ -1,0 +1,16 @@
+[memory_record] Written: /Users/pc49-58/Desktop/BeatLab/memory/2026-10-16.md (surface identity=903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a)
+[memory_record] Written: /Users/pc49-58/Desktop/BeatLab/memory/04_review_log.md (surface identity=903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a)
+[memory_record] Written: /Users/pc49-58/Desktop/BeatLab/memory/01_active_task.md (surface identity=903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a)
+- memory_type: session-derived
+  record_format_version: 1.0
+  writer: governance_tools.memory_record
+  what_changed: Revalidated unchanged committed drummer candidate on local Mac after original evidence loss. Frozen116 tracked inputs at02dc2df match root and compiled Debug simulator source. Fresh Core59, same-host native13 plus actualUI3, Dark1 repeat pass; five PNGs reviewed.407 files including source/raw/results/simulator product match second-location SHA256. DedicatedSE restored Shutdown/light. Original TestResults remains absent; no product changes, phone install or Apple upload.
+  commit: aa5eb34
+  commit_hash: aa5eb34
+  session_id: QA-REVALIDATE-01-20261016
+  memory_binding: bound
+  test_evidence: docs/slices/QA-REVALIDATE-01-verification.json and artifacts/evidence/revalidation/20261016: fresh local build/core/native-ui/dark command exits0, XCTest59 plus xcresult16 and1, positive actual touch and zero-result isolation.407-file backup hash matches; fullApp/ten-level/device tests NOT CLAIMED.
+  next_step: Build a distinct phone candidate and compare drummer with same-chart runner when proceeding to physical trial. Original backup is still needed to restore old evidence; new passes do not recover original14 bytes or accept timing/FPS/child/fullAX. KidsCharacterKit deferred.
+  plan_reconciliation: updated
+  record_identity: 903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a
+

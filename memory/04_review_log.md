@@ -520,3 +520,14 @@
 - Validation boundary: artifacts/evidence/retention/20261015/audit-command.json: observed retention audit exit1 FAIL, docs/slices/QA-RETENTION-02-verification.json lists scope and hashes. Product git diff against cc6f5e7 exit0; no fresh iOS tests or original package validation claimed.
 - Next action: Owner original backup/moved-directory location required to recover and rehash original evidence; question sent. New compilation cannot recreate original bytes. Drummer phone trial, owner mode choice and physical timing/FPS/children/fullAX remain pending.
 - PLAN reconciliation: `updated`
+
+<!-- memory_record_projection:review-log:903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a -->
+### Canonical memory checkpoint — QA-REVALIDATE-01-20261016
+
+- Writer: `governance_tools.memory_record`
+- Record identity: `903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a`
+- Commit binding: `aa5eb34` (bound)
+- Record: Revalidated unchanged committed drummer candidate on local Mac after original evidence loss. Frozen116 tracked inputs at02dc2df match root and compiled Debug simulator source. Fresh Core59, same-host native13 plus actualUI3, Dark1 repeat pass; five PNGs reviewed.407 files including source/raw/results/simulator product match second-location SHA256. DedicatedSE restored Shutdown/light. Original TestResults remains absent; no product changes, phone install or Apple upload.
+- Validation boundary: docs/slices/QA-REVALIDATE-01-verification.json and artifacts/evidence/revalidation/20261016: fresh local build/core/native-ui/dark command exits0, XCTest59 plus xcresult16 and1, positive actual touch and zero-result isolation.407-file backup hash matches; fullApp/ten-level/device tests NOT CLAIMED.
+- Next action: Build a distinct phone candidate and compare drummer with same-chart runner when proceeding to physical trial. Original backup is still needed to restore old evidence; new passes do not recover original14 bytes or accept timing/FPS/child/fullAX. KidsCharacterKit deferred.
+- PLAN reconciliation: `updated`

@@ -122,3 +122,5 @@
 - UI-STAGE-03 native third-lesson drummer SOURCE_LOCAL_CANDIDATE cc6f5e7; focused local checks and PNG review pass; owner/hardware/child/fullAX pending, not installed or uploaded. <!-- memory_record_projection:active-task-summary:ad8410f781c2394418721b11dfa0176714aa668d2e36b7ee62d0150add8d0e26 -->
 
 - QA-RETENTION-02 audit complete with FAILED original evidence retention; TestResults absent, source/history retained; need original backup and later drummer phone trial. <!-- memory_record_projection:active-task-summary:fa9a01182c6d15ef25ed768235cc4d4dc08931f4802525301a85f430c941f948 -->
+
+- QA-REVALIDATE-01 new local drummer candidate gates pass with407-file independent copy; original retention failure persists, no phone install/release; physical/owner/child/fullAX pending. <!-- memory_record_projection:active-task-summary:903c34709877ca05b0a4a4d5a92edb6d42cb584d6c51603046f4d52f7a98151a -->
