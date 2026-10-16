@@ -1,10 +1,12 @@
 # BeatLab — iOS MVP Roadmap
 <!-- governance-baseline: overridable -->
-> **最後更新**: 2026-10-15
+> **最後更新**: 2026-10-16
 > **Owner**: BeatLab owner
 > **Freshness**: Sprint (7d)
 
 ## Current Phase
+
+2026-10-16 heartbeat核對local/remote同02dc2df，原TestResults仍未恢復。接續已授權、可獨立進行的QA-REVALIDATE-01：從已提交來源新建本機鼓手候選與Core／focused原生／實際UI檢查，新Debug build、Core59、同compiled host原生13＋UI3、Dark1重跑均PASS；實看5張截圖，新407檔與第二位置副本SHA-256相同。原生／UI為focused候選檢查，非full App／十關／真機驗收；沒有產品更動、舊bytes恢復或新裝手機／上傳Apple。原留存失敗與真機／兒童／完整AX待驗收仍維持。[新批次契約](docs/slices/QA-REVALIDATE-01.md)。
 
 2026-10-15 heartbeat發現新的證據留存缺口：原TestResults根目錄目前不存在，原因未確立；昨日核對結果是當時觀察，不能沿用為今日留存PASS。NIGHT174個索引中168個檔缺失（其餘6個tracked檔hash符合）；鼓手版32個artifact／5個raw結果與inventory／118-input manifest、14版13檔簽署包／ZIP及安裝開啟原始receipt均缺失。已提交來源與摘要仍保留；產品／測試來源與cc6f5e7無差異，audit開始local/remote同435e0ec。歷史PASS與安裝成功不撤銷，但目前不能重驗原始bytes，不把摘要當重跑；本輪沒有build/test/install/upload，未建立新TestResults遮蔽缺失。已詢問owner原備份／搬移位置，真機timing/FPS/兒童/完整AX仍待驗收。[新留存稽核](docs/slices/QA-RETENTION-02.md) · [缺失清單／證據](docs/slices/QA-RETENTION-02-verification.json)。以下先前的來源／工程狀態保留為歷史，原始留存以本段為準。
 

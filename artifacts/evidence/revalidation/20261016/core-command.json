@@ -1,0 +1,17 @@
+{
+  "command": [
+    "swift",
+    "test",
+    "--package-path",
+    "artifacts/development/QA-REVALIDATE-01/source",
+    "--scratch-path",
+    "artifacts/development/QA-REVALIDATE-01/core-build",
+    "--jobs",
+    "2"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792160330.869798,
+  "finished_at": 1792160357.53352,
+  "local_mac": true
+}

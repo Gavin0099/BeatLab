@@ -1,0 +1,196 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project artifacts/development/QA-REVALIDATE-01/source/BeatLab.xcodeproj -scheme BeatLab -configuration Debug -derivedDataPath artifacts/development/QA-REVALIDATE-01/DerivedData -destination "platform=iOS Simulator,id=52C92F83-56BB-4DC9-9331-3556F124FF2F" -jobs 2 -disableAutomaticPackageResolution -skipPackageUpdates -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test-without-building "-only-testing:BeatLabUITests/PracticeUITests/testDrummerMaximumTextControlsAndNoWriteOnExit" -resultBundlePath artifacts/development/QA-REVALIDATE-01/dark.xcresult
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  BeatLabCore: /Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/source @ local
+
+Writing result bundle at path:
+	/Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/dark.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:52C92F83-56BB-4DC9-9331-3556F124FF2F, OS:18.0, name:BeatLab RHYTHM-PLAY-01 }
+{ platform:iOS Simulator, arch:x86_64, id:52C92F83-56BB-4DC9-9331-3556F124FF2F, OS:18.0, name:BeatLab RHYTHM-PLAY-01 }
+2026-10-16 22:23:07.922687+0800 BeatLabUITests-Runner[3897:135729] [Default] Running tests...
+Test Suite 'Selected tests' started at 2026-10-16 22:23:08.335.
+Test Suite 'BeatLabUITests.xctest' started at 2026-10-16 22:23:08.335.
+Test Suite 'PracticeUITests' started at 2026-10-16 22:23:08.335.
+Test Case '-[BeatLabUITests.PracticeUITests testDrummerMaximumTextControlsAndNoWriteOnExit]' started.
+    t =     0.00s Start Test at 2026-10-16 22:23:08.336
+    t =     0.02s Set Up
+    t =     0.03s Open com.gavin0099.beatlab
+    t =     0.03s     Launch com.gavin0099.beatlab
+2026-10-16 22:23:08.580 xcodebuild[3872:135340] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-16 22:23:08.580 xcodebuild[3872:135340] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.86s         Setting up automation session
+    t =     1.33s         Wait for com.gavin0099.beatlab to idle
+    t =     2.61s Checking existence of `"練習" Button`
+    t =     2.71s Find the "練習" Button
+    t =     2.73s Tap "練習" Button
+    t =     2.73s     Wait for com.gavin0099.beatlab to idle
+    t =     2.73s     Find the "練習" Button
+    t =     2.74s     Check for interrupting elements affecting "練習" Button
+    t =     2.76s     Synthesize event
+    t =     3.05s     Wait for com.gavin0099.beatlab to idle
+    t =     3.22s Tap "practiceSettings" Button
+    t =     3.22s     Wait for com.gavin0099.beatlab to idle
+    t =     3.89s     Find the "practiceSettings" Button
+    t =     3.94s     Check for interrupting elements affecting "practiceSettings" Button
+    t =     3.97s     Synthesize event
+    t =     4.26s     Wait for com.gavin0099.beatlab to idle
+    t =     4.27s Find the Window (First Match)
+    t =     4.28s Checking existence of `"節奏挑戰" NavigationBar`
+    t =     4.32s Checking existence of `"選擇夥伴" NavigationBar`
+    t =     4.35s Checking existence of `NavigationBar (First Match)`
+    t =     4.36s Find the NavigationBar (First Match)
+    t =     4.37s Checking existence of `TabBar (First Match)`
+    t =     4.38s Find the TabBar (First Match)
+    t =     4.39s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     4.41s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     4.44s Find the "comparison.eighth.drummer" Button
+    t =     4.47s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     4.50s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.50s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     4.53s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     4.53s     Wait for com.gavin0099.beatlab to idle
+    t =     4.79s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.80s     Check for interrupting elements affecting Window
+    t =     4.82s     Synthesize event
+    t =     4.82s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.83s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.84s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.85s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.86s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.19s     Wait for com.gavin0099.beatlab to idle
+    t =     6.19s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.22s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.25s Find the "comparison.eighth.drummer" Button
+    t =     6.28s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.31s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.32s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.35s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     6.35s     Wait for com.gavin0099.beatlab to idle
+    t =     6.35s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.35s     Check for interrupting elements affecting Window
+    t =     6.38s     Synthesize event
+    t =     6.38s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.38s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.39s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.40s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.40s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.74s     Wait for com.gavin0099.beatlab to idle
+    t =     7.75s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     7.80s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     7.83s Find the "comparison.eighth.drummer" Button
+    t =     7.86s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     7.89s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.89s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     7.92s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     7.92s     Wait for com.gavin0099.beatlab to idle
+    t =     7.92s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.93s     Check for interrupting elements affecting Window
+    t =     7.95s     Synthesize event
+    t =     7.95s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.96s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.97s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.98s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.98s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.32s     Wait for com.gavin0099.beatlab to idle
+    t =     9.32s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     9.35s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     9.37s Find the "comparison.eighth.drummer" Button
+    t =     9.40s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     9.43s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.44s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     9.47s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     9.47s     Wait for com.gavin0099.beatlab to idle
+    t =     9.47s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.47s     Check for interrupting elements affecting Window
+    t =     9.50s     Synthesize event
+    t =     9.50s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.51s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.63s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.64s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.64s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.99s     Wait for com.gavin0099.beatlab to idle
+    t =    11.00s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    11.05s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    11.08s Find the "comparison.eighth.drummer" Button
+    t =    11.11s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    11.14s Find the "comparison.eighth.drummer" Button
+    t =    11.17s Tap "comparison.eighth.drummer" Button
+    t =    11.17s     Wait for com.gavin0099.beatlab to idle
+    t =    11.17s     Find the "comparison.eighth.drummer" Button
+    t =    11.20s     Check for interrupting elements affecting "comparison.eighth.drummer" Button
+    t =    11.22s     Synthesize event
+    t =    11.51s     Wait for com.gavin0099.beatlab to idle
+    t =    11.66s Waiting 5.0s for "practiceTapPad.left" Button to exist
+    t =    12.74s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.left" Button`
+    t =    12.74s         Checking existence of `"practiceTapPad.left" Button`
+    t =    12.77s Find the "practiceTapPad.right" Button
+    t =    12.80s Find the "practiceTapPad.right" Button
+    t =    12.83s Find the Window (First Match)
+    t =    12.84s Find the "practiceTapPad.right" Button
+    t =    12.86s Find the Target Application 'com.gavin0099.beatlab'
+    t =    12.90s Added attachment named 'Drummer maximum text live'
+    t =    12.90s Tap "pausePractice" Button
+    t =    12.90s     Wait for com.gavin0099.beatlab to idle
+    t =    12.90s     Find the "pausePractice" Button
+    t =    12.93s     Check for interrupting elements affecting "pausePractice" Button
+    t =    12.96s     Synthesize event
+    t =    13.25s     Wait for com.gavin0099.beatlab to idle
+    t =    13.26s Find the Window (First Match)
+    t =    13.26s Checking existence of `"節奏挑戰" NavigationBar`
+    t =    13.28s Checking existence of `"選擇夥伴" NavigationBar`
+    t =    13.30s Checking existence of `NavigationBar (First Match)`
+    t =    13.34s Checking existence of `StatusBar (First Match)`
+    t =    13.38s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    13.39s Checking existence of `TabBar (First Match)`
+    t =    13.43s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    13.44s Checking existence of `"resumePractice" Button`
+    t =    13.45s Checking existence of `"resumePractice" Button`
+    t =    13.47s Find the "resumePractice" Button
+    t =    13.49s Checking existence of `"resumePractice" Button`
+    t =    13.51s Find the "resumePractice" Button
+    t =    13.53s Tap "resumePractice" Button
+    t =    13.53s     Wait for com.gavin0099.beatlab to idle
+    t =    13.53s     Find the "resumePractice" Button
+    t =    13.55s     Check for interrupting elements affecting "resumePractice" Button
+    t =    13.57s     Synthesize event
+    t =    13.86s     Wait for com.gavin0099.beatlab to idle
+    t =    13.86s Waiting 5.0s for "practiceTapPad.right" Button to exist
+    t =    14.93s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.right" Button`
+    t =    14.93s         Checking existence of `"practiceTapPad.right" Button`
+    t =    14.95s Tap "stopPractice" Button
+    t =    14.95s     Wait for com.gavin0099.beatlab to idle
+    t =    14.96s     Find the "stopPractice" Button
+    t =    14.97s     Check for interrupting elements affecting "stopPractice" Button
+    t =    15.00s     Synthesize event
+    t =    15.29s     Wait for com.gavin0099.beatlab to idle
+    t =    15.29s Waiting 5.0s for "journeyProgress" StaticText to exist
+    t =    16.36s     Checking `Expect predicate `existsNoRetry == 1` for object "journeyProgress" StaticText`
+    t =    16.36s         Checking existence of `"journeyProgress" StaticText`
+    t =    16.40s Find the "journeyProgress" StaticText
+    t =    16.42s Tear Down
+Test Case '-[BeatLabUITests.PracticeUITests testDrummerMaximumTextControlsAndNoWriteOnExit]' passed (16.646 seconds).
+Test Suite 'PracticeUITests' passed at 2026-10-16 22:23:24.984.
+	 Executed 1 test, with 0 failures (0 unexpected) in 16.646 (16.648) seconds
+Test Suite 'BeatLabUITests.xctest' passed at 2026-10-16 22:23:24.985.
+	 Executed 1 test, with 0 failures (0 unexpected) in 16.646 (16.649) seconds
+Test Suite 'Selected tests' passed at 2026-10-16 22:23:24.985.
+	 Executed 1 test, with 0 failures (0 unexpected) in 16.646 (16.651) seconds
+2026-10-16 22:23:25.313 xcodebuild[3872:135340] [MT] IDETestOperationsObserverDebug: 18.666 elapsed -- Testing started completed.
+2026-10-16 22:23:25.313 xcodebuild[3872:135340] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-16 22:23:25.313 xcodebuild[3872:135340] [MT] IDETestOperationsObserverDebug: 18.666 sec, +18.666 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/dark.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

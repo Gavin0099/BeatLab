@@ -1,0 +1,261 @@
+{
+  "slice": "QA-REVALIDATE-01",
+  "date": "2026-10-16",
+  "status": "NEW_LOCAL_CANDIDATE_PASSED; physical/owner/child/fullAX pending",
+  "source_ref": "02dc2df94f09410368c08ebbdbba5280bd81e0e9",
+  "product_source_equivalent_to": "cc6f5e7",
+  "frozen_inputs": 116,
+  "source_manifest_ref": "artifacts/evidence/revalidation/20261016/source-manifest.json",
+  "build": {
+    "exit_code": 0,
+    "location": "local Mac Xcode26.6",
+    "configuration": "Debug iOS18 simulator; not phone-signed"
+  },
+  "fresh_checks": {
+    "Core_XCTest": {
+      "passed": 59,
+      "failed": 0
+    },
+    "same_compiled_host_native_and_UI": {
+      "passed": 16,
+      "failed": 0,
+      "native_class": "RhythmPrototypeTests,13 unique",
+      "UI": "3 unique flows: real individual touch/pause/zero-result/retry/isolation; maximum text; existing falling regression"
+    },
+    "dark_repeat": {
+      "passed": 1,
+      "failed": 0,
+      "not_an_additional_unique_case": true
+    }
+  },
+  "raw_results": [
+    "artifacts/development/QA-REVALIDATE-01/native-ui.xcresult",
+    "artifacts/development/QA-REVALIDATE-01/dark.xcresult"
+  ],
+  "visual_review": {
+    "actually_viewed": [
+      "actual-touch.png",
+      "maximum-text-light.png",
+      "zero-input-result.png",
+      "native-compact-dark.png",
+      "maximum-text-dark.png"
+    ],
+    "observed": "actual positive hit, zero-input0stars/0of32, readable maximum-text BPM and cue in Light/Dark, native dark stage",
+    "not_claimed": "animation FPS, child appeal or full accessibility"
+  },
+  "retention": {
+    "checked_at": "2026-10-16T14:23:55.172278+00:00",
+    "source": "/Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01",
+    "backup": "/Users/pc49-58/Library/Application Support/BeatLabEvidence/QA-REVALIDATE-01-20261016",
+    "files_checked": 407,
+    "manifest_sha256": "0a10180f5f6fbace37c268766f23e6b3853b7a056f6ba942ce762ce1c80ae373",
+    "copy_hashes_match": true,
+    "excluded_rebuildable_caches": [
+      "DerivedData",
+      "Intermediates.noindex",
+      "__pycache__",
+      "core-build"
+    ],
+    "old_TestResults_recovered": false
+  },
+  "original_TestResults_exists": false,
+  "old_evidence_recovered": false,
+  "cleanup": {
+    "own_original_and_final": "Shutdown",
+    "own_original_and_restored_appearance": "light",
+    "observed_after": [
+      {
+        "id": "B3E27BF5-0FC6-4378-8A06-A254DC3782B2",
+        "name": "iPhone 16",
+        "state": "Booted"
+      },
+      {
+        "id": "52C92F83-56BB-4DC9-9331-3556F124FF2F",
+        "name": "BeatLab RHYTHM-PLAY-01",
+        "state": "Shutdown"
+      }
+    ],
+    "other_device_no_mutation_performed": true
+  },
+  "phone_install": "NOT RUN; drummer trial has not been installed",
+  "TestFlight_public": "NOT RUN",
+  "material_changes": "No product/test/art/score/clock/persistence changes; new local validation evidence only",
+  "not_claimed": [
+    "original14 signed package restoration",
+    "fullApp suite rerun",
+    "full ten-lesson regression",
+    "Release or physical-phone candidate",
+    "hardware timing/audio-visual latency/FPS acceptance",
+    "owner gameplay or child enjoyment",
+    "OS Reduce Motion/VoiceOver/fullAX acceptance",
+    "continuous10hour work"
+  ],
+  "remaining": [
+    "owner original backup/moved folder if available to recover old evidence",
+    "physical candidate build/install and same-chart drummer vs runner trial",
+    "timing/FPS/child/fullAX acceptance",
+    "KidsCharacterKit deferred by owner"
+  ],
+  "evidence_refs": [
+    {
+      "path": "artifacts/evidence/revalidation/20261016/backup-receipt.json",
+      "sha256": "be152a79d08a3ee192b9cf2974faec42bfc3bce83795a2e12179f7840d10e786"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/backup.py",
+      "sha256": "60f1d8e7e8b372837b1bd069e0b0713c82ab3540b0ac09a35f3a1f95ee0597f7"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/build-command.json",
+      "sha256": "45d521c297bb924346f96694e39f31766e60fce0920b89024a3a958744a70598"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/build.log",
+      "sha256": "44ce8f674f15fc642a35e5500740738d3bcd6ea47afc1f0190cfdf64a81232ad"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/core-command.json",
+      "sha256": "4f8b9e0ac22de62246f40e75033a568bd8be5c7f38e98b513858647b48c6b04a"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/core-summary.json",
+      "sha256": "b63cd4f5ad69c8700d2d224b66177aee69e14d15f87b5f68e13f31961ccc225d"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/core.log",
+      "sha256": "c9652f6ef226b352e435442304009602714121255e8c94de93a137a354321b8d"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark-attachments.json",
+      "sha256": "ac30e3bb04a14778fdea82cc253e96934aa81870b8ab0a51ea238ac0b0fd21df"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark-command.json",
+      "sha256": "84474f66477a8e6f2e86574cce2212092b20a116b892694764ccfbfcb628c197"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark-export-command.json",
+      "sha256": "b84c5df75fa3315ac134c9f82268fa18631a9a59c388872c84fd1a4157c29328"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark-export.log",
+      "sha256": "75675f2bec223c62a818ce9e57d55cf94ce8184d965ed901e4d640b2ff6ac417"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark-summary-command.json",
+      "sha256": "ac137302f2868c36d1e60bd5deb7688d20e25a9009b6c4c507fd6ff8de0827d5"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark-summary.log",
+      "sha256": "e21c7129122652a27526e2fef985898fb61c54dc98227a2c320b5e2d1ea9aa07"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/dark.log",
+      "sha256": "bc52a69be98891184e09b841427d6e121d842f171b12ed2bb0b51c2628d0d496"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/initial-appearance-command.json",
+      "sha256": "bb2c292dfa081e0e7aa28a35b148e39b62b67c051503b71be1ea63036d91ae32"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/initial-appearance.log",
+      "sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui-attachments.json",
+      "sha256": "3e887660954b582d1814f732f2dfa880a7ae4e96df44f0ae4bcf369544bc2ae2"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui-command.json",
+      "sha256": "f8362e1efb78fbfc50e1e037b73ef2f0b66f68d2930a2b9620141161ae353063"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui-export-command.json",
+      "sha256": "eb77bb9361c292310a66b4c210b490a0e68e100fc9c225cca53516c4b9ea5c3e"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui-export.log",
+      "sha256": "653318b8ef849ae4325c251e2d417d4d0a162e8f039397440896124dfaea5fb0"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui-summary-command.json",
+      "sha256": "d821001a5c8c4cc48243018a58af1ed835d27e2b1ad852e8d76c37b823eb4601"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui-summary.log",
+      "sha256": "fa53cf4663ddbef082620596117adc28a4b18199d1724f25a3f7dbddf721b5aa"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/native-ui.log",
+      "sha256": "6570a51fcd9b6eae6331badb8085cf0e933e3e2ec143af9c9146757156c5d3d0"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/original-simulator-state.json",
+      "sha256": "14d0edcebd97e43e87250af050d7f684b42d4eb76a6ba64e6ed8d66324a62799"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/restore-light-command.json",
+      "sha256": "7985e68980f06ee7e79ae0d72a12f4e694e80710d1b8ee33e3fc817ace4b5bc2"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/restore-light.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/restore-shutdown-command.json",
+      "sha256": "716cda0f22f9622a581194b44674a7a35b07e57295ca107367b35e5f1a78eb03"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/restore-shutdown.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/retention-manifest.json",
+      "sha256": "0a10180f5f6fbace37c268766f23e6b3853b7a056f6ba942ce762ce1c80ae373"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/run.py",
+      "sha256": "53b26ba666d9355c262017c5cbcf730c2dfd48d96113b3872003b2ac3b79f063"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/screenshots/actual-touch.png",
+      "sha256": "7a5fef8a7338d87da07898a24bbe69a568dda2c063274441deac42cdd1aca091"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/screenshots/maximum-text-dark.png",
+      "sha256": "7a3dbe677766305f3271cfbe8c5aea4135d1f23e7a591d7421729b672f9c0035"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/screenshots/maximum-text-light.png",
+      "sha256": "c26ef5d767557b7c408386b32f2bb58e9566001d41b66f1a21ec2c10fe904d46"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/screenshots/native-compact-dark.png",
+      "sha256": "de012fd3bbf97d6304bf27987e7ca209c6e45ab85cd71b10fc6b51d6f595241c"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/screenshots/zero-input-result.png",
+      "sha256": "cc6351c7434e3f64319d05793653d56ee87bddabc14b2af8adfbea950620e9da"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/set-dark-command.json",
+      "sha256": "c0cb023eadce3d6697b69950ad0ca88352a3f7f92d9eb8506aa8c65cd8e1b95c"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/set-dark.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/simulator-cleanup.json",
+      "sha256": "c5e02a70e8d841410cdbe6e4799ea3f95bebedc424413a86e4073b3e0af13e8b"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/source-and-candidate-binding.json",
+      "sha256": "09c8dc0994afb781f3c7db60a473e76e5dede410d0bbdc6501c967d94ee2e28c"
+    },
+    {
+      "path": "artifacts/evidence/revalidation/20261016/source-manifest.json",
+      "sha256": "c66b45b1298eb0d4ade37d36c3c085d9458118f2ff951a1d200a8597e2708437"
+    }
+  ]
+}

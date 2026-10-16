@@ -1,0 +1,8 @@
+{
+  "runner": "SwiftPM XCTest on local macOS",
+  "passed": 59,
+  "failed": 0,
+  "command_exit_code": 0,
+  "basis": "Final XCTest suite counts in core.log; trailing Swift Testing 0 is a different unused framework, not the XCTest run",
+  "source_manifest": "source-manifest.json"
+}

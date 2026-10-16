@@ -1,0 +1,31 @@
+{
+  "command": [
+    "xcodebuild",
+    "-project",
+    "artifacts/development/QA-REVALIDATE-01/source/BeatLab.xcodeproj",
+    "-scheme",
+    "BeatLab",
+    "-configuration",
+    "Debug",
+    "-derivedDataPath",
+    "artifacts/development/QA-REVALIDATE-01/DerivedData",
+    "-destination",
+    "platform=iOS Simulator,id=52C92F83-56BB-4DC9-9331-3556F124FF2F",
+    "-jobs",
+    "2",
+    "-disableAutomaticPackageResolution",
+    "-skipPackageUpdates",
+    "-parallel-testing-enabled",
+    "NO",
+    "CODE_SIGNING_ALLOWED=NO",
+    "test-without-building",
+    "-only-testing:BeatLabUITests/PracticeUITests/testDrummerMaximumTextControlsAndNoWriteOnExit",
+    "-resultBundlePath",
+    "artifacts/development/QA-REVALIDATE-01/dark.xcresult"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792160583.4365911,
+  "finished_at": 1792160605.473823,
+  "local_mac": true
+}

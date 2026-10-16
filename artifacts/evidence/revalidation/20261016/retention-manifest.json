@@ -1,0 +1,2037 @@
+[
+  {
+    "path": "backup.py",
+    "sha256": "60f1d8e7e8b372837b1bd069e0b0713c82ab3540b0ac09a35f3a1f95ee0597f7",
+    "bytes": 1363
+  },
+  {
+    "path": "build-command.json",
+    "sha256": "45d521c297bb924346f96694e39f31766e60fce0920b89024a3a958744a70598",
+    "bytes": 707
+  },
+  {
+    "path": "build.log",
+    "sha256": "44ce8f674f15fc642a35e5500740738d3bcd6ea47afc1f0190cfdf64a81232ad",
+    "bytes": 327677
+  },
+  {
+    "path": "core-command.json",
+    "sha256": "4f8b9e0ac22de62246f40e75033a568bd8be5c7f38e98b513858647b48c6b04a",
+    "bytes": 376
+  },
+  {
+    "path": "core-summary.json",
+    "sha256": "b63cd4f5ad69c8700d2d224b66177aee69e14d15f87b5f68e13f31961ccc225d",
+    "bytes": 280
+  },
+  {
+    "path": "core.log",
+    "sha256": "c9652f6ef226b352e435442304009602714121255e8c94de93a137a354321b8d",
+    "bytes": 16818
+  },
+  {
+    "path": "dark-command.json",
+    "sha256": "84474f66477a8e6f2e86574cce2212092b20a116b892694764ccfbfcb628c197",
+    "bytes": 896
+  },
+  {
+    "path": "dark-export-command.json",
+    "sha256": "b84c5df75fa3315ac134c9f82268fa18631a9a59c388872c84fd1a4157c29328",
+    "bytes": 392
+  },
+  {
+    "path": "dark-export.log",
+    "sha256": "75675f2bec223c62a818ce9e57d55cf94ce8184d965ed901e4d640b2ff6ac417",
+    "bytes": 372
+  },
+  {
+    "path": "dark-pngs/959F37F0-0FD3-476C-9F26-C9D7A6269C1A.png",
+    "sha256": "7a3dbe677766305f3271cfbe8c5aea4135d1f23e7a591d7421729b672f9c0035",
+    "bytes": 228480
+  },
+  {
+    "path": "dark-pngs/manifest.json",
+    "sha256": "ac30e3bb04a14778fdea82cc253e96934aa81870b8ab0a51ea238ac0b0fd21df",
+    "bytes": 710
+  },
+  {
+    "path": "dark-summary-command.json",
+    "sha256": "ac137302f2868c36d1e60bd5deb7688d20e25a9009b6c4c507fd6ff8de0827d5",
+    "bytes": 328
+  },
+  {
+    "path": "dark-summary.log",
+    "sha256": "e21c7129122652a27526e2fef985898fb61c54dc98227a2c320b5e2d1ea9aa07",
+    "bytes": 990
+  },
+  {
+    "path": "dark.log",
+    "sha256": "bc52a69be98891184e09b841427d6e121d842f171b12ed2bb0b51c2628d0d496",
+    "bytes": 14009
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~4VqMqsI5lOfxRppnud6-VDWcNsU8J7VgFCJfW2dXPwOcAkvU-I8Um5yp9n0Zv6nr3VmcxYggaVMDFfR0U_vjKw==",
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "bytes": 2
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~ItbuiFVXojO-h74Gmkcb8JgaeFI52xqCj6jAKYU1Td5Ml3hVWCqPjMI2ow0_W6oGWjDKgzTofMrIUNL4v594Sg==",
+    "sha256": "282f1f5f8396cef4a0eb007a7482cc612f6dd5d962ce63c4a639c47f16f4a83f",
+    "bytes": 138368
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~QGAI2DU3ySO0bs20fzEpnMADm8xDYueH120Wvq4ll3itA3dFOiL7T6BcXhaZW3NIQs0nE50jjv-LX_Lz6GDinw==",
+    "sha256": "beccbc2433adc09537ecac9f76c3c24edbfae7b6758cc2813498d4bbe8fdf4e0",
+    "bytes": 1766
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~X-i0_-SiYjUHb0PGz2taF7653Rj7iDefw8q7e_IL-eELCAqBdhVOSDJXBSxIhzGnCVE9eULV3FaPBZko0NtBQA==",
+    "sha256": "0a3e38a7ee2f4a7971fb4853eb1fdbd6acbeae91d43fcf4a6e70f65e3371434d",
+    "bytes": 38
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~XoVeeMFW3DKnL3CSIwkZJzxNHNN7cVVmua0VLI5h-9dB0WkSw-6h9rQsWbW4P-bycitG-kkOq68PE_5UTYDyhg==",
+    "sha256": "8edf768fbbbcde9b1e6570fc24b2a3a091ca348423d913e9443443de3c6c8357",
+    "bytes": 138
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~_T-sVKxCeBlZ8fiTZutRdPJAiSrgkNz29nfwdDciuELLavvuqSdDKSlWBV41_NcW5jeEuvfgLAJI8FalkldtNw==",
+    "sha256": "73fc4fdeeb34439c4db3cf66d47506646e5a73049bcc7af705218e78b0c86815",
+    "bytes": 7067
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~aKFnShGER4EXRjL4-gcQupsu9UCLz7HsgHSP4uYrO4S9A9amdewbeWW9H6-WPYGBYy0d_JnKqfOg83fP4JvgLA==",
+    "sha256": "ef63d205fa99e5b0b5627ffe8c4299e3aa790803485403261d28e08ce76bc424",
+    "bytes": 192
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~bFKRbO5mw_vCvOZBwDGWN3VABKHEs8CTS0kzD1zUlAj6Y-thId36B7NusumFWdDB9fqQq2M320XTF2UE-5Z7mQ==",
+    "sha256": "530ae354c06191b495be2b43eb9a219f9ce9db08ea2dbee03e1c09248856118b",
+    "bytes": 4814
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~iUv6IKdcnDVNL9UsmIYvSc2S2_oWgNhBfxragsqP6fjcYxW5MYbCKebu3_lO6nmKrzT2wAr88mwGMxYABilzmw==",
+    "sha256": "c7d367d5e74bfaa31b04fa8248db1ad855686e22546664f9d2cbaaaaa91c27da",
+    "bytes": 1583
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~jE1T0b2tTSlNJluDyLU4B818D2QuV7I08SrUyycazx3khnNRusAaoaRRwKC_c361g_pleQ21xsEtE0KF1HxnKQ==",
+    "sha256": "7a3dbe677766305f3271cfbe8c5aea4135d1f23e7a591d7421729b672f9c0035",
+    "bytes": 228480
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~nnudgVqFiNDIuFRdn33eFmZI91R-QLfn3IrBvp14CJLqUL0N6kkb-_du83dS4Cl7TeACmVnd8pbtLK9OohUjmA==",
+    "sha256": "6b6795273f41457bbdc8724849dba976d3c060e9f90920c23454773d8119a77c",
+    "bytes": 784
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~sBt_GzveJEj8hwK1sZNS-j7FqPSMVqqo3HPOGL7JbrKbpaRm9VmDvpaG_Dpy3Ui6NctIHlGMaqm586gAHCHj6g==",
+    "sha256": "b8a8295a31ffb1f3a0bd06ca62abfe40645db7ee7adb06512c1fbdb73529fad5",
+    "bytes": 88022
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~sPGvbz8_yHIc_nWsZwSS3_1hVmjakg5JO_WL_BvlD3rTEKd45Q79qqribHQZWEFLAYG_fVxRR1yzVSi0Jf4yjw==",
+    "sha256": "9b1cc67f7a7b427029f74ae11369094969565d62469b76920c023f0875078596",
+    "bytes": 107
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~ukOqZO36JnfCxREeBDkNmRoTkH9WFiJkiaPhL9ZkOJ7khWVwbCbIz3_pdc6EsvVYG55-5SVbIMK96rY2jRxz-Q==",
+    "sha256": "50421e1bb729a2ccab1745e80efaa9e70a026ba659445908e91fa85ad7916a78",
+    "bytes": 319
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~vI5otJU7e7XxkCuaWqIjH829pecIfrSy2n819XDjv-aGVhe7-w18U6XUBy4EbmwaBojPX9KWHgAQU7zwSbIjow==",
+    "sha256": "0434c4b41e371bf73915c092508a237eb9233212abe0451c49c59de42376efa8",
+    "bytes": 840
+  },
+  {
+    "path": "dark.xcresult/Data/data.0~w2PaKKiWH_DqGbosw4oRjcbcNvXc_O4wJQesf2NxjNQYERYz6mGwrMGzc238Xx6IW-TBkweatfCu43xZZVMYxQ==",
+    "sha256": "e9d5ee81cf968c2f0b8b74cfcdbb07e5a6a5cbd6ac8572b767ca3d1a2a6464a8",
+    "bytes": 300
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~4VqMqsI5lOfxRppnud6-VDWcNsU8J7VgFCJfW2dXPwOcAkvU-I8Um5yp9n0Zv6nr3VmcxYggaVMDFfR0U_vjKw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~ItbuiFVXojO-h74Gmkcb8JgaeFI52xqCj6jAKYU1Td5Ml3hVWCqPjMI2ow0_W6oGWjDKgzTofMrIUNL4v594Sg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~QGAI2DU3ySO0bs20fzEpnMADm8xDYueH120Wvq4ll3itA3dFOiL7T6BcXhaZW3NIQs0nE50jjv-LX_Lz6GDinw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~X-i0_-SiYjUHb0PGz2taF7653Rj7iDefw8q7e_IL-eELCAqBdhVOSDJXBSxIhzGnCVE9eULV3FaPBZko0NtBQA==",
+    "sha256": "798be6cb6eaa057e1d2786c654097ee061a75dcf8e6f02e444bd7e74a6e76e15",
+    "bytes": 67
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~XoVeeMFW3DKnL3CSIwkZJzxNHNN7cVVmua0VLI5h-9dB0WkSw-6h9rQsWbW4P-bycitG-kkOq68PE_5UTYDyhg==",
+    "sha256": "c756e28082b60243f786c34d9d6a46b3ce5b08627f0b12125bbf48df31348034",
+    "bytes": 199
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~_T-sVKxCeBlZ8fiTZutRdPJAiSrgkNz29nfwdDciuELLavvuqSdDKSlWBV41_NcW5jeEuvfgLAJI8FalkldtNw==",
+    "sha256": "b57a22f5a4384320f1f7ef2982fcd2507aa545bb86870686b286ac2cd98b3476",
+    "bytes": 67
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~aKFnShGER4EXRjL4-gcQupsu9UCLz7HsgHSP4uYrO4S9A9amdewbeWW9H6-WPYGBYy0d_JnKqfOg83fP4JvgLA==",
+    "sha256": "0b0482d690f64da21577fc5678ecdf95e503836a9ac5435dae75270e5b2ab487",
+    "bytes": 199
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~bFKRbO5mw_vCvOZBwDGWN3VABKHEs8CTS0kzD1zUlAj6Y-thId36B7NusumFWdDB9fqQq2M320XTF2UE-5Z7mQ==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~iUv6IKdcnDVNL9UsmIYvSc2S2_oWgNhBfxragsqP6fjcYxW5MYbCKebu3_lO6nmKrzT2wAr88mwGMxYABilzmw==",
+    "sha256": "44d54c0c99c3f950d4ee09fb2f0639485c93ba3042fc3137c25f331930e76ff6",
+    "bytes": 265
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~jE1T0b2tTSlNJluDyLU4B818D2QuV7I08SrUyycazx3khnNRusAaoaRRwKC_c361g_pleQ21xsEtE0KF1HxnKQ==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~nnudgVqFiNDIuFRdn33eFmZI91R-QLfn3IrBvp14CJLqUL0N6kkb-_du83dS4Cl7TeACmVnd8pbtLK9OohUjmA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~sBt_GzveJEj8hwK1sZNS-j7FqPSMVqqo3HPOGL7JbrKbpaRm9VmDvpaG_Dpy3Ui6NctIHlGMaqm586gAHCHj6g==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~sPGvbz8_yHIc_nWsZwSS3_1hVmjakg5JO_WL_BvlD3rTEKd45Q79qqribHQZWEFLAYG_fVxRR1yzVSi0Jf4yjw==",
+    "sha256": "b165d5a2a8105ac8cdf75c65f86c7840713d6c90c3e2536df1b9f08c0cd6439c",
+    "bytes": 133
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~ukOqZO36JnfCxREeBDkNmRoTkH9WFiJkiaPhL9ZkOJ7khWVwbCbIz3_pdc6EsvVYG55-5SVbIMK96rY2jRxz-Q==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~vI5otJU7e7XxkCuaWqIjH829pecIfrSy2n819XDjv-aGVhe7-w18U6XUBy4EbmwaBojPX9KWHgAQU7zwSbIjow==",
+    "sha256": "097b509158c139ee702d1e76f2bb13513874ec5e06f9bb47d22350970d51e3dd",
+    "bytes": 67
+  },
+  {
+    "path": "dark.xcresult/Data/refs.0~w2PaKKiWH_DqGbosw4oRjcbcNvXc_O4wJQesf2NxjNQYERYz6mGwrMGzc238Xx6IW-TBkweatfCu43xZZVMYxQ==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "dark.xcresult/Info.plist",
+    "sha256": "b9a78fd9ede89b546fff34c82e0b10ee74ee369b2c875523c248d96b3b44e6e4",
+    "bytes": 715
+  },
+  {
+    "path": "dark.xcresult/database.sqlite3",
+    "sha256": "19a9b6d66dc3a8189b917cc6edd429d545f85f63937a6b4f6471681fa2e02de2",
+    "bytes": 274432
+  },
+  {
+    "path": "initial-appearance-command.json",
+    "sha256": "bb2c292dfa081e0e7aa28a35b148e39b62b67c051503b71be1ea63036d91ae32",
+    "bytes": 274
+  },
+  {
+    "path": "initial-appearance.log",
+    "sha256": "00be490dace2ce959d7af6676ed67f78d1f9c8a58174447b1d6d96168f386166",
+    "bytes": 6
+  },
+  {
+    "path": "native-ui-command.json",
+    "sha256": "f8362e1efb78fbfc50e1e037b73ef2f0b66f68d2930a2b9620141161ae353063",
+    "bytes": 1167
+  },
+  {
+    "path": "native-ui-export-command.json",
+    "sha256": "eb77bb9361c292310a66b4c210b490a0e68e100fc9c225cca53516c4b9ea5c3e",
+    "bytes": 403
+  },
+  {
+    "path": "native-ui-export.log",
+    "sha256": "653318b8ef849ae4325c251e2d417d4d0a162e8f039397440896124dfaea5fb0",
+    "bytes": 3653
+  },
+  {
+    "path": "native-ui-pngs/47B6134D-9847-4C62-8089-A713E9382ACC.png",
+    "sha256": "d9dcc24f1eb99e62c905dabd20f7f3375fd8b56f723974770ef5f1adaefde38f",
+    "bytes": 221585
+  },
+  {
+    "path": "native-ui-pngs/54239E34-3585-49C0-B6A8-E00486D8E581.png",
+    "sha256": "cc6351c7434e3f64319d05793653d56ee87bddabc14b2af8adfbea950620e9da",
+    "bytes": 183727
+  },
+  {
+    "path": "native-ui-pngs/672CDD02-859B-4BF3-BF07-3D7A35455E5B.png",
+    "sha256": "7a5fef8a7338d87da07898a24bbe69a568dda2c063274441deac42cdd1aca091",
+    "bytes": 281589
+  },
+  {
+    "path": "native-ui-pngs/68C87912-1196-4E76-BBFB-1F2EFE097870.png",
+    "sha256": "c26ef5d767557b7c408386b32f2bb58e9566001d41b66f1a21ec2c10fe904d46",
+    "bytes": 233408
+  },
+  {
+    "path": "native-ui-pngs/79FD1A4D-E4A3-4E4C-96DD-B0CD1BC70513.png",
+    "sha256": "500682b0bac735ab49b81ca183d98fbd4cc9589f00600066a6c60ba2db9f1fe5",
+    "bytes": 263176
+  },
+  {
+    "path": "native-ui-pngs/8BEB9088-F06C-4ED0-8CEE-308C748FFCE5.png",
+    "sha256": "0d0a7f475ec1faa7be6c21fb3b17dd5655e3e02ff3309bf8a8118d73d907c06c",
+    "bytes": 241280
+  },
+  {
+    "path": "native-ui-pngs/92EFD56D-89B6-4189-9511-862CFE65783E.png",
+    "sha256": "f5bcec5dd754357fad431e02abf8922417b9eb1d04cc48a28cc3189c15550e72",
+    "bytes": 222803
+  },
+  {
+    "path": "native-ui-pngs/C3495560-EF1E-495D-B717-B6490611E78F.png",
+    "sha256": "de012fd3bbf97d6304bf27987e7ca209c6e45ab85cd71b10fc6b51d6f595241c",
+    "bytes": 206572
+  },
+  {
+    "path": "native-ui-pngs/D7042B30-5D75-42A1-86E4-83EA8C9936AA.png",
+    "sha256": "9e69549191be1b21643c189c8cd32da9309304fae26213e139a89169d5b81228",
+    "bytes": 235544
+  },
+  {
+    "path": "native-ui-pngs/D877431B-C04B-437E-B3AC-4948C939AB92.png",
+    "sha256": "d58f68a6fe57530c854d79bab5b213b44cf1730d87573d3d6f4166dd8fe7df0c",
+    "bytes": 89727
+  },
+  {
+    "path": "native-ui-pngs/EEFDC049-CB0B-49D2-B2C5-0C2A8C68EDD0.png",
+    "sha256": "152fa6132748115cf11bdbf3d90b6a18903a04769c7cbde59e9a9d8f16fbfa05",
+    "bytes": 88324
+  },
+  {
+    "path": "native-ui-pngs/manifest.json",
+    "sha256": "3e887660954b582d1814f732f2dfa880a7ae4e96df44f0ae4bcf369544bc2ae2",
+    "bytes": 6014
+  },
+  {
+    "path": "native-ui-summary-command.json",
+    "sha256": "d821001a5c8c4cc48243018a58af1ed835d27e2b1ad852e8d76c37b823eb4601",
+    "bytes": 334
+  },
+  {
+    "path": "native-ui-summary.log",
+    "sha256": "fa53cf4663ddbef082620596117adc28a4b18199d1724f25a3f7dbddf721b5aa",
+    "bytes": 993
+  },
+  {
+    "path": "native-ui.log",
+    "sha256": "6570a51fcd9b6eae6331badb8085cf0e933e3e2ec143af9c9146757156c5d3d0",
+    "bytes": 58963
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~-0xCLGVJe_pOr7XXHphSESZe3OyipgdKVOKA8CXGsri49iJ0g9aZ9llfSJhtqnc0CprS1nyURfTGxbG66-B-ZA==",
+    "sha256": "812381713f81210a26cbfe58d30a6c9fbd2d7d12edf258769cdb79eac7ff09e5",
+    "bytes": 305
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~12_CTdorBxw9errJI8PQYUZRA8JPPXK__OVfOcRqYmBIANfU-5ttpmCxHsMhBqiw-z-bg4vUG79LGE7qG6PhEA==",
+    "sha256": "2356df5fa81b971ec5c173f88f7231eff317bb8e7a90ac7ddedcd979b11fa244",
+    "bytes": 901
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~1h8-Lex1cX5C3KUQlG_sas141_5R4v0MbPVT-4GNNBcdIcrF2gY07yv0IcLsrhNS2EfCw4SnWm-FUQN2gWSE3Q==",
+    "sha256": "96461fb256a1438ccc4e4475223acf7bc7ac3c9bded34c084ef40fa611c3f913",
+    "bytes": 223
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~4EBTWhQpnMuyiJYgt3NMeP4hfVuJfsQB33IsUoQY-OjMeneSFp4UY0FXA2E-L4xZni5uXj0AeTi87OF9oaaW4g==",
+    "sha256": "152fa6132748115cf11bdbf3d90b6a18903a04769c7cbde59e9a9d8f16fbfa05",
+    "bytes": 88324
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~4VqMqsI5lOfxRppnud6-VDWcNsU8J7VgFCJfW2dXPwOcAkvU-I8Um5yp9n0Zv6nr3VmcxYggaVMDFfR0U_vjKw==",
+    "sha256": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945",
+    "bytes": 2
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~4tnwcicZHk0dpN1gX0GhJmIrPU1GVzKfApYTuEgy3ahx6BKUFcf-Wff1AhKbmDZRn044dbHkPvLqiTLIDAiDNA==",
+    "sha256": "9e69549191be1b21643c189c8cd32da9309304fae26213e139a89169d5b81228",
+    "bytes": 235544
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~7LVhI0L3jyPBWo7gP3G3J6zjk9kxHUgYm7XbYZ6mesDtCHfa78Hy6HZMqE7y5fUGdy5OxhWIWWdYAHaZu2J5zg==",
+    "sha256": "c6734c8f2e683db7e43e46b1d0c7df5b7da705bb15c83ff1b119482849034e55",
+    "bytes": 38
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~BiBzrfBJruvV4GX0PaUp95PerJMTIJy6AwbB4xR5fRfQmFWbpxstKNkMPksosOtoLkArsHPtysnQTayi_ObI-A==",
+    "sha256": "34631969ec4e6dd57d5377e571e58d49fe3d123ea4f82e9a9fcefe6ff0616572",
+    "bytes": 297
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~Crk5iyIdk-Moxl0kSG890EizyBsnFwShfAMpW_odip3gVi1o5AcXQFjbHAo3TPj77U203NSDLczQ43x_STwMWQ==",
+    "sha256": "66d45eb9b5fa0dfa1d2abae18909ef2b115c5b7bd11bca7a39e1571a5d96fc77",
+    "bytes": 307
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~DkhIwaBntceV2R6sl3-H8_8lhBMQjDemziC2rim10G3sPX1QbDBMSiCGA79jaU1i-AFsVTkNOW-OBcCjA2wktw==",
+    "sha256": "6d5bd439c297ba76585f4e7d460b63ceb69c122dac6ebff4cf20826115196963",
+    "bytes": 7118
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~FRWlz7CY1Qsa9J5h9mEUCd4cBuht8GroUFb-w74EohC65MPs3utHe3eSKmBFsdIATykopUgwLinBuuWl4QLz2A==",
+    "sha256": "5dbd050183a809974a21bfbf485e5a971c013d273a093d8e828b7204baab73fc",
+    "bytes": 11489
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~G2k0S4gIaon97jqwxsF9WB1phXSAA2ZzUjlzNydd2ud5FFIUgscJ6tsNKAE6VJBEYWonNLJYB0nNKFvKYqMHIw==",
+    "sha256": "9fb36aab751237e3092dd34a8a809595ab0a360eb9308e1026f62c4c68c8db71",
+    "bytes": 393798
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~IveYb77r04Gno9bpW717IW4iecYp9TeSnjHB02sFC2rG0wqNJUSK7dcnToq3UK_of_888XU-peR4GtjEjbKoxQ==",
+    "sha256": "35e4bd5db018efe78f9badc24175cb8b4816ffa1dd0468954bb72d75fb08e32d",
+    "bytes": 1407
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~KcI2yUosvOrhdZN1hzd9DYGS725qjkJwUxb6USOdOS1VZ6chF1iuofs39WptXg7tNpSW_uErBnZYFSpsX90k2w==",
+    "sha256": "1809869531b23396c28a114d61026afe4f74c7b4740b03e620392495c0a324e3",
+    "bytes": 302
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~LDLMsFcsGoISF-da7_w1yY_TkMCucd4WFEmxLvzF_mz8suA9taZHTDh457JAzADLFq_CsC03J8pGAoC0b5eisA==",
+    "sha256": "c26ef5d767557b7c408386b32f2bb58e9566001d41b66f1a21ec2c10fe904d46",
+    "bytes": 233408
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~Lk_ekLybkLJeazsq6AaPp7Mb5ZTxYAPNuuvtSo3bE61mCnRReuGkmECwRHLWx6vl4ucqi_0MR88UkQIKcJKkxg==",
+    "sha256": "ae7ea15839f9371d524970ed36e831acdc699699faea1b911ca89e97ca37ada2",
+    "bytes": 320
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~Mum-HuqCnFSCH1fsPZRHNi3QBkAQwPcXWJqW_G7rAyqr5zKKUmJIdXSR_h7_2WWTKAsjfcVSDQMh9DRc4GEGfQ==",
+    "sha256": "016c123d018496895e061af527fc7027ef1c115a802d47e2b85275fe84c37fe6",
+    "bytes": 3250
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~N62fTMkJNRm0hL5S4KT_gmq7pNIzkm1kTqnwDsfTZymoMvIE2nT5VxsWM5qZ0Za1aYzA2_SHidrXFZl-Kk_iRQ==",
+    "sha256": "c0d2bf9b4826bfa2a162dfb3b1a383063bad0e41dbb6e5c79fe687fed91a9174",
+    "bytes": 12145
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~Qv9H5xJrP8f0ccY2UiA97_Gkioxm3NlSQdNinChyDqK8ZUd2CZRL7jLQpKYUgMCw_zs2ySlGCeywppwM1nNGWg==",
+    "sha256": "6a1d1f4815e9ff44c25ffb207622155d54a10edb44a7877beb66441c0e48ed15",
+    "bytes": 9604
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~ULnshZQb7tbp0OSHjHLoradK_5x40oQ_k5nXfjw0j6QbLYcmFpQDSPeQsTXMnZOordOX3nWs--2ZSB9SYvaMEg==",
+    "sha256": "c06c5a8073f736318116e22381ef611612876cb03dfae30c6c1851312d5ebf80",
+    "bytes": 5030
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~WncQh5IuJQQvIVVLg3WmgzK3kF9tWU7vscBF_GerOuWvpbHAq5nRoPyqXikBhL36qsbwjCwq2h5TfyfR0FpT0A==",
+    "sha256": "0d0a7f475ec1faa7be6c21fb3b17dd5655e3e02ff3309bf8a8118d73d907c06c",
+    "bytes": 241280
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~WyoggyhNMB2IHxp2tU4t6OLKhoYSaSfUEDMl88Dj8EyQY7U6eCpTB1echJpDVzg-8ATDm3udlCBM-k7YSZHbWA==",
+    "sha256": "cc6351c7434e3f64319d05793653d56ee87bddabc14b2af8adfbea950620e9da",
+    "bytes": 183727
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~YCiQ99xH7Au-QM9aGSRMZH8tK7VMlmkZcZcJByAt2PSyHrQPmbgA2ruwpewgZUpGuMiHxBV2CUsKVcdsPh56Mg==",
+    "sha256": "93300d85d866bad6b7cdd48704eb32039234eef6caafbc1fabc0265ebd02235c",
+    "bytes": 136
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~YHItV51Lt5HzDX_7uhdtgobAv0XS1ssc8S2tRcmWsRKVzWppnJeyO6iHXM4_EF3IrjPSiIGGCDTm_m7dQSt0Vw==",
+    "sha256": "de012fd3bbf97d6304bf27987e7ca209c6e45ab85cd71b10fc6b51d6f595241c",
+    "bytes": 206572
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~Z6MO2cmj0jvzgGOoihm_gbHVP243uSsjX-P8EgltSeMjQWJMjlq-EGluCu4pEQMfQmd4jmKPvUbhADEp1IEk0Q==",
+    "sha256": "a877a15c09a483d1efddd05df5078b611f7eb284490dfe0573ac431082a74413",
+    "bytes": 307
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~ZzA3oZOfQjD1WSATewfp63K8xtzAuzMoeLzBYZAVjSfB7altNuM8liKs2IBmTD2JHVVou4l6HBRr2iQe5DC2rw==",
+    "sha256": "fd54aad2ebfef655e7d9d3e0843496cbcd9840c92ff0d72c11165315b641ca37",
+    "bytes": 301
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~_PsbiqCvWVXxDbGfB-xdtznOBcl2IDrUFBLL9ueAuq-Ip7vR_OYFgOQ06ga67OgTWEo8QKvz-XsNlx75mBrV6Q==",
+    "sha256": "e1b6395ef62664ce7346ad99b8f87f52767d34d2f5ec2653a84ef35e9da0ae29",
+    "bytes": 106
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~_VRI6hnz2N-R_TMzr1ANW9p8vHr0NlVgREF-8XtBhghxogaCOJoqSQ708zMh_F5dgM-wQtTuQY-cTCy1FNud8g==",
+    "sha256": "5c84d679a500feddafd9f2a1963fb749b41caf7005f438a2d82767be9e0790e3",
+    "bytes": 1686
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~apqqvJ1fTj9M6kUWd4gUSH_O3937t4T0Vtu6TvWjTdLkTzWzSPOreJo7GH_AfEQ7YFUsxXd0ScwDgy7d2ptanA==",
+    "sha256": "8b35dc96f6dcbbbbb54c7a5f9f9dcc307c3fe7dfd7b8c94571042dcec5ad2dc2",
+    "bytes": 302
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~d-XN8e_r6t5wCd9zrZ45y_j-XLS5m2ZOUBRtd2xr25SWsHhsxVmLKA_8YN9TBiZ4DBWrUikapm7dxdjfFJ1IYA==",
+    "sha256": "e4bc7b03437eb28308186ef727c6975158086d3cca80173c03ab3ac96c0a1280",
+    "bytes": 304
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~dUm9pXRLmo4XwdbD9Whzyq7YiOkOghkmtnRXwfMDL8RY-XcxpcdPz8amIFRhrXnIzAFbJxDw0cdrnjKHXqwQsg==",
+    "sha256": "ea996c3fb2ff9fd192a07385e88e8015e1580817170da7ce03c23ce8ca1f3094",
+    "bytes": 116
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~j8qOfibCe_hndQOZDPgtsDYiSlrCmvtb-0BJ6euwGtLN63_hs_OgxESp6zrE6K6Zeca7GP6shc5Ktrqua_2OKA==",
+    "sha256": "d58f68a6fe57530c854d79bab5b213b44cf1730d87573d3d6f4166dd8fe7df0c",
+    "bytes": 89727
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~kkC2OTUjOue1tWaYmxq4cAxTVHcfoPfrmm2PtU04XbgQA2TOc-myYjCZVqb-9rxoueQitkem9OzZLyqYBVRCBg==",
+    "sha256": "d9dcc24f1eb99e62c905dabd20f7f3375fd8b56f723974770ef5f1adaefde38f",
+    "bytes": 221585
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~lP1F9NECPklFVew74uGJv-M13v0J93IzV6A312q9l6XvjmHJiH3NEKGMonWenZHzM8FuBjXLHpXY_VrWVGHqww==",
+    "sha256": "579dc5ad9bc0a9b105b55e9a423ef517000d795afa8c95a58531017db493badc",
+    "bytes": 108
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~lqQG2t5KJurfPFAGUiUjZNzrsJkX_cE34lSlpoB-f_8m6tcA-ePdpFftM6kJZ2CGXRWz7ALZm4kHXLXcCIYFkw==",
+    "sha256": "070a0ccc8a0ced478e1b35b0c12d368f842620aa70e2760db985ce6e466c7679",
+    "bytes": 512962
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~mMpzZBKu5M4U8mrZhC75luBc7rHVvwpibLWb5BAXj_dVEbVxv0l5RTQl2RmXwmjaGMR42C3SnJcRiQV6ZHmrCg==",
+    "sha256": "f5bcec5dd754357fad431e02abf8922417b9eb1d04cc48a28cc3189c15550e72",
+    "bytes": 222803
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~mvRU0PpF2m8ZwRDtfeqZZ7p8RDJrEoBpkF_FAxRROx-_EJ4wFOwpKiJA7YAWYK-n0xzVG2yelPtLvaw3xbyFYg==",
+    "sha256": "34b9b4be304ce97f556da818c26c18c34bba462d29561488ac871cd3f2d0a45c",
+    "bytes": 299
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~oEzs8zFncxAJn3lpLvelZg66CV1-oqV_f88NS5taA9SwxB6PkWepwvEdGIgC9fgjh44-DehZ9Y_SZGf33Z-rxA==",
+    "sha256": "11d94ae5a0d20b0d5dc961c5f68126b64c6c5373b37d12329b13eb2451e2f8b3",
+    "bytes": 296
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~pTLwslPyrjBfTNRVWBr9IUwlY-moo7JmsrrA5b88WEOCCt4GnEZ5qMvW0TyEFfRjZiltEy4jhjkikBikU4S8yA==",
+    "sha256": "500682b0bac735ab49b81ca183d98fbd4cc9589f00600066a6c60ba2db9f1fe5",
+    "bytes": 263176
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~qC8_QEiC4hgU8rF6QKv9yxeW6zgjRZxLfjSFUdlNF_30Krw7AL5FTDt3y5y7IRcEjALLc64-zJnk9F0NYEHQAg==",
+    "sha256": "7a5fef8a7338d87da07898a24bbe69a568dda2c063274441deac42cdd1aca091",
+    "bytes": 281589
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~qIXnAAJigcBHoN6FaZRmtaRtf0x-ZPx-XsHk205Q1wyDgSTOqHqM9qnRiN7mTed1it8CTCZQEeUBDL1_yDF5CA==",
+    "sha256": "1f95d1515cdecb5b15b5c568fceffc5297338c4d133f22396a453cba711a8cd2",
+    "bytes": 305
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~qUra6DYiDhUnUx6tZpPlEmJsvpgQ_CcNEHSmpFs0olhlppUKfJhxFDDL5wTgLFGPDgRSJqgyjjPYHEKzoezJvQ==",
+    "sha256": "1b661d01650e1ddc163b926d2d014eb78dc365053394aa2a08336fd17483d19b",
+    "bytes": 304
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~t3DaKe7FEjeIZC_8oHA-y1tliEns5V9F3J-D-fz-9qAHyKkaOG3MUeO7jO-HpUX9BX-Yr6DY6B5phBGHr47Aag==",
+    "sha256": "661150a69810390ecadb79e4ea7c28d4ba569ae7f28f3a773cf8972827b62b1d",
+    "bytes": 11493
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~vsmKQZjOSwrGJT-qq_CFSsGTjDTXcRTNc0SzVFYHFFuDLr0km7ETloiMkEPiwRyHm2zEYEwhEPrhO8lgMJRTFw==",
+    "sha256": "e2116fd9755c69ca65ead0c53ae5c61501f7e4c7a4118bc856015499775817bc",
+    "bytes": 310
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~wCbeSm4z_cr31EjFXT9Uivjm0DRBeiuzVowmahiS1CwvKffvSP2w7w7yrQkPBP71gu2fijWPA0CVYVswhiCniQ==",
+    "sha256": "93684b96a66338e11929691a21baac73fadec68a4ddbcc14ab3201634aea0655",
+    "bytes": 312
+  },
+  {
+    "path": "native-ui.xcresult/Data/data.0~wzpT_hAX7X-NDT_Ct4M4SYS99AfH26md6H-NbSTFmmqVh4eJdUARV6EHE4rfPrMDrF5JSGNEu4NpM01fJ3p14g==",
+    "sha256": "0adb8fe98c9463395908f5be4004f105881f58639ccc2f956d4225cd3ec0463f",
+    "bytes": 1586
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~-0xCLGVJe_pOr7XXHphSESZe3OyipgdKVOKA8CXGsri49iJ0g9aZ9llfSJhtqnc0CprS1nyURfTGxbG66-B-ZA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~12_CTdorBxw9errJI8PQYUZRA8JPPXK__OVfOcRqYmBIANfU-5ttpmCxHsMhBqiw-z-bg4vUG79LGE7qG6PhEA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~1h8-Lex1cX5C3KUQlG_sas141_5R4v0MbPVT-4GNNBcdIcrF2gY07yv0IcLsrhNS2EfCw4SnWm-FUQN2gWSE3Q==",
+    "sha256": "5ccc9a2e342c3d018aa2bbce379a9e1da844ed029190989226fdeb52e8887fd7",
+    "bytes": 265
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~4EBTWhQpnMuyiJYgt3NMeP4hfVuJfsQB33IsUoQY-OjMeneSFp4UY0FXA2E-L4xZni5uXj0AeTi87OF9oaaW4g==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~4VqMqsI5lOfxRppnud6-VDWcNsU8J7VgFCJfW2dXPwOcAkvU-I8Um5yp9n0Zv6nr3VmcxYggaVMDFfR0U_vjKw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~4tnwcicZHk0dpN1gX0GhJmIrPU1GVzKfApYTuEgy3ahx6BKUFcf-Wff1AhKbmDZRn044dbHkPvLqiTLIDAiDNA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~7LVhI0L3jyPBWo7gP3G3J6zjk9kxHUgYm7XbYZ6mesDtCHfa78Hy6HZMqE7y5fUGdy5OxhWIWWdYAHaZu2J5zg==",
+    "sha256": "c340955590e494d2fb613de85e17ca22f5179c1846a4dcb568727ef762e5407f",
+    "bytes": 67
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~BiBzrfBJruvV4GX0PaUp95PerJMTIJy6AwbB4xR5fRfQmFWbpxstKNkMPksosOtoLkArsHPtysnQTayi_ObI-A==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~Crk5iyIdk-Moxl0kSG890EizyBsnFwShfAMpW_odip3gVi1o5AcXQFjbHAo3TPj77U203NSDLczQ43x_STwMWQ==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~DkhIwaBntceV2R6sl3-H8_8lhBMQjDemziC2rim10G3sPX1QbDBMSiCGA79jaU1i-AFsVTkNOW-OBcCjA2wktw==",
+    "sha256": "0cd0581ae6015db5821c74572a64eb0b5ad07ad72298719f9b999f2066b55dab",
+    "bytes": 67
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~FRWlz7CY1Qsa9J5h9mEUCd4cBuht8GroUFb-w74EohC65MPs3utHe3eSKmBFsdIATykopUgwLinBuuWl4QLz2A==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~G2k0S4gIaon97jqwxsF9WB1phXSAA2ZzUjlzNydd2ud5FFIUgscJ6tsNKAE6VJBEYWonNLJYB0nNKFvKYqMHIw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~IveYb77r04Gno9bpW717IW4iecYp9TeSnjHB02sFC2rG0wqNJUSK7dcnToq3UK_of_888XU-peR4GtjEjbKoxQ==",
+    "sha256": "52878fcf1098a5fbce9d187f547582337d9d99536fa6d3ff1367093167a98ee4",
+    "bytes": 265
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~KcI2yUosvOrhdZN1hzd9DYGS725qjkJwUxb6USOdOS1VZ6chF1iuofs39WptXg7tNpSW_uErBnZYFSpsX90k2w==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~LDLMsFcsGoISF-da7_w1yY_TkMCucd4WFEmxLvzF_mz8suA9taZHTDh457JAzADLFq_CsC03J8pGAoC0b5eisA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~Lk_ekLybkLJeazsq6AaPp7Mb5ZTxYAPNuuvtSo3bE61mCnRReuGkmECwRHLWx6vl4ucqi_0MR88UkQIKcJKkxg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~Mum-HuqCnFSCH1fsPZRHNi3QBkAQwPcXWJqW_G7rAyqr5zKKUmJIdXSR_h7_2WWTKAsjfcVSDQMh9DRc4GEGfQ==",
+    "sha256": "5342f8421da1f2cc7519ce704751637754fe01f91595f9a8f95a07e6be6f5ef8",
+    "bytes": 1057
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~N62fTMkJNRm0hL5S4KT_gmq7pNIzkm1kTqnwDsfTZymoMvIE2nT5VxsWM5qZ0Za1aYzA2_SHidrXFZl-Kk_iRQ==",
+    "sha256": "bf900dc5fa822d42bf40a00e39dc7df63a4fc10b6aa14de812cccc062e868153",
+    "bytes": 199
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~Qv9H5xJrP8f0ccY2UiA97_Gkioxm3NlSQdNinChyDqK8ZUd2CZRL7jLQpKYUgMCw_zs2ySlGCeywppwM1nNGWg==",
+    "sha256": "87b9191f7ab81840432ae5cbb481ac6018c0a8420ffea6e10b6fde1d79fbe607",
+    "bytes": 199
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~ULnshZQb7tbp0OSHjHLoradK_5x40oQ_k5nXfjw0j6QbLYcmFpQDSPeQsTXMnZOordOX3nWs--2ZSB9SYvaMEg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~WncQh5IuJQQvIVVLg3WmgzK3kF9tWU7vscBF_GerOuWvpbHAq5nRoPyqXikBhL36qsbwjCwq2h5TfyfR0FpT0A==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~WyoggyhNMB2IHxp2tU4t6OLKhoYSaSfUEDMl88Dj8EyQY7U6eCpTB1echJpDVzg-8ATDm3udlCBM-k7YSZHbWA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~YCiQ99xH7Au-QM9aGSRMZH8tK7VMlmkZcZcJByAt2PSyHrQPmbgA2ruwpewgZUpGuMiHxBV2CUsKVcdsPh56Mg==",
+    "sha256": "a0fcf9d7e71b18f6a4112599cd2fcb5071b5785fac641259bd2c06cb2844a825",
+    "bytes": 199
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~YHItV51Lt5HzDX_7uhdtgobAv0XS1ssc8S2tRcmWsRKVzWppnJeyO6iHXM4_EF3IrjPSiIGGCDTm_m7dQSt0Vw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~Z6MO2cmj0jvzgGOoihm_gbHVP243uSsjX-P8EgltSeMjQWJMjlq-EGluCu4pEQMfQmd4jmKPvUbhADEp1IEk0Q==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~ZzA3oZOfQjD1WSATewfp63K8xtzAuzMoeLzBYZAVjSfB7altNuM8liKs2IBmTD2JHVVou4l6HBRr2iQe5DC2rw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~_PsbiqCvWVXxDbGfB-xdtznOBcl2IDrUFBLL9ueAuq-Ip7vR_OYFgOQ06ga67OgTWEo8QKvz-XsNlx75mBrV6Q==",
+    "sha256": "a590e8ba120a0bf92659d8c3b308d8683d98fe2ed7008ddc0a1cd73ca4a03fe4",
+    "bytes": 133
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~_VRI6hnz2N-R_TMzr1ANW9p8vHr0NlVgREF-8XtBhghxogaCOJoqSQ708zMh_F5dgM-wQtTuQY-cTCy1FNud8g==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~apqqvJ1fTj9M6kUWd4gUSH_O3937t4T0Vtu6TvWjTdLkTzWzSPOreJo7GH_AfEQ7YFUsxXd0ScwDgy7d2ptanA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~d-XN8e_r6t5wCd9zrZ45y_j-XLS5m2ZOUBRtd2xr25SWsHhsxVmLKA_8YN9TBiZ4DBWrUikapm7dxdjfFJ1IYA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~dUm9pXRLmo4XwdbD9Whzyq7YiOkOghkmtnRXwfMDL8RY-XcxpcdPz8amIFRhrXnIzAFbJxDw0cdrnjKHXqwQsg==",
+    "sha256": "d2c28986087462b86ca440dc7f2d4ad12a0b3ad888edd5482fd26fad6f35e356",
+    "bytes": 133
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~j8qOfibCe_hndQOZDPgtsDYiSlrCmvtb-0BJ6euwGtLN63_hs_OgxESp6zrE6K6Zeca7GP6shc5Ktrqua_2OKA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~kkC2OTUjOue1tWaYmxq4cAxTVHcfoPfrmm2PtU04XbgQA2TOc-myYjCZVqb-9rxoueQitkem9OzZLyqYBVRCBg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~lP1F9NECPklFVew74uGJv-M13v0J93IzV6A312q9l6XvjmHJiH3NEKGMonWenZHzM8FuBjXLHpXY_VrWVGHqww==",
+    "sha256": "4beac74aa7acfe43d7a0285264253d594174a7559bd55cd84de847f66eb6e910",
+    "bytes": 133
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~lqQG2t5KJurfPFAGUiUjZNzrsJkX_cE34lSlpoB-f_8m6tcA-ePdpFftM6kJZ2CGXRWz7ALZm4kHXLXcCIYFkw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~mMpzZBKu5M4U8mrZhC75luBc7rHVvwpibLWb5BAXj_dVEbVxv0l5RTQl2RmXwmjaGMR42C3SnJcRiQV6ZHmrCg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~mvRU0PpF2m8ZwRDtfeqZZ7p8RDJrEoBpkF_FAxRROx-_EJ4wFOwpKiJA7YAWYK-n0xzVG2yelPtLvaw3xbyFYg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~oEzs8zFncxAJn3lpLvelZg66CV1-oqV_f88NS5taA9SwxB6PkWepwvEdGIgC9fgjh44-DehZ9Y_SZGf33Z-rxA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~pTLwslPyrjBfTNRVWBr9IUwlY-moo7JmsrrA5b88WEOCCt4GnEZ5qMvW0TyEFfRjZiltEy4jhjkikBikU4S8yA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~qC8_QEiC4hgU8rF6QKv9yxeW6zgjRZxLfjSFUdlNF_30Krw7AL5FTDt3y5y7IRcEjALLc64-zJnk9F0NYEHQAg==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~qIXnAAJigcBHoN6FaZRmtaRtf0x-ZPx-XsHk205Q1wyDgSTOqHqM9qnRiN7mTed1it8CTCZQEeUBDL1_yDF5CA==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~qUra6DYiDhUnUx6tZpPlEmJsvpgQ_CcNEHSmpFs0olhlppUKfJhxFDDL5wTgLFGPDgRSJqgyjjPYHEKzoezJvQ==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~t3DaKe7FEjeIZC_8oHA-y1tliEns5V9F3J-D-fz-9qAHyKkaOG3MUeO7jO-HpUX9BX-Yr6DY6B5phBGHr47Aag==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~vsmKQZjOSwrGJT-qq_CFSsGTjDTXcRTNc0SzVFYHFFuDLr0km7ETloiMkEPiwRyHm2zEYEwhEPrhO8lgMJRTFw==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~wCbeSm4z_cr31EjFXT9Uivjm0DRBeiuzVowmahiS1CwvKffvSP2w7w7yrQkPBP71gu2fijWPA0CVYVswhiCniQ==",
+    "sha256": "6e340b9cffb37a989ca544e6bb780a2c78901d3fb33738768511a30617afa01d",
+    "bytes": 1
+  },
+  {
+    "path": "native-ui.xcresult/Data/refs.0~wzpT_hAX7X-NDT_Ct4M4SYS99AfH26md6H-NbSTFmmqVh4eJdUARV6EHE4rfPrMDrF5JSGNEu4NpM01fJ3p14g==",
+    "sha256": "9c97762f144cbf32b98db7dbe41a8d7e1e3e6f6cf1d3945337fe6a29b18a1886",
+    "bytes": 265
+  },
+  {
+    "path": "native-ui.xcresult/Info.plist",
+    "sha256": "e3694728de66aefc8d80d38d0c18c6c06de365d4466c6c67b4be8edeffa7655c",
+    "bytes": 715
+  },
+  {
+    "path": "native-ui.xcresult/database.sqlite3",
+    "sha256": "7df05f0bbd7bad0ec9bd12e5c9f64ccc88a23bdf5dd8a8dcf6eaf9f8eed6f843",
+    "bytes": 372736
+  },
+  {
+    "path": "original-simulator-state.json",
+    "sha256": "14d0edcebd97e43e87250af050d7f684b42d4eb76a6ba64e6ed8d66324a62799",
+    "bytes": 198
+  },
+  {
+    "path": "restore-light-command.json",
+    "sha256": "7985e68980f06ee7e79ae0d72a12f4e694e80710d1b8ee33e3fc817ace4b5bc2",
+    "bytes": 287
+  },
+  {
+    "path": "restore-light.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "restore-shutdown-command.json",
+    "sha256": "716cda0f22f9622a581194b44674a7a35b07e57295ca107367b35e5f1a78eb03",
+    "bytes": 263
+  },
+  {
+    "path": "restore-shutdown.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "run.py",
+    "sha256": "53b26ba666d9355c262017c5cbcf730c2dfd48d96113b3872003b2ac3b79f063",
+    "bytes": 633
+  },
+  {
+    "path": "set-dark-command.json",
+    "sha256": "c0cb023eadce3d6697b69950ad0ca88352a3f7f92d9eb8506aa8c65cd8e1b95c",
+    "bytes": 286
+  },
+  {
+    "path": "set-dark.log",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "bytes": 0
+  },
+  {
+    "path": "simulator-cleanup.json",
+    "sha256": "c5e02a70e8d841410cdbe6e4799ea3f95bebedc424413a86e4073b3e0af13e8b",
+    "bytes": 413
+  },
+  {
+    "path": "source/BeatLab/App/BeatLabApp.swift",
+    "sha256": "095332cfbf4f7c5ded6df9d10ffc0247a84d7ca7d92cf98b5d12451e6a89494c",
+    "bytes": 1641
+  },
+  {
+    "path": "source/BeatLab/App/ConfigurationStore.swift",
+    "sha256": "5e7468614d839a3dcf3e580aed9ba479fe76d63ffb155127073ba9c977958fe4",
+    "bytes": 3803
+  },
+  {
+    "path": "source/BeatLab/App/PracticeComparison.swift",
+    "sha256": "ce1054c28f1624c616d9a97605964ccbd717be5b9a19b2993c37bfc8eb3a1008",
+    "bytes": 2247
+  },
+  {
+    "path": "source/BeatLab/App/PracticeStore.swift",
+    "sha256": "30399aec6de20f306f21b09848924f3ffd2d9bf77523218c253a9970eaf5395c",
+    "bytes": 18066
+  },
+  {
+    "path": "source/BeatLab/App/PracticeTransportProjection.swift",
+    "sha256": "13cc1fcdadb443d91d66077223a5d34e4cbf8ea1a53b68d250de9261842de16a",
+    "bytes": 1064
+  },
+  {
+    "path": "source/BeatLab/Audio/CountVoice.swift",
+    "sha256": "070715d9819c4af058e6cbc269cbd7f602ee41ff8f25ac908597bd6bf5c58e5b",
+    "bytes": 4284
+  },
+  {
+    "path": "source/BeatLab/Audio/MetronomeAudio.swift",
+    "sha256": "ac678d8003cabab33335aa3a461a0c327735a056639857163ba94f0c6c36926d",
+    "bytes": 21885
+  },
+  {
+    "path": "source/BeatLab/Audio/PracticeGroove.swift",
+    "sha256": "6ccda8c9456b7b73b2dcbe0495715e942778c2f03699c5cbd4c6d29da395e0ee",
+    "bytes": 2119
+  },
+  {
+    "path": "source/BeatLab/Design/BeatLabStyle.swift",
+    "sha256": "0b05516de6b504cb3c85e420d73ebf054bd326b24a25dd7b0331493438d2e720",
+    "bytes": 6653
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AccentColor.colorset/Contents.json",
+    "sha256": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AccentSoft.colorset/Contents.json",
+    "sha256": "4bced10099c22590e0325fb99df0488ef488067297c7444a889dbd4c9c616261",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png",
+    "sha256": "9d77b5ba7b6174a0f4a5bec9849ea8fd47e67f407de00e66642a6f0107792f30",
+    "bytes": 1255317
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/artwork.png",
+    "sha256": "bcc0c9c110974ac95abd310c55017cb3ab59412d6ffa5a5bc0356ce521b585ca",
+    "bytes": 431364
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/artwork.png",
+    "sha256": "4048570545258386a1cbd54df1af5186bc19726de27ff5a085901e917828cf55",
+    "bytes": 722928
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/artwork.png",
+    "sha256": "e02cb053fb601e70a385e7766cbc034ee1776dcf8c1deebe0e71ecef04263641",
+    "bytes": 936139
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png",
+    "sha256": "2a7b4b8c8c75aa0f1ec98337e94b42b9dd94a39bfe2c87dff38f6388f0d69b51",
+    "bytes": 1534882
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+    "sha256": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57",
+    "bytes": 1038757
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json",
+    "sha256": "6ad2c5c3bbcf972c7f02d217d6afcac3f24a10e30510c7e2d06c582371ed9d22",
+    "bytes": 134
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Canvas.colorset/Contents.json",
+    "sha256": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/CatMotionAtlas.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/CatMotionAtlas.imageset/artwork.png",
+    "sha256": "a2e247908deb337dd52114499303b41e9da6e588a70150ed901851b62c371d6c",
+    "bytes": 2375964
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Contents.json",
+    "sha256": "2320eb3e02f9e3419d35676c6fd470ec13d5aa314c0d29700e09ec76d8e2360a",
+    "bytes": 50
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/artwork.png",
+    "sha256": "4f234115f7470bb0b64e207e710852dd2fe7b975a47b11d37f8c493610d30c3d",
+    "bytes": 1956197
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/artwork.png",
+    "sha256": "2d8007c4ab227946ae87ff86d3ac1ed30af64251e13981f1744eac40eaa2f57b",
+    "bytes": 1780915
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/artwork.png",
+    "sha256": "f5ba432fcfa6c43b82634449ac5bbacc5e4d5627cc60633a7cda2f6684e8493e",
+    "bytes": 1600593
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/EggMissionAtlas.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/EggMissionAtlas.imageset/artwork.png",
+    "sha256": "f92458183b6fdb634f526f7f7fd48d6e0c5fc48c269b2c0028ef3b09fb932f44",
+    "bytes": 1445738
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/artwork.png",
+    "sha256": "8e13a5aba8719cbbad5118e04f2f10a8bb8e7bc80dcdaa1849c1f3b902457d5d",
+    "bytes": 1622714
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeCanvas.colorset/Contents.json",
+    "sha256": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png",
+    "sha256": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889",
+    "bytes": 967394
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeForest.colorset/Contents.json",
+    "sha256": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeHero.colorset/Contents.json",
+    "sha256": "867b02029807b8e1abe270afa80b4529a5bf6cae9fae833b679fe1ba2ff9f835",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeInk.colorset/Contents.json",
+    "sha256": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeMuted.colorset/Contents.json",
+    "sha256": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/HomeSurface.colorset/Contents.json",
+    "sha256": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Ink.colorset/Contents.json",
+    "sha256": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/MutedInk.colorset/Contents.json",
+    "sha256": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/OnAccent.colorset/Contents.json",
+    "sha256": "e1abe8f9a069fa1f0bcc17d0a41aaf633972ce45d83fcf3a69d5595a1ceecbac",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RecoveryCatExpressions.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RecoveryCatExpressions.imageset/artwork.png",
+    "sha256": "1236371c628ba59fe1d6ba606d9789ef0693ca036333058a93885a653f7d2510",
+    "bytes": 1971202
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RecoveryDinosaurExpressions.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RecoveryDinosaurExpressions.imageset/artwork.png",
+    "sha256": "87b824a3b7a06234c0d5b7be36573c8374b3c8f6c3095ecf1e0b78292da4031a",
+    "bytes": 1804271
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RecoveryRobotExpressions.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a",
+    "bytes": 151
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RecoveryRobotExpressions.imageset/artwork.png",
+    "sha256": "40b137fac9e0ac8e1a77b912606b362a8b4ce1b462718f8ad6b18d3bf651f10b",
+    "bytes": 1501201
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Reward.colorset/Contents.json",
+    "sha256": "283098579daf80341abbbcc6d2cffae565ed2a29cd12d34beef2869fbc6222c4",
+    "bytes": 696
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RewardSoft.colorset/Contents.json",
+    "sha256": "d7ffe748db6f38bb7f18a7bc3e417eccf47a8d7c8e6684d7ed4b4144dcd3661b",
+    "bytes": 696
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RobotMotionAtlas.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RobotMotionAtlas.imageset/artwork.png",
+    "sha256": "54c1f48cf46ddb04f322011f229730e692571c70abcc087e92a6b4e24dec41ab",
+    "bytes": 2422996
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RunnerCircuit.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RunnerCircuit.imageset/artwork.png",
+    "sha256": "b43c924dc2205f5ae28cf80eab30133c2bc9ae969da1931192b9d675d207bf60",
+    "bytes": 2979625
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RunnerCloud.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f",
+    "bytes": 98
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RunnerCloud.imageset/artwork.png",
+    "sha256": "2b2c143455d73e815738eb875bc27bf8aaaa9e9bc6b668e09769d80aee48f7b1",
+    "bytes": 1678516
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/Contents.json",
+    "sha256": "f0946acd61b0b4a62f2ed1e7210b1bf09c601233f0ae9e43f19c36621d074e19",
+    "bytes": 113
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/artwork.png",
+    "sha256": "1c392af81eab914d0710820728e76e00e9956f1736439b7eee75d82b961bcdc2",
+    "bytes": 1528754
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Separator.colorset/Contents.json",
+    "sha256": "dc4fa6f6f4b2d511285069a49c09b0cce02f322dd3cb632ff4bd3f193b293418",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Success.colorset/Contents.json",
+    "sha256": "5dc9fb60f1c1e3ecaac6be0cfdbb040a8d5e956cb64899ada8dd65726d055355",
+    "bytes": 696
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/SuccessSoft.colorset/Contents.json",
+    "sha256": "3de56d04ef6bd21985b5b3f4a97a5c4200f2e79a379eb7d0a39740a6a024783a",
+    "bytes": 696
+  },
+  {
+    "path": "source/BeatLab/Resources/Assets.xcassets/Surface.colorset/Contents.json",
+    "sha256": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc",
+    "bytes": 690
+  },
+  {
+    "path": "source/BeatLab/Resources/PrivacyInfo.xcprivacy",
+    "sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+    "bytes": 782
+  },
+  {
+    "path": "source/BeatLab/Views/BeatVisualizer.swift",
+    "sha256": "36e9c000282a4925c16e668a262f6891b276c44cd347d9028a2b35c7a26551af",
+    "bytes": 6842
+  },
+  {
+    "path": "source/BeatLab/Views/ConfigurationSummary.swift",
+    "sha256": "4780cf39ac7c181b78cf3567b631b0c44c939e41501a84dd756cc87292663801",
+    "bytes": 1192
+  },
+  {
+    "path": "source/BeatLab/Views/DrummerRhythmScene.swift",
+    "sha256": "9be800b375f3a10fddf3e4bc8bac53db7eab411c709ad95a8aceb36b9a30d6e1",
+    "bytes": 12119
+  },
+  {
+    "path": "source/BeatLab/Views/DrummerStageView.swift",
+    "sha256": "6cf75f175aafc6ab237e304038f3c33d4776542fbd06324e42647668d6d0e718",
+    "bytes": 5678
+  },
+  {
+    "path": "source/BeatLab/Views/EggMissionView.swift",
+    "sha256": "85ecaad6ff89c1f6e98c1ab3d27c5bacb4a97d00adaf06f6a5e6e5d2152d4e7a",
+    "bytes": 96372
+  },
+  {
+    "path": "source/BeatLab/Views/FallingRhythmScene.swift",
+    "sha256": "967c082b9f6a63e4f66b18527512435371be7b24228dfa182017f019df6d9448",
+    "bytes": 5842
+  },
+  {
+    "path": "source/BeatLab/Views/GameHUD.swift",
+    "sha256": "d3ac92aa904da491fb2970e05992486a4c4dd13ba5ed1c24952cce279ac4f2d4",
+    "bytes": 3178
+  },
+  {
+    "path": "source/BeatLab/Views/GameResultView.swift",
+    "sha256": "f192004b2d64eff456379000b9ca532b06532e59f1f0e8018cc5fa125e39c6c7",
+    "bytes": 3160
+  },
+  {
+    "path": "source/BeatLab/Views/HomeView.swift",
+    "sha256": "4b224413af07e522335c85fbb0889f91be4cdacc43cf8c5ce206d085a193c937",
+    "bytes": 10333
+  },
+  {
+    "path": "source/BeatLab/Views/MetronomeView.swift",
+    "sha256": "2b30cf9c40214e383e0387dde5dd520a1cee634aca721de68454625ba1f0399d",
+    "bytes": 14215
+  },
+  {
+    "path": "source/BeatLab/Views/PracticeComparisonView.swift",
+    "sha256": "c53386db15c3c2b60569b81545f9bcb27ba0cd19e070df39a03c5f34e54d716b",
+    "bytes": 9928
+  },
+  {
+    "path": "source/BeatLab/Views/PracticeView.swift",
+    "sha256": "192ee2807cbd442cd20c8402ca9cb9fdba94cbb9fcc0d61415bd2102c27d9d65",
+    "bytes": 80361
+  },
+  {
+    "path": "source/BeatLab/Views/RhythmLane.swift",
+    "sha256": "8c6b3d35729c97cf1ccf72d2ba6dd0591d400ebcb80b4b826d26beed6dc2ab3f",
+    "bytes": 3050
+  },
+  {
+    "path": "source/BeatLab/Views/RootView.swift",
+    "sha256": "280b75ca6732e58501ea384afda1047bd20b644093a4deb25cadcfaaaa05ead5",
+    "bytes": 1618
+  },
+  {
+    "path": "source/BeatLab/Views/RunnerRhythmScene.swift",
+    "sha256": "c54e999fac080f1d6b9bb4a38b32405f97ab68498272a006b4b06db26b99b9e1",
+    "bytes": 307
+  },
+  {
+    "path": "source/BeatLab/Views/TapPad.swift",
+    "sha256": "2445e37d189c532e8a6e48955aa6c0c202f5fcc4e35794d93fd6255cbaec2d7d",
+    "bytes": 1857
+  },
+  {
+    "path": "source/BeatLab.xcodeproj/project.pbxproj",
+    "sha256": "dcbb0201b9d8dcb59b6d21958d12301a2e30850b2c99b34149bdf49434cdc8d2",
+    "bytes": 26365
+  },
+  {
+    "path": "source/BeatLab.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "sha256": "5c2b91b67a72f0c341d6fa0eda978eee611ff4a1efee3017a5617c46284973b3",
+    "bytes": 113
+  },
+  {
+    "path": "source/BeatLab.xcodeproj/xcshareddata/xcschemes/BeatLab.xcscheme",
+    "sha256": "a7ba5678196b03db86d938625668f2b947abcce307ac4ff0b19e86dcc08d0fd7",
+    "bytes": 3761
+  },
+  {
+    "path": "source/BeatLabTests/ConfigurationStoreTests.swift",
+    "sha256": "7c65756b98d0963a2e72a17a633a83ba41770f3bd8b2db8d0cb864c8f71ed669",
+    "bytes": 6368
+  },
+  {
+    "path": "source/BeatLabTests/MetronomeAudioTests.swift",
+    "sha256": "cd3c3f040fe9fbb35681db620cb44b04956aae8ca7d6cdcff29685342296df40",
+    "bytes": 15461
+  },
+  {
+    "path": "source/BeatLabTests/PracticeStoreTests.swift",
+    "sha256": "9779d8d1c952f8dfdda97c6f7bdf0e65cc1708a0e92785f5b2a19f9d42f03be7",
+    "bytes": 197772
+  },
+  {
+    "path": "source/BeatLabUITests/FoundationUITests.swift",
+    "sha256": "85892564bb94a5d2926ec6aaf44a70a4e2e5959d29684ccd73e91fc249484291",
+    "bytes": 10669
+  },
+  {
+    "path": "source/BeatLabUITests/InterfaceUITests.swift",
+    "sha256": "cd9d2c01a2a333ccfcca4d7820ad00bb1512dc21b6683b89cd4b84cf7ad60871",
+    "bytes": 2048
+  },
+  {
+    "path": "source/BeatLabUITests/MetronomeUITests.swift",
+    "sha256": "3ffe491daac4333ecee55cfcfb7de876bfaa9206792b510d58a9db1d28f2be87",
+    "bytes": 6454
+  },
+  {
+    "path": "source/BeatLabUITests/PracticeUITests.swift",
+    "sha256": "6474e4e54147fe4eae01006f7775bd0e171041e4ea21e2c0579556632b5bad44",
+    "bytes": 62956
+  },
+  {
+    "path": "source/Build/Products/BeatLab_iphonesimulator26.5-arm64.xctestrun",
+    "sha256": "100fe262784052b266dc4b258fc2c7f9207c1eae42bf8be9db824d9a2564a50c",
+    "bytes": 8509
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/AppIcon60x60@2x.png",
+    "sha256": "dcc3a8f8aca009b22246ef6fe63335825d0360c89ea50b3d04bd2c0f3b329a86",
+    "bytes": 26152
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/AppIcon76x76@2x~ipad.png",
+    "sha256": "91698cf9eb5fa41039e7363b1fe4148ad5c4b40f2519921e979c5e1b75b9b1f0",
+    "bytes": 39354
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Assets.car",
+    "sha256": "4a5f7271dedb4e0266c79b9044c62ad6b55dcaad4d11a14849e250140f9d84fc",
+    "bytes": 24149016
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/BeatLab",
+    "sha256": "e132a12e021efd52f0d9f67d1f74ea8491b967eaef3e2221a4b95bc00df8c46f",
+    "bytes": 40344
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/BeatLab.debug.dylib",
+    "sha256": "e915b7418cc689e443f5a14559c2e8bc70c299ec0d311fa5faca28596eb22da2",
+    "bytes": 9114672
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "ce6365533c6e79993267b81964f120555ecb4cbe6e33795c41d4f7d9c7c1aed7",
+    "bytes": 666
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct",
+    "sha256": "1ea969aa030881e92873fcd84492bc2c1acf37f50f8b44a64d29e84c7c2ae984",
+    "bytes": 534880
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "ce6365533c6e79993267b81964f120555ecb4cbe6e33795c41d4f7d9c7c1aed7",
+    "bytes": 666
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/Info.plist",
+    "sha256": "07bdb309302a1e830636ebb37297b6a0cc036d5433c0437f4c31e14d2eb3128b",
+    "bytes": 767
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct.framework/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct",
+    "sha256": "c0da90c6b064d06a8f664e8b3f3fe57bceb4ba797192d220a78259eb2bfd7982",
+    "bytes": 34488
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct.framework/Info.plist",
+    "sha256": "909e457dd72e09a6e62863c269e3126ca3dd706f8f60fe96b7262de6569be041",
+    "bytes": 765
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/Testing.framework/Info.plist",
+    "sha256": "bbcbea48c0dbd6882bcb7fb2301590da876c2e4a38af45f2f180576257ff1d4b",
+    "bytes": 907
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/Testing.framework/Testing",
+    "sha256": "1986afd2209b8bb14a58207eed68baf267f77e4c7737db20bea81ef58076187e",
+    "bytes": 6920688
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/Testing.framework/_CodeSignature/CodeResources",
+    "sha256": "d4ea19a6205a1aa25fe00e49abf0cb86dfae23aed5a6cad58faf3a4bd21fbfbf",
+    "bytes": 4470
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/Testing.framework/version.plist",
+    "sha256": "223a7e8eb1e41954e172a3fa1d67f2599f17e9e7aa7ebe6165469b21b17c9468",
+    "bytes": 516
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTAutomationSupport.framework/Info.plist",
+    "sha256": "5a4175b7974d1727ba93ff93c74c2390949150ad1e96091f270454eb8346e79b",
+    "bytes": 956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+    "sha256": "dba609c844eaafabfd1448f019f9c4781dd0ae1c7b0a9c9b80ea13342468dbda",
+    "bytes": 1553216
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTAutomationSupport.framework/_CodeSignature/CodeResources",
+    "sha256": "698deeaefd9347e7585203a292ce3ff315a04b484247bee93e97cb86318c84b3",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTAutomationSupport.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTest.framework/Info.plist",
+    "sha256": "909d0355c12c582734fd68afa4fe6c897ab55907364e6b618e7c083e2f03d758",
+    "bytes": 878
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTest.framework/XCTest",
+    "sha256": "9704e507fe542166b80f96178194ec456180a6498af50858990d32671d05b349",
+    "bytes": 208400
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTest.framework/_CodeSignature/CodeResources",
+    "sha256": "026b86d77c4f67c0c0c9b6dc0d5dc36c12fc487ad8e975262a9e132edff52b5a",
+    "bytes": 17362
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTest.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestCore.framework/Info.plist",
+    "sha256": "2f0d9073b2ed1feb101463b96c31c62efcc745438d19769b964d8c1fd09f8143",
+    "bytes": 886
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestCore.framework/XCTestCore",
+    "sha256": "193ecdbb651f484a6e14f5d4dba4ef6de4b5e3aa46e53fa97bb6f1806bef71f3",
+    "bytes": 4089904
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestCore.framework/_CodeSignature/CodeResources",
+    "sha256": "a4e4cb1b450b595cd79991e6a5bc1a00bedad7ef6b6f2cb402b562c45aee3ec4",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestCore.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestSupport.framework/Info.plist",
+    "sha256": "b1e2907db77398ee443b5f99aae969be48e8f0627ff219cb164d9286d7145de8",
+    "bytes": 892
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestSupport.framework/XCTestSupport",
+    "sha256": "f48a2fc67431dd73c9238768ec6635ea8d311098aea8c7b2021920e34c4f5dc4",
+    "bytes": 224912
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestSupport.framework/_CodeSignature/CodeResources",
+    "sha256": "493bfa3cbc1033bef7ab5021c6c6423a3ed8bbd86b1fa7c294524777dee105b1",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCTestSupport.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUIAutomation.framework/Info.plist",
+    "sha256": "c8165e0af2a549416efc6dbe5d4bf3d8d306c42cb68d963c3f0b6d8f34457533",
+    "bytes": 894
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUIAutomation.framework/XCUIAutomation",
+    "sha256": "94e82a956c1d5bdd596b020bd517e793a7534da3efe6468233909ae7a2629ff3",
+    "bytes": 3643712
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUIAutomation.framework/_CodeSignature/CodeResources",
+    "sha256": "04ef214a7112d65469abb1c4fca5e5222b7d7f84a1906bd107d780ceed580da2",
+    "bytes": 9338
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUIAutomation.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUnit.framework/Info.plist",
+    "sha256": "a05755dfb1b3c5fabe06e52ca0a5aafc57919ebcabf0bb10740bc04790ef5bb3",
+    "bytes": 878
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUnit.framework/XCUnit",
+    "sha256": "4d8ff95683584aeaa4d4e4c5699d4f9cc651ca8ac3cd0b9294a960eeccf2b803",
+    "bytes": 100640
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUnit.framework/_CodeSignature/CodeResources",
+    "sha256": "a6c97eddc25aff25229771a51202ff4ddc11234de78af235bd7661493ef4f3dc",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/XCUnit.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/libXCTestBundleInject.dylib",
+    "sha256": "46e7d27a02da5ed805846b031a56ecfaccd4feed9ec4dc053a5ad689c00530dc",
+    "bytes": 139824
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Frameworks/libXCTestSwiftSupport.dylib",
+    "sha256": "547be7a8f425563f4ee23f9af749884abcbce56eb3b42714b69929d716e8a533",
+    "bytes": 2052560
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/Info.plist",
+    "sha256": "b85bc8f7635123f9552ce4a59fc3fb9f7fefa4871a6bcf7faaac6f0253e85bbd",
+    "bytes": 1527
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PkgInfo",
+    "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "bytes": 8
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "ce6365533c6e79993267b81964f120555ecb4cbe6e33795c41d4f7d9c7c1aed7",
+    "bytes": 666
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/BeatLabTests",
+    "sha256": "38243a8f16908465b99656b58520a39bb64f08fff3b4b98ed8f71ffc2d3ccefd",
+    "bytes": 2463744
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct",
+    "sha256": "1ea969aa030881e92873fcd84492bc2c1acf37f50f8b44a64d29e84c7c2ae984",
+    "bytes": 534880
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "ce6365533c6e79993267b81964f120555ecb4cbe6e33795c41d4f7d9c7c1aed7",
+    "bytes": 666
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Frameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/Info.plist",
+    "sha256": "07bdb309302a1e830636ebb37297b6a0cc036d5433c0437f4c31e14d2eb3128b",
+    "bytes": 767
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Frameworks/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct.framework/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct",
+    "sha256": "c0da90c6b064d06a8f664e8b3f3fe57bceb4ba797192d220a78259eb2bfd7982",
+    "bytes": 34488
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Frameworks/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct.framework/Info.plist",
+    "sha256": "909e457dd72e09a6e62863c269e3126ca3dd706f8f60fe96b7262de6569be041",
+    "bytes": 765
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PlugIns/BeatLabTests.xctest/Info.plist",
+    "sha256": "b3f3d14f58009f015d0a7e3b5601bcc4da9eb9b9145b085cd8ed416f0218fe42",
+    "bytes": 676
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/PrivacyInfo.xcprivacy",
+    "sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+    "bytes": 782
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.app/__preview.dylib",
+    "sha256": "56e8c8a037a2059425cc6f031c3c07141dc8822f2baba5c5609b654f52254f7e",
+    "bytes": 16752
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo",
+    "sha256": "76bc41f1fed24dd33bed35676f6662adaaf40c86644838c2f56987717a807bf1",
+    "bytes": 124072
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.swiftmodule/arm64-apple-ios-simulator.abi.json",
+    "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+    "bytes": 149
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.swiftmodule/arm64-apple-ios-simulator.swiftdoc",
+    "sha256": "b9f47ffb5737bbccedb994b7100351275418fa22f523e3497abc6e78dbe08424",
+    "bytes": 20232
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLab.swiftmodule/arm64-apple-ios-simulator.swiftmodule",
+    "sha256": "e438f0dcbe8e2e8920901089e5c7e3f1a9a73f28df9c37a7328f5df2beb1b7ad",
+    "bytes": 563104
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore.o",
+    "sha256": "8a1dcad021d22d52290d35b2ea02b2fba8aba9a8618adf37b944911f105a4c5e",
+    "bytes": 997872
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo",
+    "sha256": "50a06ce950b90e6c1fc6633d189b8b2d2d65488fba134a10d47dc618daa2d502",
+    "bytes": 38440
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore.swiftmodule/arm64-apple-ios-simulator.abi.json",
+    "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+    "bytes": 149
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore.swiftmodule/arm64-apple-ios-simulator.swiftdoc",
+    "sha256": "c2e1b953e6d4efd206998efd487a7d512199c61afca765b92d75d103cbda4213",
+    "bytes": 2188
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore.swiftmodule/arm64-apple-ios-simulator.swiftmodule",
+    "sha256": "74a6379a1d7d4f06b2cebfec92ab92442733db1ba515fcbcac20943edaf0d5f3",
+    "bytes": 235324
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "ce6365533c6e79993267b81964f120555ecb4cbe6e33795c41d4f7d9c7c1aed7",
+    "bytes": 666
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabDSP.o",
+    "sha256": "5784c1ae76221535db4e96a007733e5bff7b806e569a17c1a40347379df8e7e2",
+    "bytes": 14576
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabTests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo",
+    "sha256": "c1baf6a3b86e9ea76233858083982736c8be19f0da3734fadc785f4b3a9fa6cf",
+    "bytes": 35876
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabTests.swiftmodule/arm64-apple-ios-simulator.abi.json",
+    "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+    "bytes": 149
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabTests.swiftmodule/arm64-apple-ios-simulator.swiftdoc",
+    "sha256": "a0bec34de27d643ac6b01623844aab7d0b51f25d93c4b0c708800bcdd59bddc5",
+    "bytes": 424
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabTests.swiftmodule/arm64-apple-ios-simulator.swiftmodule",
+    "sha256": "cfcfd8d00650dbff32311f81bc7c88eb589c9b737267ad332bcd38a8531a8af2",
+    "bytes": 155220
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/BeatLabUITests-Runner",
+    "sha256": "7e36729d4fbf984e023e98952e7a2b878c735240c41c14f1f8a6b1544b20d233",
+    "bytes": 113616
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/Testing.framework/Info.plist",
+    "sha256": "bbcbea48c0dbd6882bcb7fb2301590da876c2e4a38af45f2f180576257ff1d4b",
+    "bytes": 907
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/Testing.framework/Testing",
+    "sha256": "1986afd2209b8bb14a58207eed68baf267f77e4c7737db20bea81ef58076187e",
+    "bytes": 6920688
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/Testing.framework/_CodeSignature/CodeResources",
+    "sha256": "d4ea19a6205a1aa25fe00e49abf0cb86dfae23aed5a6cad58faf3a4bd21fbfbf",
+    "bytes": 4470
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/Testing.framework/version.plist",
+    "sha256": "223a7e8eb1e41954e172a3fa1d67f2599f17e9e7aa7ebe6165469b21b17c9468",
+    "bytes": 516
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTAutomationSupport.framework/Info.plist",
+    "sha256": "5a4175b7974d1727ba93ff93c74c2390949150ad1e96091f270454eb8346e79b",
+    "bytes": 956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTAutomationSupport.framework/XCTAutomationSupport",
+    "sha256": "dba609c844eaafabfd1448f019f9c4781dd0ae1c7b0a9c9b80ea13342468dbda",
+    "bytes": 1553216
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTAutomationSupport.framework/_CodeSignature/CodeResources",
+    "sha256": "698deeaefd9347e7585203a292ce3ff315a04b484247bee93e97cb86318c84b3",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTAutomationSupport.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTest.framework/Info.plist",
+    "sha256": "909d0355c12c582734fd68afa4fe6c897ab55907364e6b618e7c083e2f03d758",
+    "bytes": 878
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTest.framework/XCTest",
+    "sha256": "9704e507fe542166b80f96178194ec456180a6498af50858990d32671d05b349",
+    "bytes": 208400
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTest.framework/_CodeSignature/CodeResources",
+    "sha256": "026b86d77c4f67c0c0c9b6dc0d5dc36c12fc487ad8e975262a9e132edff52b5a",
+    "bytes": 17362
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTest.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestCore.framework/Info.plist",
+    "sha256": "2f0d9073b2ed1feb101463b96c31c62efcc745438d19769b964d8c1fd09f8143",
+    "bytes": 886
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestCore.framework/XCTestCore",
+    "sha256": "193ecdbb651f484a6e14f5d4dba4ef6de4b5e3aa46e53fa97bb6f1806bef71f3",
+    "bytes": 4089904
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestCore.framework/_CodeSignature/CodeResources",
+    "sha256": "a4e4cb1b450b595cd79991e6a5bc1a00bedad7ef6b6f2cb402b562c45aee3ec4",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestCore.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestSupport.framework/Info.plist",
+    "sha256": "b1e2907db77398ee443b5f99aae969be48e8f0627ff219cb164d9286d7145de8",
+    "bytes": 892
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestSupport.framework/XCTestSupport",
+    "sha256": "f48a2fc67431dd73c9238768ec6635ea8d311098aea8c7b2021920e34c4f5dc4",
+    "bytes": 224912
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestSupport.framework/_CodeSignature/CodeResources",
+    "sha256": "493bfa3cbc1033bef7ab5021c6c6423a3ed8bbd86b1fa7c294524777dee105b1",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCTestSupport.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUIAutomation.framework/Info.plist",
+    "sha256": "c8165e0af2a549416efc6dbe5d4bf3d8d306c42cb68d963c3f0b6d8f34457533",
+    "bytes": 894
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUIAutomation.framework/XCUIAutomation",
+    "sha256": "94e82a956c1d5bdd596b020bd517e793a7534da3efe6468233909ae7a2629ff3",
+    "bytes": 3643712
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUIAutomation.framework/_CodeSignature/CodeResources",
+    "sha256": "04ef214a7112d65469abb1c4fca5e5222b7d7f84a1906bd107d780ceed580da2",
+    "bytes": 9338
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUIAutomation.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUnit.framework/Info.plist",
+    "sha256": "a05755dfb1b3c5fabe06e52ca0a5aafc57919ebcabf0bb10740bc04790ef5bb3",
+    "bytes": 878
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUnit.framework/XCUnit",
+    "sha256": "4d8ff95683584aeaa4d4e4c5699d4f9cc651ca8ac3cd0b9294a960eeccf2b803",
+    "bytes": 100640
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUnit.framework/_CodeSignature/CodeResources",
+    "sha256": "a6c97eddc25aff25229771a51202ff4ddc11234de78af235bd7661493ef4f3dc",
+    "bytes": 2018
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/XCUnit.framework/version.plist",
+    "sha256": "610df6a865b3c4c8c7e86c4b30c672a5edf7f956ae2605502afdb819518bea78",
+    "bytes": 518
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Frameworks/libXCTestSwiftSupport.dylib",
+    "sha256": "547be7a8f425563f4ee23f9af749884abcbce56eb3b42714b69929d716e8a533",
+    "bytes": 2052560
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/Info.plist",
+    "sha256": "1fa295357eb6b2bc761dcc3469db7e1f491e72c126b7316821fb130adae59ae4",
+    "bytes": 8336
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/PkgInfo",
+    "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "bytes": 8
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/PlugIns/BeatLabUITests.xctest/BeatLabUITests",
+    "sha256": "48d5f767434bc17dddcbffe9e2e12904177ebb3f3a49ca9b06cfc657df9db0b0",
+    "bytes": 618432
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests-Runner.app/PlugIns/BeatLabUITests.xctest/Info.plist",
+    "sha256": "b15e57b758d0c7ef7afbf1a7cb6116eee6a35eec5b8c3bdddd16f58dc9ea539b",
+    "bytes": 708
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests.swiftmodule/Project/arm64-apple-ios-simulator.swiftsourceinfo",
+    "sha256": "b423e9cd15758df456e282871623d2f2727f4a1b07f14c54396dd8d7b08f42a7",
+    "bytes": 10388
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests.swiftmodule/arm64-apple-ios-simulator.abi.json",
+    "sha256": "4277ac6b49f8511196028a5ac20f5b1b1dfa754c24615d34068089f0b1739728",
+    "bytes": 149
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests.swiftmodule/arm64-apple-ios-simulator.swiftdoc",
+    "sha256": "2cab514a16dc0c20fa468d638ea497964f645ecdb674f7a1192fa3d85579d581",
+    "bytes": 428
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/BeatLabUITests.swiftmodule/arm64-apple-ios-simulator.swiftmodule",
+    "sha256": "e1eed8c7cff648947be24149a9d9c43b54eb5e16ccd83e94d6c06a8d73b2e004",
+    "bytes": 66876
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/PackageFrameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct",
+    "sha256": "fb9cca3ceff0b532ec4eb6d8095d46091e61b34dec3c6d0ec2fcf28ee8ceed55",
+    "bytes": 649040
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/PackageFrameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "ce6365533c6e79993267b81964f120555ecb4cbe6e33795c41d4f7d9c7c1aed7",
+    "bytes": 666
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/PackageFrameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/PackageFrameworks/BeatLabCore_-20C893F3F6DDE7E1_PackageProduct.framework/Info.plist",
+    "sha256": "07bdb309302a1e830636ebb37297b6a0cc036d5433c0437f4c31e14d2eb3128b",
+    "bytes": 767
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/PackageFrameworks/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct.framework/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct",
+    "sha256": "d900e7b64a2b215ec320a90335c71bdb9fdb64817f1618b5e46f014fb261d191",
+    "bytes": 36168
+  },
+  {
+    "path": "source/Build/Products/Debug-iphonesimulator/PackageFrameworks/BeatLabDSP_-21F7CBD7F66ACE84_PackageProduct.framework/Info.plist",
+    "sha256": "909e457dd72e09a6e62863c269e3126ca3dd706f8f60fe96b7262de6569be041",
+    "bytes": 765
+  },
+  {
+    "path": "source/Package.swift",
+    "sha256": "eb6b2f4e8dd7b8d1206c22ac15f29e3177e3275c8a660f63bb345cdbe5011f02",
+    "bytes": 588
+  },
+  {
+    "path": "source/Sources/BeatLabCore/ConfigurationRepository.swift",
+    "sha256": "8c979ee3fca706065a21fd84136a17aad5f2159aebbe7380a23e5fbc0549ac9d",
+    "bytes": 2635
+  },
+  {
+    "path": "source/Sources/BeatLabCore/MetronomeConfiguration.swift",
+    "sha256": "6635f5249f30eb85c11b2e5561a4a3f64f1808ddee2efb662b2fff656953b4a6",
+    "bytes": 5886
+  },
+  {
+    "path": "source/Sources/BeatLabCore/ProgressRepository.swift",
+    "sha256": "1fe4bcce97c817853743aa3a6a37c6516e80491008fcf3419273baf4b817b037",
+    "bytes": 3504
+  },
+  {
+    "path": "source/Sources/BeatLabCore/Resources/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "source/Sources/BeatLabCore/RhythmLesson.swift",
+    "sha256": "2805917e06713d672c29c2ccd4c1410057146b67f5bf8eff0e06ec401fd2e53e",
+    "bytes": 4667
+  },
+  {
+    "path": "source/Sources/BeatLabCore/Subdivision.swift",
+    "sha256": "250349165142b1fdc6a85f5979cdf50743bea9aad735f8c47822b352f73d930d",
+    "bytes": 516
+  },
+  {
+    "path": "source/Sources/BeatLabCore/TapTempo.swift",
+    "sha256": "fa0a8512f19780993319b11b795a417f142bd93cb19f3e552cb9933d377ad5ee",
+    "bytes": 1704
+  },
+  {
+    "path": "source/Sources/BeatLabCore/Tempo.swift",
+    "sha256": "2d68c68a91dd68d46f9eb1d9e70adee4619a8a099dbd5b19869cec7e613b5108",
+    "bytes": 862
+  },
+  {
+    "path": "source/Sources/BeatLabCore/TimeSignature.swift",
+    "sha256": "f74cd80421e1f92f8c54e9003957ac38e7bd70a3d7a2aa6ad2e0dc03221a6872",
+    "bytes": 413
+  },
+  {
+    "path": "source/Sources/BeatLabCore/TimingPractice.swift",
+    "sha256": "c771e19d11a0d6ac397ac3c9170bd877bb1a90375f2c2df1afaac5783f11655e",
+    "bytes": 5365
+  },
+  {
+    "path": "source/Sources/BeatLabDSP/BeatLabDSP.c",
+    "sha256": "6bc94c2bbf55eddb91119dd090365a052a37735fdd4faf54536ac4d6876a8a8d",
+    "bytes": 14366
+  },
+  {
+    "path": "source/Sources/BeatLabDSP/include/BeatLabDSP.h",
+    "sha256": "fa73496fe16b2d7f4d81c3795302d6c66c1fa70ac2c0616ce66e2bb641acf736",
+    "bytes": 2241
+  },
+  {
+    "path": "source/Tests/BeatLabCoreTests/ConfigurationRepositoryTests.swift",
+    "sha256": "0d0f52e55807811c1c5428fc9eb10b7770e4138007af678d587f691125f8b2bc",
+    "bytes": 7921
+  },
+  {
+    "path": "source/Tests/BeatLabCoreTests/DSPTests.swift",
+    "sha256": "d73f9f322218a96051a456d3721f1722539d0aaa8e55fba60b3926c8a30a5245",
+    "bytes": 13147
+  },
+  {
+    "path": "source/Tests/BeatLabCoreTests/DomainTests.swift",
+    "sha256": "0b3ca97217d4cba18a3644472562759c5b217694a7aefd30a446b53a3fa05011",
+    "bytes": 5591
+  },
+  {
+    "path": "source/Tests/BeatLabCoreTests/PracticeTests.swift",
+    "sha256": "59c4191d700c27980a67cf1ad229e16816036ff64e70fdbde313b14c69463651",
+    "bytes": 13524
+  },
+  {
+    "path": "source/Tests/BeatLabCoreTests/ProgressTests.swift",
+    "sha256": "3f7a02bf1f1fb8261a5243a43ddb717ae21d5f40a3c140cb3847d8292128ebe6",
+    "bytes": 2939
+  },
+  {
+    "path": "source/Tests/BeatLabCoreTests/TapTempoTests.swift",
+    "sha256": "3bd3406353bcbb79c280095c5cc70942c8507fd03e4f71cd3799f46e05745cf0",
+    "bytes": 1763
+  },
+  {
+    "path": "source/Tests/DSPKernelTests/main.c",
+    "sha256": "e850d074b6dd61bca2cadd65457b04cf119f4c592e5d156d6284329cd7b05321",
+    "bytes": 12333
+  },
+  {
+    "path": "source/Tests/TimingCaptureTests/test_capture.py",
+    "sha256": "cbde36faa05ef837aea93ad9bd59a06464043ce6d5831a66d7a9e452c455a2a0",
+    "bytes": 1651
+  },
+  {
+    "path": "source-and-candidate-binding.json",
+    "sha256": "09c8dc0994afb781f3c7db60a473e76e5dede410d0bbdc6501c967d94ee2e28c",
+    "bytes": 649
+  },
+  {
+    "path": "source-manifest.json",
+    "sha256": "c66b45b1298eb0d4ade37d36c3c085d9458118f2ff951a1d200a8597e2708437",
+    "bytes": 18539
+  }
+]

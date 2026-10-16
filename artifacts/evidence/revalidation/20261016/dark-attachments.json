@@ -1,0 +1,17 @@
+[
+  {
+    "attachments" : [
+      {
+        "configurationName" : "Test Scheme Action",
+        "deviceId" : "52C92F83-56BB-4DC9-9331-3556F124FF2F",
+        "deviceName" : "BeatLab RHYTHM-PLAY-01",
+        "exportedFileName" : "959F37F0-0FD3-476C-9F26-C9D7A6269C1A.png",
+        "isAssociatedWithFailure" : false,
+        "suggestedHumanReadableName" : "Drummer maximum text live_0_26D9C69A-F017-4695-8FDE-6CDB8BBC4BD9.png",
+        "timestamp" : 1792160601.237
+      }
+    ],
+    "testIdentifier" : "PracticeUITests/testDrummerMaximumTextControlsAndNoWriteOnExit()",
+    "testIdentifierURL" : "test://com.apple.xcode/BeatLab/BeatLabUITests/PracticeUITests/testDrummerMaximumTextControlsAndNoWriteOnExit"
+  }
+]

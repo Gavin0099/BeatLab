@@ -1,0 +1,758 @@
+Command line invocation:
+    /Applications/Xcode.app/Contents/Developer/usr/bin/xcodebuild -project artifacts/development/QA-REVALIDATE-01/source/BeatLab.xcodeproj -scheme BeatLab -configuration Debug -derivedDataPath artifacts/development/QA-REVALIDATE-01/DerivedData -destination "platform=iOS Simulator,id=52C92F83-56BB-4DC9-9331-3556F124FF2F" -jobs 2 -disableAutomaticPackageResolution -skipPackageUpdates -parallel-testing-enabled NO CODE_SIGNING_ALLOWED=NO test-without-building "-only-testing:BeatLabTests/RhythmPrototypeTests" "-only-testing:BeatLabUITests/PracticeUITests/testDrummerActualInputPauseRetryAndIsolatedZeroResult" "-only-testing:BeatLabUITests/PracticeUITests/testDrummerMaximumTextControlsAndNoWriteOnExit" "-only-testing:BeatLabUITests/PracticeUITests/testNewDualLaneActualTouchesPauseResumeRestartAndExit" -resultBundlePath artifacts/development/QA-REVALIDATE-01/native-ui.xcresult
+
+Build settings from command line:
+    CODE_SIGNING_ALLOWED = NO
+
+Resolve Package Graph
+
+
+Resolved source packages:
+  BeatLabCore: /Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/source @ local
+
+Writing result bundle at path:
+	/Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/native-ui.xcresult
+
+--- xcodebuild: WARNING: Using the first of multiple matching destinations:
+{ platform:iOS Simulator, arch:arm64, id:52C92F83-56BB-4DC9-9331-3556F124FF2F, OS:18.0, name:BeatLab RHYTHM-PLAY-01 }
+{ platform:iOS Simulator, arch:x86_64, id:52C92F83-56BB-4DC9-9331-3556F124FF2F, OS:18.0, name:BeatLab RHYTHM-PLAY-01 }
+2026-10-16 22:19:59.744913+0800 BeatLab[3478:126785] [general] NSBundle file:///Library/Developer/CoreSimulator/Volumes/iOS_22A3351/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/TextToSpeech.framework/ principal class is nil because all fallbacks have failed
+2026-10-16 22:19:59.744990+0800 BeatLab[3478:126785] [general] NSBundle file:///Library/Developer/CoreSimulator/Volumes/iOS_22A3351/Library/Developer/CoreSimulator/Profiles/Runtimes/iOS%2018.0.simruntime/Contents/Resources/RuntimeRoot/System/Library/PrivateFrameworks/TextToSpeech.framework/ principal class is nil because all fallbacks have failed
+2026-10-16 22:20:00.037813+0800 BeatLab[3478:127027] [asset] Failed to get sandbox extensions
+2026-10-16 22:20:00.078014+0800 BeatLab[3478:127027] [catalog] Query for com.apple.MobileAsset.VoiceServicesVocalizerVoice failed: 2
+2026-10-16 22:20:00.078573+0800 BeatLab[3478:127027] [asset] #FactoryInstall Unable to query results, error: 5
+2026-10-16 22:20:00.094013+0800 BeatLab[3478:127027] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+2026-10-16 22:20:00.106333+0800 BeatLab[3478:127027] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+Test Suite 'Selected tests' started at 2026-10-16 22:20:00.434.
+Test Suite 'BeatLabTests.xctest' started at 2026-10-16 22:20:00.435.
+Test Suite 'RhythmPrototypeTests' started at 2026-10-16 22:20:00.435.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testActualSceneCoordinatesRemainAtFixedLineUntilRealWindowExpires]' started.
+2026-10-16 22:20:00.444738+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+2026-10-16 22:20:00.474300+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testActualSceneCoordinatesRemainAtFixedLineUntilRealWindowExpires]' passed (0.042 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testComparisonDoesNotWriteProgressOnSuccessFailureOrCancel]' started.
+2026-10-16 22:20:00.512335+0800 BeatLab[3478:126785] [plugin] AddInstanceForFactory: No factory registered for id <CFUUID 0x60000026a560> F8BB1C28-BAE8-11D6-9C31-00039315CD46
+2026-10-16 22:20:33.503673+0800 BeatLab[3478:127022] [catalog] Query for com.apple.MobileAsset.VoiceServicesVocalizerVoice failed: 2
+2026-10-16 22:20:33.524062+0800 BeatLab[3478:127022] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+2026-10-16 22:20:33.529254+0800 BeatLab[3478:127022] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+Test Case '-[BeatLabTests.RhythmPrototypeTests testComparisonDoesNotWriteProgressOnSuccessFailureOrCancel]' passed (37.607 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerNativeRenderingSpecimensAndReducedActorLayout]' started.
+2026-10-16 22:20:38.095149+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+2026-10-16 22:20:38.399978+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+2026-10-16 22:20:38.501412+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+2026-10-16 22:20:38.584495+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerNativeRenderingSpecimensAndReducedActorLayout]' passed (0.591 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerNotesPreviewAtRealFixedStrikeAndExpireWithoutScoring]' started.
+2026-10-16 22:20:38.678139+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerNotesPreviewAtRealFixedStrikeAndExpireWithoutScoring]' passed (0.026 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerRealMatchDrivesReboundExtraDoesNotAdvanceAndPauseFreezesPose]' started.
+2026-10-16 22:20:38.704332+0800 BeatLab[3478:126785] [UIFocus] SKView implements focusItemsInRect: - caching for linear focus movement is limited as long as this view is on screen.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerRealMatchDrivesReboundExtraDoesNotAdvanceAndPauseFreezesPose]' passed (0.014 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerTrialRejectsOtherLessonsUsesOriginalThirdChartAndNeverSaves]' started.
+2026-10-16 22:20:51.081410+0800 BeatLab[3478:127026] [catalog] Query for com.apple.MobileAsset.VoiceServicesVocalizerVoice failed: 2
+2026-10-16 22:20:51.098368+0800 BeatLab[3478:127026] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+2026-10-16 22:20:51.115391+0800 BeatLab[3478:127026] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+2026-10-16 22:20:57.861464+0800 BeatLab[3478:127043] [catalog] Query for com.apple.MobileAsset.VoiceServicesVocalizerVoice failed: 2
+2026-10-16 22:20:57.876589+0800 BeatLab[3478:127043] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+2026-10-16 22:20:57.889953+0800 BeatLab[3478:127043] [catalog] Query for com.apple.MobileAsset.VoiceServices.GryphonVoice failed: 2
+Test Case '-[BeatLabTests.RhythmPrototypeTests testDrummerTrialRejectsOtherLessonsUsesOriginalThirdChartAndNeverSaves]' passed (40.536 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testFixedCenterLeadCalibrationRestsAndMissWindowAreReadOnly]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testFixedCenterLeadCalibrationRestsAndMissWindowAreReadOnly]' passed (0.001 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testPausedRouteAndMediaResetDiscardSessionWithoutUnlocking]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testPausedRouteAndMediaResetDiscardSessionWithoutUnlocking]' passed (0.205 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testPausePreservesTargetsHitsAndRejectsPausedAndResumeCountInTaps]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testPausePreservesTargetsHitsAndRejectsPausedAndResumeCountInTaps]' passed (0.444 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testPauseProjectionIndependentMidBeatOracleAndInvalidCountIn]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testPauseProjectionIndependentMidBeatOracleAndInvalidCountIn]' passed (0.002 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testReviewedQuarterAndEighthFixturesHaveSameJudgmentInBothPresentations]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testReviewedQuarterAndEighthFixturesHaveSameJudgmentInBothPresentations]' passed (0.004 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testReviewedTempoOffsetAndSeededSpamMatrixKeepsRealStars]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testReviewedTempoOffsetAndSeededSpamMatrixKeepsRealStars]' passed (0.037 seconds).
+Test Case '-[BeatLabTests.RhythmPrototypeTests testSpamRateMatrixCannotEarnIntroStarWhileFiniteAccurateTapsCan]' started.
+Test Case '-[BeatLabTests.RhythmPrototypeTests testSpamRateMatrixCannotEarnIntroStarWhileFiniteAccurateTapsCan]' passed (0.003 seconds).
+Test Suite 'RhythmPrototypeTests' passed at 2026-10-16 22:21:19.954.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 79.513 (79.519) seconds
+Test Suite 'BeatLabTests.xctest' passed at 2026-10-16 22:21:19.954.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 79.513 (79.519) seconds
+Test Suite 'Selected tests' passed at 2026-10-16 22:21:19.955.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 79.513 (79.520) seconds
+2026-10-16 22:21:21.171175+0800 BeatLabUITests-Runner[3647:130811] [Default] Running tests...
+2026-10-16 22:21:21.218184+0800 BeatLabUITests-Runner[3647:130868] [General] Failed to send CA Event for app launch measurements for ca_event_type: 0 event_name: com.apple.app_launch_measurement.FirstFramePresentationMetric
+2026-10-16 22:21:21.619972+0800 BeatLabUITests-Runner[3647:130868] [General] Failed to send CA Event for app launch measurements for ca_event_type: 1 event_name: com.apple.app_launch_measurement.ExtendedLaunchMetrics
+    t =      nans Interface orientation changed to Portrait
+Test Suite 'Selected tests' started at 2026-10-16 22:21:23.418.
+Test Suite 'BeatLabUITests.xctest' started at 2026-10-16 22:21:23.419.
+Test Suite 'PracticeUITests' started at 2026-10-16 22:21:23.419.
+Test Case '-[BeatLabUITests.PracticeUITests testDrummerActualInputPauseRetryAndIsolatedZeroResult]' started.
+    t =     0.00s Start Test at 2026-10-16 22:21:23.419
+    t =     0.22s Set Up
+    t =     0.22s Open com.gavin0099.beatlab
+    t =     0.22s     Launch com.gavin0099.beatlab
+2026-10-16 22:21:24.085 xcodebuild[3416:125867] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-16 22:21:24.085 xcodebuild[3416:125867] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     0.88s         Setting up automation session
+    t =     1.61s         Wait for com.gavin0099.beatlab to idle
+    t =     3.02s Checking existence of `"練習" Button`
+    t =     3.11s Find the "練習" Button
+    t =     3.15s Tap "練習" Button
+    t =     3.15s     Wait for com.gavin0099.beatlab to idle
+    t =     3.15s     Find the "練習" Button
+    t =     3.17s     Check for interrupting elements affecting "練習" Button
+    t =     3.19s     Synthesize event
+    t =     3.58s     Wait for com.gavin0099.beatlab to idle
+    t =     3.73s Tap "practiceSettings" Button
+    t =     3.73s     Wait for com.gavin0099.beatlab to idle
+    t =     4.40s     Find the "practiceSettings" Button
+    t =     4.46s     Check for interrupting elements affecting "practiceSettings" Button
+    t =     4.49s     Synthesize event
+    t =     4.78s     Wait for com.gavin0099.beatlab to idle
+    t =     5.27s Find the Window (First Match)
+    t =     5.28s Checking existence of `"節奏挑戰" NavigationBar`
+    t =     5.33s Checking existence of `"選擇夥伴" NavigationBar`
+    t =     5.36s Checking existence of `NavigationBar (First Match)`
+    t =     5.36s Find the NavigationBar (First Match)
+    t =     5.38s Checking existence of `TabBar (First Match)`
+    t =     5.39s Find the TabBar (First Match)
+    t =     5.40s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.42s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.45s Find the "comparison.eighth.drummer" Button
+    t =     5.48s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.50s Find the "comparison.eighth.drummer" Button
+    t =     5.54s Tap "comparison.eighth.drummer" Button
+    t =     5.54s     Wait for com.gavin0099.beatlab to idle
+    t =     5.54s     Find the "comparison.eighth.drummer" Button
+    t =     5.56s     Check for interrupting elements affecting "comparison.eighth.drummer" Button
+    t =     5.59s     Synthesize event
+    t =     5.88s     Wait for com.gavin0099.beatlab to idle
+    t =     6.05s Waiting 5.0s for "practiceTapPad.right" Button to exist
+    t =     7.12s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.right" Button`
+    t =     7.12s         Checking existence of `"practiceTapPad.right" Button`
+    t =     7.16s Tap "pausePractice" Button
+    t =     7.16s     Wait for com.gavin0099.beatlab to idle
+    t =     7.16s     Find the "pausePractice" Button
+    t =     7.19s     Check for interrupting elements affecting "pausePractice" Button
+    t =     7.23s     Synthesize event
+    t =     7.51s     Wait for com.gavin0099.beatlab to idle
+    t =     7.51s Waiting 5.0s for "restartPractice" Button to exist
+    t =     8.58s     Checking `Expect predicate `existsNoRetry == 1` for object "restartPractice" Button`
+    t =     8.58s         Checking existence of `"restartPractice" Button`
+    t =     8.62s Find the Target Application 'com.gavin0099.beatlab'
+    t =     8.67s Added attachment named 'Drummer paused before expiry'
+    t =     8.67s Tap "restartPractice" Button
+    t =     8.67s     Wait for com.gavin0099.beatlab to idle
+    t =     8.67s     Find the "restartPractice" Button
+    t =     8.69s     Check for interrupting elements affecting "restartPractice" Button
+    t =     8.72s     Synthesize event
+    t =     9.01s     Wait for com.gavin0099.beatlab to idle
+    t =     9.01s Waiting 5.0s for "practiceTapPad.right" Button to exist
+    t =    10.09s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.right" Button`
+    t =    10.09s         Checking existence of `"practiceTapPad.right" Button`
+    t =    10.12s Find the "jumpMatches" StaticText
+    t =    10.14s Waiting 26.0s for "practiceSummary" StaticText to exist
+    t =    11.21s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    11.21s         Checking existence of `"practiceSummary" StaticText`
+    t =    11.23s         Capturing element debug description
+    t =    12.19s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    12.19s         Checking existence of `"practiceSummary" StaticText`
+    t =    12.21s         Capturing element debug description
+    t =    13.17s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    13.17s         Checking existence of `"practiceSummary" StaticText`
+    t =    13.20s         Capturing element debug description
+    t =    14.16s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    14.16s         Checking existence of `"practiceSummary" StaticText`
+    t =    14.20s         Capturing element debug description
+    t =    15.16s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    15.16s         Checking existence of `"practiceSummary" StaticText`
+    t =    15.19s         Capturing element debug description
+    t =    16.16s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    16.16s         Checking existence of `"practiceSummary" StaticText`
+    t =    16.18s         Capturing element debug description
+    t =    17.15s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    17.15s         Checking existence of `"practiceSummary" StaticText`
+    t =    17.17s         Capturing element debug description
+    t =    18.14s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    18.14s         Checking existence of `"practiceSummary" StaticText`
+    t =    18.17s         Capturing element debug description
+    t =    19.14s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    19.14s         Checking existence of `"practiceSummary" StaticText`
+    t =    19.16s         Capturing element debug description
+    t =    20.15s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    20.15s         Checking existence of `"practiceSummary" StaticText`
+    t =    20.18s         Capturing element debug description
+    t =    21.15s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    21.15s         Checking existence of `"practiceSummary" StaticText`
+    t =    21.17s         Capturing element debug description
+    t =    22.14s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    22.14s         Checking existence of `"practiceSummary" StaticText`
+    t =    22.16s         Capturing element debug description
+    t =    23.23s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    23.23s         Checking existence of `"practiceSummary" StaticText`
+    t =    23.26s         Capturing element debug description
+    t =    24.23s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    24.23s         Checking existence of `"practiceSummary" StaticText`
+    t =    24.26s         Capturing element debug description
+    t =    25.22s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    25.22s         Checking existence of `"practiceSummary" StaticText`
+    t =    25.25s         Capturing element debug description
+    t =    26.22s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    26.22s         Checking existence of `"practiceSummary" StaticText`
+    t =    26.24s         Capturing element debug description
+    t =    27.21s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    27.21s         Checking existence of `"practiceSummary" StaticText`
+    t =    27.23s         Capturing element debug description
+    t =    28.20s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    28.20s         Checking existence of `"practiceSummary" StaticText`
+    t =    28.22s         Capturing element debug description
+    t =    29.19s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceSummary" StaticText`
+    t =    29.19s         Checking existence of `"practiceSummary" StaticText`
+    t =    29.21s Find the "practiceStars" Other
+    t =    29.22s Checking existence of `"nextLesson" Button`
+    t =    29.24s Find the Target Application 'com.gavin0099.beatlab'
+    t =    29.27s Added attachment named 'Drummer zero-input real result'
+    t =    29.27s Find the Window (First Match)
+    t =    29.28s Checking existence of `"節奏挑戰" NavigationBar`
+    t =    29.29s Checking existence of `"選擇夥伴" NavigationBar`
+    t =    29.30s Checking existence of `NavigationBar (First Match)`
+    t =    29.31s Find the NavigationBar (First Match)
+    t =    29.32s Checking existence of `TabBar (First Match)`
+    t =    29.33s Find the TabBar (First Match)
+    t =    29.33s Checking existence of `"retryLesson" Button`
+    t =    29.35s Checking existence of `"retryLesson" Button`
+    t =    29.36s Find the "retryLesson" Button
+    t =    29.37s Checking existence of `"retryLesson" Button`
+    t =    29.39s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    29.39s Checking existence of `"retryLesson" Button`
+    t =    29.40s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 451.0) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 231.0) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =    29.40s     Wait for com.gavin0099.beatlab to idle
+    t =    29.41s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    29.41s     Check for interrupting elements affecting Window
+    t =    29.42s     Synthesize event
+    t =    29.42s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    29.43s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    29.44s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    29.44s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    29.45s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    30.79s     Wait for com.gavin0099.beatlab to idle
+    t =    30.80s Checking existence of `"retryLesson" Button`
+    t =    30.82s Checking existence of `"retryLesson" Button`
+    t =    30.83s Find the "retryLesson" Button
+    t =    30.85s Checking existence of `"retryLesson" Button`
+    t =    30.86s Find the "retryLesson" Button
+    t =    30.88s Tap "retryLesson" Button
+    t =    30.88s     Wait for com.gavin0099.beatlab to idle
+    t =    30.88s     Find the "retryLesson" Button
+    t =    30.89s     Check for interrupting elements affecting "retryLesson" Button
+    t =    30.91s     Synthesize event
+    t =    31.20s     Wait for com.gavin0099.beatlab to idle
+    t =    31.20s Waiting 5.0s for "practiceTapPad.right" Button to exist
+    t =    32.26s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.right" Button`
+    t =    32.26s         Checking existence of `"practiceTapPad.right" Button`
+    t =    32.30s Find the "practiceTapPad.left" Button
+    t =    32.33s Find the "practiceTapPad.left" Button
+    t =    32.35s Find the "practiceTapPad.right" Button
+    t =    32.38s Find the "practiceTapPad.right" Button
+    t =    33.47s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    33.47s     Find the "jumpCue" StaticText
+    t =    33.50s     Capturing element debug description
+    t =    33.60s         Requesting snapshot of accessibility hierarchy for app with pid 3671
+    t =    33.65s         Find: Descendants matching type StaticText
+    t =    33.65s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    33.65s         Requesting snapshot of accessibility hierarchy for app with pid 3671
+    t =    33.69s         Find: Descendants matching type StaticText
+    t =    33.69s         Requesting snapshot of accessibility hierarchy for app with pid 3671
+    t =    34.47s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    34.47s     Find the "jumpCue" StaticText
+    t =    34.50s     Capturing element debug description
+    t =    34.59s         Requesting snapshot of accessibility hierarchy for app with pid 3671
+    t =    34.63s         Find: Descendants matching type StaticText
+    t =    34.63s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    34.63s         Requesting snapshot of accessibility hierarchy for app with pid 3671
+    t =    34.66s         Find: Descendants matching type StaticText
+    t =    34.66s         Requesting snapshot of accessibility hierarchy for app with pid 3671
+    t =    35.45s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    35.45s     Find the "jumpCue" StaticText
+    t =    35.49s Checking existence of `"practiceTapPad.right" Button`
+    t =    35.51s Tap "practiceTapPad.right" Button
+    t =    35.51s     Wait for com.gavin0099.beatlab to idle
+    t =    35.51s     Find the "practiceTapPad.right" Button
+    t =    35.54s     Check for interrupting elements affecting "practiceTapPad.right" Button
+    t =    35.57s     Synthesize event
+    t =    35.87s     Wait for com.gavin0099.beatlab to idle
+    t =    35.87s Checking existence of `"jumpMatches" StaticText`
+    t =    35.90s Find the "jumpMatches" StaticText
+    t =    35.92s Checking existence of `"jumpMatches" StaticText`
+    t =    35.94s Find the "jumpMatches" StaticText
+    t =    35.97s Find the Target Application 'com.gavin0099.beatlab'
+    t =    36.02s Added attachment named 'Drummer actual individual touch and judged feedback'
+    t =    36.02s Tap "stopPractice" Button
+    t =    36.02s     Wait for com.gavin0099.beatlab to idle
+    t =    36.03s     Find the "stopPractice" Button
+    t =    36.06s     Check for interrupting elements affecting "stopPractice" Button
+    t =    36.09s     Synthesize event
+    t =    36.39s     Wait for com.gavin0099.beatlab to idle
+    t =    36.46s Waiting 5.0s for "journeyProgress" StaticText to exist
+    t =    37.52s     Checking `Expect predicate `existsNoRetry == 1` for object "journeyProgress" StaticText`
+    t =    37.52s         Checking existence of `"journeyProgress" StaticText`
+    t =    37.55s Find the "journeyProgress" StaticText
+    t =    37.57s Find the "journeyLesson.quarter-hands" Button
+    t =    37.59s Tear Down
+Test Case '-[BeatLabUITests.PracticeUITests testDrummerActualInputPauseRetryAndIsolatedZeroResult]' passed (37.819 seconds).
+Test Case '-[BeatLabUITests.PracticeUITests testDrummerMaximumTextControlsAndNoWriteOnExit]' started.
+    t =     0.00s Start Test at 2026-10-16 22:22:01.238
+    t =     0.03s Set Up
+    t =     0.03s Open com.gavin0099.beatlab
+    t =     0.03s     Launch com.gavin0099.beatlab
+    t =     0.03s         Terminate com.gavin0099.beatlab:3671
+2026-10-16 22:22:02.319 xcodebuild[3416:125867] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-16 22:22:02.319 xcodebuild[3416:125867] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.29s         Setting up automation session
+    t =     1.93s         Wait for com.gavin0099.beatlab to idle
+    t =     3.19s Checking existence of `"練習" Button`
+    t =     3.26s Find the "練習" Button
+    t =     3.29s Tap "練習" Button
+    t =     3.29s     Wait for com.gavin0099.beatlab to idle
+    t =     3.29s     Find the "練習" Button
+    t =     3.30s     Check for interrupting elements affecting "練習" Button
+    t =     3.31s     Synthesize event
+    t =     3.60s     Wait for com.gavin0099.beatlab to idle
+    t =     4.23s Tap "practiceSettings" Button
+    t =     4.23s     Wait for com.gavin0099.beatlab to idle
+    t =     4.23s     Find the "practiceSettings" Button
+    t =     4.28s     Check for interrupting elements affecting "practiceSettings" Button
+    t =     4.30s     Synthesize event
+    t =     4.59s     Wait for com.gavin0099.beatlab to idle
+    t =     5.02s Find the Window (First Match)
+    t =     5.03s Checking existence of `"節奏挑戰" NavigationBar`
+    t =     5.07s Checking existence of `"選擇夥伴" NavigationBar`
+    t =     5.10s Checking existence of `NavigationBar (First Match)`
+    t =     5.11s Find the NavigationBar (First Match)
+    t =     5.13s Checking existence of `TabBar (First Match)`
+    t =     5.13s Find the TabBar (First Match)
+    t =     5.14s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.17s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.19s Find the "comparison.eighth.drummer" Button
+    t =     5.22s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.25s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.25s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     5.28s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     5.28s     Wait for com.gavin0099.beatlab to idle
+    t =     5.28s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.29s     Check for interrupting elements affecting Window
+    t =     5.31s     Synthesize event
+    t =     5.31s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.31s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.32s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.33s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.33s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.67s     Wait for com.gavin0099.beatlab to idle
+    t =     6.68s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.73s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.76s Find the "comparison.eighth.drummer" Button
+    t =     6.79s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.84s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.84s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     6.87s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     6.87s     Wait for com.gavin0099.beatlab to idle
+    t =     6.87s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.88s     Check for interrupting elements affecting Window
+    t =     6.90s     Synthesize event
+    t =     6.90s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.91s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.91s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.92s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.93s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.27s     Wait for com.gavin0099.beatlab to idle
+    t =     8.28s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     8.31s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     8.34s Find the "comparison.eighth.drummer" Button
+    t =     8.39s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     8.42s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.42s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     8.45s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     8.45s     Wait for com.gavin0099.beatlab to idle
+    t =     8.45s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.46s     Check for interrupting elements affecting Window
+    t =     8.48s     Synthesize event
+    t =     8.48s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.49s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.50s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.50s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.51s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     9.85s     Wait for com.gavin0099.beatlab to idle
+    t =     9.86s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     9.91s Checking existence of `"comparison.eighth.drummer" Button`
+    t =     9.94s Find the "comparison.eighth.drummer" Button
+    t =    10.09s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    10.12s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.13s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    10.17s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 455.6) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 235.6) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =    10.17s     Wait for com.gavin0099.beatlab to idle
+    t =    10.17s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.18s     Check for interrupting elements affecting Window
+    t =    10.21s     Synthesize event
+    t =    10.21s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.22s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.23s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.24s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    10.25s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.60s     Wait for com.gavin0099.beatlab to idle
+    t =    11.60s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    11.63s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    11.66s Find the "comparison.eighth.drummer" Button
+    t =    11.69s Checking existence of `"comparison.eighth.drummer" Button`
+    t =    11.71s Find the "comparison.eighth.drummer" Button
+    t =    11.75s Tap "comparison.eighth.drummer" Button
+    t =    11.75s     Wait for com.gavin0099.beatlab to idle
+    t =    11.75s     Find the "comparison.eighth.drummer" Button
+    t =    11.77s     Check for interrupting elements affecting "comparison.eighth.drummer" Button
+    t =    11.80s     Synthesize event
+    t =    12.08s     Wait for com.gavin0099.beatlab to idle
+    t =    12.15s Waiting 5.0s for "practiceTapPad.left" Button to exist
+    t =    13.22s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.left" Button`
+    t =    13.22s         Checking existence of `"practiceTapPad.left" Button`
+    t =    13.25s Find the "practiceTapPad.right" Button
+    t =    13.29s Find the "practiceTapPad.right" Button
+    t =    13.31s Find the Window (First Match)
+    t =    13.32s Find the "practiceTapPad.right" Button
+    t =    13.34s Find the Target Application 'com.gavin0099.beatlab'
+    t =    13.39s Added attachment named 'Drummer maximum text live'
+    t =    13.39s Tap "pausePractice" Button
+    t =    13.39s     Wait for com.gavin0099.beatlab to idle
+    t =    13.39s     Find the "pausePractice" Button
+    t =    13.42s     Check for interrupting elements affecting "pausePractice" Button
+    t =    13.45s     Synthesize event
+    t =    13.75s     Wait for com.gavin0099.beatlab to idle
+    t =    13.76s Find the Window (First Match)
+    t =    13.77s Checking existence of `"節奏挑戰" NavigationBar`
+    t =    13.79s Checking existence of `"選擇夥伴" NavigationBar`
+    t =    13.81s Checking existence of `NavigationBar (First Match)`
+    t =    13.85s Checking existence of `StatusBar (First Match)`
+    t =    13.89s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    13.90s Checking existence of `TabBar (First Match)`
+    t =    13.94s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    13.94s Checking existence of `"resumePractice" Button`
+    t =    13.96s Checking existence of `"resumePractice" Button`
+    t =    13.98s Find the "resumePractice" Button
+    t =    14.00s Checking existence of `"resumePractice" Button`
+    t =    14.02s Find the "resumePractice" Button
+    t =    14.04s Tap "resumePractice" Button
+    t =    14.04s     Wait for com.gavin0099.beatlab to idle
+    t =    14.04s     Find the "resumePractice" Button
+    t =    14.06s     Check for interrupting elements affecting "resumePractice" Button
+    t =    14.08s     Synthesize event
+    t =    14.37s     Wait for com.gavin0099.beatlab to idle
+    t =    14.37s Waiting 5.0s for "practiceTapPad.right" Button to exist
+    t =    15.44s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad.right" Button`
+    t =    15.44s         Checking existence of `"practiceTapPad.right" Button`
+    t =    15.46s Tap "stopPractice" Button
+    t =    15.46s     Wait for com.gavin0099.beatlab to idle
+    t =    15.46s     Find the "stopPractice" Button
+    t =    15.48s     Check for interrupting elements affecting "stopPractice" Button
+    t =    15.51s     Synthesize event
+    t =    15.80s     Wait for com.gavin0099.beatlab to idle
+    t =    15.81s Waiting 5.0s for "journeyProgress" StaticText to exist
+    t =    16.88s     Checking `Expect predicate `existsNoRetry == 1` for object "journeyProgress" StaticText`
+    t =    16.88s         Checking existence of `"journeyProgress" StaticText`
+    t =    16.93s Find the "journeyProgress" StaticText
+    t =    16.96s Tear Down
+Test Case '-[BeatLabUITests.PracticeUITests testDrummerMaximumTextControlsAndNoWriteOnExit]' passed (17.183 seconds).
+Test Case '-[BeatLabUITests.PracticeUITests testNewDualLaneActualTouchesPauseResumeRestartAndExit]' started.
+    t =     0.00s Start Test at 2026-10-16 22:22:18.423
+    t =     0.04s Set Up
+    t =     0.04s Open com.gavin0099.beatlab
+    t =     0.04s     Launch com.gavin0099.beatlab
+    t =     0.04s         Terminate com.gavin0099.beatlab:3760
+2026-10-16 22:22:19.572 xcodebuild[3416:125867] [MT] IDELaunchParametersSnapshot: The operation couldn’t be completed. (DebuggerLLDB.DebuggerVersionStore.StoreError error 0.)
+2026-10-16 22:22:19.572 xcodebuild[3416:125867] [MT] IDELaunchParametersSnapshot: no debugger version
+    t =     1.36s         Setting up automation session
+    t =     1.95s         Wait for com.gavin0099.beatlab to idle
+    t =     3.20s Checking existence of `"練習" Button`
+    t =     3.28s Find the "練習" Button
+    t =     3.30s Tap "練習" Button
+    t =     3.30s     Wait for com.gavin0099.beatlab to idle
+    t =     3.31s     Find the "練習" Button
+    t =     3.32s     Check for interrupting elements affecting "練習" Button
+    t =     3.34s     Synthesize event
+    t =     3.62s     Wait for com.gavin0099.beatlab to idle
+    t =     4.24s Find the Window (First Match)
+    t =     4.25s Checking existence of `"節奏挑戰" NavigationBar`
+    t =     4.29s Checking existence of `"選擇夥伴" NavigationBar`
+    t =     4.31s Checking existence of `NavigationBar (First Match)`
+    t =     4.32s Find the NavigationBar (First Match)
+    t =     4.33s Checking existence of `TabBar (First Match)`
+    t =     4.33s Find the TabBar (First Match)
+    t =     4.34s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     4.36s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     4.38s Find the "journeyLesson.first-beat" Button
+    t =     4.40s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     4.43s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.43s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     4.45s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 451.0) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 231.0) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     4.45s     Wait for com.gavin0099.beatlab to idle
+    t =     4.45s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.46s     Check for interrupting elements affecting Window
+    t =     4.48s     Synthesize event
+    t =     4.48s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.48s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.49s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.50s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     4.50s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.84s     Wait for com.gavin0099.beatlab to idle
+    t =     5.85s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     5.89s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     5.91s Find the "journeyLesson.first-beat" Button
+    t =     5.93s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     5.96s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.96s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     5.98s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 451.0) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 231.0) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     5.98s     Wait for com.gavin0099.beatlab to idle
+    t =     5.98s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     5.99s     Check for interrupting elements affecting Window
+    t =     6.01s     Synthesize event
+    t =     6.01s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.01s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.02s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.03s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     6.03s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.37s     Wait for com.gavin0099.beatlab to idle
+    t =     7.38s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     7.42s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     7.44s Find the "journeyLesson.first-beat" Button
+    t =     7.47s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     7.49s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.50s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     7.52s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 451.0) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 231.0) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =     7.52s     Wait for com.gavin0099.beatlab to idle
+    t =     7.52s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.52s     Check for interrupting elements affecting Window
+    t =     7.54s     Synthesize event
+    t =     7.54s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.55s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.56s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.56s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     7.57s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =     8.91s     Wait for com.gavin0099.beatlab to idle
+    t =     8.92s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     8.95s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     8.98s Find the "journeyLesson.first-beat" Button
+    t =     9.00s Checking existence of `"journeyLesson.first-beat" Button`
+    t =     9.02s Find the "journeyLesson.first-beat" Button
+    t =     9.05s Find the "journeyLesson.first-beat" Button
+    t =     9.07s Tap "journeyLesson.first-beat" Button[0.50, 0.50]
+    t =     9.07s     Wait for com.gavin0099.beatlab to idle
+    t =     9.07s     Find the "journeyLesson.first-beat" Button
+    t =     9.10s     Check for interrupting elements affecting "journeyLesson.first-beat" Button
+    t =     9.11s     Synthesize event
+    t =     9.11s         Find the "journeyLesson.first-beat" Button
+    t =     9.14s         Find the "journeyLesson.first-beat" Button
+    t =     9.16s         Find the "journeyLesson.first-beat" Button
+    t =     9.47s     Wait for com.gavin0099.beatlab to idle
+    t =     9.83s Waiting 5.0s for "preparedLessonNumber" StaticText to exist
+    t =    10.87s     Checking `Expect predicate `existsNoRetry == 1` for object "preparedLessonNumber" StaticText`
+    t =    10.87s         Checking existence of `"preparedLessonNumber" StaticText`
+    t =    10.94s Find the "preparedLessonNumber" StaticText
+    t =    10.96s Find the Window (First Match)
+    t =    10.97s Checking existence of `"節奏挑戰" NavigationBar`
+    t =    10.99s Checking existence of `"選擇夥伴" NavigationBar`
+    t =    11.02s Checking existence of `NavigationBar (First Match)`
+    t =    11.03s Find the NavigationBar (First Match)
+    t =    11.04s Checking existence of `TabBar (First Match)`
+    t =    11.05s Find the TabBar (First Match)
+    t =    11.05s Checking existence of `"startLesson" Button`
+    t =    11.07s Checking existence of `"startLesson" Button`
+    t =    11.10s Find the "startLesson" Button
+    t =    11.13s Checking existence of `"startLesson" Button`
+    t =    11.16s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.16s Checking existence of `"startLesson" Button`
+    t =    11.19s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 451.0) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 231.0) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =    11.19s     Wait for com.gavin0099.beatlab to idle
+    t =    11.19s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.20s     Check for interrupting elements affecting Window
+    t =    11.22s     Synthesize event
+    t =    11.22s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.23s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.24s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.24s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    11.25s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.59s     Wait for com.gavin0099.beatlab to idle
+    t =    12.60s Checking existence of `"startLesson" Button`
+    t =    12.64s Checking existence of `"startLesson" Button`
+    t =    12.67s Find the "startLesson" Button
+    t =    12.70s Checking existence of `"startLesson" Button`
+    t =    12.73s Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.73s Checking existence of `"startLesson" Button`
+    t =    12.76s Press Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 451.0) for 0.1 seconds, then drag to Window at {{0.0, 0.0}, {375.0, 667.0}}[0.00, 0.00] -> (187.5, 0.0) -> (0.0, 231.0) with velocity of 250.00 pixels per second, and then hold for 0.1 seconds 
+    t =    12.76s     Wait for com.gavin0099.beatlab to idle
+    t =    12.76s     Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.77s     Check for interrupting elements affecting Window
+    t =    12.79s     Synthesize event
+    t =    12.79s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.80s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.80s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.81s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    12.82s         Find the Window at {{0.0, 0.0}, {375.0, 667.0}}
+    t =    14.16s     Wait for com.gavin0099.beatlab to idle
+    t =    14.50s Checking existence of `"startLesson" Button`
+    t =    14.54s Checking existence of `"startLesson" Button`
+    t =    14.57s Find the "startLesson" Button
+    t =    14.60s Checking existence of `"startLesson" Button`
+    t =    14.62s Find the "startLesson" Button
+    t =    14.66s Tap "startLesson" Button
+    t =    14.66s     Wait for com.gavin0099.beatlab to idle
+    t =    14.66s     Find the "startLesson" Button
+    t =    14.68s     Check for interrupting elements affecting "startLesson" Button
+    t =    14.71s     Synthesize event
+    t =    15.00s     Wait for com.gavin0099.beatlab to idle
+    t =    15.06s Waiting 5.0s for "practiceTapPad" Button to exist
+    t =    16.09s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad" Button`
+    t =    16.09s         Checking existence of `"practiceTapPad" Button`
+    t =    16.12s Find the "practiceTapPad.left" Button
+    t =    16.17s Find the "practiceTapPad.left" Button
+    t =    16.20s Find the "practiceTapPad" Button
+    t =    16.24s Find the "practiceTapPad.left" Button
+    t =    16.27s Find the "practiceTapPad" Button
+    t =    16.30s Checking existence of `"rhythmPlayfield" Any`
+    t =    16.33s Checking existence of `"rhythmPlayfield" Any`
+    t =    16.36s Find the "rhythmPlayfield" Any
+    t =    16.41s Find the "rhythmPlayfield" Other
+    t =    16.46s Find the "practiceTapPad" Button
+    t =    16.48s Find the Target Application 'com.gavin0099.beatlab'
+    t =    16.53s Added attachment named 'new A fixed lanes and pads'
+    t =    16.53s Tap "pausePractice" Button
+    t =    16.53s     Wait for com.gavin0099.beatlab to idle
+    t =    16.53s     Find the "pausePractice" Button
+    t =    16.56s     Check for interrupting elements affecting "pausePractice" Button
+    t =    16.60s     Synthesize event
+    t =    16.89s     Wait for com.gavin0099.beatlab to idle
+    t =    16.89s Waiting 5.0s for "resumePractice" Button to exist
+    t =    17.93s     Checking `Expect predicate `existsNoRetry == 1` for object "resumePractice" Button`
+    t =    17.93s         Checking existence of `"resumePractice" Button`
+    t =    17.99s Tap "resumePractice" Button
+    t =    17.99s     Wait for com.gavin0099.beatlab to idle
+    t =    17.99s     Find the "resumePractice" Button
+    t =    18.02s     Check for interrupting elements affecting "resumePractice" Button
+    t =    18.05s     Synthesize event
+    t =    18.34s     Wait for com.gavin0099.beatlab to idle
+    t =    18.34s Waiting 5.0s for "practiceTapPad" Button to exist
+    t =    19.40s     Checking `Expect predicate `existsNoRetry == 1` for object "practiceTapPad" Button`
+    t =    19.40s         Checking existence of `"practiceTapPad" Button`
+    t =    20.46s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    20.46s     Find the "jumpCue" StaticText
+    t =    20.49s     Capturing element debug description
+    t =    20.60s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    20.64s         Find: Descendants matching type StaticText
+    t =    20.64s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    20.65s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    20.69s         Find: Descendants matching type StaticText
+    t =    20.69s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    21.50s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    21.50s     Find the "jumpCue" StaticText
+    t =    21.53s     Capturing element debug description
+    t =    21.64s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    21.68s         Find: Descendants matching type StaticText
+    t =    21.68s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    21.68s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    21.72s         Find: Descendants matching type StaticText
+    t =    21.73s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    22.44s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    22.44s     Find the "jumpCue" StaticText
+    t =    22.48s     Capturing element debug description
+    t =    22.60s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    22.64s         Find: Descendants matching type StaticText
+    t =    22.64s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    22.64s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    22.69s         Find: Descendants matching type StaticText
+    t =    22.69s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    23.49s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    23.49s     Find the "jumpCue" StaticText
+    t =    23.53s     Capturing element debug description
+    t =    23.63s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    23.67s         Find: Descendants matching type StaticText
+    t =    23.67s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    23.67s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    23.72s         Find: Descendants matching type StaticText
+    t =    23.72s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    24.44s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    24.44s     Find the "jumpCue" StaticText
+    t =    24.47s     Capturing element debug description
+    t =    24.59s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    24.63s         Find: Descendants matching type StaticText
+    t =    24.64s         Find: Elements matching predicate '"jumpCue" IN identifiers'
+    t =    24.64s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    24.71s         Find: Descendants matching type StaticText
+    t =    24.72s         Requesting snapshot of accessibility hierarchy for app with pid 3812
+    t =    25.53s Checking `Expect predicate `NOT label BEGINSWITH "先聽"` for object "jumpCue" StaticText`
+    t =    25.53s     Find the "jumpCue" StaticText
+    t =    25.56s Tap "practiceTapPad" Button
+    t =    25.56s     Wait for com.gavin0099.beatlab to idle
+    t =    25.56s     Find the "practiceTapPad" Button
+    t =    25.60s     Check for interrupting elements affecting "practiceTapPad" Button
+    t =    25.63s     Synthesize event
+    t =    25.92s     Wait for com.gavin0099.beatlab to idle
+    t =    25.92s Find the "jumpMatches" StaticText
+    t =    25.95s Tap "practiceTapPad" Button
+    t =    25.95s     Wait for com.gavin0099.beatlab to idle
+    t =    25.96s     Find the "practiceTapPad" Button
+    t =    25.99s     Check for interrupting elements affecting "practiceTapPad" Button
+    t =    26.02s     Synthesize event
+    t =    26.31s     Wait for com.gavin0099.beatlab to idle
+    t =    26.32s Find the "jumpMatches" StaticText
+    t =    26.34s Tap "practiceTapPad" Button
+    t =    26.34s     Wait for com.gavin0099.beatlab to idle
+    t =    26.35s     Find the "practiceTapPad" Button
+    t =    26.38s     Check for interrupting elements affecting "practiceTapPad" Button
+    t =    26.41s     Synthesize event
+    t =    26.70s     Wait for com.gavin0099.beatlab to idle
+    t =    26.70s Find the "jumpMatches" StaticText
+    t =    26.73s Find the Target Application 'com.gavin0099.beatlab'
+    t =    26.77s Added attachment named 'A actual individual touch judgment'
+    t =    26.77s Find the "jumpMatches" StaticText
+    t =    26.80s Tap "pausePractice" Button
+    t =    26.80s     Wait for com.gavin0099.beatlab to idle
+    t =    26.80s     Find the "pausePractice" Button
+    t =    26.83s     Check for interrupting elements affecting "pausePractice" Button
+    t =    26.86s     Synthesize event
+    t =    27.15s     Wait for com.gavin0099.beatlab to idle
+    t =    27.16s Waiting 5.0s for "restartPractice" Button to exist
+    t =    28.22s     Checking `Expect predicate `existsNoRetry == 1` for object "restartPractice" Button`
+    t =    28.22s         Checking existence of `"restartPractice" Button`
+    t =    28.27s Find the Target Application 'com.gavin0099.beatlab'
+    t =    28.31s Added attachment named 'new pause controls'
+    t =    28.31s Tap "restartPractice" Button
+    t =    28.31s     Wait for com.gavin0099.beatlab to idle
+    t =    28.32s     Find the "restartPractice" Button
+    t =    28.35s     Check for interrupting elements affecting "restartPractice" Button
+    t =    28.38s     Synthesize event
+    t =    28.67s     Wait for com.gavin0099.beatlab to idle
+    t =    28.67s Waiting 5.0s for "jumpMatches" StaticText to exist
+    t =    29.74s     Checking `Expect predicate `existsNoRetry == 1` for object "jumpMatches" StaticText`
+    t =    29.74s         Checking existence of `"jumpMatches" StaticText`
+    t =    29.77s Find the "jumpMatches" StaticText
+    t =    29.80s Tap "stopPractice" Button
+    t =    29.80s     Wait for com.gavin0099.beatlab to idle
+    t =    29.80s     Find the "stopPractice" Button
+    t =    29.83s     Check for interrupting elements affecting "stopPractice" Button
+    t =    29.86s     Synthesize event
+    t =    30.15s     Wait for com.gavin0099.beatlab to idle
+    t =    30.16s Waiting 5.0s for "journeyProgress" StaticText to exist
+    t =    31.22s     Checking `Expect predicate `existsNoRetry == 1` for object "journeyProgress" StaticText`
+    t =    31.22s         Checking existence of `"journeyProgress" StaticText`
+    t =    31.27s Find the "journeyLesson.quarter-hands" Button
+    t =    31.30s Tear Down
+Test Case '-[BeatLabUITests.PracticeUITests testNewDualLaneActualTouchesPauseResumeRestartAndExit]' passed (31.520 seconds).
+Test Suite 'PracticeUITests' passed at 2026-10-16 22:22:49.943.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 86.522 (86.525) seconds
+Test Suite 'BeatLabUITests.xctest' passed at 2026-10-16 22:22:49.945.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 86.522 (86.526) seconds
+Test Suite 'Selected tests' passed at 2026-10-16 22:22:49.946.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 86.522 (86.528) seconds
+2026-10-16 22:22:50.401 xcodebuild[3416:125867] [MT] IDETestOperationsObserverDebug: 178.155 elapsed -- Testing started completed.
+2026-10-16 22:22:50.401 xcodebuild[3416:125867] [MT] IDETestOperationsObserverDebug: 0.000 sec, +0.000 sec -- start
+2026-10-16 22:22:50.401 xcodebuild[3416:125867] [MT] IDETestOperationsObserverDebug: 178.155 sec, +178.155 sec -- end
+
+Test session results, code coverage, and logs:
+	/Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/native-ui.xcresult
+
+** TEST EXECUTE SUCCEEDED **
+
+Testing started

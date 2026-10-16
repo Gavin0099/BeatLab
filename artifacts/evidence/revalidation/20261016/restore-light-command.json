@@ -1,0 +1,15 @@
+{
+  "command": [
+    "xcrun",
+    "simctl",
+    "ui",
+    "52C92F83-56BB-4DC9-9331-3556F124FF2F",
+    "appearance",
+    "light"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792160625.490117,
+  "finished_at": 1792160625.722974,
+  "local_mac": true
+}

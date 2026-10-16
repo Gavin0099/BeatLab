@@ -1,0 +1,175 @@
+Building for debugging...
+[0/9] /Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/core-build/arm64-apple-macosx/debug/BeatLabCorePackageTests.derived/runner.swift
+[1/9] Write swift-version--58304C5D6DBC2206.txt
+[2/9] Copying lessons.json
+[3/9] Write sources
+[6/15] Compiling BeatLabDSP BeatLabDSP.c
+[8/15] Emitting module BeatLabCore
+[9/15] Compiling BeatLabCore ConfigurationRepository.swift
+[10/15] Compiling BeatLabCore MetronomeConfiguration.swift
+[11/15] Compiling BeatLabCore ProgressRepository.swift
+[12/15] Compiling BeatLabCore RhythmLesson.swift
+[13/15] Compiling BeatLabCore Subdivision.swift
+[14/20] Compiling BeatLabCore TapTempo.swift
+[15/20] Compiling BeatLabCore Tempo.swift
+[16/20] Compiling BeatLabCore TimeSignature.swift
+[17/20] Compiling BeatLabCore TimingPractice.swift
+[18/20] Compiling BeatLabCore resource_bundle_accessor.swift
+[19/24] Emitting module BeatLabCoreTests
+[20/27] Compiling BeatLabCoreTests PracticeTests.swift
+[21/27] Compiling BeatLabCoreTests ProgressTests.swift
+[22/27] Compiling BeatLabCoreTests TapTempoTests.swift
+[23/27] Compiling BeatLabCoreTests ConfigurationRepositoryTests.swift
+[24/27] Compiling BeatLabCoreTests DSPTests.swift
+[25/27] Compiling BeatLabCoreTests DomainTests.swift
+[26/29] Emitting module BeatLabCorePackageTests
+[27/29] Compiling BeatLabCorePackageTests runner.swift
+[27/29] Write Objects.LinkFileList
+[28/29] Linking BeatLabCorePackageTests
+Build complete! (18.11s)
+Test Suite 'All tests' started at 2026-10-16 22:19:17.297.
+Test Suite 'BeatLabCorePackageTests.xctest' started at 2026-10-16 22:19:17.304.
+Test Suite 'ConfigurationRepositoryTests' started at 2026-10-16 22:19:17.304.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testCompoundConfigurationRoundTrips]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testCompoundConfigurationRoundTrips]' passed (0.008 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testCorruptAndInvalidStoredValuesReturnSafeDefaults]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testCorruptAndInvalidStoredValuesReturnSafeDefaults]' passed (0.002 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testExplicitResetAllowsFreshSaveAfterUnsupportedSchema]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testExplicitResetAllowsFreshSaveAfterUnsupportedSchema]' passed (0.002 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testLegacyV1LoadIsReadOnlyAndUserEditSavesV2WithNewDefaults]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testLegacyV1LoadIsReadOnlyAndUserEditSavesV2WithNewDefaults]' passed (0.002 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testMalformedV2PatternRecoversWithoutOverwritingPayload]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testMalformedV2PatternRecoversWithoutOverwritingPayload]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testMissingSettingsLoadSafeDefaultsWithoutWriting]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testMissingSettingsLoadSafeDefaultsWithoutWriting]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testRoundTripPersistsAllFourFieldsToNewRepository]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testRoundTripPersistsAllFourFieldsToNewRepository]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testSaveRechecksSchemaAtWriteBoundary]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testSaveRechecksSchemaAtWriteBoundary]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testUnsupportedSchemaIsPreservedAndBlocksOverwrite]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testUnsupportedSchemaIsPreservedAndBlocksOverwrite]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testValidEditCanRecoverCorruptPayload]' started.
+Test Case '-[BeatLabCoreTests.ConfigurationRepositoryTests testValidEditCanRecoverCorruptPayload]' passed (0.001 seconds).
+Test Suite 'ConfigurationRepositoryTests' passed at 2026-10-16 22:19:17.325.
+	 Executed 10 tests, with 0 failures (0 unexpected) in 0.020 (0.021) seconds
+Test Suite 'DSPTests' started at 2026-10-16 22:19:17.325.
+Test Case '-[BeatLabCoreTests.DSPTests testBPMAndSubdivisionWaitForNextBeat]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testBPMAndSubdivisionWaitForNextBeat]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testClickOnsetsAreAtExactTargetSamples]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testClickOnsetsAreAtExactTargetSamples]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testFinitePracticeBedStartsOnExistingCursorAndDoesNotChangeBeatHistory]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testFinitePracticeBedStartsOnExistingCursorAndDoesNotChangeBeatHistory]' passed (0.002 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testInvalidOutputSettingsAreRejectedWithoutChangingRequestedState]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testInvalidOutputSettingsAreRejectedWithoutChangingRequestedState]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testInvalidSampleRateAndCompoundCombinationCannotCreateKernel]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testInvalidSampleRateAndCompoundCombinationCannotCreateKernel]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testMeterAndAccentWaitForBarWhileTempoCanChangeAtBeat]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testMeterAndAccentWaitForBarWhileTempoCanChangeAtBeat]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testMutedBeatSuppressesEverySubdivisionAndVoiceWhileClockAdvances]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testMutedBeatSuppressesEverySubdivisionAndVoiceWhileClockAdvances]' passed (0.024 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testPatternWaitsForBarTimbreForBeatAndAllMutedRecoveryKeepsPhase]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testPatternWaitsForBarTimbreForBeatAndAllMutedRecoveryKeepsPhase]' passed (0.008 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testPracticeBedRejectsInvalidDataAndIsIndependentOfRenderQuantum]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testPracticeBedRejectsInvalidDataAndIsIndependentOfRenderQuantum]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testPracticeBedRespectsMuteGainAndDisablesOnTempoMeterOrSubdivisionChange]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testPracticeBedRespectsMuteGainAndDisablesOnTempoMeterOrSubdivisionChange]' passed (0.009 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testRapidRequestsUseLatestStateAndInvalidRequestIsRejected]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testRapidRequestsUseLatestStateAndInvalidRequestIsRejected]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testTempoChangeDoesNotApplyPendingCompoundMutePatternToOldBar]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testTempoChangeDoesNotApplyPendingCompoundMutePatternToOldBar]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.DSPTests testZeroGainKeepsClockAndBeatAdvancing]' started.
+Test Case '-[BeatLabCoreTests.DSPTests testZeroGainKeepsClockAndBeatAdvancing]' passed (0.004 seconds).
+Test Suite 'DSPTests' passed at 2026-10-16 22:19:17.378.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.051 (0.052) seconds
+Test Suite 'DomainTests' started at 2026-10-16 22:19:17.378.
+Test Case '-[BeatLabCoreTests.DomainTests testBeatCycleAndMeterResizePreserveStatesAndRejectBadIndex]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testBeatCycleAndMeterResizePreserveStatesAndRejectBadIndex]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testCompatibleSignatureChangePreservesSubdivision]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testCompatibleSignatureChangePreservesSubdivision]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testCompoundMeterHasTwoDottedQuarterBeats]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testCompoundMeterHasTwoDottedQuarterBeats]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testDecodeRejectsIncompatibleOrInvalidConfiguration]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testDecodeRejectsIncompatibleOrInvalidConfiguration]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testDefaultConfigurationMatchesFoundationContract]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testDefaultConfigurationMatchesFoundationContract]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testInitializerRejectsIncompatibleSubdivision]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testInitializerRejectsIncompatibleSubdivision]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testInvalidPatternsAndTimbresCannotBeDecoded]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testInvalidPatternsAndTimbresCannotBeDecoded]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testInvalidSubdivisionEditDoesNotMutateConfiguration]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testInvalidSubdivisionEditDoesNotMutateConfiguration]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testSignatureChangeNormalizesSubdivisionAtomically]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testSignatureChangeNormalizesSubdivisionAtomically]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testSimpleMetersAllowFourDefinedSubdivisions]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testSimpleMetersAllowFourDefinedSubdivisions]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testTempoAcceptsInclusiveBoundaries]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testTempoAcceptsInclusiveBoundaries]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testTempoDecodeCannotBypassRangeValidation]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testTempoDecodeCannotBypassRangeValidation]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.DomainTests testTempoRejectsValuesOutsideBoundaries]' started.
+Test Case '-[BeatLabCoreTests.DomainTests testTempoRejectsValuesOutsideBoundaries]' passed (0.000 seconds).
+Test Suite 'DomainTests' passed at 2026-10-16 22:19:17.380.
+	 Executed 13 tests, with 0 failures (0 unexpected) in 0.002 (0.003) seconds
+Test Suite 'PracticeTests' started at 2026-10-16 22:19:17.380.
+Test Case '-[BeatLabCoreTests.PracticeTests testBestBPMOnlyAdvancesAfterHigherTempoPasses]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testBestBPMOnlyAdvancesAfterHigherTempoPasses]' passed (0.002 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testCalibrationRemovesKnownOffsetAndRejectsUnstableOrWrongRoute]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testCalibrationRemovesKnownOffsetAndRejectsUnstableOrWrongRoute]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testCatalogAllTenLessonsWalkThroughAndUnlockWithoutUIChanges]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testCatalogAllTenLessonsWalkThroughAndUnlockWithoutUIChanges]' passed (0.003 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testHigherLessonsAndMatcherAccuracyAreNotRelaxed]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testHigherLessonsAndMatcherAccuracyAreNotRelaxed]' passed (0.002 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testIntroOneStarIntegerBoundariesDoNotRequirePerfect]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testIntroOneStarIntegerBoundariesDoNotRequirePerfect]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testIntroTwoAndThreeStarAccuracyRequirementsArePreserved]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testIntroTwoAndThreeStarAccuracyRequirementsArePreserved]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testInvalidCatalogVersionDuplicateAndEmptyPatternFailClosed]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testInvalidCatalogVersionDuplicateAndEmptyPatternFailClosed]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testInvalidOptionalTwoStarFloorsFailClosed]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testInvalidOptionalTwoStarFloorsFailClosed]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testLegacyCatalogOptionalTierFloorAndTempoCopyAreCompatible]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testLegacyCatalogOptionalTierFloorAndTempoCopyAreCompatible]' passed (0.001 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testMissesAndSpamCannotPassWithPerfectMatchedTaps]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testMissesAndSpamCannotPassWithPerfectMatchedTaps]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testNearestTieChoosesEarlierAndDuplicateStaysExtra]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testNearestTieChoosesEarlierAndDuplicateStaysExtra]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testNewOneStarPersistedUnlockAndExistingBestStarsSurvive]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testNewOneStarPersistedUnlockAndExistingBestStarsSurvive]' passed (0.003 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testSignedGradesAndPerfectBoundariesUseSpecifiedOffsets]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testSignedGradesAndPerfectBoundariesUseSpecifiedOffsets]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.PracticeTests testWindowMissExtraRestAndInvalidInput]' started.
+Test Case '-[BeatLabCoreTests.PracticeTests testWindowMissExtraRestAndInvalidInput]' passed (0.000 seconds).
+Test Suite 'PracticeTests' passed at 2026-10-16 22:19:17.396.
+	 Executed 14 tests, with 0 failures (0 unexpected) in 0.015 (0.016) seconds
+Test Suite 'ProgressTests' started at 2026-10-16 22:19:17.396.
+Test Case '-[BeatLabCoreTests.ProgressTests testCorruptionRecoveryAndFutureSchemaPreservedUntilExplicitReset]' started.
+Test Case '-[BeatLabCoreTests.ProgressTests testCorruptionRecoveryAndFutureSchemaPreservedUntilExplicitReset]' passed (0.003 seconds).
+Test Case '-[BeatLabCoreTests.ProgressTests testMalformedPersistedScoreIsRejected]' started.
+Test Case '-[BeatLabCoreTests.ProgressTests testMalformedPersistedScoreIsRejected]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.ProgressTests testProgressModeCalibrationAndBestScoresSurviveRepositoryRestart]' started.
+Test Case '-[BeatLabCoreTests.ProgressTests testProgressModeCalibrationAndBestScoresSurviveRepositoryRestart]' passed (0.001 seconds).
+Test Suite 'ProgressTests' passed at 2026-10-16 22:19:17.401.
+	 Executed 3 tests, with 0 failures (0 unexpected) in 0.005 (0.005) seconds
+Test Suite 'TapTempoTests' started at 2026-10-16 22:19:17.401.
+Test Case '-[BeatLabCoreTests.TapTempoTests testAccepts30And240BPMBoundaries]' started.
+Test Case '-[BeatLabCoreTests.TapTempoTests testAccepts30And240BPMBoundaries]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.TapTempoTests testDeliberateTempoChangeDoesNotBlendOldIntervals]' started.
+Test Case '-[BeatLabCoreTests.TapTempoTests testDeliberateTempoChangeDoesNotBlendOldIntervals]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.TapTempoTests testDoubleTapDoesNotShiftIntendedReference]' started.
+Test Case '-[BeatLabCoreTests.TapTempoTests testDoubleTapDoesNotShiftIntendedReference]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.TapTempoTests testInvalidOrReversedTimestampsResetSafely]' started.
+Test Case '-[BeatLabCoreTests.TapTempoTests testInvalidOrReversedTimestampsResetSafely]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.TapTempoTests testLongPauseAndExplicitResetStartNewSeries]' started.
+Test Case '-[BeatLabCoreTests.TapTempoTests testLongPauseAndExplicitResetStartNewSeries]' passed (0.000 seconds).
+Test Case '-[BeatLabCoreTests.TapTempoTests testRequiresThreeTapsAndEstimates120BPM]' started.
+Test Case '-[BeatLabCoreTests.TapTempoTests testRequiresThreeTapsAndEstimates120BPM]' passed (0.000 seconds).
+Test Suite 'TapTempoTests' passed at 2026-10-16 22:19:17.402.
+	 Executed 6 tests, with 0 failures (0 unexpected) in 0.001 (0.001) seconds
+Test Suite 'BeatLabCorePackageTests.xctest' passed at 2026-10-16 22:19:17.402.
+	 Executed 59 tests, with 0 failures (0 unexpected) in 0.094 (0.098) seconds
+Test Suite 'All tests' passed at 2026-10-16 22:19:17.402.
+	 Executed 59 tests, with 0 failures (0 unexpected) in 0.094 (0.105) seconds
+◇ Test run started.
+↳ Testing Library Version: 1902
+↳ Target Platform: arm64e-apple-macos14.0
+✔ Test run with 0 tests in 0 suites passed after 0.001 seconds.

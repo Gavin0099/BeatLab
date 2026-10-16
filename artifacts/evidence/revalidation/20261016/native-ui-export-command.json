@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "artifacts/development/QA-REVALIDATE-01/native-ui.xcresult",
+    "--output-path",
+    "artifacts/development/QA-REVALIDATE-01/native-ui-pngs"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792160584.510321,
+  "finished_at": 1792160584.7286432,
+  "local_mac": true
+}

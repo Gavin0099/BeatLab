@@ -1,0 +1,17 @@
+{
+  "own_original_and_final": "Shutdown",
+  "own_original_and_restored_appearance": "light",
+  "observed_after": [
+    {
+      "id": "B3E27BF5-0FC6-4378-8A06-A254DC3782B2",
+      "name": "iPhone 16",
+      "state": "Booted"
+    },
+    {
+      "id": "52C92F83-56BB-4DC9-9331-3556F124FF2F",
+      "name": "BeatLab RHYTHM-PLAY-01",
+      "state": "Shutdown"
+    }
+  ],
+  "other_device_no_mutation_performed": true
+}

@@ -1,0 +1,17 @@
+{
+  "command": [
+    "xcrun",
+    "xcresulttool",
+    "export",
+    "attachments",
+    "--path",
+    "artifacts/development/QA-REVALIDATE-01/dark.xcresult",
+    "--output-path",
+    "artifacts/development/QA-REVALIDATE-01/dark-pngs"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792160625.288266,
+  "finished_at": 1792160625.436002,
+  "local_mac": true
+}

@@ -1,0 +1,17 @@
+{
+  "checked_at": "2026-10-16T14:20:47.379857+00:00",
+  "source_ref": "02dc2df",
+  "input_count": 116,
+  "frozen_and_root_match_all_inputs": true,
+  "source_manifest_sha256": "c66b45b1298eb0d4ade37d36c3c085d9458118f2ff951a1d200a8597e2708437",
+  "simulator_candidate": "artifacts/development/QA-REVALIDATE-01/source/Build/Products/Debug-iphonesimulator/BeatLab.app",
+  "executable_sha256": "e132a12e021efd52f0d9f67d1f74ea8491b967eaef3e2221a4b95bc00df8c46f",
+  "bundle_id": "com.gavin0099.beatlab",
+  "version": "0.1.0",
+  "build": "14",
+  "platforms": [
+    "iPhoneSimulator"
+  ],
+  "original_TestResults_exists": false,
+  "not_phone_signed": true
+}

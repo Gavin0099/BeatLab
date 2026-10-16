@@ -1,0 +1,466 @@
+[
+  {
+    "path": "BeatLab.xcodeproj/project.pbxproj",
+    "sha256": "dcbb0201b9d8dcb59b6d21958d12301a2e30850b2c99b34149bdf49434cdc8d2"
+  },
+  {
+    "path": "BeatLab.xcodeproj/project.xcworkspace/contents.xcworkspacedata",
+    "sha256": "5c2b91b67a72f0c341d6fa0eda978eee611ff4a1efee3017a5617c46284973b3"
+  },
+  {
+    "path": "BeatLab.xcodeproj/xcshareddata/xcschemes/BeatLab.xcscheme",
+    "sha256": "a7ba5678196b03db86d938625668f2b947abcce307ac4ff0b19e86dcc08d0fd7"
+  },
+  {
+    "path": "BeatLab/App/BeatLabApp.swift",
+    "sha256": "095332cfbf4f7c5ded6df9d10ffc0247a84d7ca7d92cf98b5d12451e6a89494c"
+  },
+  {
+    "path": "BeatLab/App/ConfigurationStore.swift",
+    "sha256": "5e7468614d839a3dcf3e580aed9ba479fe76d63ffb155127073ba9c977958fe4"
+  },
+  {
+    "path": "BeatLab/App/PracticeComparison.swift",
+    "sha256": "ce1054c28f1624c616d9a97605964ccbd717be5b9a19b2993c37bfc8eb3a1008"
+  },
+  {
+    "path": "BeatLab/App/PracticeStore.swift",
+    "sha256": "30399aec6de20f306f21b09848924f3ffd2d9bf77523218c253a9970eaf5395c"
+  },
+  {
+    "path": "BeatLab/App/PracticeTransportProjection.swift",
+    "sha256": "13cc1fcdadb443d91d66077223a5d34e4cbf8ea1a53b68d250de9261842de16a"
+  },
+  {
+    "path": "BeatLab/Audio/CountVoice.swift",
+    "sha256": "070715d9819c4af058e6cbc269cbd7f602ee41ff8f25ac908597bd6bf5c58e5b"
+  },
+  {
+    "path": "BeatLab/Audio/MetronomeAudio.swift",
+    "sha256": "ac678d8003cabab33335aa3a461a0c327735a056639857163ba94f0c6c36926d"
+  },
+  {
+    "path": "BeatLab/Audio/PracticeGroove.swift",
+    "sha256": "6ccda8c9456b7b73b2dcbe0495715e942778c2f03699c5cbd4c6d29da395e0ee"
+  },
+  {
+    "path": "BeatLab/Design/BeatLabStyle.swift",
+    "sha256": "0b05516de6b504cb3c85e420d73ebf054bd326b24a25dd7b0331493438d2e720"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AccentColor.colorset/Contents.json",
+    "sha256": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AccentSoft.colorset/Contents.json",
+    "sha256": "4bced10099c22590e0325fb99df0488ef488067297c7444a889dbd4c9c616261"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureCat.imageset/artwork.png",
+    "sha256": "9d77b5ba7b6174a0f4a5bec9849ea8fd47e67f407de00e66642a6f0107792f30"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureCatCelebration.imageset/artwork.png",
+    "sha256": "bcc0c9c110974ac95abd310c55017cb3ab59412d6ffa5a5bc0356ce521b585ca"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureDinosaur.imageset/artwork.png",
+    "sha256": "4048570545258386a1cbd54df1af5186bc19726de27ff5a085901e917828cf55"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureDinosaurCelebration.imageset/artwork.png",
+    "sha256": "e02cb053fb601e70a385e7766cbc034ee1776dcf8c1deebe0e71ecef04263641"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AdventureRobot.imageset/artwork.png",
+    "sha256": "2a7b4b8c8c75aa0f1ec98337e94b42b9dd94a39bfe2c87dff38f6388f0d69b51"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png",
+    "sha256": "f0043ce71b82f7135ef22d39fa55d5cc9b321f1fa3e73b8a26554911e668af57"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/AppIcon.appiconset/Contents.json",
+    "sha256": "6ad2c5c3bbcf972c7f02d217d6afcac3f24a10e30510c7e2d06c582371ed9d22"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Canvas.colorset/Contents.json",
+    "sha256": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/CatMotionAtlas.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/CatMotionAtlas.imageset/artwork.png",
+    "sha256": "a2e247908deb337dd52114499303b41e9da6e588a70150ed901851b62c371d6c"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Contents.json",
+    "sha256": "2320eb3e02f9e3419d35676c6fd470ec13d5aa314c0d29700e09ec76d8e2360a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/DenseCatMotion.imageset/artwork.png",
+    "sha256": "4f234115f7470bb0b64e207e710852dd2fe7b975a47b11d37f8c493610d30c3d"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/DenseDinosaurMotion.imageset/artwork.png",
+    "sha256": "2d8007c4ab227946ae87ff86d3ac1ed30af64251e13981f1744eac40eaa2f57b"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/DenseRobotMotion.imageset/artwork.png",
+    "sha256": "f5ba432fcfa6c43b82634449ac5bbacc5e4d5627cc60633a7cda2f6684e8493e"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/EggMissionAtlas.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/EggMissionAtlas.imageset/artwork.png",
+    "sha256": "f92458183b6fdb634f526f7f7fd48d6e0c5fc48c269b2c0028ef3b09fb932f44"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/EggMotionAtlas.imageset/artwork.png",
+    "sha256": "8e13a5aba8719cbbad5118e04f2f10a8bb8e7bc80dcdaa1849c1f3b902457d5d"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeCanvas.colorset/Contents.json",
+    "sha256": "29900798fc7886a592b65f8e01b3779c4c984af31d6e49b1ca8b3ee106df3ba8"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeDinosaur.imageset/artwork.png",
+    "sha256": "2c5aea93bbcbe5749fcfdd5049e6d0e250e488eb82b034d9cd00e7a140b33889"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeForest.colorset/Contents.json",
+    "sha256": "69801ba6620b7ab4087502b559b879f1c7e1ab557230e62e1750e3e9a4d145c4"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeHero.colorset/Contents.json",
+    "sha256": "867b02029807b8e1abe270afa80b4529a5bf6cae9fae833b679fe1ba2ff9f835"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeInk.colorset/Contents.json",
+    "sha256": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeMuted.colorset/Contents.json",
+    "sha256": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/HomeSurface.colorset/Contents.json",
+    "sha256": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Ink.colorset/Contents.json",
+    "sha256": "dd36906b3a1210bb931b8ad15ba7f5ec7b7dddf8582bde03ccaff016754c5179"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/MutedInk.colorset/Contents.json",
+    "sha256": "d164f64a40a054e92d54c57934194d606ad6c561f98cafb9313c3a3318b2fde0"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/OnAccent.colorset/Contents.json",
+    "sha256": "e1abe8f9a069fa1f0bcc17d0a41aaf633972ce45d83fcf3a69d5595a1ceecbac"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RecoveryCatExpressions.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RecoveryCatExpressions.imageset/artwork.png",
+    "sha256": "1236371c628ba59fe1d6ba606d9789ef0693ca036333058a93885a653f7d2510"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RecoveryDinosaurExpressions.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RecoveryDinosaurExpressions.imageset/artwork.png",
+    "sha256": "87b824a3b7a06234c0d5b7be36573c8374b3c8f6c3095ecf1e0b78292da4031a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RecoveryRobotExpressions.imageset/Contents.json",
+    "sha256": "c635355b47fff33484d24ab3bbcc0c001427fff9c2e830354eff1e80eeda618a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RecoveryRobotExpressions.imageset/artwork.png",
+    "sha256": "40b137fac9e0ac8e1a77b912606b362a8b4ce1b462718f8ad6b18d3bf651f10b"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Reward.colorset/Contents.json",
+    "sha256": "283098579daf80341abbbcc6d2cffae565ed2a29cd12d34beef2869fbc6222c4"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RewardSoft.colorset/Contents.json",
+    "sha256": "d7ffe748db6f38bb7f18a7bc3e417eccf47a8d7c8e6684d7ed4b4144dcd3661b"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RobotMotionAtlas.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RobotMotionAtlas.imageset/artwork.png",
+    "sha256": "54c1f48cf46ddb04f322011f229730e692571c70abcc087e92a6b4e24dec41ab"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RunnerCircuit.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RunnerCircuit.imageset/artwork.png",
+    "sha256": "b43c924dc2205f5ae28cf80eab30133c2bc9ae969da1931192b9d675d207bf60"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RunnerCloud.imageset/Contents.json",
+    "sha256": "f8338bae74032761b5b883654256bb58513b7a32483e574a65c3426e2563058f"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RunnerCloud.imageset/artwork.png",
+    "sha256": "2b2c143455d73e815738eb875bc27bf8aaaa9e9bc6b668e09769d80aee48f7b1"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/Contents.json",
+    "sha256": "f0946acd61b0b4a62f2ed1e7210b1bf09c601233f0ae9e43f19c36621d074e19"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/RunnerIsland.imageset/artwork.png",
+    "sha256": "1c392af81eab914d0710820728e76e00e9956f1736439b7eee75d82b961bcdc2"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Separator.colorset/Contents.json",
+    "sha256": "dc4fa6f6f4b2d511285069a49c09b0cce02f322dd3cb632ff4bd3f193b293418"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Success.colorset/Contents.json",
+    "sha256": "5dc9fb60f1c1e3ecaac6be0cfdbb040a8d5e956cb64899ada8dd65726d055355"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/SuccessSoft.colorset/Contents.json",
+    "sha256": "3de56d04ef6bd21985b5b3f4a97a5c4200f2e79a379eb7d0a39740a6a024783a"
+  },
+  {
+    "path": "BeatLab/Resources/Assets.xcassets/Surface.colorset/Contents.json",
+    "sha256": "f46f66e266a74b4063d4587bb9986799a34820d19dbdc158017e70f62653f4bc"
+  },
+  {
+    "path": "BeatLab/Resources/PrivacyInfo.xcprivacy",
+    "sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53"
+  },
+  {
+    "path": "BeatLab/Views/BeatVisualizer.swift",
+    "sha256": "36e9c000282a4925c16e668a262f6891b276c44cd347d9028a2b35c7a26551af"
+  },
+  {
+    "path": "BeatLab/Views/ConfigurationSummary.swift",
+    "sha256": "4780cf39ac7c181b78cf3567b631b0c44c939e41501a84dd756cc87292663801"
+  },
+  {
+    "path": "BeatLab/Views/DrummerRhythmScene.swift",
+    "sha256": "9be800b375f3a10fddf3e4bc8bac53db7eab411c709ad95a8aceb36b9a30d6e1"
+  },
+  {
+    "path": "BeatLab/Views/DrummerStageView.swift",
+    "sha256": "6cf75f175aafc6ab237e304038f3c33d4776542fbd06324e42647668d6d0e718"
+  },
+  {
+    "path": "BeatLab/Views/EggMissionView.swift",
+    "sha256": "85ecaad6ff89c1f6e98c1ab3d27c5bacb4a97d00adaf06f6a5e6e5d2152d4e7a"
+  },
+  {
+    "path": "BeatLab/Views/FallingRhythmScene.swift",
+    "sha256": "967c082b9f6a63e4f66b18527512435371be7b24228dfa182017f019df6d9448"
+  },
+  {
+    "path": "BeatLab/Views/GameHUD.swift",
+    "sha256": "d3ac92aa904da491fb2970e05992486a4c4dd13ba5ed1c24952cce279ac4f2d4"
+  },
+  {
+    "path": "BeatLab/Views/GameResultView.swift",
+    "sha256": "f192004b2d64eff456379000b9ca532b06532e59f1f0e8018cc5fa125e39c6c7"
+  },
+  {
+    "path": "BeatLab/Views/HomeView.swift",
+    "sha256": "4b224413af07e522335c85fbb0889f91be4cdacc43cf8c5ce206d085a193c937"
+  },
+  {
+    "path": "BeatLab/Views/MetronomeView.swift",
+    "sha256": "2b30cf9c40214e383e0387dde5dd520a1cee634aca721de68454625ba1f0399d"
+  },
+  {
+    "path": "BeatLab/Views/PracticeComparisonView.swift",
+    "sha256": "c53386db15c3c2b60569b81545f9bcb27ba0cd19e070df39a03c5f34e54d716b"
+  },
+  {
+    "path": "BeatLab/Views/PracticeView.swift",
+    "sha256": "192ee2807cbd442cd20c8402ca9cb9fdba94cbb9fcc0d61415bd2102c27d9d65"
+  },
+  {
+    "path": "BeatLab/Views/RhythmLane.swift",
+    "sha256": "8c6b3d35729c97cf1ccf72d2ba6dd0591d400ebcb80b4b826d26beed6dc2ab3f"
+  },
+  {
+    "path": "BeatLab/Views/RootView.swift",
+    "sha256": "280b75ca6732e58501ea384afda1047bd20b644093a4deb25cadcfaaaa05ead5"
+  },
+  {
+    "path": "BeatLab/Views/RunnerRhythmScene.swift",
+    "sha256": "c54e999fac080f1d6b9bb4a38b32405f97ab68498272a006b4b06db26b99b9e1"
+  },
+  {
+    "path": "BeatLab/Views/TapPad.swift",
+    "sha256": "2445e37d189c532e8a6e48955aa6c0c202f5fcc4e35794d93fd6255cbaec2d7d"
+  },
+  {
+    "path": "BeatLabTests/ConfigurationStoreTests.swift",
+    "sha256": "7c65756b98d0963a2e72a17a633a83ba41770f3bd8b2db8d0cb864c8f71ed669"
+  },
+  {
+    "path": "BeatLabTests/MetronomeAudioTests.swift",
+    "sha256": "cd3c3f040fe9fbb35681db620cb44b04956aae8ca7d6cdcff29685342296df40"
+  },
+  {
+    "path": "BeatLabTests/PracticeStoreTests.swift",
+    "sha256": "9779d8d1c952f8dfdda97c6f7bdf0e65cc1708a0e92785f5b2a19f9d42f03be7"
+  },
+  {
+    "path": "BeatLabUITests/FoundationUITests.swift",
+    "sha256": "85892564bb94a5d2926ec6aaf44a70a4e2e5959d29684ccd73e91fc249484291"
+  },
+  {
+    "path": "BeatLabUITests/InterfaceUITests.swift",
+    "sha256": "cd9d2c01a2a333ccfcca4d7820ad00bb1512dc21b6683b89cd4b84cf7ad60871"
+  },
+  {
+    "path": "BeatLabUITests/MetronomeUITests.swift",
+    "sha256": "3ffe491daac4333ecee55cfcfb7de876bfaa9206792b510d58a9db1d28f2be87"
+  },
+  {
+    "path": "BeatLabUITests/PracticeUITests.swift",
+    "sha256": "6474e4e54147fe4eae01006f7775bd0e171041e4ea21e2c0579556632b5bad44"
+  },
+  {
+    "path": "Package.swift",
+    "sha256": "eb6b2f4e8dd7b8d1206c22ac15f29e3177e3275c8a660f63bb345cdbe5011f02"
+  },
+  {
+    "path": "Sources/BeatLabCore/ConfigurationRepository.swift",
+    "sha256": "8c979ee3fca706065a21fd84136a17aad5f2159aebbe7380a23e5fbc0549ac9d"
+  },
+  {
+    "path": "Sources/BeatLabCore/MetronomeConfiguration.swift",
+    "sha256": "6635f5249f30eb85c11b2e5561a4a3f64f1808ddee2efb662b2fff656953b4a6"
+  },
+  {
+    "path": "Sources/BeatLabCore/ProgressRepository.swift",
+    "sha256": "1fe4bcce97c817853743aa3a6a37c6516e80491008fcf3419273baf4b817b037"
+  },
+  {
+    "path": "Sources/BeatLabCore/Resources/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8"
+  },
+  {
+    "path": "Sources/BeatLabCore/RhythmLesson.swift",
+    "sha256": "2805917e06713d672c29c2ccd4c1410057146b67f5bf8eff0e06ec401fd2e53e"
+  },
+  {
+    "path": "Sources/BeatLabCore/Subdivision.swift",
+    "sha256": "250349165142b1fdc6a85f5979cdf50743bea9aad735f8c47822b352f73d930d"
+  },
+  {
+    "path": "Sources/BeatLabCore/TapTempo.swift",
+    "sha256": "fa0a8512f19780993319b11b795a417f142bd93cb19f3e552cb9933d377ad5ee"
+  },
+  {
+    "path": "Sources/BeatLabCore/Tempo.swift",
+    "sha256": "2d68c68a91dd68d46f9eb1d9e70adee4619a8a099dbd5b19869cec7e613b5108"
+  },
+  {
+    "path": "Sources/BeatLabCore/TimeSignature.swift",
+    "sha256": "f74cd80421e1f92f8c54e9003957ac38e7bd70a3d7a2aa6ad2e0dc03221a6872"
+  },
+  {
+    "path": "Sources/BeatLabCore/TimingPractice.swift",
+    "sha256": "c771e19d11a0d6ac397ac3c9170bd877bb1a90375f2c2df1afaac5783f11655e"
+  },
+  {
+    "path": "Sources/BeatLabDSP/BeatLabDSP.c",
+    "sha256": "6bc94c2bbf55eddb91119dd090365a052a37735fdd4faf54536ac4d6876a8a8d"
+  },
+  {
+    "path": "Sources/BeatLabDSP/include/BeatLabDSP.h",
+    "sha256": "fa73496fe16b2d7f4d81c3795302d6c66c1fa70ac2c0616ce66e2bb641acf736"
+  },
+  {
+    "path": "Tests/BeatLabCoreTests/ConfigurationRepositoryTests.swift",
+    "sha256": "0d0f52e55807811c1c5428fc9eb10b7770e4138007af678d587f691125f8b2bc"
+  },
+  {
+    "path": "Tests/BeatLabCoreTests/DSPTests.swift",
+    "sha256": "d73f9f322218a96051a456d3721f1722539d0aaa8e55fba60b3926c8a30a5245"
+  },
+  {
+    "path": "Tests/BeatLabCoreTests/DomainTests.swift",
+    "sha256": "0b3ca97217d4cba18a3644472562759c5b217694a7aefd30a446b53a3fa05011"
+  },
+  {
+    "path": "Tests/BeatLabCoreTests/PracticeTests.swift",
+    "sha256": "59c4191d700c27980a67cf1ad229e16816036ff64e70fdbde313b14c69463651"
+  },
+  {
+    "path": "Tests/BeatLabCoreTests/ProgressTests.swift",
+    "sha256": "3f7a02bf1f1fb8261a5243a43ddb717ae21d5f40a3c140cb3847d8292128ebe6"
+  },
+  {
+    "path": "Tests/BeatLabCoreTests/TapTempoTests.swift",
+    "sha256": "3bd3406353bcbb79c280095c5cc70942c8507fd03e4f71cd3799f46e05745cf0"
+  },
+  {
+    "path": "Tests/DSPKernelTests/main.c",
+    "sha256": "e850d074b6dd61bca2cadd65457b04cf119f4c592e5d156d6284329cd7b05321"
+  },
+  {
+    "path": "Tests/TimingCaptureTests/test_capture.py",
+    "sha256": "cbde36faa05ef837aea93ad9bd59a06464043ce6d5831a66d7a9e452c455a2a0"
+  }
+]

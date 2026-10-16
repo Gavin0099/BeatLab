@@ -1,0 +1,44 @@
+Skipped export for RhythmPrototypeTests/testActualSceneCoordinatesRemainAtFixedLineUntilRealWindowExpires(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testComparisonDoesNotWriteProgressOnSuccessFailureOrCancel(): no matching attachments
+
+Exported 4 attachments for: RhythmPrototypeTests/testDrummerNativeRenderingSpecimensAndReducedActorLayout():
+File: 8BEB9088-F06C-4ED0-8CEE-308C748FFCE5.png, suggested name: "Drummer native 520.0 2_0_2B2EBE85-D404-4525-B8B4-4DA9E32367AF.png"
+File: C3495560-EF1E-495D-B717-B6490611E78F.png, suggested name: "Drummer native 340.0 2_0_50AFDA17-3191-4BCF-A2E5-A5CA577E71E6.png"
+File: 79FD1A4D-E4A3-4E4C-96DD-B0CD1BC70513.png, suggested name: "Drummer native 520.0 1_0_2A3036D5-66C7-4CD6-A3FD-822315693B17.png"
+File: D7042B30-5D75-42A1-86E4-83EA8C9936AA.png, suggested name: "Drummer native 340.0 1_0_564D4F4B-B995-402E-A266-E9E4394C82D2.png"
+
+Skipped export for RhythmPrototypeTests/testDrummerNotesPreviewAtRealFixedStrikeAndExpireWithoutScoring(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testDrummerRealMatchDrivesReboundExtraDoesNotAdvanceAndPauseFreezesPose(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testDrummerTrialRejectsOtherLessonsUsesOriginalThirdChartAndNeverSaves(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testFixedCenterLeadCalibrationRestsAndMissWindowAreReadOnly(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testPausedRouteAndMediaResetDiscardSessionWithoutUnlocking(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testPausePreservesTargetsHitsAndRejectsPausedAndResumeCountInTaps(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testPauseProjectionIndependentMidBeatOracleAndInvalidCountIn(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testReviewedQuarterAndEighthFixturesHaveSameJudgmentInBothPresentations(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testReviewedTempoOffsetAndSeededSpamMatrixKeepsRealStars(): no matching attachments
+
+Skipped export for RhythmPrototypeTests/testSpamRateMatrixCannotEarnIntroStarWhileFiniteAccurateTapsCan(): no matching attachments
+
+Exported 3 attachments for: PracticeUITests/testDrummerActualInputPauseRetryAndIsolatedZeroResult():
+File: 672CDD02-859B-4BF3-BF07-3D7A35455E5B.png, suggested name: "Drummer actual individual touch and judged feedback_0_7F63CD81-194B-4B71-BDC3-DB0EF55E1A6A.png"
+File: 54239E34-3585-49C0-B6A8-E00486D8E581.png, suggested name: "Drummer zero-input real result_0_563E7BB9-CA29-46DA-A3C7-B3197C896F3C.png"
+File: D877431B-C04B-437E-B3AC-4948C939AB92.png, suggested name: "Drummer paused before expiry_0_4EE545D5-36B8-4F37-BFEF-8CF65516CD4E.png"
+
+Exported 1 attachment for: PracticeUITests/testDrummerMaximumTextControlsAndNoWriteOnExit():
+File: 68C87912-1196-4E76-BBFB-1F2EFE097870.png, suggested name: "Drummer maximum text live_0_0415A650-EBC8-4B57-956D-3DBFDFFCCAE9.png"
+
+Exported 3 attachments for: PracticeUITests/testNewDualLaneActualTouchesPauseResumeRestartAndExit():
+File: EEFDC049-CB0B-49D2-B2C5-0C2A8C68EDD0.png, suggested name: "new pause controls_0_BB38E4AE-548A-45F4-9A34-9E535F0D366F.png"
+File: 92EFD56D-89B6-4189-9511-862CFE65783E.png, suggested name: "A actual individual touch judgment_0_B002B14D-5FDB-452A-A8BA-25F9CC195FA0.png"
+File: 47B6134D-9847-4C62-8089-A713E9382ACC.png, suggested name: "new A fixed lanes and pads_0_3BAF3C74-EEBE-40B7-B41A-9F12825B0288.png"
+
+Generated manifest file with attachment details: /Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01/native-ui-pngs/manifest.json
