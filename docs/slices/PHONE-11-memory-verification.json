@@ -1,0 +1,35 @@
+{
+  "slice": "PHONE-11",
+  "candidate_evidence_commit": "5f5c2d2",
+  "canonical_writer": "governance_tools.memory_record",
+  "memory_workflow_check_run_guard_exit": 0,
+  "guard_ran": true,
+  "completion_claim_allowed": true,
+  "current_diff_blockers": 0,
+  "repo_state_blockers": 0,
+  "warnings_retained": {
+    "canonical_writer_path": "NOT FOUND",
+    "authority_guard_path": "NOT FOUND",
+    "missing_canonical_memory": 1,
+    "test_evidence_provenance_not_found": 2
+  },
+  "boundary": "Guard permits this candidate preparation record, not full governance adoption or phone/install/physical/release acceptance. Task completion is not session end.",
+  "evidence_refs": [
+    {
+      "path": "artifacts/evidence/phone/20261017/memory-writer-command.json",
+      "sha256": "fe9bb1c585047cccfca4667dcaf7aa3577a35bf34773656977e05564fbf938f5"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/memory-writer.log",
+      "sha256": "8f5e45e610787bf1eab9df86595a7d03270e947ff4f9fc826329e4e12789f03d"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/memory-guard-command.json",
+      "sha256": "ec807cb31734662734afed43263195bf20baabb424db6eb5c2e383595141f13e"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/memory-guard.log",
+      "sha256": "af082ae7726fb3a001d87be8d14d0e7ce61f531872067a9b17e179d2855e2adc"
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+{
+  "command": [
+    "/Applications/Xcode.app/Contents/Developer/usr/bin/python3",
+    "-m",
+    "governance_tools.memory_workflow",
+    "--check",
+    "--repo",
+    ".",
+    "--run-guard"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792207000.016778,
+  "finished_at": 1792207000.685045,
+  "local_mac": true
+}
