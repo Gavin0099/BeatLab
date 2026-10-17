@@ -1,0 +1,14 @@
+{
+  "command": [
+    "codesign",
+    "--verify",
+    "--deep",
+    "--strict",
+    "artifacts/development/PHONE-11/Frozen/BeatLab.app"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792206854.34047,
+  "finished_at": 1792206854.3617249,
+  "local_mac": true
+}

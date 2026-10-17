@@ -1,0 +1,191 @@
+{
+  "slice": "PHONE-11",
+  "date": "2026-10-17",
+  "status": "SIGNED_CANDIDATE_PREPARED_NOT_INSTALLED",
+  "source_ref": "f1f9a650ab249249a2d03983e6eb681b202dfc34",
+  "product_equivalent_to": "cc6f5e7",
+  "product_edits": "NONE",
+  "phone_build": {
+    "local_mac": true,
+    "configuration": "Debug iphoneos",
+    "exit_code": 0,
+    "version": "0.1.0",
+    "build": "15",
+    "only_command_override": "CURRENT_PROJECT_VERSION=15",
+    "root_project_build": "14",
+    "bundle": "com.gavin0099.beatlab",
+    "team_preserved": true
+  },
+  "validation_basis": {
+    "fresh_source_tests": "QA-REVALIDATE-01 on2026-10-16: Core59/native13/UI3/Dark1repeat; not reexecuted this slice",
+    "same116_root_frozen_git_inputs": true,
+    "QA_407_files_two_copies_rehashed_today": true,
+    "signature_verify": "PASS",
+    "profile_and_resources": {
+      "display_name": "拍拍冒險",
+      "bundle": "com.gavin0099.beatlab",
+      "version": "0.1.0",
+      "build": "15",
+      "platform": "iPhoneOS",
+      "Debug_define_observed": true,
+      "drummer_DEBUG_entry_present": true,
+      "signature_verify_exit": 0,
+      "team_matches_existing": true,
+      "application_identifier_matches": true,
+      "profile_development": true,
+      "profile_expires": "2027-10-09T09:48:38+00:00",
+      "profile_sha256": "b8ebbc925d2da17851cdba3250a6c271269ad0952c783803a5fc3a45fed8f418",
+      "owner_profile_coverage": {
+        "matched_against": "fresh paired device inventory hardware UDID",
+        "covered": true,
+        "live_phone_state_verified": false,
+        "inventory_tunnel": "disconnected",
+        "inventory_transport": "localNetwork"
+      },
+      "catalog_sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+      "catalog_matches_source": true,
+      "privacy_sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+      "privacy_matches_source": true,
+      "icons_match_prior_accepted_icon_bytes": {
+        "AppIcon60x60@2x.png": "6728db4681d2d751ed7916209f8053019e3145ff196ea0481d11dde4a25690dc",
+        "AppIcon76x76@2x~ipad.png": "632c86674893e5bfa8978ce2d8569ace0cbf4a0932473598fdb91dc4c19eb575"
+      },
+      "frozen_inputs_match": 116,
+      "build_override_only": "CURRENT_PROJECT_VERSION=15; root project remains14",
+      "UI_test_suite_injected": false,
+      "phone_install": "NOT RUN",
+      "physical_timing_FPS_child_acceptance": "NOT RUN"
+    }
+  },
+  "frozen_candidate": "/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11/Frozen/BeatLab.app",
+  "archive": {
+    "archive": "/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11/BeatLab-0.1.0-15-PHONE-11.zip",
+    "sha256": "5d7ac14e9ad96294671f78a33028a3ac95386273579423c66ac00ee66e1c02bb",
+    "verified_package_files": 13,
+    "archive_original_bytes_match": true,
+    "version": "0.1.0(15)",
+    "not_old14_package": true
+  },
+  "retention": {
+    "checked_at_utc": "2026-10-17T03:15:31.476039+00:00",
+    "source": "/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11",
+    "backup": "/Users/pc49-58/Library/Application Support/BeatLabEvidence/PHONE-11-20261017",
+    "files_checked": 148,
+    "copy_hashes_match": true,
+    "manifest_sha256": "2618a01660cf1a3f4389bf3847e7c427a7ae1dd0839d3acd9a13622f1ec972c4",
+    "excluded_rebuildable_outputs": [
+      "PhoneDerivedData",
+      "PhoneIntermediates",
+      "PhoneProducts",
+      "__pycache__"
+    ],
+    "frozen_package_and_zip_retained": true,
+    "original_TestResults_recovered": false
+  },
+  "device": {
+    "source": "fresh devicectl paired inventory",
+    "owner_matches_expected": true,
+    "profile_UDID_coverage": true,
+    "tunnel": "disconnected",
+    "present_live_device_state": "NOT VERIFIED",
+    "install_attempted": false,
+    "launch_attempted": false
+  },
+  "Apple_upload": "NOT RUN",
+  "old_TestResults_recovered": false,
+  "remaining": [
+    "actual Wi-Fi install/launch and owner same-chart drummer vs runner trial",
+    "physical timing/audio-visual synchronization/FPS",
+    "children/fullAX acceptance",
+    "KidsCharacterKit deferred by owner",
+    "original evidence recovery requires owner backup if available"
+  ],
+  "not_claimed": [
+    "installed or launched15",
+    "full new App or ten-level test rerun",
+    "physical timing/FPS/child acceptance",
+    "original14 signed bytes restored",
+    "release readiness or TestFlight/public upload"
+  ],
+  "evidence_refs": [
+    {
+      "path": "artifacts/evidence/phone/20261017/source-manifest.json",
+      "sha256": "c66b45b1298eb0d4ade37d36c3c085d9458118f2ff951a1d200a8597e2708437"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/prerequisite.json",
+      "sha256": "f5d9eb5a068dcca55a3c2cab6b32a9af0548a1b036d6e175179c33edad0d5b73"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/build-command.json",
+      "sha256": "80b0885af71dcc3ea127542363a172633fd55d1addb8e1de6cbec491b27c87c6"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/codesign-verify-command.json",
+      "sha256": "a9a345378b39e870da3c63c576a1411010be52677f14cfc2bc01ed4214902902"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/codesign-verify.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/devices-command.json",
+      "sha256": "f07651bf7d127c0c1bf4c70048f1de74544fcc97ae9db8a612e051b28ea9d633"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/inspection.json",
+      "sha256": "2ffa87d0079ddfd655ca97f559c1258705765d0e7c685c886459348af0976883"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/package-manifest.json",
+      "sha256": "f4a6cde842c537b8a38048ff35c0cfaf09aa3817e9abf90dc9a43fc6f774ccb5"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/zip-command.json",
+      "sha256": "f1cf4dd43884b96fdcf3a8fb41541e92b9f773b64b250d6bdedb7b6ad71e4dd0"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/zip.log",
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/zip-verification.json",
+      "sha256": "4e246c0acde7dfaa3cdf396b0eb5d34830d53bb84c594b2e1c528f2d9cb2d516"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/backup-receipt.json",
+      "sha256": "66fc8f7076dbcb3424159790e9902aaf7440afc108b6992230d0096bdd70af71"
+    },
+    {
+      "path": "artifacts/evidence/phone/20261017/retention-manifest.json",
+      "sha256": "2618a01660cf1a3f4389bf3847e7c427a7ae1dd0839d3acd9a13622f1ec972c4"
+    }
+  ],
+  "local_raw_refs": [
+    {
+      "path": "artifacts/development/PHONE-11/build.log",
+      "sha256": "2cea69d1f68393fce951143312c5dc3368216bd33b7a248b5c5eed1a66bd2b7e",
+      "kept_only_local": true
+    },
+    {
+      "path": "artifacts/development/PHONE-11/devices.json",
+      "sha256": "8bd612c09feb7d6db67d8e8cc0d86428ae2f95ebe128d00dced3ad06bbf6ec10",
+      "kept_only_local": true
+    },
+    {
+      "path": "artifacts/development/PHONE-11/devices.log",
+      "sha256": "155c0e75a7c438164815973bcca2bbc0b0a1d85f6a3b2f3fed304f5b2f4b67f3",
+      "kept_only_local": true
+    },
+    {
+      "path": "artifacts/development/PHONE-11/profile-local.plist",
+      "sha256": "6771bfa1134c506b5912d7d2250541a9a9597bdfc993b8073776d95d1e54b8b1",
+      "kept_only_local": true
+    },
+    {
+      "path": "artifacts/development/PHONE-11/entitlements-local.plist",
+      "sha256": "e51ea17ec1db39b2ae8e95dac5524e416f6792ba7e3859e7f06ceae5c2793cbb",
+      "kept_only_local": true
+    }
+  ]
+}

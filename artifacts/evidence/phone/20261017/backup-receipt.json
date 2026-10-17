@@ -1,0 +1,16 @@
+{
+  "checked_at_utc": "2026-10-17T03:15:31.476039+00:00",
+  "source": "/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11",
+  "backup": "/Users/pc49-58/Library/Application Support/BeatLabEvidence/PHONE-11-20261017",
+  "files_checked": 148,
+  "copy_hashes_match": true,
+  "manifest_sha256": "2618a01660cf1a3f4389bf3847e7c427a7ae1dd0839d3acd9a13622f1ec972c4",
+  "excluded_rebuildable_outputs": [
+    "PhoneDerivedData",
+    "PhoneIntermediates",
+    "PhoneProducts",
+    "__pycache__"
+  ],
+  "frozen_package_and_zip_retained": true,
+  "original_TestResults_recovered": false
+}

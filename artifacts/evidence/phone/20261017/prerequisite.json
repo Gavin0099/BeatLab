@@ -1,0 +1,22 @@
+{
+  "source_ref": "f1f9a65",
+  "product_equivalent": "cc6f5e7",
+  "inputs": 116,
+  "QA_two_locations": {
+    "checked_at": "2026-10-16T14:23:55.172278+00:00",
+    "source": "/Users/pc49-58/Desktop/BeatLab/artifacts/development/QA-REVALIDATE-01",
+    "backup": "/Users/pc49-58/Library/Application Support/BeatLabEvidence/QA-REVALIDATE-01-20261016",
+    "files_checked": 407,
+    "manifest_sha256": "0a10180f5f6fbace37c268766f23e6b3853b7a056f6ba942ce762ce1c80ae373",
+    "copy_hashes_match": true,
+    "excluded_rebuildable_caches": [
+      "DerivedData",
+      "Intermediates.noindex",
+      "__pycache__",
+      "core-build"
+    ],
+    "old_TestResults_recovered": false
+  },
+  "checked_this_turn": "both407-file copies match tracked SHA manifest",
+  "old_TestResults_recovered": false
+}

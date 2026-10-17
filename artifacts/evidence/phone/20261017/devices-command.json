@@ -1,0 +1,15 @@
+{
+  "command": [
+    "xcrun",
+    "devicectl",
+    "list",
+    "devices",
+    "--json-output",
+    "artifacts/development/PHONE-11/devices.json"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792206806.186603,
+  "finished_at": 1792206807.004983,
+  "local_mac": true
+}

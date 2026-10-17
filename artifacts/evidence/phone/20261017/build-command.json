@@ -1,0 +1,29 @@
+{
+  "command": [
+    "xcodebuild",
+    "build",
+    "-jobs",
+    "2",
+    "-project",
+    "/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11/source/BeatLab.xcodeproj",
+    "-scheme",
+    "BeatLab",
+    "-configuration",
+    "Debug",
+    "-destination",
+    "generic/platform=iOS",
+    "-derivedDataPath",
+    "/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11/PhoneDerivedData",
+    "OBJROOT=/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11/PhoneIntermediates",
+    "SYMROOT=/Users/pc49-58/Desktop/BeatLab/artifacts/development/PHONE-11/PhoneProducts",
+    "-disableAutomaticPackageResolution",
+    "-skipPackageUpdates",
+    "DEVELOPMENT_TEAM=P358EB3X9H",
+    "CURRENT_PROJECT_VERSION=15"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792206807.076264,
+  "finished_at": 1792206836.154467,
+  "local_mac": true
+}

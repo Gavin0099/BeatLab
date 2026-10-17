@@ -1,0 +1,35 @@
+{
+  "display_name": "拍拍冒險",
+  "bundle": "com.gavin0099.beatlab",
+  "version": "0.1.0",
+  "build": "15",
+  "platform": "iPhoneOS",
+  "Debug_define_observed": true,
+  "drummer_DEBUG_entry_present": true,
+  "signature_verify_exit": 0,
+  "team_matches_existing": true,
+  "application_identifier_matches": true,
+  "profile_development": true,
+  "profile_expires": "2027-10-09T09:48:38+00:00",
+  "profile_sha256": "b8ebbc925d2da17851cdba3250a6c271269ad0952c783803a5fc3a45fed8f418",
+  "owner_profile_coverage": {
+    "matched_against": "fresh paired device inventory hardware UDID",
+    "covered": true,
+    "live_phone_state_verified": false,
+    "inventory_tunnel": "disconnected",
+    "inventory_transport": "localNetwork"
+  },
+  "catalog_sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+  "catalog_matches_source": true,
+  "privacy_sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+  "privacy_matches_source": true,
+  "icons_match_prior_accepted_icon_bytes": {
+    "AppIcon60x60@2x.png": "6728db4681d2d751ed7916209f8053019e3145ff196ea0481d11dde4a25690dc",
+    "AppIcon76x76@2x~ipad.png": "632c86674893e5bfa8978ce2d8569ace0cbf4a0932473598fdb91dc4c19eb575"
+  },
+  "frozen_inputs_match": 116,
+  "build_override_only": "CURRENT_PROJECT_VERSION=15; root project remains14",
+  "UI_test_suite_injected": false,
+  "phone_install": "NOT RUN",
+  "physical_timing_FPS_child_acceptance": "NOT RUN"
+}

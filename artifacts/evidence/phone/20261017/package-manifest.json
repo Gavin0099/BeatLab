@@ -1,0 +1,67 @@
+[
+  {
+    "path": "AppIcon60x60@2x.png",
+    "sha256": "6728db4681d2d751ed7916209f8053019e3145ff196ea0481d11dde4a25690dc",
+    "bytes": 24655
+  },
+  {
+    "path": "AppIcon76x76@2x~ipad.png",
+    "sha256": "632c86674893e5bfa8978ce2d8569ace0cbf4a0932473598fdb91dc4c19eb575",
+    "bytes": 36799
+  },
+  {
+    "path": "Assets.car",
+    "sha256": "ea1962b479c15c5a5375108b69e7afeda68932ca4a57288a64e423e6718d03b9",
+    "bytes": 25426248
+  },
+  {
+    "path": "BeatLab",
+    "sha256": "e4fb8a89af8065c37e39582d4c73b053e7eee10a4184fecaa56b3e84e2227d97",
+    "bytes": 92000
+  },
+  {
+    "path": "BeatLab.debug.dylib",
+    "sha256": "4f0b204a66ff20eda2968656b170b20a6ea383aef0eff3609766cca9e6099e19",
+    "bytes": 9655744
+  },
+  {
+    "path": "BeatLabCore_BeatLabCore.bundle/Info.plist",
+    "sha256": "d18b435a5ae9a61a1fcc579106df3a719523f3f484e196d0f3661e8cd77e63c2",
+    "bytes": 713
+  },
+  {
+    "path": "BeatLabCore_BeatLabCore.bundle/lessons.json",
+    "sha256": "e4521461c4cfaf4d1490882ce32c1bc4fb194fd308976bb078f9e2f12320cde8",
+    "bytes": 4956
+  },
+  {
+    "path": "Info.plist",
+    "sha256": "17a219a45f743fc5ff1e958ae1536e7ab7bacd498fab9dd27012b97dceda45e3",
+    "bytes": 1547
+  },
+  {
+    "path": "PkgInfo",
+    "sha256": "82502191c9484b04d685374f9879a0066069c49b8acae7a04b01d38d07e8eca0",
+    "bytes": 8
+  },
+  {
+    "path": "PrivacyInfo.xcprivacy",
+    "sha256": "7e24a9bf3663b8826acfc3af541e4cd3571ffeb73b5e5892bea1db0e44cc9e53",
+    "bytes": 782
+  },
+  {
+    "path": "_CodeSignature/CodeResources",
+    "sha256": "fc4895fc6da558e6f68501f718ce629af1511a8270df1d5ea6142c8be46fe838",
+    "bytes": 3983
+  },
+  {
+    "path": "__preview.dylib",
+    "sha256": "7979d4750e8313c29e8c9c9d67eb4673735cc63835746365fe99e68e7f0a18c1",
+    "bytes": 34944
+  },
+  {
+    "path": "embedded.mobileprovision",
+    "sha256": "b8ebbc925d2da17851cdba3250a6c271269ad0952c783803a5fc3a45fed8f418",
+    "bytes": 12277
+  }
+]

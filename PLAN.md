@@ -1,10 +1,12 @@
 # BeatLab — iOS MVP Roadmap
 <!-- governance-baseline: overridable -->
-> **最後更新**: 2026-10-16
+> **最後更新**: 2026-10-17
 > **Owner**: BeatLab owner
 > **Freshness**: Sprint (7d)
 
 ## Current Phase
+
+2026-10-17 heartbeat核對新QA批次407檔兩個位置仍符合hash，local／remote同f1f9a65，來源未變。PHONE-11已完成本機iphoneos Debug 0.1.0(15)候選準備：同116已驗證來源、原bundle／team、command override build15；build／codesign／development profile／owner paired UDID coverage／compiled catalog／privacy／icon與ZIP核對PASS，148檔雙份hash一致。fresh inventory為paired／tunnel disconnected；未嘗試安裝／啟動，不聲稱手機鎖定或已確認安裝阻擋，沒有Apple發行；真機timing/FPS／兒童／玩法接受仍pending。[手機候選切片](docs/slices/PHONE-11.md)。
 
 2026-10-16 heartbeat核對local/remote同02dc2df，原TestResults仍未恢復。接續已授權、可獨立進行的QA-REVALIDATE-01：從已提交來源新建本機鼓手候選與Core／focused原生／實際UI檢查，新Debug build、Core59、同compiled host原生13＋UI3、Dark1重跑均PASS；實看5張截圖，新407檔與第二位置副本SHA-256相同。原生／UI為focused候選檢查，非full App／十關／真機驗收；沒有產品更動、舊bytes恢復或新裝手機／上傳Apple。原留存失敗與真機／兒童／完整AX待驗收仍維持。[新批次契約](docs/slices/QA-REVALIDATE-01.md)。
 

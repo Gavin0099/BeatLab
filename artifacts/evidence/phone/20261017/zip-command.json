@@ -1,0 +1,15 @@
+{
+  "command": [
+    "ditto",
+    "-c",
+    "-k",
+    "--keepParent",
+    "artifacts/development/PHONE-11/Frozen/BeatLab.app",
+    "artifacts/development/PHONE-11/BeatLab-0.1.0-15-PHONE-11.zip"
+  ],
+  "cwd": "/Users/pc49-58/Desktop/BeatLab",
+  "exit_code": 0,
+  "started_at": 1792206908.53024,
+  "finished_at": 1792206909.11822,
+  "local_mac": true
+}
