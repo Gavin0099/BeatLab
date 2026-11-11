@@ -19,7 +19,8 @@ struct BeatVisualizer: View {
             VStack(spacing: 12) {
                 if interactive {
                     pendulum(beat: beat)
-                    Text("點拍點切換：重音 → 一般 → 靜音").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+                    Text("點拍點切換：重音 → 一般 → 靜音").font(BLTypography.supporting).foregroundStyle(BeatLabStyle.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 12), count: textSize.isAccessibilitySize ? 2 : config.timeSignature.beatsPerBar), spacing: 12) {
                     ForEach(0..<config.timeSignature.beatsPerBar, id: \.self) { index in
@@ -41,20 +42,24 @@ struct BeatVisualizer: View {
                 }
                 if config.timeSignature.isCompound {
                     Text("1-la-li · 2-la-li")
-                        .font(.headline.monospaced())
+                        .font(BLTypography.control.monospaced())
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 if let beat, audio.isPlaying {
                     Text("\(beat.configuration.tempo.bpm) BPM · 第 \(beat.bar + 1) 小節\(beat.muted ? " · 靜音，保持內心節拍" : "")")
-                        .font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+                        .font(BLTypography.supporting).foregroundStyle(BeatLabStyle.muted)
+                        .fixedSize(horizontal: false, vertical: true)
                 }
                 if audio.isPlaying, practice.phase != .playing && practice.phase != .preparing,
                    audio.ladderBars == 0, let beat, !soundMatches(beat.configuration, store.configuration) {
                     Text("設定將在下一拍或下一小節生效")
-                        .font(.caption)
+                        .font(BLTypography.caption)
+                        .fixedSize(horizontal: false, vertical: true)
                         .foregroundStyle(BeatLabStyle.muted)
                         .accessibilityIdentifier("pendingConfiguration")
                 }
             }
+            .multilineTextAlignment(.center)
             .padding(interactive ? 8 : 0)
             .background(interactive && store.configuration.screenPulseEnabled && !reduceMotion && beat != nil && (beat?.phase ?? 1) < 0.12
                         ? BeatLabStyle.rewardSoft : Color.clear, in: RoundedRectangle(cornerRadius: 20))
@@ -69,10 +74,13 @@ struct BeatVisualizer: View {
     }
     private func beatLabel(_ index: Int, active: Bool, emphasis: BeatEmphasis, phase: Double) -> some View {
         VStack(spacing: 6) {
-            Text("\(index + 1)").font(.system(.largeTitle, design: .rounded).bold())
+            Text("\(index + 1)").font(BLTypography.beat)
             Image(systemName: emphasis == .accent ? "speaker.wave.3.fill" : emphasis == .muted ? "speaker.slash.fill" : "speaker.wave.1.fill")
-                .font(.caption).accessibilityHidden(true)
-            if interactive { Text(emphasis.displayName).font(.caption.weight(.semibold)) }
+                .font(BLTypography.caption).accessibilityHidden(true)
+            if interactive {
+                Text(emphasis.displayName).font(BLTypography.caption.weight(.semibold))
+                    .fixedSize(horizontal: false, vertical: true)
+            }
         }
         .foregroundStyle(active ? BeatLabStyle.onAccent : BeatLabStyle.ink)
         .frame(maxWidth: .infinity, minHeight: 80).padding(.vertical, 8)

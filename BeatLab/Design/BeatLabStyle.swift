@@ -16,6 +16,17 @@ enum BeatLabStyle {
     static let maxWidth: CGFloat = 680
 }
 
+// Semantic roles inherit the user's Dynamic Type size, including accessibility sizes.
+// Keep numerals monospaced without shrinking them to fit their containers.
+enum BLTypography {
+    static let tempo = Font.system(.largeTitle, design: .rounded).bold().monospacedDigit()
+    static let beat = Font.system(.title2, design: .rounded).bold().monospacedDigit()
+    static let heading = Font.title2.bold()
+    static let control = Font.headline
+    static let supporting = Font.subheadline
+    static let caption = Font.caption
+}
+
 struct BLCard<Content: View>: View {
     let color: Color
     let content: Content
@@ -32,7 +43,8 @@ struct BLPrimaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var enabled
     @Environment(\.accessibilityReduceMotion) private var reduceMotion
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label.font(.headline.bold()).multilineTextAlignment(.center)
+        configuration.label.font(BLTypography.control.bold()).lineLimit(nil).multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, minHeight: 24).padding(.horizontal, 16).padding(.vertical, 16)
             .foregroundStyle(enabled ? BeatLabStyle.onAccent : BeatLabStyle.muted)
             .background(enabled ? Color.accentColor : BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 18))
@@ -44,7 +56,8 @@ struct BLPrimaryButtonStyle: ButtonStyle {
 struct BLSecondaryButtonStyle: ButtonStyle {
     @Environment(\.isEnabled) private var enabled
     func makeBody(configuration: Configuration) -> some View {
-        configuration.label.font(.headline).multilineTextAlignment(.center)
+        configuration.label.font(BLTypography.control).lineLimit(nil).multilineTextAlignment(.center)
+            .fixedSize(horizontal: false, vertical: true)
             .frame(maxWidth: .infinity, minHeight: 22).padding(.horizontal, 12).padding(.vertical, 12)
             .foregroundStyle(enabled ? Color.accentColor : BeatLabStyle.muted)
             .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 16))
@@ -57,8 +70,8 @@ struct BLSectionHeading: View {
     var subtitle: String? = nil
     var body: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text(title).font(.title2.bold()).foregroundStyle(BeatLabStyle.ink).accessibilityAddTraits(.isHeader)
-            if let subtitle { Text(subtitle).font(.subheadline).foregroundStyle(BeatLabStyle.muted) }
+            Text(title).font(BLTypography.heading).foregroundStyle(BeatLabStyle.ink).accessibilityAddTraits(.isHeader)
+            if let subtitle { Text(subtitle).font(BLTypography.supporting).foregroundStyle(BeatLabStyle.muted) }
         }.fixedSize(horizontal: false, vertical: true)
     }
 }
@@ -81,7 +94,7 @@ struct BLStatusMessage: View {
         Label {
             Text(text).fixedSize(horizontal: false, vertical: true)
         } icon: { Image(systemName: symbol).accessibilityHidden(true) }
-        .font(.subheadline).foregroundStyle(BeatLabStyle.ink)
+        .font(BLTypography.supporting).foregroundStyle(BeatLabStyle.ink)
         .padding(16).frame(maxWidth: .infinity, alignment: .leading)
         .background(BeatLabStyle.accentSoft, in: RoundedRectangle(cornerRadius: 16))
         .accessibilityElement(children: .combine)
