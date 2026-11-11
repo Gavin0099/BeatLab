@@ -9,7 +9,6 @@ struct MetronomeView: View {
     @EnvironmentObject private var audio: MetronomeAudio
     @EnvironmentObject private var practice: PracticeStore
     @Environment(\.dynamicTypeSize) private var textSize
-    @ScaledMetric(relativeTo: .largeTitle) private var tempoSize = 76.0
     @State private var confirmReset = false
     @State private var tapTempo = TapTempo()
     @State private var tempoFeedback: String?
@@ -28,7 +27,8 @@ struct MetronomeView: View {
                 }
                 BLCard {
                     VStack(spacing: 16) {
-                        Text("找到舒服的速度").font(.subheadline.weight(.semibold)).foregroundStyle(BeatLabStyle.muted)
+                        Text("找到舒服的速度").font(BLTypography.control).foregroundStyle(BeatLabStyle.muted)
+                            .fixedSize(horizontal: false, vertical: true)
                         HStack {
                             Spacer()
                             Button { tapTempo.reset(); tempoFeedback = nil; store.undoTempo() } label: { Image(systemName: "arrow.uturn.backward") }
@@ -36,12 +36,15 @@ struct MetronomeView: View {
                             Button { tapTempo.reset(); tempoFeedback = nil; store.redoTempo() } label: { Image(systemName: "arrow.uturn.forward") }
                                 .disabled(store.redoTempos.isEmpty).accessibilityLabel("重做速度").accessibilityIdentifier("redoTempo")
                         }.buttonStyle(BLSecondaryButtonStyle())
-                        HStack(alignment: .firstTextBaseline, spacing: 8) {
-                            Text("\(store.configuration.tempo.bpm)")
-                                .font(.system(size: tempoSize, weight: .bold, design: .rounded)).monospacedDigit()
-                                .lineLimit(1).minimumScaleFactor(0.5).accessibilityIdentifier("tempoValue")
-                                .accessibilityLabel("速度 \(store.configuration.tempo.bpm) BPM")
-                            Text("BPM").font(.headline).foregroundStyle(BeatLabStyle.muted).accessibilityHidden(true)
+                        ViewThatFits(in: .horizontal) {
+                            HStack(alignment: .firstTextBaseline, spacing: 8) {
+                                tempoValue
+                                tempoUnit
+                            }
+                            VStack(spacing: 4) {
+                                tempoValue
+                                tempoUnit
+                            }
                         }
                         Slider(value: Binding(get: { Double(store.configuration.tempo.bpm) }, set: { manualTempo(Int($0.rounded())) }), in: 30...240, step: 1,
                                onEditingChanged: { if $0 { store.beginTempoGesture() } else { store.endTempoGesture() } })
@@ -59,7 +62,10 @@ struct MetronomeView: View {
                             } else { tempoFeedback = "繼續跟著拍，至少連續點 3 下" }
                         } label: { Label("跟著拍，設定速度", systemImage: "hand.tap") }
                         .buttonStyle(BLSecondaryButtonStyle()).accessibilityIdentifier("tapTempo")
-                        if let tempoFeedback { Text(tempoFeedback).font(.subheadline).foregroundStyle(BeatLabStyle.muted) }
+                        if let tempoFeedback {
+                            Text(tempoFeedback).font(BLTypography.body).foregroundStyle(BeatLabStyle.muted)
+                                .fixedSize(horizontal: false, vertical: true)
+                        }
                     }.disabled(!store.canEdit)
                 }
                 BLCard {
@@ -78,53 +84,61 @@ struct MetronomeView: View {
                         DisclosureGroup(isExpanded: $showSettings) {
                             VStack(alignment: .leading, spacing: 16) {
                                 ConfigurationSummary(configuration: store.configuration)
-                                Picker("拍號", selection: Binding(get: { store.configuration.timeSignature }, set: { tapTempo.reset(); store.setTimeSignature($0) })) {
+                                BLWrappingPicker("拍號", value: store.configuration.timeSignature.rawValue,
+                                                 selection: Binding(get: { store.configuration.timeSignature }, set: { tapTempo.reset(); store.setTimeSignature($0) })) {
                                     ForEach(TimeSignature.allCases, id: \.self) { Text($0.rawValue).tag($0) }
-                                }.pickerStyle(.menu).accessibilityIdentifier("signaturePicker")
-                                Picker("細分", selection: Binding(get: { store.configuration.subdivision }, set: { store.setSubdivision($0) })) {
+                                }.accessibilityIdentifier("signaturePicker")
+                                BLWrappingPicker("細分", value: store.configuration.subdivision.displayName,
+                                                 selection: Binding(get: { store.configuration.subdivision }, set: { store.setSubdivision($0) })) {
                                     ForEach(Subdivision.supported(for: store.configuration.timeSignature), id: \.self) { Text($0.displayName).tag($0) }
-                                }.pickerStyle(.menu).accessibilityIdentifier("subdivisionPicker")
+                                }.accessibilityIdentifier("subdivisionPicker")
                                 Toggle("第一拍重音", isOn: Binding(get: { store.configuration.accentEnabled }, set: { store.setAccentEnabled($0) }))
+                                    .fixedSize(horizontal: false, vertical: true)
                                     .accessibilityIdentifier("accentToggle")
                                 if store.configuration.timeSignature.isCompound {
-                                    Text("6/8 有兩個大拍，每拍分成三下：1-la-li、2-la-li。").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+                                    Text("6/8 有兩個大拍，每拍分成三下：1-la-li、2-la-li。").font(BLTypography.body).foregroundStyle(BeatLabStyle.muted)
+                                        .fixedSize(horizontal: false, vertical: true)
                                 }
                             }.padding(.top, 16).disabled(!store.canEdit)
                         } label: {
-                            Label("節奏設定 · \(store.configuration.timeSignature.rawValue)", systemImage: "music.note.list").font(.headline)
+                            Label("節奏設定 · \(store.configuration.timeSignature.rawValue)", systemImage: "music.note.list").font(BLTypography.control)
+                                .fixedSize(horizontal: false, vertical: true)
                                 .accessibilityIdentifier("rhythmSettings")
                         }
                         Divider()
-                        Picker("節拍音色", selection: Binding(get: { store.configuration.clickTimbre }, set: { store.setClickTimbre($0) })) {
-                            ForEach(ClickTimbre.allCases, id: \.self) { Text($0.displayName).tag($0) }
-                        }.pickerStyle(.segmented).disabled(!store.canEdit).accessibilityIdentifier("clickTimbrePicker")
-                        Picker("數拍聲音", selection: Binding(get: { audio.sound }, set: { audio.selectSound($0) })) {
+                        timbrePicker.disabled(!store.canEdit).accessibilityIdentifier("clickTimbrePicker")
+                        BLWrappingPicker("數拍聲音", value: countSoundTitle,
+                                         selection: Binding(get: { audio.sound }, set: { audio.selectSound($0) })) {
                             Text("節拍聲").tag(CountSound.click)
                             Text("數拍").tag(CountSound.voice)
                             Text("兩種都要").tag(CountSound.both)
-                        }.pickerStyle(.menu).accessibilityIdentifier("countSoundPicker")
+                        }.accessibilityIdentifier("countSoundPicker")
                         if audio.sound != .click {
-                            Text("八分音符數 1 & 2 &；其他細分數大拍。快速度可改用節拍聲。").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+                            Text("八分音符數 1 & 2 &；其他細分數大拍。快速度可改用節拍聲。").font(BLTypography.body).foregroundStyle(BeatLabStyle.muted)
+                                .fixedSize(horizontal: false, vertical: true)
                         }
                         VStack(alignment: .leading, spacing: 8) {
-                            Text("聲音大小").font(.subheadline.weight(.semibold))
+                            Text("聲音大小").font(BLTypography.control).fixedSize(horizontal: false, vertical: true)
                             Slider(value: Binding(get: { Double(audio.volume) }, set: { audio.setGain(Float($0)) }), in: 0...1)
                                 .accessibilityLabel("節拍音量").accessibilityValue("\(Int(audio.volume * 100))%")
                                 .accessibilityIdentifier("volumeSlider")
                         }
                         Toggle(isOn: Binding(get: { store.configuration.screenPulseEnabled }, set: { store.setScreenPulseEnabled($0) })) {
                             Label("畫面閃光提示", systemImage: "sun.max")
-                        }.disabled(!store.canEdit).accessibilityIdentifier("screenPulseToggle")
+                        }.fixedSize(horizontal: false, vertical: true)
+                            .disabled(!store.canEdit).accessibilityIdentifier("screenPulseToggle")
                         Toggle(isOn: Binding(get: { store.configuration.hapticsEnabled }, set: { store.setHapticsEnabled($0) })) {
                             Label("震動提示", systemImage: "iphone.radiowaves.left.and.right")
-                        }.disabled(!store.canEdit || UIDevice.current.userInterfaceIdiom != .phone).accessibilityIdentifier("hapticsToggle")
-                        Text("將音量拉到零，可只用畫面或震動跟拍。震動依裝置能力提供；提示不作精準度量測。").font(.subheadline).foregroundStyle(BeatLabStyle.muted)
+                        }.fixedSize(horizontal: false, vertical: true)
+                            .disabled(!store.canEdit || UIDevice.current.userInterfaceIdiom != .phone).accessibilityIdentifier("hapticsToggle")
+                        Text("將音量拉到零，可只用畫面或震動跟拍。震動依裝置能力提供；提示不作精準度量測。").font(BLTypography.body).foregroundStyle(BeatLabStyle.muted)
+                            .fixedSize(horizontal: false, vertical: true)
                     }
                 }
                 BLCard {
                     VStack(alignment: .leading, spacing: 16) {
                         BLSectionHeading(title: "顯示模式", subtitle: "入門看大拍，標準多一些練習工具。")
-                        BLModePicker()
+                        BLModePicker(wrapsAtAccessibilitySizes: true)
                         if practice.mode == .standard { challenges }
                     }
                 }
@@ -143,6 +157,8 @@ struct MetronomeView: View {
             .frame(maxWidth: .infinity).background(BeatLabStyle.canvas)
         }
         .navigationTitle("節拍器").navigationBarTitleDisplayMode(.inline)
+        .font(BLTypography.body)
+        .lineLimit(nil)
         .confirmationDialog("重設會清除節拍器設定，課程進度會保留。", isPresented: $confirmReset, titleVisibility: .visible) {
             Button("重設設定", role: .destructive) { store.resetSettings() }
         }
@@ -152,13 +168,49 @@ struct MetronomeView: View {
         VStack(alignment: .leading, spacing: 16) {
             Divider()
             BLSectionHeading(title: "內心節拍挑戰", subtitle: "靜音時繼續數拍，等聲音回來。")
-            Picker("Gap Click", selection: Binding(get: { audio.gapBars }, set: { audio.setGap($0) })) {
+            BLWrappingPicker("Gap Click", value: audio.gapBars == 0 ? "關閉" : "出聲 4 小節，靜音 \(audio.gapBars) 小節",
+                             selection: Binding(get: { audio.gapBars }, set: { audio.setGap($0) })) {
                 Text("關閉").tag(0); Text("出聲 4 小節，靜音 1 小節").tag(1); Text("出聲 4 小節，靜音 2 小節").tag(2)
-            }.pickerStyle(.menu).accessibilityIdentifier("gapPicker")
+            }.accessibilityIdentifier("gapPicker")
             BLSectionHeading(title: "慢慢加快", subtitle: "每幾小節加 5 BPM，手動改速度就結束升速。")
-            Picker("Tempo Ladder", selection: Binding(get: { audio.ladderBars }, set: { audio.setLadder($0) })) {
+            BLWrappingPicker("Tempo Ladder", value: audio.ladderBars == 0 ? "關閉" : "每 \(audio.ladderBars) 小節 +5",
+                             selection: Binding(get: { audio.ladderBars }, set: { audio.setLadder($0) })) {
                 Text("關閉").tag(0); Text("每 2 小節 +5").tag(2); Text("每 4 小節 +5").tag(4); Text("每 8 小節 +5").tag(8)
-            }.pickerStyle(.menu).accessibilityIdentifier("ladderPicker")
+            }.accessibilityIdentifier("ladderPicker")
+        }
+    }
+    private var tempoValue: some View {
+        Text("\(store.configuration.tempo.bpm)")
+            .font(BLTypography.tempo)
+            .fixedSize()
+            .accessibilityIdentifier("tempoValue")
+            .accessibilityLabel("速度 \(store.configuration.tempo.bpm) BPM")
+    }
+    private var tempoUnit: some View {
+        Text("BPM").font(BLTypography.control).foregroundStyle(BeatLabStyle.muted)
+            .fixedSize().accessibilityHidden(true)
+    }
+    @ViewBuilder
+    private var timbrePicker: some View {
+        if textSize.isAccessibilitySize {
+            BLWrappingPicker("節拍音色", value: store.configuration.clickTimbre.displayName,
+                             selection: Binding(get: { store.configuration.clickTimbre }, set: { store.setClickTimbre($0) })) {
+                timbres
+            }
+        } else {
+            Picker("節拍音色", selection: Binding(get: { store.configuration.clickTimbre }, set: { store.setClickTimbre($0) })) {
+                timbres
+            }.pickerStyle(.segmented)
+        }
+    }
+    private var timbres: some View {
+        ForEach(ClickTimbre.allCases, id: \.self) { Text($0.displayName).tag($0) }
+    }
+    private var countSoundTitle: String {
+        switch audio.sound {
+        case .click: return "節拍聲"
+        case .voice: return "數拍"
+        case .both: return "兩種都要"
         }
     }
     private func manualTempo(_ bpm: Int) {
