@@ -19,16 +19,16 @@ struct ConfigurationSummary: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 8) {
             Text("\(configuration.tempo.bpm) BPM · \(configuration.timeSignature.rawValue)")
-                .font(.headline.bold())
+                .font(BLTypography.control.bold())
                 .monospacedDigit()
                 .accessibilityIdentifier("configurationSummary")
             Text(configuration.subdivision.displayName)
-                .font(.subheadline)
+                .font(BLTypography.supporting)
                 .accessibilityIdentifier("subdivisionSummary")
             Text(configuration.accentEnabled ? "第一拍重音：開啟" : "第一拍重音：關閉")
-                .font(.subheadline)
+                .font(BLTypography.supporting)
                 .foregroundStyle(BeatLabStyle.muted)
                 .accessibilityIdentifier("accentSummary")
-        }
+        }.fixedSize(horizontal: false, vertical: true)
     }
 }

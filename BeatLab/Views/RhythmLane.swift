@@ -18,7 +18,7 @@ struct RhythmLane: View {
                 HStack(spacing: 8) {
                     ForEach(0..<4, id: \.self) { beat in
                         VStack(spacing: 6) {
-                            Text("\(beat + 1)").font(.caption.bold()).foregroundStyle(BeatLabStyle.muted)
+                            Text("\(beat + 1)").font(BLTypography.caption.bold()).foregroundStyle(BeatLabStyle.muted)
                             note(beat)
                         }
                     }
@@ -26,7 +26,8 @@ struct RhythmLane: View {
             } else {
                 ForEach(0..<4, id: \.self) { beat in
                     HStack(alignment: .center, spacing: 10) {
-                        Text("\(beat + 1)").font(.headline.monospacedDigit()).foregroundStyle(BeatLabStyle.muted)
+                        Text("\(beat + 1)").font(BLTypography.control.monospacedDigit()).foregroundStyle(BeatLabStyle.muted)
+                            .fixedSize()
                             .frame(minWidth: 20).accessibilityLabel("第 \(beat + 1) 拍")
                         LazyVGrid(columns: Array(repeating: GridItem(.flexible(), spacing: 6), count: textSize.isAccessibilitySize ? min(2, pattern.stepsPerBeat) : pattern.stepsPerBeat), spacing: 6) {
                             ForEach(0..<pattern.stepsPerBeat, id: \.self) { division in note(beat * pattern.stepsPerBeat + division) }
@@ -40,7 +41,8 @@ struct RhythmLane: View {
         let stroke = pattern.steps[index]
         let selected = isPlaying && index == active
         return VStack(spacing: 2) {
-            Text(stroke == .rest ? "—" : stroke.rawValue).font(.system(.title3, design: .rounded).bold())
+            Text(stroke == .rest ? "—" : stroke.rawValue).font(BLTypography.beat)
+                .fixedSize(horizontal: false, vertical: true)
             Circle().fill(selected ? BeatLabStyle.onAccent : Color.clear).frame(width: 4, height: 4)
         }
         .foregroundStyle(selected ? BeatLabStyle.onAccent : stroke == .rest ? BeatLabStyle.muted : BeatLabStyle.ink)
